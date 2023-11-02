@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Listing {
+  id            String          @id @unique @default(cuid())
+  title         String
+  deposit       Decimal?
+  imageUrls     String[]
+  description   String
+  beds          Int
+  baths         Int
+  area          Int
+  availableDate DateTime        @default(dbgenerated("CURRENT_DATE")) @db.Date
+  prices        ListingPrice[]
+  ratings       ListingRating[]
+
+  @@map("listing")
+}
+
+model ListingPrice {
+  id        String   @id @unique @default(cuid())
+  value     Decimal  @default(-1)
+  startDate DateTime @default(dbgenerated("CURRENT_DATE")) @db.Date
+  endDate   DateTime @db.Date
+  isCurrent Boolean  @default(true)
+  listing   Listing  @relation(fields: [listingId], references: [id])
+  listingId String   @unique
+
+  @@map("listing_price")
+}
+
+model ListingRating {
+  id        String  @id @unique @default(cuid())
+  value     Int
+  listing   Listing @relation(fields: [listingId], references: [id])
+  listingId String  @unique
+
+  @@map("listing_rating")
+}
+
+model Address {
+  id          String @id @unique @default(cuid())
+  addressLine String
+  city        String
+  state       String
+  zipcode     Int?
+
+  @@map("address")
+}
+
+model ContactInfo {
+  id            String  @id @unique @default(cuid())
+  name          String
+  contactNumber String
+  email         String?
+
+  @@map("contact_info")
+}
