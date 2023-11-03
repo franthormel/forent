@@ -8,26 +8,28 @@ datasource db {
 }
 
 model Listing {
-  id            String              @id @default(cuid())
+  id            String    @id @default(cuid())
   title         String
-  deposit       Decimal?            @db.Money
+  deposit       Decimal?  @db.Money
   imageUrls     String[]
   description   String
   beds          Int
   baths         Int
-  area          Decimal             @db.Decimal(24, 2)
-  availableDate DateTime?           @db.Date
+  area          Decimal   @db.Decimal(24, 2)
+  availableDate DateTime? @db.Date
   /// Current and previous prices of the listing. The current price is the first entry in the list.
-  prices        ListingPrice[]
-  ratings       ListingRating[]
-  address       ListingAddress?
-  contactInfo   ListingContactInfo?
+  prices        Price[]
+  ratings       Rating[]
+  address       Address?
+  /// User that created this listing.
+  user          User      @relation(fields: [userId], references: [id])
+  userId        String
 
   @@map("listing")
 }
 
-// Each listing must have a price.
-model ListingPrice {
+// Each listing must have its current and previous prices recorded.
+model Price {
   id        String   @id @default(cuid())
   value     Decimal  @db.Money
   /// The price is effective on the day that it is listed.
@@ -36,23 +38,23 @@ model ListingPrice {
   endDate   DateTime @default("9999-12-31T00:00:00.000Z") @db.Date
   isCurrent Boolean  @default(true)
   listing   Listing  @relation(fields: [listingId], references: [id])
-  listingId String   @unique
+  listingId String
 
-  @@map("listing_price")
+  @@map("price")
 }
 
 /// Each listing may have zero (0) or more ratings.
-model ListingRating {
+model Rating {
   id        String  @id @default(cuid())
   value     Int
   listing   Listing @relation(fields: [listingId], references: [id])
-  listingId String  @unique
+  listingId String
 
-  @@map("listing_rating")
+  @@map("rating")
 }
 
 /// Each address must be associated with one (1) listing. (for now)
-model ListingAddress {
+model Address {
   id          String  @id @default(cuid())
   addressLine String
   city        String
@@ -64,17 +66,16 @@ model ListingAddress {
   listing     Listing @relation(fields: [listingId], references: [id])
   listingId   String  @unique
 
-  @@map("listing_address")
+  @@map("address")
 }
 
-/// Each contact must have one (1) or more listings.
-model ListingContactInfo {
-  id            String  @id @default(cuid())
+/// Each user can have zero (0) or more listings.
+model User {
+  id            String    @id @default(cuid())
   name          String
   contactNumber String
-  email         String?
-  listing       Listing @relation(fields: [listingId], references: [id])
-  listingId     String  @unique
+  email         String?   @unique
+  listings      Listing[]
 
-  @@map("listing_contact_info")
+  @@map("user")
 }
