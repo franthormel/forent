@@ -1,22 +1,26 @@
-import Link from "next/link";
+import Link from "next/link"
 
 interface LinkButtonProps {
     /**
      * URL for the `Link` component.
      */
-    href: string;
+    href: string
     /** 
      * Text to be displayed.
      */
-    text: string;
+    text: string
 }
 
 export default function LinkButton({
     ...props
 }: LinkButtonProps) {
     return (
-        <div className="bg-yellow-300 px-3 py-2 rounded-full w-fit">
+        <div className="bg-blue-500 px-3 py-2 rounded-full w-fit">
             <Link href={props.href}>{props.text}</Link>
         </div>
-    );
+    )
 }
+
+// TODO:
+// 1. Add disabled styling similar to `FormSubmitButton`
+// 2. Add onclick styling similar to `FormSubmitButton`
