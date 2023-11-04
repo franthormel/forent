@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { dmSans } from './fonts'
 
 import './global.css'
 
@@ -13,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className='p-12'>
+    <html lang="en" className={`${dmSans.className} p-12`}>
       <body>{children}</body>
     </html>
   )

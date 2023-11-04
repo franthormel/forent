@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className='flex flex-col space-y-4'>
-      <h1 className='text-5xl font-bold'>Forent</h1>
+      <header className='text-5xl'>Forent</header>
       <LinkButton href="/sign-in" text='Sign In' />
     </main>
   );
