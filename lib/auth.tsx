@@ -44,3 +44,13 @@ export function auth(
 ) {
   return getServerSession(...args, authOptions)
 }
+
+/**
+ * Returns a `User` object if logged in otherwise `null`.
+ * 
+ * @returns User | null
+ */
+export async function getUser() {
+  const session = await getServerSession(authOptions);
+  return session?.user;
+}

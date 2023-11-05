@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import LinkButton from '@/components/LinkButton';
+import AuthenticationWrapper from '@/components/AuthenticationWrapper';
 
 export const metadata: Metadata = {
   title: 'Homepage | Forent',
@@ -10,12 +10,9 @@ export default function Home() {
   return (
     <main className='flex flex-col space-y-4'>
       <header className='text-5xl'>Forent</header>
-      <LinkButton href="/api/auth/signin" text='Sign In' />
+      <AuthenticationWrapper />
     </main>
   );
 }
 
-// TODO:
-// 1. Sign out button
-// 2. Sign in link
-// 3. Display profile
+// TODO: Display profile when logged in

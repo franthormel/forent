@@ -5,8 +5,4 @@ const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
 
-// TODO:
-// 1. Create custom sign in page
-// 1.1 = https://next-auth.js.org/configuration/pages#oauth-sign-in
-// 1.2 = https://next-auth.js.org/configuration/pages#email-sign-in
-// 2. Add event logging
+// TODO: 1. custom sign in page and 2. event logging

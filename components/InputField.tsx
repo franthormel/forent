@@ -40,7 +40,4 @@ export default function InputField({
     )
 }
 
-// TODO:
-// 1. Add input field onActive styling
-// 2. Add input field required styling
-// 3. Add toggle password visibility on/off
+// TODO: 1. input field onActive and required AND password visibility toggle

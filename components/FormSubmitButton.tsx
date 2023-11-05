@@ -22,6 +22,4 @@ export default function FormSubmitButton({
     )
 }
 
-// TODO:
-// 1. Add disabled styling similar to `LinkButton`
-// 2. Add onclick styling similar to `LinkButton`
+// TODO: disabled and onclick CSS styles for button
