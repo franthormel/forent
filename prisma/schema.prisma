@@ -72,9 +72,9 @@ model Address {
 /// Each user can have zero (0) or more listings.
 model User {
   id            String    @id @default(cuid())
-  name          String
+  name          String?
   contactNumber String?
-  email         String?   @unique
+  email         String   @unique
   emailVerified DateTime?
   listings      Listing[]
   image         String?

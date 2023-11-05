@@ -14,3 +14,8 @@ export default function Home() {
     </main>
   );
 }
+
+// TODO:
+// 1. Sign out button
+// 2. Sign in link
+// 3. Display profile
