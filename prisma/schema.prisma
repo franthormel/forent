@@ -73,7 +73,7 @@ model Address {
 model User {
   id            String    @id @default(cuid())
   name          String
-  contactNumber String
+  contactNumber String?
   email         String?   @unique
   emailVerified DateTime?
   listings      Listing[]

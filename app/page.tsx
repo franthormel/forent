@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main className='flex flex-col space-y-4'>
       <header className='text-5xl'>Forent</header>
-      <LinkButton href="/sign-in" text='Sign In' />
+      <LinkButton href="/api/auth/signin" text='Sign In' />
     </main>
   );
 }
