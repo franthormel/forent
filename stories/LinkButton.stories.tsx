@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import LinkButton from "../components/LinkButton"
 
 const meta: Meta = {
-    title: "LinkButton",
+    title: "Components/LinkButton",
     component: LinkButton,
     parameters: {
         layout: "centered",

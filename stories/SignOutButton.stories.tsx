@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import SignOutButton from "../components/SignOutButton"
 
 const meta: Meta = {
-    title: "SignOutButton",
+    title: "Components/SignOutButton",
     component: SignOutButton,
     parameters: {
         layout: "centered",
