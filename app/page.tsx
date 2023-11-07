@@ -1,5 +1,5 @@
-import { Metadata } from 'next';
 import AuthenticationWrapper from '@/components/AuthenticationWrapper';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Homepage | Forent',

@@ -1,4 +1,4 @@
-import { Libre_Baskerville, DM_Sans } from 'next/font/google'
+import { DM_Sans, Libre_Baskerville } from 'next/font/google'
 
 export const libreBaskerville = Libre_Baskerville({
     subsets: ['latin'],
