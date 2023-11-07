@@ -13,9 +13,9 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Example: Story = {
+export const SignIn: Story = {
     args: {
         href: "",
-        text: "Button"
+        text: "Sign In"
     },
 }
