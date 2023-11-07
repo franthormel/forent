@@ -36,3 +36,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+chromatic.log
+build-storybook.log
+
+.flaskenv*
+!.env.project
+!.env.vault
