@@ -12,6 +12,7 @@
 
 ## Final Checklist
 - [ ] File imports are sorted
+- [ ] Metadata is always updated
 - [ ] [Unit Tests](https://jestjs.io/docs/) for functional APIs
 - [ ] [Interaction Tests](https://storybook.js.org/docs/react/writing-tests/interaction-testing) for complex components and UIs
 - [ ] A11y Tests for each individual component 
