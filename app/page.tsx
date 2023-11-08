@@ -1,4 +1,5 @@
 import AuthenticationWrapper from '@/components/AuthenticationWrapper';
+import LogoHeader from '@/components/LogoHeader';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className='flex flex-col space-y-4'>
-      <header className='text-5xl'>Forent</header>
+      <LogoHeader />
       <AuthenticationWrapper />
     </main>
   );
