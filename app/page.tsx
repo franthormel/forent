@@ -1,6 +1,6 @@
 import AuthenticationWrapper from '@/components/AuthenticationWrapper';
-import { Metadata } from 'next';
 import LogoHeader from '@/components/LogoHeader';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Rent Property | Forent',
