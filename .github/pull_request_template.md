@@ -1,6 +1,6 @@
 **Issue:** #<put issue number>
 
-## Description
+## Implemented
 1. <put description on what was done>
 1. <put description on what was done>
 
