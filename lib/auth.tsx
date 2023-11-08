@@ -15,7 +15,6 @@ const prisma = new PrismaClient()
 // to `NextAuth` in `app/api/auth/[...nextauth]/route.ts`
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
-  debug: true,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
