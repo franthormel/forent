@@ -5,12 +5,13 @@
 1. <put description on what was done>
 
 ## Tasks
-- [ ] <put task 1>
-  - [ ] <subtask 1.1>
-- [ ] <task 2>
-- [ ] <task 3>
+- <put task 1>
+  - <subtask 1.1>
+- <task 2>
+- <task 3>
 
 ## Final Checklist
+- [ ] All checks have passed
 - [ ] File imports are sorted
 - [ ] Metadata is always updated
 - [ ] [Unit Tests](https://jestjs.io/docs/) for functional APIs
