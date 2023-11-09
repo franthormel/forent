@@ -1,36 +1,31 @@
-name: "UI Tests"
-
+name: "Storybook UI Test"
 on: push
-
 jobs:
   # Run interaction and accessibility tests
   interaction-and-accessibility:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "19.x"
-      - name: Install dependencies
-        run: yarn
-      - name: Install Playwright
-        run: npx playwright install --with-deps
-      - name: Build Storybook
-        run: yarn build-storybook --quiet
+      - run: npm install
+      - run: npx playwright install --with-deps
+      - run: npm run build-storybook --quiet
       - name: Serve Storybook and run tests
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:6006 && yarn test-storybook"
+            "npx wait-on http://127.0.0.1:6006 && npm run test-storybook"
   # Run visual and composition tests with Chromatic
   visual-and-composition:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Required to retrieve git history
-      - name: Install dependencies
-        run: yarn
+      - run: npm install
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
