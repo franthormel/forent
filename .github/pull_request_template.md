@@ -1,14 +1,14 @@
 **Issue:** #<put issue number>
 
 ## Implemented
-1. <put description on what was done>
-1. <put description on what was done>
+- [ ] <put description on what was done>
+- [ ] <put description on what was done>
 
 ## Tasks
-- <put task 1>
-  - <subtask 1.1>
-- <task 2>
-- <task 3>
+- [ ] <put task 1>
+  -[ ] <subtask 1.1>
+- [ ] <task 2>
+- [ ] <task 3>
 
 ## Final Checklist
 - [ ] Testing
