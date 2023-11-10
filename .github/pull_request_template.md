@@ -6,18 +6,19 @@
 
 ## Tasks
 - [ ] <put task 1>
-  -[ ] <subtask 1.1>
+  - [ ] <subtask 1.1>
 - [ ] <task 2>
 - [ ] <task 3>
 
 ## Final Checklist
-- [ ] Testing
-  - [ ] All checks have passed
-  - [ ] Unit tests
-    - [ ] All lines are covered
-    - [ ] All lines are covered
-  - [ ] Component
-    - [ ]  Accessibility tests
-    - [ ]  Visual tests
+- [ ] All checks have passed
 - [ ] File imports are sorted
 - [ ] Metadata is always updated
+- [ ] Testing
+  - [ ] Unit tests (Jest)
+    - [ ] All lines are covered
+    - [ ] All branches are covered
+  - [ ] Component tests (Cypress)
+    - [ ] Accessibility tests (Storybook)
+    - [ ] Visual regression tests (Chromatic)
+  - [ ] E2E test (Cypress)
