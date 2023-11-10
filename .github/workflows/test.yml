@@ -21,10 +21,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: Clean install packages
-        run: npm ci
+        name: List the state of node_modules
+        continue-on-error: true
+        run: npm list
+      - name: Clean install packages
+        run: npm ci --ignore-scripts
       - name: Run test
-        run: npm test
+        run: npm test-ci
   # Run interaction and accessibility tests
   interaction-and-accessibility:
     timeout-minutes: 60
@@ -35,6 +38,7 @@ jobs:
         with:
           node-version: "19.x"
       - uses: actions/cache@v3
+        id: cache-npm
         with:
           path: |
             ~/.npm
@@ -42,8 +46,12 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           restore-keys: |
             ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
-      - name: Install packages
-        run: npm install
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node_modules
+        continue-on-error: true
+        run: npm list
+      - name: Clean install packages
+        run: npm ci --ignore-scripts
       - name: Install Playwright
         run: npx playwright install --with-deps
       - name: Build Storybook
@@ -61,6 +69,7 @@ jobs:
         with:
           fetch-depth: 0 # Required to retrieve git history
       - uses: actions/cache@v3
+        id: cache-npm
         with:
           path: |
             ~/.npm
@@ -68,8 +77,12 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           restore-keys: |
             ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
-      - name: Install packages
-        run: npm install
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node_modules
+        continue-on-error: true
+        run: npm list
+      - name: Clean install packages
+        run: npm ci --ignore-scripts
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
