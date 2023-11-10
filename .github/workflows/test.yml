@@ -1,0 +1,90 @@
+name: "Test"
+on: push
+jobs:
+  # Run tests
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "19.x"
+      - uses: actions/cache@v3
+        id: cache-npm
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node_modules
+        continue-on-error: true
+        run: npm list
+      - name: Clean install packages
+        run: npm ci --ignore-scripts
+      - name: Run test
+        run: npm run test-ci
+  # Run interaction and accessibility tests
+  interaction-and-accessibility:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "19.x"
+      - uses: actions/cache@v3
+        id: cache-npm
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node_modules
+        continue-on-error: true
+        run: npm list
+      - name: Clean install packages
+        run: npm ci --ignore-scripts
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+      - name: Build Storybook
+        run: npm run build-storybook --quiet
+      - name: Serve Storybook and run tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on http://127.0.0.1:6006 && npm run test-storybook"
+  # Run visual and composition tests with Chromatic
+  visual-and-composition:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required to retrieve git history
+      - uses: actions/cache@v3
+        id: cache-npm
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}-
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node_modules
+        continue-on-error: true
+        run: npm list
+      - name: Clean install packages
+        run: npm ci --ignore-scripts
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          # Grab this from the Chromatic manage page
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
