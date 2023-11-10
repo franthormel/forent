@@ -7,14 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --exit-zero-changes",
-    "cypress:open": "cypress open",
-    "postinstall": "prisma generate",
     "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test-storybook": "test-storybook",
+    "chromatic": "npx chromatic --exit-zero-changes",
+    "postinstall": "prisma generate",
     "test": "jest",
-    "test-ci": "jest --ci",
-    "test-storybook": "test-storybook"
+    "test-ci": "jest --ci"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
@@ -43,7 +42,6 @@
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "chromatic": "^7.6.0",
-    "cypress": "^13.5.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.1",
     "eslint-plugin-storybook": "^0.6.15",
