@@ -14,6 +14,8 @@
 - [ ] Testing
   - [ ] All checks have passed
   - [ ] Unit tests
+    - [ ] All lines are covered
+    - [ ] All lines are covered
   - [ ] Component
     - [ ]  Accessibility tests
     - [ ]  Visual tests
