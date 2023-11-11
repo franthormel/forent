@@ -9,6 +9,7 @@
     "lint": "next lint",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --exit-zero-changes",
+    "cypress:open": "cypress open",
     "postinstall": "prisma generate",
     "storybook": "storybook dev -p 6006",
     "test": "jest",
