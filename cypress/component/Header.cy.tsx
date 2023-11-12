@@ -2,8 +2,8 @@ import React from 'react'
 import Header from '../../components/Header'
 
 describe('<Header />', () => {
-  it('renders', () => {
-    // see: https://on.cypress.io/mounting-react
-    cy.mount(<Header text='header'/>)
-  })
+  it('works', () => {
+    cy.mount(<Header text='header-text' />)
+    cy.get('[data-cy="header"').should('have.text', 'header-text')
+  });
 })

@@ -2,8 +2,8 @@ import React from 'react'
 import LogoHeader from '../../components/LogoHeader'
 
 describe('<LogoHeader />', () => {
-  it('renders', () => {
-    // see: https://on.cypress.io/mounting-react
+  it('works', () => {
     cy.mount(<LogoHeader />)
+    cy.get('[data-cy="logo-header"]').should('have.text', 'Forent')
   })
 })

@@ -10,5 +10,5 @@ interface HeaderProps {
 export default function Header({
     text = ''
 }: HeaderProps) {
-    return <header className={`text-4xl ${headerFont.className}`}>{text}</header>
+    return <header className={`text-4xl ${headerFont.className}`} data-cy="header">{text}</header>
 }
