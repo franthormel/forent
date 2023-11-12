@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 import React from 'react'
 import AuthenticationWrapper from '../../components/AuthenticationWrapper'
 

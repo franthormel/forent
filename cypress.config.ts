@@ -6,6 +6,6 @@ export default defineConfig({
       framework: "next",
       bundler: "webpack",
     },
-    specPattern: ["./tests/component/*.cy.{ts,tsx}"],
+    specPattern: ["./cypress/component/*.cy.{ts,tsx}"],
   },
 });

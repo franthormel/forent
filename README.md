@@ -31,16 +31,17 @@ Wanted to try all the technologies listed below.
 
 ## What each of the directories are for 📂
 
-| Directory    | Purpose                                                          |
-| ------------ | ---------------------------------------------------------------- |
-| `.github`    | GitHub templates and workflow                                    |
-| `.storybook` | Storybook config                                                 |
-| `app`        | Application itself                                               |
-| `components` | UI pieces                                                        |
-| `lib`        | Functions                                                        |
-| `prisma`     | DB schema and changes                                            |
+| Directory    | Purpose                                               |
+| ------------ | ----------------------------------------------------- |
+| `.github`    | GitHub templates and workflow                         |
+| `.storybook` | Storybook config                                      |
+| `app`        | Application itself                                    |
+| `cypress`    | Component and E2E tests                               |
+| `components` | UI pieces                                             |
+| `lib`        | Functions                                             |
+| `prisma`     | DB schema and changes                                 |
 | `stories`    | Design examples, accessibility tests and visual tests |
-| `tests`      | Different test types: `unit`, `component`, and `e2e`.            |
+| `tests`      | Unit tests                                            |
 
 ## How quality is assured 🧪
 

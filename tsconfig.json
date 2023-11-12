@@ -5,18 +5,12 @@
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     },
     "plugins": [
       {
@@ -28,11 +22,7 @@
     "strict": true,
     "target": "es5"
   },
-  "exclude": [
-    "node_modules",
-    "./cypress.config.ts",
-    "./cypress"
-  ],
+  "exclude": ["node_modules", "./cypress.config.ts", "cypress"],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
