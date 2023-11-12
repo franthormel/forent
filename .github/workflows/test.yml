@@ -1,7 +1,7 @@
 name: "Test"
 on: push
 jobs:
-  # Run tests
+  # Run unit tests
   unit-test:
     runs-on: ubuntu-latest
     steps:
@@ -28,6 +28,16 @@ jobs:
         run: npm ci --ignore-scripts
       - name: Run test
         run: npm run test-ci
+  # Run component tests
+  component-cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Install NPM dependencies, cache them correctly and run all Cypress tests
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          component: true
   # Run interaction and accessibility tests
   interaction-and-accessibility:
     timeout-minutes: 60
