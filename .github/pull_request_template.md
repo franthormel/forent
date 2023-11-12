@@ -12,7 +12,9 @@
 
 ## Final Checklist
 - [ ] All checks have passed
-- [ ] File imports are sorted
+- [ ] File organization
+  - [ ] File imports are sorted
+  - [ ] Tailwind CSS classes are sorted
 - [ ] Metadata is always updated
 - [ ] Testing
   - [ ] Unit tests (Jest)
