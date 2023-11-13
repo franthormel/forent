@@ -38,13 +38,15 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           component: true
-  e2e-run:
+  e2e-test:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Cypress run
         uses: cypress-io/github-action@v6
+        env:
+          NEXTAUTH_SECRET: ZPSgkxMY/eLARn2mSzVpQpw/cp1OD9anTWmKhS9N/qM=
         with:
           build: npm run build
           start: npm start
