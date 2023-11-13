@@ -23,4 +23,4 @@
   - [ ] Component tests (Cypress)
     - [ ] Accessibility tests (Storybook)
     - [ ] Visual regression tests (Chromatic)
-  - [ ] E2E test (Cypress)
+  - [ ] E2E tests (Cypress)
