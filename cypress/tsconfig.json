@@ -1,9 +1,18 @@
 {
   "compilerOptions": {
     "noEmit": true,
-    "types": ["cypress"]
+    "types": [
+      "cypress"
+    ]
   },
   "exclude": [],
   "extends": "../tsconfig.json",
-  "include": ["../node_modules/cypress", "./component/*.tsx", "./cypress.d.ts"]
+  "include": [
+    "../node_modules/cypress",
+    "./component/*.ts",
+    "./component/*.tsx",
+    "./e2e/*.ts",
+    "./e2e/*.tsx",
+    "./cypress.d.ts"
+  ]
 }
