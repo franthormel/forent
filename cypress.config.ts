@@ -1,4 +1,9 @@
 import { defineConfig } from "cypress";
+import dotenv from "dotenv";
+
+// Only works for non-CI environments
+dotenv.config({ path: "./env.local " });
+dotenv.config();
 
 export default defineConfig({
   component: {
@@ -10,9 +15,11 @@ export default defineConfig({
   },
   e2e: {
     baseUrl: "http://localhost:3000",
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-    },
     specPattern: ["./cypress/e2e/*.cy.{ts,tsx}"],
+  },
+  env: {
+    googleRefreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+    googleClientId: process.env.GOOGLE_CLIENT_ID,
+    googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
   },
 });

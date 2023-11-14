@@ -47,6 +47,9 @@ jobs:
         uses: cypress-io/github-action@v6
         env:
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
         with:
           build: npm run build
           start: npm start
