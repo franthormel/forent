@@ -18,6 +18,7 @@ export default defineConfig({
     specPattern: ["./cypress/e2e/*.cy.{ts,tsx}"],
   },
   env: {
+    authSecret: process.env.NEXTAUTH_SECRET,
     googleRefreshToken: process.env.GOOGLE_REFRESH_TOKEN,
     googleClientId: process.env.GOOGLE_CLIENT_ID,
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,

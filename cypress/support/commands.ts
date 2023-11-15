@@ -1,3 +1,5 @@
+import { encode } from "next-auth/jwt";
+
 Cypress.Commands.add("loginByGoogleApi", () => {
   cy.log("Logging in to Google");
 
@@ -35,4 +37,12 @@ Cypress.Commands.add("loginByGoogleApi", () => {
       cy.visit("/");
     });
   });
+});
+
+Cypress.Commands.add("login", () => {
+  cy.fixture("user.json")
+    .then((user) => encode({ token: user, secret: Cypress.env("authSecret") }))
+    .then((encryptedToken) => {
+      cy.setCookie("next-auth.session-token", encryptedToken);
+    });
 });
