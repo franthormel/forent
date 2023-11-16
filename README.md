@@ -12,11 +12,12 @@ Wanted to try all the technologies listed below.
 
 - [NextJS](https://nextjs.org/) - React Framework
 - [NextAuth](https://next-auth.js.org/) - Authentication
-- [Storybook](https://storybook.js.org/) - Components Design
+- [Storybook](https://storybook.js.org/) - Design & Testing (a11y & visual)
 - [Jest](https://jestjs.io/) - Testing (unit)
 - [Prisma](https://www.prisma.io/) - Database ORM and design
   - [PostgreSQL](https://www.postgresql.org/) - Database (Prisma handles all the communication)
 - [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Cypress](https://www.cypress.io/) - Testing (component & e2e)
 
 > More might be added (as needed).
 
@@ -30,16 +31,17 @@ Wanted to try all the technologies listed below.
 
 ## What each of the directories are for 📂
 
-| Directory    | Purpose                                                          |
-| ------------ | ---------------------------------------------------------------- |
-| `.github`    | GitHub templates and workflow                                    |
-| `.storybook` | Storybook config                                                 |
-| `app`        | Application itself                                               |
-| `components` | UI pieces                                                        |
-| `lib`        | Functions                                                        |
-| `prisma`     | DB schema and changes                                            |
-| `stories`    | Design examples, accessibility tests and visual regression tests |
-| `tests`      | Different test types: `unit`, `component`, and `e2e`.            |
+| Directory    | Purpose                                               |
+| ------------ | ----------------------------------------------------- |
+| `.github`    | GitHub templates and workflow                         |
+| `.storybook` | Storybook config                                      |
+| `app`        | Application itself                                    |
+| `cypress`    | Component and E2E tests                               |
+| `components` | UI pieces                                             |
+| `lib`        | Functions                                             |
+| `prisma`     | DB schema and changes                                 |
+| `stories`    | Design examples, accessibility tests and visual tests |
+| `tests`      | Unit tests                                            |
 
 ## How quality is assured 🧪
 

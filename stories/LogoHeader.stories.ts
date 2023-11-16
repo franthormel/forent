@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import SignOutButton from "../components/SignOutButton"
+import LogoHeader from "@/components/LogoHeader"
 
 const meta: Meta = {
-    title: "Components/SignOutButton",
-    component: SignOutButton,
+    title: "Components/LogoHeader",
+    component: LogoHeader,
     parameters: {
         layout: "centered",
     },
     tags: ["autodocs"],
-} satisfies Meta<typeof SignOutButton>
+} satisfies Meta<typeof LogoHeader>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const SignOut: Story = {}
+export const Example: Story = {}

@@ -1,15 +1,17 @@
-import { authOptions } from "@/lib/auth"
-import { getServerSession } from "next-auth"
-import { signOut } from "next-auth/react"
-import LinkButton from "./LinkButton"
-import SignOutButton from "./SignOutButton"
+import { getUser } from "@/lib/auth";
+import { signOut } from "next-auth/react";
+import LinkButton from "./LinkButton";
+import SignOutButton from "./SignOutButton";
 
 export default async function AuthenticationWrapper() {
-    const session = await getServerSession(authOptions);
+    const user = await getUser();
 
     // Show the `Sign out` button if there is a signed in user ...
-    if (session?.user) {
-        return <SignOutButton />
+    if (user) {
+        return <>
+            <p>Hello {user.name}</p>
+            <SignOutButton />
+        </>
     }
 
     // ... otherwise show the `Sign In` button.

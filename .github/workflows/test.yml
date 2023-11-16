@@ -1,14 +1,14 @@
 name: "Test"
 on: push
 jobs:
-  # Run tests
+  # Run unit tests
   unit-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "19.x"
+          node-version: "latest"
       - uses: actions/cache@v3
         id: cache-npm
         with:
@@ -25,9 +25,34 @@ jobs:
         continue-on-error: true
         run: npm list
       - name: Clean install packages
-        run: npm ci --ignore-scripts
+        run: npm ci
       - name: Run test
         run: npm run test-ci
+  # Run component tests
+  component-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Install NPM dependencies, cache them correctly and run all Cypress tests
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          component: true
+  e2e-test:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        env:
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+        with:
+          build: npm run build
+          start: npm start
   # Run interaction and accessibility tests
   interaction-and-accessibility:
     timeout-minutes: 60
@@ -36,7 +61,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "19.x"
+          node-version: "latest"
       - uses: actions/cache@v3
         id: cache-npm
         with:

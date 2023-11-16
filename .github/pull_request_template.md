@@ -2,22 +2,18 @@
 
 ## Implemented
 - [ ] <put description on what was done>
-- [ ] <put description on what was done>
 
 ## Tasks
 - [ ] <put task 1>
-  -[ ] <subtask 1.1>
+  - [ ] <subtask 1.1>
 - [ ] <task 2>
-- [ ] <task 3>
 
 ## Final Checklist
 - [ ] Testing
-  - [ ] All checks have passed
-  - [ ] Unit tests
-    - [ ] All lines are covered
-    - [ ] All lines are covered
-  - [ ] Component
-    - [ ]  Accessibility tests
-    - [ ]  Visual tests
-- [ ] File imports are sorted
+  - [ ] Unit tests (Jest)
+  - [ ] Component tests (Cypress)
+  - [ ] E2E tests (Cypress)
+- [ ] File organization
+  - [ ] File imports are sorted
+  - [ ] Tailwind CSS classes are sorted
 - [ ] Metadata is always updated
