@@ -15,7 +15,7 @@ export default function LinkButton({
     ...props
 }: LinkButtonProps) {
     return (
-        <div className="w-fit rounded-full bg-blue-500 px-3 py-2">
+        <div className="w-fit h-fit rounded-full bg-blue-500 px-3 py-2">
             <Link href={props.href} data-cy="link-button">{props.text}</Link>
         </div>
     )

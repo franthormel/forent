@@ -8,10 +8,7 @@ export default async function AuthenticationWrapper() {
 
     // Show the `Sign out` button if there is a signed in user ...
     if (user) {
-        return <>
-            <p>Hello {user.name}</p>
-            <SignOutButton />
-        </>
+        return <SignOutButton />
     }
 
     // ... otherwise show the `Sign In` button.

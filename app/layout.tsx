@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${textFont.className} p-12`}>
+    <html lang="en" className={`${textFont.className} p-10`}>
       <body>{children}</body>
     </html>
   )

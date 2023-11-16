@@ -1,5 +1,4 @@
-import AuthenticationWrapper from '@/components/AuthenticationWrapper';
-import LogoHeader from '@/components/LogoHeader';
+import NavigationMenu from '@/components/NavigationMenu';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -8,9 +7,8 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className='flex flex-col space-y-4'>
-      <LogoHeader />
-      <AuthenticationWrapper />
+    <main>
+      <NavigationMenu />
     </main>
   );
 }
