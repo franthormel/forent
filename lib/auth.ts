@@ -47,8 +47,13 @@ export const authOptions = {
   ],
 } satisfies NextAuthOptions;
 
-// Use it in server contexts
-// TODO: need mock
+
+/**
+ * Use in server context.
+ * 
+ * @param args
+ * @returns 
+ */
 export function auth(
   ...args:
     | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
@@ -63,7 +68,6 @@ export function auth(
  *
  * @returns User | null
  */
-// TODO: need mock
 export async function getUser() {
   const session = await getServerSession(authOptions);
   return session?.user;
