@@ -1,4 +1,4 @@
-import NavigationMenu from '@/components/NavigationMenu';
+import NavigationMenu from '@/components/home/NavigationMenu';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
