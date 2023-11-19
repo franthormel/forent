@@ -43,7 +43,8 @@ function chooseColor(color?: ButtonColor) {
     switch (color) {
         case "secondary": return "bg-orange-600";
         case "tertiary": return "bg-cyan-300";
-        case "primary" || null || undefined: return "bg-amber-400";
+        case "primary": return "bg-amber-400";
+        default: return "bg-amber-400";
     }
 }
 

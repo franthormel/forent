@@ -19,7 +19,7 @@ export default function RouterButton(props: RouterButtonProps) {
             text={props.text}
             borderRadius="square"
             dataCy="router-button"
-            color="primary"
+            color={props.color}
         />
     );
 }

@@ -1,4 +1,3 @@
-import NavigationMenu from '@/components/home/NavigationMenu';
 import RouterButton from '@/components/ui/buttons/RouterButton';
 import { Metadata } from 'next';
 
@@ -7,14 +6,10 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-  return (
-    <main className='flex flex-col gap-5'>
-      <NavigationMenu />
-      <div>
-        <RouterButton route='#' text='Create Post' />
-      </div>
-    </main>
-  );
+  return <div className='flex flex-row gap-4'>
+    <RouterButton route='/listings' text='View Listings' />
+    <RouterButton route='/listings/create' text='Create a Listing' color='tertiary' />
+  </div>;
 }
 
 // TODO: Display profile when logged in
