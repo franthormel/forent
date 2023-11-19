@@ -14,5 +14,12 @@ export interface RouterButtonProps extends RouterButtonPropsType {
 
 export default function RouterButton(props: RouterButtonProps) {
     const router = useRouter();
-    return <Button onClick={() => router.replace(props.route)} text={props.text} />
+    return (
+        <Button onClick={() => router.replace(props.route)}
+            text={props.text}
+            borderRadius="square"
+            dataCy="router-button"
+            color="primary"
+        />
+    );
 }

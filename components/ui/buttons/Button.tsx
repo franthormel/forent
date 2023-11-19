@@ -1,12 +1,10 @@
 import { EventHandler, MouseEventHandler } from "react";
 
+type ButtonColor = "primary" | "secondary" | "tertiary";
 type ButtonBorderRadius = "rounded" | "square";
 
 export interface ButtonProps {
-    /**
-     * Tailwind CSS color
-     */
-    color?: string;
+    color?: ButtonColor;
     text: string;
     onClick?: MouseEventHandler<HTMLButtonElement>;
     /**
@@ -26,7 +24,7 @@ export default function Button(props: ButtonProps) {
     const borderRadius = chooseButtonBorderRadius(props.borderRadius);
 
     return (
-        <button className={`w-fit ${borderRadius} px-6 py-3 transition-all hover:shadow-md ${color}`}
+        <button className={`w-fit ${borderRadius} px-6 py-3 transition-all ${color} hover:shadow-md`}
             data-cy={cypressSelector}
             onClick={props.onClick}>
             <span>{props.text}</span>
@@ -41,11 +39,12 @@ function chooseButtonBorderRadius(borderRadius?: ButtonBorderRadius) {
     return "rounded-md";
 }
 
-function chooseColor(color?: string) {
-    if (!color) {
-        return "bg-amber-400"
+function chooseColor(color?: ButtonColor) {
+    switch (color) {
+        case "secondary": return "bg-orange-600";
+        case "tertiary": return "bg-cyan-300";
+        case "primary" || null || undefined: return "bg-amber-400";
     }
-    return color;
 }
 
 function chooseDataCy(dataCy?: string) {
