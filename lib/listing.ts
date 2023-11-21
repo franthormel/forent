@@ -36,3 +36,16 @@ interface ListingAddress {
   latitude: number;
   longitude: number;
 }
+
+/**
+ * An optional variation with the same properties as {@link ListingAddress}.
+ */
+export interface Address {
+  addressLine?: string;
+  city?: string;
+  state?: string;
+  zipcode?: string;
+  country?: string;
+  latitude?: number;
+  longitude?: number;
+}
