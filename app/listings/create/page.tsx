@@ -1,4 +1,4 @@
-import MapDisplay from '@/components/MapDisplay';
+import MapDisplay from '@/components/map/MapDisplay';
 import Button from "@/components/ui/buttons/Button";
 import prisma from '@/lib/db';
 
