@@ -1,6 +1,7 @@
-import MapDisplay from '@/components/map/MapDisplay';
-import Button from "@/components/ui/buttons/Button";
+import MapForm from '@/components/map/MapForm';
+import Button from "@/components/ui/button/Button";
 import prisma from '@/lib/db';
+import InputField from '@/components/ui/form/InputField';
 
 export default function CreateListing() {
     async function create(formData: FormData) {
@@ -15,10 +16,7 @@ export default function CreateListing() {
     return (
         <form action={create} className="border-2 border-orange-600 p-4">
             <div className="flex flex-col gap-5">
-                <div>
-                    <label htmlFor="title">Title</label>
-                    <input type="text" placeholder="My Apartment" name="title" required />
-                </div>
+                <InputField name='title' label='Title' type='text' placeholder='My Apartment' />
 
                 <div>
                     <label htmlFor="deposit">Deposit</label>
@@ -53,8 +51,7 @@ export default function CreateListing() {
                     <input type="number" name="price" required placeholder="0"></input>
                 </div>
 
-
-                <MapDisplay />
+                <MapForm />
 
                 <input type="submit" value="Create Listing" className="cursor-pointer w-fit rounded-md px-6 py-3 transition-all bg-amber-400 hover:shadow-md" />
             </div>

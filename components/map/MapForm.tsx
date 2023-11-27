@@ -45,7 +45,7 @@ const mapLayers = [
     })
 ];
 
-export default function MapDisplay() {
+export default function MapForm() {
     const zoom = useRef<number>(mapZoomDefault);
     const [address, setAddress] = useState<Address>({ longitude: 0, latitude: 0 });
 
