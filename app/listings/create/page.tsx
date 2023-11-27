@@ -1,6 +1,9 @@
-import MapDisplay from '@/components/map/MapDisplay';
-import Button from "@/components/ui/buttons/Button";
+import MapForm from '@/components/ui/map/MapForm';
+import Button from "@/components/ui/button/Button";
 import prisma from '@/lib/db';
+import InputField from '@/components/ui/form/InputField';
+import TextField from '@/components/ui/form/TextField';
+import FormSubmitButton from '@/components/ui/form/FormSubmitButton';
 
 export default function CreateListing() {
     async function create(formData: FormData) {
@@ -13,50 +16,17 @@ export default function CreateListing() {
     }
 
     return (
-        <form action={create} className="border-2 border-orange-600 p-4">
+        <form action={create}>
             <div className="flex flex-col gap-5">
-                <div>
-                    <label htmlFor="title">Title</label>
-                    <input type="text" placeholder="My Apartment" name="title" required />
-                </div>
-
-                <div>
-                    <label htmlFor="deposit">Deposit</label>
-                    <input type="number" placeholder="0" name="deposit" />
-                </div>
-
-                {/* TODO: Make them choose temporary images or at least make them choose temporary image assets*/}
-
-                <div>
-                    <label htmlFor="description">Description</label>
-                    <textarea placeholder="Describe your listing" name="description" required />
-                </div>
-
-                {/* TODO: Improve try input type=range or selection */}
-                <div>
-                    <label htmlFor="beds">No. of Beds</label>
-                    <input type="number" placeholder="1" name="beds" required />
-                </div>
-
-                <div>
-                    <label htmlFor="baths">No. of Baths</label>
-                    <input type="number" placeholder="1" name="baths" required />
-                </div>
-
-                <div>
-                    <label htmlFor="availableDate">Available Date?</label>
-                    <input type="date" name="availableDate" />
-                </div>
-
-                <div>
-                    <label htmlFor="price">Price</label>
-                    <input type="number" name="price" required placeholder="0"></input>
-                </div>
-
-
-                <MapDisplay />
-
-                <input type="submit" value="Create Listing" className="cursor-pointer w-fit rounded-md px-6 py-3 transition-all bg-amber-400 hover:shadow-md" />
+                <InputField label='Title' name='title' type='text' placeholder='My Apartment' required={true} />
+                <InputField label='Deposit' name='deposit' type='number' placeholder='0' required={true} />
+                <TextField label='Description' name='description' placeholder="Describe your listing" required={true} />
+                <InputField label='No. of Beds' name='beds' type='number' placeholder='1' required={true} />
+                <InputField label='No. of Baths' name='baths' type='number' placeholder='1' required={true} />
+                <InputField label='Available Date' name='availableDate' type='date' />
+                <InputField label='Price' name='price' type='number' placeholder='0' required={true} />
+                <MapForm />
+                <FormSubmitButton text="Create Listing" />
             </div>
         </form>
     )

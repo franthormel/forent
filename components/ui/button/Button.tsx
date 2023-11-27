@@ -17,10 +17,9 @@ export interface ButtonProps {
     borderRadius?: ButtonBorderRadius
 }
 
-// TODO: For theming
 export default function Button(props: ButtonProps) {
     const color = chooseColor(props.color);
-    const cypressSelector = chooseDataCy(props.dataCy);
+    const cypressSelector = props.dataCy ?? "button";
     const borderRadius = chooseButtonBorderRadius(props.borderRadius);
 
     return (
@@ -46,11 +45,4 @@ function chooseColor(color?: ButtonColor) {
         case "primary": return "bg-amber-400";
         default: return "bg-amber-400";
     }
-}
-
-function chooseDataCy(dataCy?: string) {
-    if (!dataCy) {
-        return "button"
-    }
-    return dataCy;
 }

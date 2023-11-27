@@ -1,5 +1,5 @@
 import { getUser } from "@/lib/auth";
-import RouterButton from "../ui/buttons/RouterButton";
+import RouterButton from "../ui/button/RouterButton";
 import SignOutButton from "./SignOutButton";
 import Image from "next/image";
 import { DefaultSession } from "next-auth";

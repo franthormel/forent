@@ -1,5 +1,5 @@
 import type { Meta, StoryObj, ArgTypes } from "@storybook/react";
-import Button, { ButtonProps } from "@/components/ui/buttons/Button";
+import Button, { ButtonProps } from "@/components/ui/button/Button";
 
 const meta: Meta = {
   title: "Components/UI/Button",
@@ -9,7 +9,6 @@ const meta: Meta = {
   },
   tags: ["autodocs"],
 } satisfies Meta<typeof Button>;
-``;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -22,19 +21,16 @@ const args: ButtonProps = {
 export const PrimaryColor: Story = {
   args: args,
 };
-
-const secondaryArgs: ButtonProps = {
-  ...args,
-  color: "bg-orange-600",
-};
-
 export const SecondaryColor: Story = {
-  args: secondaryArgs,
+  args: {
+    ...args,
+    color: "secondary",
+  },
 };
 
 const tertiaryArgs: ButtonProps = {
   ...args,
-  color: "bg-cyan-300",
+  color: "tertiary",
 };
 
 export const TertiaryColor: Story = {

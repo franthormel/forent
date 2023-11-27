@@ -1,4 +1,4 @@
-import RouterButton from '@/components/ui/buttons/RouterButton';
+import RouterButton from '@/components/ui/button/RouterButton';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -11,5 +11,3 @@ export default function Home() {
     <RouterButton route='/listings/create' text='Create a Listing' color='tertiary' />
   </div>;
 }
-
-// TODO: Display profile when logged in

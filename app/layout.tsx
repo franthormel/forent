@@ -15,7 +15,6 @@ export const metadata: Metadata = {
   authors: { name: 'Francis Anthony Carmel', url: 'mailto:fcaboyo@gmail.com' },
   creator: 'franthormel',
   publisher: 'franthormel',
-  // TODO: Add metadataBase once a domain is secured
   openGraph: {
     title: {
       template: '%s | Forent',
