@@ -3,7 +3,7 @@ import Button from "@/components/ui/button/Button";
 import prisma from '@/lib/db';
 import InputField from '@/components/ui/form/InputField';
 import TextField from '@/components/ui/form/TextField';
-import FormSubmitButton from '@/components/ui/form/FormSubmitButton';
+import SubmitButton from '@/co@/components/ui/form/SubmitButton
 
 export default function CreateListing() {
     async function create(formData: FormData) {
@@ -26,7 +26,7 @@ export default function CreateListing() {
                 <InputField label='Available Date' name='availableDate' type='date' />
                 <InputField label='Price' name='price' type='number' placeholder='0' required={true} />
                 <MapForm />
-                <FormSubmitButton text="Create Listing" />
+                <SubmitButton text="Create Listing" />
             </div>
         </form>
     )

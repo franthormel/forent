@@ -4,8 +4,17 @@ type ButtonColor = "primary" | "secondary" | "tertiary";
 type ButtonBorderRadius = "rounded" | "square";
 
 export interface ButtonProps {
+    /**
+     * Button color
+     */
     color?: ButtonColor;
+    /**
+     * Button text
+     */
     text: string;
+    /**
+     * Button action when clicked
+     */
     onClick?: MouseEventHandler<HTMLButtonElement>;
     /**
      * Data attribute for Cypress.

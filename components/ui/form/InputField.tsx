@@ -1,4 +1,4 @@
-import FieldProps from "./FormFieldProps"
+import FieldProps from "./Field"
 
 export default function InputField(props: FieldProps) {
     return (

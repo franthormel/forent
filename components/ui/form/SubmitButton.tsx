@@ -1,8 +1,11 @@
-interface FormSubmitButtonProps {
+export interface SubmitButtonProps {
+    /**
+     * Text to be displayed. Default is 'Submit'
+     */
     text?: string;
 }
 
-export default function FormSubmitButton(props: FormSubmitButtonProps) {
+export default function SubmitButton(props: SubmitButtonProps) {
     const text = props.text ?? 'Submit';
 
     return <input type="submit" value={text}

@@ -1,6 +1,6 @@
-import FieldProps from "./FormFieldProps"
+import FieldProps from "./Field"
 
-type TextFieldProps = Omit<FieldProps, "type">
+export type TextFieldProps = Omit<FieldProps, "type">
 
 export default function TextField(props: TextFieldProps) {
     return (
