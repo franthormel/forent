@@ -3,7 +3,7 @@ import Button from "@/components/ui/button/Button";
 import prisma from '@/lib/db';
 import InputField from '@/components/ui/form/InputField';
 import TextField from '@/components/ui/form/TextField';
-import SubmitButton from '@/co@/components/ui/form/SubmitButton
+import SubmitButton from '@/components/ui/form/SubmitButton'
 
 export default function CreateListing() {
     async function create(formData: FormData) {
