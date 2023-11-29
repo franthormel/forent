@@ -18,9 +18,11 @@ type Story = StoryObj<typeof meta>;
  * Text
  */
 const textArgs: FieldProps = {
-  label: "Username",
-  name: "username",
+  label: "Full Name",
+  name: "fullname",
   type: "text",
+  placeholder: "Fyodor Mikhailovich Dostoevsky",
+  required: true,
 };
 export const TextInputField: Story = {
   args: textArgs,
@@ -36,16 +38,4 @@ const dateArgs: FieldProps = {
 };
 export const DateInputField: Story = {
   args: dateArgs,
-};
-
-/**
- * Number
- */
-const numArgs: FieldProps = {
-  label: "Quantity",
-  name: "quantity",
-  type: "number",
-};
-export const NumberInputField: Story = {
-  args: numArgs,
 };

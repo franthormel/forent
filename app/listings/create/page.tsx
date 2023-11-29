@@ -18,13 +18,13 @@ export default function CreateListing() {
     return (
         <form action={create}>
             <div className="flex flex-col gap-5">
-                <InputField label='Title' name='title' type='text' placeholder='My Apartment' required={true} />
-                <InputField label='Deposit' name='deposit' type='number' placeholder='0' required={true} />
+                <InputField label='Title' name='title' placeholder='My Apartment' required={true} />
+                <InputField label='Deposit' name='deposit' placeholder='0' required={true} />
                 <TextField label='Description' name='description' placeholder="Describe your listing" required={true} />
-                <InputField label='No. of Beds' name='beds' type='number' placeholder='1' required={true} />
-                <InputField label='No. of Baths' name='baths' type='number' placeholder='1' required={true} />
+                <InputField label='No. of Beds' name='beds' placeholder='1' required={true} />
+                <InputField label='No. of Baths' name='baths' placeholder='1' required={true} />
                 <InputField label='Available Date' name='availableDate' type='date' />
-                <InputField label='Price' name='price' type='number' placeholder='0' required={true} />
+                <InputField label='Price' name='price' placeholder='0' required={true} />
                 <MapForm />
                 <SubmitButton text="Create Listing" />
             </div>

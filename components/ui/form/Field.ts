@@ -1,10 +1,10 @@
-type InputType = "text" | "number" | "date";
+type InputType = "text" | "date";
 
 export default interface FieldProps {
   /**
-   * Input type
+   * Input type. Default is 'text'
    */
-  type: InputType;
+  type?: InputType;
   /**
    * Input name
    */
@@ -18,7 +18,7 @@ export default interface FieldProps {
    */
   placeholder?: string;
   /**
-   * Is input required
+   * Is input required. Default is 'false'.
    */
   required?: boolean;
 }
