@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${textFont.className} p-10`}>
+    <html lang="en" className={`${textFont.className} px-14 py-8`}>
       <body className='flex flex-col gap-5'>
         <NavigationMenu />
         {children}

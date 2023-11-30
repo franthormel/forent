@@ -4,9 +4,6 @@ import LogoHeader from "@/components/LogoHeader"
 const meta: Meta = {
     title: "Components/Logo Header",
     component: LogoHeader,
-    parameters: {
-        layout: "centered",
-    },
     tags: ["autodocs"],
 } satisfies Meta<typeof LogoHeader>
 

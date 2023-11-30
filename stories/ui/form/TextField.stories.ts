@@ -1,17 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import TextField from "@/components/ui/form/TextField";
+import TextField, { TextFieldProps } from "@/components/ui/form/TextField";
 
 const meta: Meta = {
   title: "Components/UI/Form/Text Field",
   component: TextField,
-  parameters: {
-    layout: "centered",
-  },
   tags: ["autodocs"],
 } satisfies Meta<typeof TextField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Example: Story = {};
+const args: TextFieldProps = {
+  label: "Description",
+  name: "description",
+  placeholder: "Please describe your experience...",
+};
+
+export const Example: Story = {
+  args: args,
+};

@@ -5,9 +5,6 @@ import InputField from "@/components/ui/form/InputField";
 const meta: Meta = {
   title: "Components/UI/Form/Input Field",
   component: InputField,
-  parameters: {
-    layout: "centered",
-  },
   tags: ["autodocs"],
 } satisfies Meta<typeof InputField>;
 
@@ -22,7 +19,7 @@ const textArgs: FieldProps = {
   name: "fullname",
   type: "text",
   placeholder: "Fyodor Mikhailovich Dostoevsky",
-  required: true,
+  optional: true,
 };
 export const TextInputField: Story = {
   args: textArgs,

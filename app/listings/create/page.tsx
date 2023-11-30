@@ -16,18 +16,54 @@ export default function CreateListing() {
     }
 
     return (
-        <form action={create}>
-            <div className="flex flex-col gap-5">
-                <InputField label='Title' name='title' placeholder='My Apartment' required={true} />
-                <InputField label='Deposit' name='deposit' placeholder='0' required={true} />
-                <TextField label='Description' name='description' placeholder="Describe your listing" required={true} />
-                <InputField label='No. of Beds' name='beds' placeholder='1' required={true} />
-                <InputField label='No. of Baths' name='baths' placeholder='1' required={true} />
-                <InputField label='Available Date' name='availableDate' type='date' />
-                <InputField label='Price' name='price' placeholder='0' required={true} />
-                <MapForm />
-                <SubmitButton text="Create Listing" />
-            </div>
-        </form>
+        <div className="min-w-full">
+            <form action={create}>
+                <div className="grid grid-cols-1 divide-y-2">
+                    <div className="grid grid-cols-2 gap-x-8 pb-8">
+                        <div>
+                            <header className="font-semibold">Suspendisse Dui Sem</header>
+                            <p className="text-gray-600 mt-2">Nam mollis sapien est, euismod dapibus orci ultricies vel.</p>
+                        </div>
+                        <div className="grid gap-y-8">
+                            <InputField label='Title' name='title' placeholder='My Apartment' />
+                            <MapForm />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-x-8 py-8">
+                        <div>
+                            <header className="font-semibold">Suspendisse Dui Sem</header>
+                            <p className="text-gray-600 mt-2">Nam mollis sapien est, euismod dapibus orci ultricies vel.</p>
+                        </div>
+                        <div className="grid gap-y-8">
+                            <InputField label='Price' name='price' placeholder='0' />
+                            <InputField label='Deposit' name='deposit' placeholder='0' optional={true} />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-x-8 py-8">
+                        <div>
+                            <header className="font-semibold">Suspendisse Dui Sem</header>
+                            <p className="text-gray-600 mt-2">Nam mollis sapien est, euismod dapibus orci ultricies vel.</p>
+                        </div>
+                        <div className="grid gap-y-8">
+                            <TextField label='Description' name='description' placeholder="Describe your listing" />
+                            <InputField label='Available Date' name='availableDate' type='date' />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-x-8 py-8">
+                        <div>
+                            <header className="font-semibold">Suspendisse Dui Sem</header>
+                            <p className="text-gray-600 mt-2">Nam mollis sapien est, euismod dapibus orci ultricies vel.</p>
+                        </div>
+                        <div className="grid gap-y-8">
+                            <InputField label='No. of Beds' name='beds' placeholder='1' />
+                            <InputField label='No. of Baths' name='baths' placeholder='1' />
+                        </div>
+                    </div>
+                    <div className="pt-8">
+                        <button>Hi</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     )
 }

@@ -4,9 +4,6 @@ import Button, { ButtonProps } from "@/components/ui/button/Button";
 const meta: Meta = {
   title: "Components/UI/Button",
   component: Button,
-  parameters: {
-    layout: "centered",
-  },
   tags: ["autodocs"],
 } satisfies Meta<typeof Button>;
 

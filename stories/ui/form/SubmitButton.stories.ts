@@ -6,9 +6,6 @@ import SubmitButton, {
 const meta: Meta = {
   title: "Components/UI/Form/Button",
   component: SubmitButton,
-  parameters: {
-    layout: "centered",
-  },
   tags: ["autodocs"],
 } satisfies Meta<typeof SubmitButton>;
 

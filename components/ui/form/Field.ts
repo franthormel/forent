@@ -18,7 +18,7 @@ export default interface FieldProps {
    */
   placeholder?: string;
   /**
-   * Is input required. Default is 'false'.
+   * Is input optional. Default is 'false'.
    */
-  required?: boolean;
+  optional?: boolean;
 }

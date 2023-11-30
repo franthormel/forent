@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/react"
+import type { Preview } from "@storybook/react";
 
 import "./storybook.css";
 
@@ -11,10 +11,11 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    layout: "centered",
     docs: {
-      toc: true
-    }
+      toc: true,
+    },
   },
-}
+};
 
-export default preview
+export default preview;
