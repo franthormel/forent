@@ -1,21 +1,38 @@
-import MapForm from '@/components/ui/map/MapForm';
 import Button from "@/components/ui/button/Button";
-import prisma from '@/lib/db';
 import InputField from '@/components/ui/form/InputField';
 import TextField from '@/components/ui/form/TextField';
-import SubmitButton from '@/components/ui/form/buttons/SubmitButton'
 import ResetButton from '@/components/ui/form/buttons/ResetButton';
+import SubmitButton from '@/components/ui/form/buttons/SubmitButton';
+import MapForm from '@/components/ui/map/MapForm';
+import { GeonamesProvider } from "@/lib/geocode";
+import { CreateListingPreview } from '@/lib/types/main';
 
 export default function CreateListing() {
     async function submit(formData: FormData) {
         'use server';
-        let i = 0;
-        console.log("Input length: ", i);
-        console.log("Displaying form entries 👇")
-        formData.forEach((v, k) => { i++; console.log(`${k} = ${v}`) })
-        console.log("Input length: ", i);
+
+        // Prepare geocode provider
+        const lat = formData.get("addressLatitude")?.toString()!;
+        const lon = formData.get("addressLongitude")?.toString()!;
+        const geocodeProvider = new GeonamesProvider(lat, lon);
+        const url = geocodeProvider.url();
+
+        // TODO: 2. Continue parsing data
+        fetch(url!).then((res) => res.json()).then((res) => console.log(JSON.parse(res)));
+
+        // Map form data for preview
+        const previewListing: CreateListingPreview = {
+            title: formData.get("title")?.toString(),
+            description: formData.get("description")?.toString(),
+            price: formData.get("price")?.toString(),
+            deposit: formData.get("deposit")?.toString(),
+            availableDate: formData.get("availableDate")?.toString(),
+            beds: formData.get("beds")?.toString(),
+            baths: formData.get("baths")?.toString(),
+        }
     }
 
+    // TODO: 1. Validate form data
     return (
         <div className="min-w-full px-24 py-16">
             <form action={submit}>

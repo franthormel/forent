@@ -1,6 +1,6 @@
 "use client"
 
-import { Address } from '@/lib/listing';
+import { LonLat } from '@/lib/types/geography';
 import { Feature, Map, View } from 'ol';
 import Geolocation from 'ol/Geolocation';
 import { ZoomSlider, defaults } from 'ol/control';
@@ -47,12 +47,12 @@ const mapLayers = [
 
 export default function MapForm() {
     const zoom = useRef<number>(mapZoomDefault);
-    const [address, setAddress] = useState<Address>({ longitude: 0, latitude: 0 });
+    const [lonLat, setLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 });
 
     useEffect(() => {
         // Map (View)
         const mapView = new View({
-            center: fromLonLat([address.longitude!, address.latitude!]),
+            center: fromLonLat([lonLat.longitude!, lonLat.latitude!]),
             zoom: zoom.current,
         });
         // Map (Controls)
@@ -74,8 +74,8 @@ export default function MapForm() {
 
             // Change input field values
             const lonLat = toLonLat(e.coordinate);
-            setAddress({
-                ...address,
+            setLonLat({
+                ...lonLat,
                 longitude: lonLat[0],
                 latitude: lonLat[1]
             })
@@ -99,7 +99,7 @@ export default function MapForm() {
 
     return <>
         <div className='h-96 max-h-full' id="map" />
-        <input type="hidden" name="addressLongitude" value={address.longitude} />
-        <input type="hidden" name="addressLatitude" value={address.latitude} />
+        <input type="hidden" name="addressLongitude" value={lonLat.longitude} />
+        <input type="hidden" name="addressLatitude" value={lonLat.latitude} />
     </>;
 }

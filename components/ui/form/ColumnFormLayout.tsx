@@ -1,6 +1,5 @@
 import InputField from "./InputField";
 
-// TODO: Generate values
 export default function ColumnFormLayout() {
     return (
         <div className="min-w-full">

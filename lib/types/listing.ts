@@ -1,4 +1,5 @@
-export interface Listing {
+// Prisma schema
+interface Listing {
   id: string;
   title: string;
   deposit?: number;
@@ -35,17 +36,4 @@ interface ListingAddress {
   country: string;
   latitude: number;
   longitude: number;
-}
-
-/**
- * An optional variation with the same properties as {@link ListingAddress}.
- */
-export interface Address {
-  addressLine?: string;
-  city?: string;
-  state?: string;
-  zipcode?: string;
-  country?: string;
-  latitude?: number;
-  longitude?: number;
 }
