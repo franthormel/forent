@@ -9,5 +9,5 @@ export default function SubmitButton(props: SubmitButtonProps) {
     const text = props.text ?? 'Submit';
 
     return <input type="submit" value={text}
-        className="cursor-pointer w-fit rounded-md px-6 py-3 transition-all bg-amber-400 hover:shadow-md" />;
+        className="w-fit cursor-pointer rounded-md bg-amber-400 px-6 py-3 transition-all hover:shadow-md" />;
 }

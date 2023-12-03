@@ -98,7 +98,7 @@ export default function MapForm() {
     });
 
     return <>
-        <div className='h-screen max-h-screen' id="map" tabIndex={1} />
+        <div className='h-96 max-h-full' id="map" />
         <input type="hidden" name="addressLongitude" value={address.longitude} />
         <input type="hidden" name="addressLatitude" value={address.latitude} />
     </>;

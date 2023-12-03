@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import SubmitButton, {
   SubmitButtonProps,
-} from "@/components/ui/form/SubmitButton";
+} from "@/components/ui/form/buttons/SubmitButton";
 
 const meta: Meta = {
   title: "Components/UI/Form/Button",
