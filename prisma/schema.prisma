@@ -9,7 +9,6 @@ datasource db {
 
 model Listing {
   id            String    @id @default(cuid())
-  title         String
   deposit       Decimal?  @db.Money
   imageUrls     String[]
   description   String

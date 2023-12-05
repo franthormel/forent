@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import FieldProps from "@/components/ui/form/Field";
-import InputField from "@/components/ui/form/InputField";
+import InputField, { InputFieldProps } from "@/components/ui/form/InputField";
 
 const meta: Meta = {
   title: "Components/UI/Form/Input Field",
@@ -14,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 /**
  * Text
  */
-const textArgs: FieldProps = {
+const textArgs: InputFieldProps = {
   label: "Full Name",
   name: "fullname",
   type: "text",
@@ -28,7 +27,7 @@ export const TextInputField: Story = {
 /**
  * Date
  */
-const dateArgs: FieldProps = {
+const dateArgs: InputFieldProps = {
   label: "Date of Appointment",
   name: "appointmentDate",
   type: "date",

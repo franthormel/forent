@@ -4,7 +4,6 @@
  * Util interface for listing preview.
  */
 export interface CreateListingPreview {
-  title?: string;
   description?: string;
   price?: string;
   deposit?: string;

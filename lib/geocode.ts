@@ -20,7 +20,7 @@ export class GeonamesProvider implements GeocodeProvider {
 
   constructor(latitude: string, longitude: string) {
     this.latitude = latitude;
-    this.longitude = latitude;
+    this.longitude = longitude;
   }
 
   url(): string {
