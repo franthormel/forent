@@ -11,7 +11,9 @@
 | No. of Beds   | 1     | 750                |
 | No. of Baths  | 1     | 250                |
 
-## Listing Address (Editable)
+## Listing Address
+
+* All listed address information below can be edited by the user
 
 |          | 3Geonames | DB Column     |
 | -------- | --------- | ------------- |

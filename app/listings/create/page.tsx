@@ -5,20 +5,45 @@ import ResetButton from '@/components/ui/form/buttons/ResetButton';
 import SubmitButton from '@/components/ui/form/buttons/SubmitButton';
 import MapForm from '@/components/ui/map/MapForm';
 import { fetchDateOneYearFromToday, fetchDateToday } from "@/lib/date";
-import { GeonamesProvider } from "@/lib/geocode";
-import { CreateListingPreview } from '@/lib/types/main';
+import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
+import { DraftListingOptional } from '@/lib/types';
 import { ZodError, z } from "zod";
 
 export default function CreateListing() {
+    const today = fetchDateToday();
+    const oneYearFromToday = fetchDateOneYearFromToday();
+
     async function submit(formData: FormData) {
         'use server';
+
+        // Read raw form data
+        const draft: DraftListingOptional = {
+            price: formData.get("price")?.toString(),
+            description: formData.get("description")?.toString(),
+            deposit: formData.get("deposit")?.toString(),
+            availableDate: formData.get("availableDate")?.toString(),
+            beds: formData.get("beds")?.toString(),
+            baths: formData.get("baths")?.toString(),
+        }
+
+        // NOTE Clean and transform
+
+        // TODO Check if values have data
+        const draftValidator = z.object({
+            price: z.number().min(100).max(100_000_000),
+            description: z.string().min(16).max(1024),
+            deposit: z.number().min(0).max(1_000_000),
+            availableDate: z.date().min(today).max(oneYearFromToday),
+            beds: z.number().min(1).max(750),
+            baths: z.number().min(1).max(250),
+        })
 
         // Check if map data is selected
         const lat = formData.get("addressLatitude")?.toString();
         const lon = formData.get("addressLongitude")?.toString();
 
         if (!lat || !lon) {
-            // TODO: 3. Show error message if nothing was selected
+            // TODO Show error message if nothing was selected (use zod also)
             return;
         }
 
@@ -26,24 +51,14 @@ export default function CreateListing() {
         const geocodeProvider = new GeonamesProvider(lat, lon);
         const url = geocodeProvider.url();
 
-        // TODO: 2. Continue parsing data
         // Fetch data from the geocode provider
-        fetch(url).then((res) => res.json()).then((res) => console.log(res.nearest));
+        const response: GeonamesResponse = await fetch(url).then((res) => res.json());
 
-        // Map form data for previewing
-        const previewListing: CreateListingPreview = {
-            description: formData.get("description")?.toString(),
-            price: formData.get("price")?.toString(),
-            deposit: formData.get("deposit")?.toString(),
-            availableDate: formData.get("availableDate")?.toString(),
-            beds: formData.get("beds")?.toString(),
-            baths: formData.get("baths")?.toString(),
-            // TODO: 2. Need to add address info (just essentials)
-        }
+        // TODO Need to add address info (just essentials)
     }
 
-    const today = fetchDateToday();
-    const oneYearFromToday = fetchDateOneYearFromToday();
+    const todayISO = fetchDateToday().toISOString().substring(0, 10);
+    const oneYearFromTodayISO = fetchDateOneYearFromToday().toISOString().substring(0, 10);
 
     return (
         <div className="min-w-full px-24 py-16">
@@ -71,7 +86,8 @@ export default function CreateListing() {
                         </div>
                         <div className="grid gap-y-8">
                             <InputField label='Deposit' name='deposit' type="number" optional={true} min={0} max={1_000_000} />
-                            <InputField label='Available Date' name='availableDate' type='date' optional={true} min={today} defaultValue={today} max={oneYearFromToday} />
+                            <InputField label='Available Date' name='availableDate' type='date' optional={true}
+                                min={todayISO} defaultValue={todayISO} max={oneYearFromTodayISO} />
                             <InputField label='No. of Beds' name='beds' type="number" min={1} max={750} />
                             <InputField label='No. of Baths' name='baths' type="number" min={1} max={250} />
                         </div>
