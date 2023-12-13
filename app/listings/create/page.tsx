@@ -4,9 +4,10 @@ import TextField from '@/components/ui/form/TextField';
 import ResetButton from '@/components/ui/form/buttons/ResetButton';
 import SubmitButton from '@/components/ui/form/buttons/SubmitButton';
 import MapForm from '@/components/ui/map/MapForm';
+import { NumberUtils } from "@/lib/commons";
 import { fetchDateOneYearFromToday, fetchDateToday } from "@/lib/date";
 import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
-import { DraftListingOptional } from '@/lib/types';
+import { DraftListing } from '@/lib/types/listing';
 import { ZodError, z } from "zod";
 
 export default function CreateListing() {
@@ -14,19 +15,22 @@ export default function CreateListing() {
     const oneYearFromToday = fetchDateOneYearFromToday();
 
     async function submit(formData: FormData) {
-        'use server';
+        'use server'
 
-        // Read raw form data
-        const draft: DraftListingOptional = {
-            price: formData.get("price")?.toString(),
-            description: formData.get("description")?.toString(),
-            deposit: formData.get("deposit")?.toString(),
-            availableDate: formData.get("availableDate")?.toString(),
-            beds: formData.get("beds")?.toString(),
-            baths: formData.get("baths")?.toString(),
+        // TODO: Maybe FormDataUtils?
+        // Default values must be fail safes
+        const draft: DraftListing = {
+            price: NumberUtils.toNumber(formData.get("price")?.toString().trim(), -1),
+            description: formData.get("description")?.toString()?.trim() ?? '',
+            deposit: NumberUtils.toNumber(formData.get("deposit")?.toString().trim(), -1),
+            // TODO: DateUtils might help
+            // availableDate: new Date(formData.get("availableDate")?.toString().trim()) ?? '', 
+            availableDate: formData.get("availableDate")?.toString().trim() ?? '',
+            beds: NumberUtils.toNumber(formData.get("beds")?.toString().trim(), -1),
+            baths: NumberUtils.toNumber(formData.get("baths")?.toString().trim(), -1),
         }
 
-        // NOTE Clean and transform
+        console.log(draft)
 
         // TODO Check if values have data
         const draftValidator = z.object({

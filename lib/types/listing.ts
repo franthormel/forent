@@ -37,3 +37,12 @@ interface ListingAddress {
   latitude: number;
   longitude: number;
 }
+
+export interface DraftListing {
+  price: number;
+  description: string;
+  deposit: number;
+  availableDate: Date | string;
+  beds: number;
+  baths: number;
+}
