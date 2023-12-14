@@ -4,7 +4,7 @@ import TextField from '@/components/ui/form/TextField';
 import ResetButton from '@/components/ui/form/buttons/ResetButton';
 import SubmitButton from '@/components/ui/form/buttons/SubmitButton';
 import MapForm from '@/components/ui/map/MapForm';
-import { NumberUtils } from "@/lib/commons";
+import { FormDataUtils } from "@/lib/commons";
 import { fetchDateOneYearFromToday, fetchDateToday } from "@/lib/date";
 import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
 import { DraftListing } from '@/lib/types/listing';
@@ -17,17 +17,15 @@ export default function CreateListing() {
     async function submit(formData: FormData) {
         'use server'
 
-        // TODO: Maybe FormDataUtils?
+        const formUtils = new FormDataUtils(formData);
         // Default values must be fail safes
         const draft: DraftListing = {
-            price: NumberUtils.toNumber(formData.get("price")?.toString().trim(), -1),
-            description: formData.get("description")?.toString()?.trim() ?? '',
-            deposit: NumberUtils.toNumber(formData.get("deposit")?.toString().trim(), -1),
-            // TODO: DateUtils might help
-            // availableDate: new Date(formData.get("availableDate")?.toString().trim()) ?? '', 
-            availableDate: formData.get("availableDate")?.toString().trim() ?? '',
-            beds: NumberUtils.toNumber(formData.get("beds")?.toString().trim(), -1),
-            baths: NumberUtils.toNumber(formData.get("baths")?.toString().trim(), -1),
+            price: formUtils.getNumber("price", -1),
+            description: formUtils.getString("description", ''),
+            deposit: formUtils.getNumber("deposit", -1),
+            availableDate: new Date(formUtils.getString("availableDate", '')),
+            beds: formUtils.getNumber("beds", -1),
+            baths: formUtils.getNumber("baths", -1),
         }
 
         console.log(draft)
