@@ -38,11 +38,13 @@ interface ListingAddress {
   longitude: number;
 }
 
-export interface DraftListing {
+export interface FormListing {
   price: number;
   description: string;
   deposit: number;
-  availableDate: Date | string;
+  availableDate: Date;
   beds: number;
   baths: number;
+  longitude: string;
+  latitude: string;
 }

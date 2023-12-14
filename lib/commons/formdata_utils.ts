@@ -35,6 +35,23 @@ export class FormDataUtils {
   }
 
   /**
+   * Get the form Date value using the given key
+   *
+   * @param key Form input name
+   * @param defaultValue Default value, this will be returned if the form input does not have a value (or does not exist)
+   * @returns the Date value of the form input field or the default value
+   */
+  getDate(key: string, defaultValue: Date): Date {
+    const input = this.getFormValue(key);
+
+    if (typeof input === "string") {
+      return new Date(input);
+    }
+
+    return defaultValue;
+  }
+
+  /**
    * Get the form value using the given key
    *
    * @param key Form input name

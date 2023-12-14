@@ -99,7 +99,7 @@ export default function MapForm() {
 
     return <>
         <div className='h-96 max-h-full' id="map" />
-        <input type="hidden" name="addressLongitude" value={lonLat.longitude} />
-        <input type="hidden" name="addressLatitude" value={lonLat.latitude} />
+        <input type="hidden" name="inputLongitude" value={lonLat.longitude} />
+        <input type="hidden" name="inputLatitude" value={lonLat.latitude} />
     </>;
 }
