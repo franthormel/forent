@@ -62,8 +62,11 @@ export default function CreateListing() {
                             </p>
                         </div>
                         <div className="grid gap-y-8">
+                            {/* Price */}
                             <InputField label='Price' name='price' type="number" min={100} max={100_000_000} />
+                            {/* Description */}
                             <TextField label='Description' name='description' minLength={16} maxLength={1024} />
+                            {/* Map */}
                             <MapForm />
                         </div>
                     </div>
@@ -73,10 +76,14 @@ export default function CreateListing() {
                             <p className="text-gray-600 mt-2">Please provide other essential details</p>
                         </div>
                         <div className="grid gap-y-8">
-                            <InputField label='Deposit' name='deposit' type="number" optional={true} min={0} max={1_000_000} defaultValue={0}/>
+                            {/* Deposit */}
+                            <InputField label='Deposit' name='deposit' type="number" optional={true} min={0} max={1_000_000} defaultValue={0} />
+                            {/* Availabe Date */}
                             <InputField label='Available Date' name='availableDate' type='date' optional={true}
                                 min={todayISO} defaultValue={todayISO} max={oneYearFromTodayISO} />
+                            {/* Number of Beds */}
                             <InputField label='No. of Beds' name='beds' type="number" min={1} max={750} />
+                            {/* Number of Baths */}
                             <InputField label='No. of Baths' name='baths' type="number" min={1} max={250} />
                         </div>
                     </div>

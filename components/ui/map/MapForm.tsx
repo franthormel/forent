@@ -1,5 +1,6 @@
 "use client"
 
+import { StringUtils } from '@/lib/commons/string_utils';
 import { LonLat } from '@/lib/types/geography';
 import { Feature, Map, View } from 'ol';
 import Geolocation from 'ol/Geolocation';
@@ -12,6 +13,7 @@ import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { useEffect, useRef, useState } from "react";
+import ErrorMessage from '../ErrorMessage';
 
 // TODO: Add custom icon, optimize geolocation, and pan animation when map point is selected
 // https://openlayers.org/en/latest/examples/animation.html
@@ -45,7 +47,19 @@ const mapLayers = [
     })
 ];
 
-export default function MapForm() {
+export interface MapFormProps {
+    /**
+     * Error message
+     */
+    errorMessage?: string;
+    /**
+     * Map ID (must be filled if more than once instance of this map is to be displayed)
+     */
+    targetId?: string;
+}
+
+export default function MapForm(props: MapFormProps) {
+    const mapId = props.targetId ?? "map";
     const zoom = useRef<number>(mapZoomDefault);
     const [lonLat, setLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 });
 
@@ -60,7 +74,7 @@ export default function MapForm() {
         const mapControlZoomSlider = new ZoomSlider();
         // Map
         const map = new Map({
-            target: "map",
+            target: mapId,
             layers: mapLayers,
             controls: mapControls,
             view: mapView
@@ -97,9 +111,12 @@ export default function MapForm() {
         return () => map.dispose();
     });
 
-    return <>
-        <div className='h-96 max-h-full' id="map" />
+    const hasError = StringUtils.checkInput(props.errorMessage);
+
+    return <div className='w-96 min-w-full'>
+        <div className={`h-96 rounded-sm ${hasError && 'border-2 border-red-600'}`} id={mapId} />
+        <ErrorMessage value={props.errorMessage} />
         <input type="hidden" name="inputLongitude" value={lonLat.longitude} />
         <input type="hidden" name="inputLatitude" value={lonLat.latitude} />
-    </>;
+    </div>;
 }
