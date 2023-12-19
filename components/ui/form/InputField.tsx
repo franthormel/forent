@@ -1,3 +1,5 @@
+import { StringUtils } from "@/lib/commons/string_utils";
+import ErrorMessage from "../ErrorMessage";
 import Optional from "./Optional";
 
 type InputFieldType = "text" | "date" | "number";
@@ -42,16 +44,22 @@ export interface InputFieldProps {
      * Default value
      */
     defaultValue?: number | string;
+    /**
+     * Error message
+     */
+    errorMessage?: string;
 }
 
 export default function InputField(props: InputFieldProps) {
+    const hasError = StringUtils.checkInput(props.errorMessage);
+
     return (
-        <div className="w-5/6">
+        <div className="w-5/6 min-w-full">
             <div className="flex justify-between">
                 <label htmlFor={props.name}>
                     {props.label}
                 </label>
-                {props.optional && <Optional />}
+                <Optional optional={props.optional} />
             </div>
             <input type={props.type ?? "text"}
                 placeholder={props.placeholder}
@@ -61,7 +69,8 @@ export default function InputField(props: InputFieldProps) {
                 max={props.max}
                 minLength={props.minLength}
                 defaultValue={props.defaultValue}
-                className="mt-2 block w-full rounded-md border-2 border-slate-200 px-2 py-1" />
+                className={`mt-2 w-full rounded-md border-2 px-2 py-1 ${hasError ? 'border-red-600' : 'border-slate-200'}`} />
+            <ErrorMessage value={props.errorMessage} />
         </div>
     )
 }

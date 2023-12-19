@@ -26,11 +26,11 @@ export default function CreateListing() {
             latitude: formUtils.getString("inputLatitude", ''),
         }
 
-        // TODO Handle possible error
         const validator = new FormListingValidator(draft);
         try {
             validator.validate();
         } catch (e) {
+            // TODO: Show error to client
             if (e instanceof FormListingError) {
                 console.error(e.errors);
             }

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import InputField, { InputFieldProps } from "@/components/ui/form/InputField";
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta = {
   title: "Components/UI/Form/Input Field",
@@ -34,4 +34,13 @@ const dateArgs: InputFieldProps = {
 };
 export const DateInputField: Story = {
   args: dateArgs,
+};
+
+const argsWithError: InputFieldProps = {
+  ...textArgs,
+  errorMessage: "Something went wrong",
+};
+
+export const WithError: Story = {
+  args: argsWithError,
 };

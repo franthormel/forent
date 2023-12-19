@@ -20,3 +20,12 @@ const args: TextFieldProps = {
 export const Example: Story = {
   args: args,
 };
+
+const argsWithError: TextFieldProps = {
+  ...args,
+  errorMessage: "Something went wrong",
+};
+
+export const WithError: Story = {
+  args: argsWithError,
+};

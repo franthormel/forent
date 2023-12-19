@@ -17,10 +17,10 @@ export const Example: Story = {
   args: args,
 };
 
-const argsWithErrorMessage: MapFormProps = {
+const argsWithError: MapFormProps = {
   errorMessage: "Invalid location selected",
   targetId: "map-error-02",
 };
-export const WithErrorMessage: Story = {
-  args: argsWithErrorMessage,
+export const WithError: Story = {
+  args: argsWithError,
 };
