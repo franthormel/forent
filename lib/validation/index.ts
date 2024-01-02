@@ -25,9 +25,9 @@ export class ValidatorError<T> extends Error {
   /**
    * Errors of all the invalid inputs.
    */
-  readonly errors: Map<string, string>;
+  readonly errors: string[];
 
-  constructor(errors: Map<string, string>) {
+  constructor(errors: string[]) {
     super();
     this.errors = errors;
   }

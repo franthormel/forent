@@ -40,24 +40,21 @@ export class FormListingValidator implements Validator<FormListing> {
 
     if (!result.success) {
       const errors = result.error.errors;
-      const errorMap = new Map<string, string>();
 
+      // Need to check each error since it might not contain a corresponding error message ...
       for (const error of errors) {
         const errorKey = error.path.at(0)?.toString();
         if (errorKey === undefined) {
           continue;
         }
 
-        const erorrMessage = this.errorMessages.get(errorKey);
-        if (erorrMessage === undefined) {
+        const errorMessage = this.errorMessages.get(errorKey);
+        if (errorMessage === undefined) {
           continue;
         }
 
-        errorMap.set(errorKey, erorrMessage);
-      }
-
-      if (errorMap.size > 0) {
-        throw new FormListingError(errorMap);
+        // ... only use the primary error message (for now)
+        throw new FormListingError([errorMessage]);
       }
     }
   }
@@ -67,7 +64,22 @@ export class FormListingValidator implements Validator<FormListing> {
  * Form listing error
  */
 export class FormListingError extends ValidatorError<FormListing> {
-  constructor(errors: Map<string, string>) {
+  constructor(errors: string[]) {
     super(errors);
+  }
+
+  /**
+   *  Get the primary error message
+   *
+   * @returns primary error message
+   */
+  getErrorMessage(): string | undefined {
+    if (this.errors.length > 0) {
+      return this.errors[0];
+    }
+  }
+  
+  static empty(): FormListingError {
+    return new FormListingError([]);
   }
 }
