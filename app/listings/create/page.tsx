@@ -1,56 +1,30 @@
+"use client"
+
 import InputField from '@/components/ui/form/InputField';
 import TextField from '@/components/ui/form/TextField';
 import ResetButton from '@/components/ui/form/buttons/ResetButton';
 import SubmitButton from '@/components/ui/form/buttons/SubmitButton';
 import MapForm from '@/components/ui/map/MapForm';
-import { FormDataUtils } from "@/lib/commons";
 import { fetchDateOneYearFromToday, fetchDateToday } from "@/lib/date";
-import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
-import { FormListing } from '@/lib/types/listing';
-import { FormListingValidator, FormListingError } from "@/lib/validation/listing";
+import { createListing } from './action';
+import { useFormState } from 'react-dom';
+import ErrorMessage from '@/components/ui/ErrorMessage';
+import { FormListingError } from '@/lib/validation/listing';
+
+const initialState = {
+    message: '',
+}
 
 export default function CreateListing() {
-    async function submit(formData: FormData) {
-        'use server'
-
-        const formUtils = new FormDataUtils(formData);
-        // Default values, if the field is required, must be fail safes
-        const draft: FormListing = {
-            price: formUtils.getNumber("price", -1),
-            description: formUtils.getString("description", ''),
-            deposit: formUtils.getNumber("deposit", 0),
-            availableDate: formUtils.getDate("availableDate", new Date()),
-            beds: formUtils.getNumber("beds", -1),
-            baths: formUtils.getNumber("baths", -1),
-            longitude: formUtils.getString("inputLongitude", ''),
-            latitude: formUtils.getString("inputLatitude", ''),
-        }
-
-        const validator = new FormListingValidator(draft);
-        try {
-            validator.validate();
-        } catch (e) {
-            // TODO: Show error to client
-            if (e instanceof FormListingError) {
-                console.error(e.errors);
-            }
-        }
-
-        const geocodeProvider = new GeonamesProvider(draft.latitude, draft.longitude);
-        const url = geocodeProvider.url();
-
-        // Fetch data from the geocode provider
-        const response: GeonamesResponse = await fetch(url).then((res) => res.json());
-
-        // TODO Parse response
-    }
+    const [state, formAction] = useFormState(createListing, initialState)
 
     const todayISO = fetchDateToday().toISOString().substring(0, 10);
     const oneYearFromTodayISO = fetchDateOneYearFromToday().toISOString().substring(0, 10);
 
-    return (
+    return <>
+        <ErrorMessage value={state?.message} />
         <div className="min-w-full px-24 py-16">
-            <form action={submit}>
+            <form action={formAction}>
                 <div className="grid grid-cols-1 divide-y-2">
                     <div className="grid grid-cols-2 gap-x-8 pb-8">
                         <div>
@@ -94,5 +68,5 @@ export default function CreateListing() {
                 </div>
             </form>
         </div>
-    )
+    </>
 }
