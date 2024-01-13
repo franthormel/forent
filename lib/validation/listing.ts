@@ -2,7 +2,6 @@ import { z } from "zod";
 import { fetchDateOneYearFromToday, fetchDateToday } from "../date";
 import { FormListing } from "../types/listing";
 import { Validator, ValidatorError } from "./index";
-import { error } from "console";
 
 export class FormListingValidator implements Validator<FormListing> {
   readonly errorMessages: Map<string, string> = new Map([
@@ -40,33 +39,23 @@ export class FormListingValidator implements Validator<FormListing> {
     const result = this.#validator.safeParse(this.input);
 
     if (!result.success) {
-      return {
-        errors: result.error.flatten().fieldErrors,
-      };
+      const errors = result.error.errors;
+
+      for (const error of errors) {
+        const errorKey = error.path.at(0)?.toString();
+
+        if (errorKey === undefined) {
+          continue;
+        }
+
+        const errorMessage = this.errorMessages.get(errorKey);
+
+        if (errorMessage === undefined) {
+          continue;
+        }
+
+        throw new ValidatorError(errorMessage);
+      }
     }
-  }
-}
-
-/**
- * Form listing error
- */
-export class FormListingError extends ValidatorError<FormListing> {
-  constructor(errors: string[]) {
-    super(errors);
-  }
-
-  /**
-   *  Get the primary error message
-   *
-   * @returns primary error message
-   */
-  getErrorMessage(): string | undefined {
-    if (this.errors.length > 0) {
-      return this.errors[0];
-    }
-  }
-
-  static empty(): FormListingError {
-    return new FormListingError([]);
   }
 }

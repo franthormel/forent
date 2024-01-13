@@ -3,19 +3,14 @@
 import { FormDataUtils } from "@/lib/commons";
 import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
 import { FormListing } from "@/lib/types/listing";
-import {
-  FormListingValidator,
-  FormListingError,
-} from "@/lib/validation/listing";
+import { ValidatorError } from "@/lib/validation";
+import { FormListingValidator } from "@/lib/validation/listing";
 
-export async function createListing(
-  prevState: any,
-  formData: FormData
-): Promise<FormListingError | undefined> {
+export async function createListing(prevState: any, formData: FormData) {
   const formUtils = new FormDataUtils(formData);
   // Default values, if the field is required, must be fail safes
   const draft: FormListing = {
-    price: -1,
+    price: formUtils.getNumber("price", -1),
     description: formUtils.getString("description", ""),
     deposit: formUtils.getNumber("deposit", 0),
     availableDate: formUtils.getDate("availableDate", new Date()),
@@ -29,8 +24,8 @@ export async function createListing(
   try {
     validator.validate();
   } catch (e) {
-    if (e instanceof FormListingError) {
-      return e;
+    if (e instanceof ValidatorError) {
+      return e.getErrorMessage();
     }
   }
 

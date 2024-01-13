@@ -1,29 +1,28 @@
 "use client"
 
+import ErrorMessage from '@/components/ui/ErrorMessage';
 import InputField from '@/components/ui/form/InputField';
 import TextField from '@/components/ui/form/TextField';
 import ResetButton from '@/components/ui/form/buttons/ResetButton';
-import SubmitButton from '@/components/ui/form/buttons/SubmitButton';
 import MapForm from '@/components/ui/map/MapForm';
 import { fetchDateOneYearFromToday, fetchDateToday } from "@/lib/date";
-import { createListing } from './action';
 import { useFormState } from 'react-dom';
-import ErrorMessage from '@/components/ui/ErrorMessage';
-import { FormListingError } from '@/lib/validation/listing';
-
-const initialState = {
-    message: '',
-}
+import { createListing } from './action';
+import Button from '@/components/ui/button/Button';
 
 export default function CreateListing() {
-    const [state, formAction] = useFormState(createListing, initialState)
+    const [formState, formAction] = useFormState(createListing, '')
 
     const todayISO = fetchDateToday().toISOString().substring(0, 10);
     const oneYearFromTodayISO = fetchDateOneYearFromToday().toISOString().substring(0, 10);
 
+    if (formState !== undefined) {
+        window.scroll(0, 0);
+    }
+
     return <>
-        <ErrorMessage value={state?.message} />
-        <div className="min-w-full px-24 py-16">
+        <div className="min-w-full px-12 py-6 flex flex-col gap-5 scroll-smooth">
+            <ErrorMessage value={formState} />
             <form action={formAction}>
                 <div className="grid grid-cols-1 divide-y-2">
                     <div className="grid grid-cols-2 gap-x-8 pb-8">
@@ -63,7 +62,7 @@ export default function CreateListing() {
                     </div>
                     <div className="flex justify-end space-x-8 pt-8">
                         <ResetButton />
-                        <SubmitButton />
+                        <Button text='Submit'/>
                     </div>
                 </div>
             </form>

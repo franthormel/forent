@@ -3,7 +3,7 @@
  */
 export interface Validator<T> {
   /**
-   * Error messages of all possible scenarios.
+   * Error messages
    */
   readonly errorMessages: Map<string, string>;
 
@@ -25,10 +25,21 @@ export class ValidatorError<T> extends Error {
   /**
    * Errors of all the invalid inputs.
    */
-  readonly errors: string[];
+  readonly error: string;
 
-  constructor(errors: string[]) {
+  constructor(error: string) {
     super();
-    this.errors = errors;
+    this.error = error;
+  }
+
+  /**
+   *  Get the primary error message
+   *
+   * @returns primary error message
+   */
+  getErrorMessage(): string | undefined {
+    if (this.error.length > 0) {
+      return this.error;
+    }
   }
 }

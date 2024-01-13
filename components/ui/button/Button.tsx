@@ -35,7 +35,7 @@ export default function Button(props: ButtonProps) {
         <button className={`w-fit ${borderRadius} px-6 py-3 transition-all ${color} hover:shadow-md`}
             data-cy={cypressSelector}
             onClick={props.onClick}>
-            <span>{props.text}</span>
+            {props.text}
         </button>
     );
 }
