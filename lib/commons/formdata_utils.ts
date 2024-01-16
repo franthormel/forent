@@ -18,7 +18,6 @@ export class FormDataUtils {
    * @returns the numeric value of the form input field or the default value
    */
   getNumber(key: string, defaultValue: number): number {
-    const input = this.getFormValue(key);
     return NumberUtils.toNumber(this.getFormValue(key), defaultValue);
   }
 
@@ -47,7 +46,7 @@ export class FormDataUtils {
     if (typeof input === "string") {
       return new Date(input);
     }
-
+    
     return defaultValue;
   }
 

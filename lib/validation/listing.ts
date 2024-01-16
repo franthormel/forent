@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { fetchDateOneYearFromToday, fetchDateToday } from "../date";
+import { fetchDateOneYearFromToday, fetchToday } from "../date";
 import { FormListing } from "../types/listing";
 import { Validator, ValidatorError } from "./index";
 
@@ -19,10 +19,7 @@ export class FormListingValidator implements Validator<FormListing> {
     price: z.number().min(100).max(100_000_000),
     description: z.string().min(16).max(1024),
     deposit: z.number().min(0).max(1_000_000),
-    availableDate: z
-      .date()
-      .min(fetchDateToday())
-      .max(fetchDateOneYearFromToday()),
+    availableDate: z.date(), // todo: min and max dates
     beds: z.number().min(1).max(750),
     baths: z.number().min(1).max(250),
     longitude: z.string().min(1),

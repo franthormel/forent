@@ -5,6 +5,7 @@ import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
 import { FormListing } from "@/lib/types/listing";
 import { ValidatorError } from "@/lib/validation";
 import { FormListingValidator } from "@/lib/validation/listing";
+import prisma from "@/lib/db";
 
 export async function createListing(prevState: any, formData: FormData) {
   const formUtils = new FormDataUtils(formData);
@@ -31,9 +32,12 @@ export async function createListing(prevState: any, formData: FormData) {
 
   const geocodeProvider = new GeonamesProvider(draft.latitude, draft.longitude);
   const url = geocodeProvider.url();
+  console.log("Fetching geocode from " + url);
 
   // Fetch data from the geocode provider
   const response: GeonamesResponse = await fetch(url).then((res) => res.json());
+  console.log("Geocode response : " + response);
 
-  // TODO Parse response
+  // todo: save to db
+  // prisma.listing.create()
 }

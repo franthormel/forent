@@ -5,20 +5,17 @@ import InputField from '@/components/ui/form/InputField';
 import TextField from '@/components/ui/form/TextField';
 import ResetButton from '@/components/ui/form/buttons/ResetButton';
 import MapForm from '@/components/ui/map/MapForm';
-import { fetchDateOneYearFromToday, fetchDateToday } from "@/lib/date";
+import { fetchDateOneYearFromToday, fetchToday } from "@/lib/date";
 import { useFormState } from 'react-dom';
 import { createListing } from './action';
 import Button from '@/components/ui/button/Button';
+import { useState } from 'react';
 
 export default function CreateListing() {
     const [formState, formAction] = useFormState(createListing, '')
 
-    const todayISO = fetchDateToday().toISOString().substring(0, 10);
+    const todayISO = fetchToday().toISOString().substring(0, 10);
     const oneYearFromTodayISO = fetchDateOneYearFromToday().toISOString().substring(0, 10);
-
-    if (formState !== undefined) {
-        window.scroll(0, 0);
-    }
 
     return <>
         <div className="min-w-full px-12 py-6 flex flex-col gap-5 scroll-smooth">
@@ -62,7 +59,7 @@ export default function CreateListing() {
                     </div>
                     <div className="flex justify-end space-x-8 pt-8">
                         <ResetButton />
-                        <Button text='Submit'/>
+                        <Button text='Submit' />
                     </div>
                 </div>
             </form>
