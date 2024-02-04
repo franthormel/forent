@@ -1,11 +1,9 @@
-import { getUser } from "@/lib/auth";
+import { getSessionUser } from "@/lib/auth";
 import RouterButton from "../ui/button/RouterButton";
 import SignOutButton from "./SignOutButton";
-import Image from "next/image";
-import { DefaultSession } from "next-auth";
 
 export default async function AuthWrapper() {
-    const user = await getUser();
+    const user = await getSessionUser();
 
     if (user) {
         return <div className="flex flex-row gap-5">

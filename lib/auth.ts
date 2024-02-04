@@ -66,7 +66,7 @@ export function auth(
  *
  * @returns User | null
  */
-export async function getUser() {
+export async function getSessionUser() {
   const session = await getServerSession(authOptions);
   return session?.user;
 }
