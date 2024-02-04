@@ -20,7 +20,7 @@ describe("homepage", () => {
       cy.reload();
 
       // Sign-out button is displayed after signing in.
-      cy.get('[data-cy="sign-out-button"]').should("exist");
+      cy.get('[data-cy="signout-button"]').should("exist");
 
       // Sign-out
       cy.visit("/api/auth/signout");
