@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { textFont } from './fonts'
 
 import './global.css'
+import NavigationMenu from '@/components/home/NavigationMenu'
 
 export const metadata: Metadata = {
   title: {
@@ -14,7 +15,6 @@ export const metadata: Metadata = {
   authors: { name: 'Francis Anthony Carmel', url: 'mailto:fcaboyo@gmail.com' },
   creator: 'franthormel',
   publisher: 'franthormel',
-  // TODO: Add metadataBase once a domain is secured
   openGraph: {
     title: {
       template: '%s | Forent',
@@ -33,8 +33,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${textFont.className} p-12`}>
-      <body>{children}</body>
+    <html lang="en" className={`${textFont.className} px-14 py-8`}>
+      <body className='flex flex-col gap-5'>
+        <NavigationMenu />
+        {children}
+      </body>
     </html>
   )
 }

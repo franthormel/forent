@@ -6,6 +6,5 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    // TODO: Add  `sitemap` once a domain is secured
   };
 }

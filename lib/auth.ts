@@ -9,8 +9,7 @@ import type { NextAuthOptions, SessionStrategy } from "next-auth";
 import { getServerSession } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
-
-const prisma = new PrismaClient();
+import prisma from "./db";
 
 /**
  * The JWT strategy is for dev or CI environments.
@@ -47,8 +46,12 @@ export const authOptions = {
   ],
 } satisfies NextAuthOptions;
 
-// Use it in server contexts
-// TODO: need mock
+/**
+ * Use in server context.
+ *
+ * @param args
+ * @returns
+ */
 export function auth(
   ...args:
     | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
@@ -63,8 +66,7 @@ export function auth(
  *
  * @returns User | null
  */
-// TODO: need mock
-export async function getUser() {
+export async function getSessionUser() {
   const session = await getServerSession(authOptions);
   return session?.user;
 }

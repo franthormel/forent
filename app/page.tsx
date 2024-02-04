@@ -1,5 +1,4 @@
-import AuthenticationWrapper from '@/components/AuthenticationWrapper';
-import LogoHeader from '@/components/LogoHeader';
+import RouterButton from '@/components/ui/button/RouterButton';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -7,12 +6,8 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-  return (
-    <main className='flex flex-col space-y-4'>
-      <LogoHeader />
-      <AuthenticationWrapper />
-    </main>
-  );
+  return <div className='flex flex-row gap-4'>
+    <RouterButton route='/listings' text='View Listings' />
+    <RouterButton route='/listings/create' text='Create a Listing' color='tertiary' />
+  </div>;
 }
-
-// TODO: Display profile when logged in

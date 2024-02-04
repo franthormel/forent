@@ -1,9 +1,9 @@
 import React from 'react'
-import SignOutButton from '../../components/SignOutButton'
+import SignOutButton from '../../components/auth/SignOutButton'
 
 describe('<SignOutButton />', () => {
   it('works', () => {
     cy.mount(<SignOutButton />)
-    cy.get('[data-cy="sign-out-button"]').should('have.text', 'Sign Out')
+    cy.get('[data-cy="signout-button"]').should('have.text', 'Sign Out')
   })
 })
