@@ -15,6 +15,7 @@ export class FormListingValidator implements Validator<FormListing> {
     ["latitude", "Map address is required"],
   ]);
 
+  // todo: move min max values to env file
   readonly #validator = z.object({
     price: z.number().min(100).max(100_000_000),
     description: z.string().min(16).max(1024),

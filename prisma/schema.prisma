@@ -7,6 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// todo: need to implement `on delete cascade` https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/referential-actions#cascade
+
 model Listing {
   id            String    @id @default(cuid())
   deposit       Decimal?  @db.Money
@@ -51,6 +53,8 @@ model Rating {
 
   @@map("rating")
 }
+
+// todo: user must only be able to give one rating per listing ;3
 
 /// Each address must be associated with one (1) listing. (for now)
 model Address {
