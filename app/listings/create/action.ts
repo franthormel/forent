@@ -40,9 +40,6 @@ export async function createListing(prevState: any, formData: FormData) {
   // Fetch data from the geocode provider
   const address: GeonamesResponse = await fetch(url).then((res) => res.json());
 
-  // todo: save to db
-  // prisma.listing.create()
-
   const userSession = await getSessionUser();
   const userDB = await prisma.user.findUnique({
     where: {
@@ -50,6 +47,7 @@ export async function createListing(prevState: any, formData: FormData) {
     },
   });
 
+  // todo: remove city and prov from addressLine (only use nearest.name)
   const addressLine =
     address.nearest.name +
     "," +
