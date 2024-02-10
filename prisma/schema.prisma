@@ -47,7 +47,7 @@ model Price {
 /// Each listing may have zero (0) or more ratings.
 model Rating {
   id        String  @id @default(cuid())
-  value     Int
+  value     Int /// Range is between one (1) to five (5)
   listing   Listing @relation(fields: [listingId], references: [id])
   listingId String
 

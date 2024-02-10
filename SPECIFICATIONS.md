@@ -1,6 +1,6 @@
  # Specifications
 
-## Listing (Minmax)
+## Listing (Min-max)
 
 | Data          | Min   | Max                |
 | ------------- | ----- | ------------------ |
@@ -10,6 +10,13 @@
 | Availabe Date | Today | 4 years from today |
 | No. of Beds   | 1     | 750                |
 | No. of Baths  | 1     | 250                |
+
+
+## Rating (Min-max)
+
+Allowed value is between one (1) to five (5).
+- One (1) is the lowest possible score.
+- Five (5) is the highest possible score.
 
 ## Listing Address
 
