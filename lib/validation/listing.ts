@@ -15,16 +15,36 @@ export class FormListingValidator implements Validator<FormListing> {
     ["latitude", "Map address is required"],
   ]);
 
-  // todo: move min max values to env file
   readonly #validator = z.object({
-    price: z.number().min(100).max(100_000_000),
-    description: z.string().min(16).max(1024),
-    deposit: z.number().min(0).max(1_000_000),
+    price: z
+      .number()
+      .min(Number(process.env.LISTING_PRICE_MIN ?? 100))
+      .max(Number(process.env.LISTING_PRICE_MAX ?? 100_000_000)),
+    description: z
+      .string()
+      .min(Number(process.env.LISTING_DESC_MIN ?? 16))
+      .max(Number(process.env.LISTING_DESC_MAX ?? 1024)),
+    deposit: z
+      .number()
+      .min(Number(process.env.LISTING_DEPOSIT_MIN ?? 0))
+      .max(Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)),
     availableDate: z.date(), // todo: min and max dates
-    beds: z.number().min(1).max(750),
-    baths: z.number().min(1).max(250),
-    longitude: z.number().min(-180).max(180),
-    latitude: z.number().min(-90).max(90),
+    beds: z
+      .number()
+      .min(Number(process.env.LISTING_BEDS_MIN ?? 1))
+      .max(Number(process.env.LISTING_BEDS_MAX ?? 750)),
+    baths: z
+      .number()
+      .min(Number(process.env.LISTING_BATHS_MIN ?? 1))
+      .max(Number(process.env.LISTING_BATHS_MAX ?? 250)),
+    longitude: z
+      .number()
+      .min(Number(process.env.LISTING_LONGT_MIN ?? -180))
+      .max(Number(process.env.LISTING_LONGT_MAX ?? 180)),
+    latitude: z
+      .number()
+      .min(Number(process.env.LISTING_LATT_MIN ?? -90))
+      .max(Number(process.env.LISTING_LATT_MAX ?? 90)),
   });
 
   input: FormListing;
