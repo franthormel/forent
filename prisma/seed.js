@@ -124,7 +124,7 @@ async function main() {
         },
         ratings: {
           create: {
-            value: faker.number.int({ min: 1, max: 5 }) // todo: need to finalize rating values range
+            value: faker.number.int({ min: 1, max: 5 })
           }
         },
         address: {
