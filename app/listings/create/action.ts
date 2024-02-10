@@ -18,8 +18,8 @@ export async function createListing(prevState: any, formData: FormData) {
     availableDate: formUtils.getDate("availableDate", new Date()),
     beds: formUtils.getNumber("beds", -1),
     baths: formUtils.getNumber("baths", -1),
-    longitude: formUtils.getString("inputLongitude", ""),
-    latitude: formUtils.getString("inputLatitude", ""),
+    longitude: formUtils.getNumber("inputLongitude", -999),
+    latitude: formUtils.getNumber("inputLatitude", -999),
   };
 
   const validator = new FormListingValidator(listing);
@@ -69,6 +69,7 @@ export async function createListing(prevState: any, formData: FormData) {
         },
       },
       address: {
+        // todo: need to anticipate what if no value from geocode response (for example, user chose a faraway remote location from the map widget)
         create: {
           addressLine: addressLine,
           city: address.nearest.city,

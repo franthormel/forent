@@ -45,6 +45,6 @@ export interface FormListing {
   availableDate: Date;
   beds: number;
   baths: number;
-  longitude: string;
-  latitude: string;
+  longitude: number;
+  latitude: number;
 }

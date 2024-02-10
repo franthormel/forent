@@ -2,11 +2,11 @@ interface GeocodeProvider {
   /**
    * Latitude
    */
-  latitude: string;
+  latitude: number;
   /**
    * Longitude
    */
-  longitude: string;
+  longitude: number;
 
   /**
    * Create endpoint for the geocoding provider
