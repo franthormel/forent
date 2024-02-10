@@ -23,8 +23,8 @@ export class FormListingValidator implements Validator<FormListing> {
     availableDate: z.date(), // todo: min and max dates
     beds: z.number().min(1).max(750),
     baths: z.number().min(1).max(250),
-    longitude: z.string().min(1),
-    latitude: z.string().min(1),
+    longitude: z.number().min(-180).max(180),
+    latitude: z.number().min(-90).max(90),
   });
 
   input: FormListing;
