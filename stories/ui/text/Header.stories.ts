@@ -1,17 +1,17 @@
-import HeaderLogo from "@/components/ui/text/HeaderLogo";
 import type { Meta, StoryObj } from "@storybook/react";
+import Header from "@/components/ui/text/Header";
 
 const meta: Meta = {
-  title: "Components/UI/Text/Header Logo",
-  component: HeaderLogo,
+  title: "Components/UI/Text/Header",
+  component: Header,
   tags: ["autodocs"],
-} satisfies Meta<typeof HeaderLogo>;
+} satisfies Meta<typeof Header>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Example: Story = {
   args: {
-    colorMode: "Dark",
+    value: "Header",
   },
 };

@@ -4,7 +4,7 @@ import "./storybook.css";
 
 const preview: Preview = {
   args: {
-    colorMode: "Dark",
+    theme: "Dark",
   },
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },
