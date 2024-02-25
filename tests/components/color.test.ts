@@ -1,16 +1,16 @@
-import { ColorThemePicker } from "../../components/theme/color";
-import { ColorMode } from "../../components/theme/props";
+import { ThemeColorPicker } from "../../components/theme/color";
+import { Theme } from "../../components/theme/props";
 
 describe("Color theme picker", () => {
   test("text color must dark when the given color mode is also dark", () => {
-    const colorMode: ColorMode = "Dark";
-    const actual = ColorThemePicker.textColor(colorMode);
+    const colorMode: Theme = "Dark";
+    const actual = ThemeColorPicker.textColor(colorMode);
     expect(actual).toBe("text-gray-800");
   });
 
   test("text color must light when the given color mode is also light", () => {
-    const colorMode: ColorMode = "Light";
-    const actual = ColorThemePicker.textColor(colorMode);
+    const colorMode: Theme = "Light";
+    const actual = ThemeColorPicker.textColor(colorMode);
     expect(actual).toBe("text-slate-50");
   });
 });

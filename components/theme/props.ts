@@ -1,5 +1,5 @@
-export type ColorMode = "Dark" | "Light";
+export type Theme = "Dark" | "Light";
 
 export default interface PropsTheme {
-  colorMode?: ColorMode;
+  theme?: Theme;
 }

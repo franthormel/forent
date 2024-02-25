@@ -1,6 +1,6 @@
-import { ColorMode } from "./props";
+import { Theme } from "./props";
 
-export interface ColorTheme {
+export interface ThemeColor {
   primary: string;
   secondary: string;
   tertiary: string;
@@ -17,7 +17,7 @@ export interface ColorTheme {
 }
 
 // The following color values are only useful for Tailwind CSS
-export const defaultColors: ColorTheme = {
+export const defaultColors: ThemeColor = {
   primary: "amber-400", // #FBBF24
   secondary: "orange-500", // #F97316
   tertiary: "cyan-300", // #67E8F9
@@ -33,11 +33,11 @@ export const defaultColors: ColorTheme = {
   },
 };
 
-export class ColorThemePicker {
-  static textColor(colorMode?: ColorMode): string {
+export class ThemeColorPicker {
+  static textColor(theme?: Theme): string {
     let color = defaultColors.text.dark;
 
-    if (colorMode === "Light") {
+    if (theme === "Light") {
       color = defaultColors.text.light;
     }
 
