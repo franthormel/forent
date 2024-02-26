@@ -1,8 +1,13 @@
 import { StringUtils } from "@/lib/commons/string_utils";
-import ErrorMessage from "../ErrorMessage";
+import ErrorMessage from "./ErrorMessage";
 import Optional from "./Optional";
 
-export interface TextFieldProps {
+type InputFieldType = "text" | "date" | "number";
+export interface InputFieldProps {
+    /**
+     * Input type. Default is 'text'
+     */
+    type?: InputFieldType;
     /**
      * Input name
      */
@@ -20,6 +25,14 @@ export interface TextFieldProps {
      */
     optional?: boolean;
     /**
+     * Minimum value
+     */
+    min?: number | string;
+    /**
+     * Maximum value
+     */
+    max?: number | string;
+    /**
      * Minimum string length
      */
     minLength?: number;
@@ -28,25 +41,34 @@ export interface TextFieldProps {
      */
     maxLength?: number;
     /**
+     * Default value
+     */
+    defaultValue?: number | string;
+    /**
      * Error message
      */
     errorMessage?: string;
 }
 
-export default function TextField(props: TextFieldProps) {
+export default function InputField(props: InputFieldProps) {
     const hasError = StringUtils.checkInput(props.errorMessage);
 
     return (
         <div className="w-5/6 min-w-full">
             <div className="flex justify-between">
-                <label htmlFor={props.name}>{props.label}</label>
+                <label htmlFor={props.name}>
+                    {props.label}
+                </label>
                 <Optional optional={props.optional} />
             </div>
-            <textarea placeholder={props.placeholder}
+            <input type={props.type ?? "text"}
+                placeholder={props.placeholder}
                 name={props.name}
                 required={!props.optional}
+                min={props.min}
+                max={props.max}
                 minLength={props.minLength}
-                maxLength={props.maxLength}
+                defaultValue={props.defaultValue}
                 className={`mt-2 w-full rounded-md border-2 px-2 py-1 ${hasError ? 'border-red-600' : 'border-slate-200'}`} />
             <ErrorMessage value={props.errorMessage} />
         </div>

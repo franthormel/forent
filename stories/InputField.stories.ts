@@ -1,4 +1,4 @@
-import InputField, { InputFieldProps } from "@/components/ui/form/InputField";
+import InputField, { InputFieldProps } from "@/components/InputField";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta = {

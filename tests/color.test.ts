@@ -1,5 +1,5 @@
-import { ThemeColorPicker } from "../../components/theme/color";
-import { Theme } from "../../components/theme/props";
+import { ThemeColorPicker } from "../theme/color";
+import { Theme } from "../theme/props";
 
 describe("Color theme picker", () => {
   test("text color must dark when the given color mode is also dark", () => {

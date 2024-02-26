@@ -1,4 +1,4 @@
-import RouterButton from '@/components/ui/button/RouterButton';
+import RouterButton from '@/components/RouterButton';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

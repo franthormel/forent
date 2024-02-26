@@ -1,5 +1,5 @@
-import AuthWrapper from '../auth/AuthWrapper';
-import HeaderLogo from '../ui/text/HeaderLogo';
+import AuthWrapper from './AuthWrapper';
+import HeaderLogo from './HeaderLogo';
 
 export default function NavigationMenu() {
     return (

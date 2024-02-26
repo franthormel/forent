@@ -1,5 +1,5 @@
 import { getSessionUser } from "@/lib/auth";
-import RouterButton from "../ui/button/RouterButton";
+import RouterButton from "./RouterButton";
 import SignOutButton from "./SignOutButton";
 
 export default async function AuthWrapper() {

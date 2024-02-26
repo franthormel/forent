@@ -13,7 +13,7 @@ import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { useEffect, useRef, useState } from "react";
-import ErrorMessage from '../ErrorMessage';
+import ErrorMessage from './ErrorMessage';
 
 // TODO: Add custom icon, optimize geolocation, and pan animation when map point is selected
 // https://openlayers.org/en/latest/examples/animation.html

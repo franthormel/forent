@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import MapForm, { MapFormProps } from "@/components/ui/map/MapForm";
+import MapForm, { MapFormProps } from "@/components/MapForm";
 
 const meta: Meta = {
   title: "Components/UI/Map/Map Form",

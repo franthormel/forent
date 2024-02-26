@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { textFont } from './fonts'
 
 import './global.css'
-import NavigationMenu from '@/components/home/NavigationMenu'
+import NavigationMenu from '@/components/NavigationMenu'
 
 export const metadata: Metadata = {
   title: {
