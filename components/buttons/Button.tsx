@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react";
 import { ButtonColor, ButtonBorderRadius } from "./types";
 
-interface ButtonProps {
+export interface ButtonProps {
     /**
      * Button color
      */
