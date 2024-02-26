@@ -2,7 +2,7 @@ import FormMap, { FormMapProps } from "@/components/form-map/FormMap";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta = {
-  title: "Components/UI/Map/Map Form",
+  title: "Form Map",
   component: FormMap,
   tags: ["autodocs"],
 } satisfies Meta<typeof FormMap>;
