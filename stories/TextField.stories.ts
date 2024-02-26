@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import FormInputTextArea, {
   FormInputTextAreaProps,
-} from "@/components/form-input-textarea/FormInputTextArea";
+} from "@/components/form-inputs/FormInputTextArea";
 
 const meta: Meta = {
   title: "Components/UI/Form/Text Field",

@@ -3,6 +3,7 @@ import TextError from "../text-error/TextError";
 import TextOptional from "../text-optional/TextOptional";
 
 type FormInputType = "text" | "date" | "number";
+
 export interface FormInputProps {
     /**
      * Input type. Default is 'text'

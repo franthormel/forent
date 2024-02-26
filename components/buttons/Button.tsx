@@ -1,9 +1,7 @@
-import { EventHandler, MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
+import { ButtonColor, ButtonBorderRadius } from "./types";
 
-type ButtonColor = "primary" | "secondary" | "tertiary";
-type ButtonBorderRadius = "rounded" | "square";
-
-export interface ButtonProps {
+interface ButtonProps {
     /**
      * Button color
      */
@@ -40,6 +38,7 @@ export default function Button(props: ButtonProps) {
     );
 }
 
+// todo: should be refactored
 function chooseButtonBorderRadius(borderRadius?: ButtonBorderRadius) {
     if (borderRadius == "rounded") {
         return "rounded-full";
@@ -47,6 +46,8 @@ function chooseButtonBorderRadius(borderRadius?: ButtonBorderRadius) {
     return "rounded-md";
 }
 
+
+// todo: move to colorthemepicker
 function chooseColor(color?: ButtonColor) {
     switch (color) {
         case "secondary": return "bg-orange-600";

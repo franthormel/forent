@@ -1,4 +1,4 @@
-import AuthButton from '../auth-button/AuthButton';
+import AuthButton from '../auth-buttons/AuthButton';
 import HeaderLogo from '../header-logo/HeaderLogo';
 
 export default function NavMenu() {

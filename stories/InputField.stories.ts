@@ -1,4 +1,4 @@
-import FormInput, { FormInputProps } from "@/components/form-input/FormInput";
+import FormInput, { FormInputProps } from "@/components/form-inputs/FormInput";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta = {
