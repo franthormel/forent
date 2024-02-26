@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
 import Button from "./Button";
-import { ButtonBorderRadius, ButtonColor } from "./types";
+import { ButtonColor } from "./types";
 
 interface ButtonRouterProps {
     /**
@@ -19,14 +19,6 @@ interface ButtonRouterProps {
      */
     onClick?: MouseEventHandler<HTMLButtonElement>;
     /**
-     * Data attribute for Cypress.
-     */
-    dataCy?: string;
-    /**
-     * Default is `rounded` corners
-     */
-    borderRadius?: ButtonBorderRadius
-    /**
      * Page or URL to be routed to.
      */
     route: string;
@@ -37,9 +29,8 @@ export default function ButtonRouter(props: ButtonRouterProps) {
     return (
         <Button onClick={() => router.push(props.route)}
             text={props.text}
-            borderRadius="square"
             dataCy="router-button"
-            color={props.color}
+            color={props.color} // todo: this is wrong lol
         />
     );
 }

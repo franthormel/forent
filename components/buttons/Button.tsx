@@ -1,5 +1,5 @@
 import { MouseEventHandler } from "react";
-import { ButtonColor, ButtonBorderRadius } from "./types";
+import { ButtonColor } from "./types";
 
 export interface ButtonProps {
     /**
@@ -18,34 +18,19 @@ export interface ButtonProps {
      * Data attribute for Cypress.
      */
     dataCy?: string;
-    /**
-     * Default is `rounded` corners
-     */
-    borderRadius?: ButtonBorderRadius
 }
 
 export default function Button(props: ButtonProps) {
     const color = chooseColor(props.color);
-    const cypressSelector = props.dataCy ?? "button";
-    const borderRadius = chooseButtonBorderRadius(props.borderRadius);
 
     return (
-        <button className={`w-fit ${borderRadius} px-6 py-3 transition-all ${color} hover:shadow-md`}
-            data-cy={cypressSelector}
+        <button className={`${color} rounded-full px-10 py-4 transition-all hover:shadow-md`}
+            data-cy="button"
             onClick={props.onClick}>
             {props.text}
         </button>
     );
 }
-
-// todo: should be refactored
-function chooseButtonBorderRadius(borderRadius?: ButtonBorderRadius) {
-    if (borderRadius == "rounded") {
-        return "rounded-full";
-    }
-    return "rounded-md";
-}
-
 
 // todo: move to colorthemepicker
 function chooseColor(color?: ButtonColor) {
