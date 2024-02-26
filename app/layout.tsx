@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { textFont } from './fonts'
 
 import './global.css'
-import NavigationMenu from '@/components/home/NavigationMenu'
+import NavMenu from '@/components/navmenu/NavMenu'
 
 export const metadata: Metadata = {
   title: {
@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${textFont.className} px-14 py-8`}>
       <body className='flex flex-col gap-5'>
-        <NavigationMenu />
+        <NavMenu />
         {children}
       </body>
     </html>

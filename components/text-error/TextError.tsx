@@ -1,0 +1,18 @@
+import { StringUtils } from "@/lib/commons/string_utils";
+
+export interface TextErrorProps {
+    /**
+     * Text to display
+     */
+    value?: string;
+}
+
+export default function TextError(props: TextErrorProps) {
+    const showError = StringUtils.checkInput(props.value);
+
+    if (showError) {
+        return <span className="text-sm font-medium text-red-600">{props.value}</span>;
+    }
+
+    return null;
+}

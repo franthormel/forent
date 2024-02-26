@@ -1,4 +1,4 @@
-import RouterButton from '@/components/ui/button/RouterButton';
+import ButtonRouter from '@/components/buttons/ButtonRouter';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return <div className='flex flex-row gap-4'>
-    <RouterButton route='/listings' text='View Listings' />
-    <RouterButton route='/listings/create' text='Create a Listing' color='tertiary' />
+    <ButtonRouter route='/listings' text='View Listings' />
+    <ButtonRouter route='/listings/create' text='Create a Listing' color='tertiary' />
   </div>;
 }

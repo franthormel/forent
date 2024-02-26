@@ -1,4 +1,4 @@
-import Header from '../../components/ui/text/Header'
+import Header from '@/components/header/Header';
 
 describe('Header', () => {
   it('works', () => {
