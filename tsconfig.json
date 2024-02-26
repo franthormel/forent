@@ -29,5 +29,5 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/api/auth/[...nextauth]/route.ts"
-, "stories/InputField.stories.ts"  ]
+, "stories/FormInput.stories.ts"  ]
 }

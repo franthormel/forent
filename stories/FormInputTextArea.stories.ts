@@ -5,7 +5,7 @@ import FormInputTextArea, {
 } from "@/components/form-inputs/FormInputTextArea";
 
 const meta: Meta = {
-  title: "Components/UI/Form/Text Field",
+  title: "Form Input Text Area",
   component: FormInputTextArea,
   tags: ["autodocs"],
 } satisfies Meta<typeof FormInputTextArea>;

@@ -2,7 +2,7 @@ import TextError, { TextErrorProps } from "@/components/text-error/TextError";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta = {
-  title: "Components/Error Message",
+  title: "Text Error",
   component: TextError,
   parameters: {
     layout: "centered",

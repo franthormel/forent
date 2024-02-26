@@ -2,7 +2,7 @@ import Button, { ButtonProps } from "@/components/buttons/Button";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta = {
-  title: "Components/UI/Button",
+  title: "Button",
   component: Button,
   tags: ["autodocs"],
 } satisfies Meta<typeof Button>;

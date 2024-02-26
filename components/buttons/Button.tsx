@@ -22,10 +22,11 @@ export interface ButtonProps {
 
 export default function Button(props: ButtonProps) {
     const color = chooseColor(props.color);
-
+    const cypressSelector = props.dataCy ?? "button";
+    
     return (
         <button className={`${color} rounded-full px-10 py-4 transition-all hover:shadow-md`}
-            data-cy="button"
+            data-cy={cypressSelector}
             onClick={props.onClick}>
             {props.text}
         </button>
