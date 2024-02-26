@@ -1,11 +1,11 @@
-import InputField, { InputFieldProps } from "@/components/InputField";
+import FormInput, { FormInputProps } from "@/components/form-input/FormInput";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta = {
   title: "Components/UI/Form/Input Field",
-  component: InputField,
+  component: FormInput,
   tags: ["autodocs"],
-} satisfies Meta<typeof InputField>;
+} satisfies Meta<typeof FormInput>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 /**
  * Text
  */
-const textArgs: InputFieldProps = {
+const textArgs: FormInputProps = {
   label: "Full Name",
   name: "fullname",
   type: "text",
@@ -27,7 +27,7 @@ export const TextInputField: Story = {
 /**
  * Date
  */
-const dateArgs: InputFieldProps = {
+const dateArgs: FormInputProps = {
   label: "Date of Appointment",
   name: "appointmentDate",
   type: "date",
@@ -36,7 +36,7 @@ export const DateInputField: Story = {
   args: dateArgs,
 };
 
-const argsWithError: InputFieldProps = {
+const argsWithError: FormInputProps = {
   ...textArgs,
   errorMessage: "Something went wrong",
 };

@@ -13,7 +13,7 @@ import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { useEffect, useRef, useState } from "react";
-import ErrorMessage from './ErrorMessage';
+import TextError from '../text-error/TextError';
 
 // TODO: Add custom icon, optimize geolocation, and pan animation when map point is selected
 // https://openlayers.org/en/latest/examples/animation.html
@@ -47,7 +47,7 @@ const mapLayers = [
     })
 ];
 
-export interface MapFormProps {
+export interface FormMapProps {
     /**
      * Error message
      */
@@ -58,7 +58,7 @@ export interface MapFormProps {
     targetId?: string;
 }
 
-export default function MapForm(props: MapFormProps) {
+export default function FormMap(props: FormMapProps) {
     const mapId = props.targetId ?? "map";
     const zoom = useRef<number>(mapZoomDefault);
     const [lonLat, setLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 });
@@ -115,7 +115,7 @@ export default function MapForm(props: MapFormProps) {
 
     return <div className='w-96 min-w-full'>
         <div className={`h-96 rounded-sm ${hasError && 'border-2 border-red-600'}`} id={mapId} />
-        <ErrorMessage value={props.errorMessage} />
+        <TextError value={props.errorMessage} />
         <input type="hidden" name="inputLongitude" value={lonLat.longitude} />
         <input type="hidden" name="inputLatitude" value={lonLat.latitude} />
     </div>;

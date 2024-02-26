@@ -1,7 +1,7 @@
 import { logoFont } from "@/app/fonts";
 import Link from "next/link";
-import { ThemeColorPicker } from "../theme/color";
-import PropsTheme from "../theme/props";
+import { ThemeColorPicker } from "../../theme/color";
+import PropsTheme from "../../theme/props";
 
 export default function HeaderLogo(props: PropsTheme) {
     const textColor = ThemeColorPicker.textColor(props.theme);

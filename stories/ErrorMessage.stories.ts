@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import ErrorMessage, { ErrorMessageProps } from "@/components/ErrorMessage";
+import TextError, { TextErrorProps } from "@/components/text-error/TextError";
 
 const meta: Meta = {
   title: "Components/Error Message",
-  component: ErrorMessage,
+  component: TextError,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof ErrorMessage>;
+} satisfies Meta<typeof TextError>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const args: ErrorMessageProps = {
+const args: TextErrorProps = {
   value: "Something went wrong!",
 };
 

@@ -1,17 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import TextField, { TextFieldProps } from "@/components/TextField";
+import FormInputTextArea, {
+  FormInputTextAreaProps,
+} from "@/components/form-input-textarea/FormInputTextArea";
 
 const meta: Meta = {
   title: "Components/UI/Form/Text Field",
-  component: TextField,
+  component: FormInputTextArea,
   tags: ["autodocs"],
-} satisfies Meta<typeof TextField>;
+} satisfies Meta<typeof FormInputTextArea>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const args: TextFieldProps = {
+const args: FormInputTextAreaProps = {
   label: "Description",
   name: "description",
   placeholder: "Please describe your experience...",
@@ -21,7 +23,7 @@ export const Example: Story = {
   args: args,
 };
 
-const argsWithError: TextFieldProps = {
+const argsWithError: FormInputTextAreaProps = {
   ...args,
   errorMessage: "Something went wrong",
 };

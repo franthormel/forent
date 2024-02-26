@@ -1,13 +1,13 @@
 import { StringUtils } from "@/lib/commons/string_utils";
 
-export interface ErrorMessageProps {
+export interface TextErrorProps {
     /**
      * Text to display
      */
     value?: string;
 }
 
-export default function ErrorMessage(props: ErrorMessageProps) {
+export default function TextError(props: TextErrorProps) {
     const showError = StringUtils.checkInput(props.value);
 
     if (showError) {

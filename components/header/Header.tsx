@@ -1,6 +1,6 @@
 import { headerFont } from "@/app/fonts";
-import { ThemeColorPicker } from "../theme/color";
-import PropsTheme from "../theme/props";
+import { ThemeColorPicker } from "../../theme/color";
+import PropsTheme from "../../theme/props";
 
 export interface HeaderProps extends PropsTheme {
     /**

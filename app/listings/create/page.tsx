@@ -1,14 +1,14 @@
 "use client"
 
-import ErrorMessage from '@/components/ErrorMessage';
-import InputField from '@/components/InputField';
-import TextField from '@/components/TextField';
-import ResetButton from '@/components/ResetButton';
-import MapForm from '@/components/MapForm';
+import TextError from '@/components/text-error/TextError';
+import FormInput from '@/components/form-input/FormInput';
+import FormInputTextArea from '@/components/form-input-textarea/FormInputTextArea';
+import FormReset from '@/components/form-reset/FormReset';
+import FormMap from '@/components/form-map/FormMap';
 import { fetchDateOneYearFromToday, fetchToday } from "@/lib/date";
 import { useFormState } from 'react-dom';
 import { createListing } from './action';
-import Button from '@/components/Button';
+import Button from '@/components/button/Button';
 import { useState } from 'react';
 
 export default function CreateListing() {
@@ -19,7 +19,7 @@ export default function CreateListing() {
 
     return <>
         <div className="min-w-full px-12 py-6 flex flex-col gap-5 scroll-smooth">
-            <ErrorMessage value={formState} />
+            <TextError value={formState} />
             <form action={formAction}>
                 <div className="grid grid-cols-1 divide-y-2">
                     <div className="grid grid-cols-2 gap-x-8 pb-8">
@@ -33,11 +33,11 @@ export default function CreateListing() {
                         </div>
                         <div className="grid gap-y-8">
                             {/* Price */}
-                            <InputField label='Price' name='price' type="number" min={100} max={100_000_000} />
+                            <FormInput label='Price' name='price' type="number" min={100} max={100_000_000} />
                             {/* Description */}
-                            <TextField label='Description' name='description' minLength={16} maxLength={1024} />
+                            <FormInputTextArea label='Description' name='description' minLength={16} maxLength={1024} />
                             {/* Map */}
-                            <MapForm />
+                            <FormMap />
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-x-8 py-8">
@@ -47,18 +47,18 @@ export default function CreateListing() {
                         </div>
                         <div className="grid gap-y-8">
                             {/* Deposit */}
-                            <InputField label='Deposit' name='deposit' type="number" optional={true} min={0} max={1_000_000} defaultValue={0} />
+                            <FormInput label='Deposit' name='deposit' type="number" optional={true} min={0} max={1_000_000} defaultValue={0} />
                             {/* Availabe Date */}
-                            <InputField label='Available Date' name='availableDate' type='date' optional={true}
+                            <FormInput label='Available Date' name='availableDate' type='date' optional={true}
                                 min={todayISO} defaultValue={todayISO} max={oneYearFromTodayISO} />
                             {/* Number of Beds */}
-                            <InputField label='No. of Beds' name='beds' type="number" min={1} max={750} />
+                            <FormInput label='No. of Beds' name='beds' type="number" min={1} max={750} />
                             {/* Number of Baths */}
-                            <InputField label='No. of Baths' name='baths' type="number" min={1} max={250} />
+                            <FormInput label='No. of Baths' name='baths' type="number" min={1} max={250} />
                         </div>
                     </div>
                     <div className="flex justify-end space-x-8 pt-8">
-                        <ResetButton />
+                        <FormReset />
                         <Button text='Submit' />
                     </div>
                 </div>

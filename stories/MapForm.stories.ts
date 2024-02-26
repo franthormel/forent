@@ -1,23 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import MapForm, { MapFormProps } from "@/components/MapForm";
+import FormMap, { FormMapProps } from "@/components/form-map/FormMap";
 
 const meta: Meta = {
   title: "Components/UI/Map/Map Form",
-  component: MapForm,
+  component: FormMap,
   tags: ["autodocs"],
-} satisfies Meta<typeof MapForm>;
+} satisfies Meta<typeof FormMap>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const args: MapFormProps = {
+const args: FormMapProps = {
   targetId: "map-example-01",
 };
 export const Example: Story = {
   args: args,
 };
 
-const argsWithError: MapFormProps = {
+const argsWithError: FormMapProps = {
   errorMessage: "Invalid location selected",
   targetId: "map-error-02",
 };
