@@ -2,7 +2,7 @@ import { ThemeColorPicker } from "@/theme/color";
 import { ColorSwatch } from "@/theme/props";
 import { MouseEventHandler } from "react";
 
-export interface ButtonProps {
+interface ButtonProps {
     /**
      * Button color
      */
@@ -29,7 +29,7 @@ export default function Button(props: ButtonProps) {
         <button className={`${color} rounded-full px-10 py-4 transition-all hover:shadow-md`}
             data-cy={cypressSelector}
             onClick={props.onClick}>
-            {props.text}
+            {props.text ?? "Button"}
         </button>
     );
 }

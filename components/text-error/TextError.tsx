@@ -1,6 +1,6 @@
 import { StringUtils } from "@/lib/commons/string_utils";
 
-export interface TextErrorProps {
+interface TextErrorProps {
     /**
      * Text to display
      */

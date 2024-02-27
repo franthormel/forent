@@ -2,7 +2,7 @@ import { StringUtils } from "@/lib/commons/string_utils";
 import TextError from "../text-error/TextError";
 import TextOptional from "../text-optional/TextOptional";
 
-export interface FormInputTextAreaProps {
+interface FormInputTextAreaProps {
     /**
      * Input name
      */

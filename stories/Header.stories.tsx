@@ -1,7 +1,7 @@
 import Header from "@/components/header/Header";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta = {
+const meta: Meta<typeof Header> = {
   title: "Header",
   component: Header,
   tags: ["autodocs"],
@@ -13,5 +13,6 @@ type Story = StoryObj<typeof meta>;
 export const Example: Story = {
   args: {
     value: "Header",
+    theme: "dark"
   },
 };

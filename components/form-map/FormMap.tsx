@@ -47,7 +47,7 @@ const mapLayers = [
     })
 ];
 
-export interface FormMapProps {
+interface FormMapProps {
     /**
      * Error message
      */

@@ -1,7 +1,7 @@
-import TextError, { TextErrorProps } from "@/components/text-error/TextError";
+import TextError from "@/components/text-error/TextError";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta = {
+const meta: Meta<typeof TextError> = {
   title: "Text Error",
   component: TextError,
   parameters: {
@@ -13,10 +13,8 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const args: TextErrorProps = {
-  value: "Something went wrong!",
-};
-
 export const Example: Story = {
-  args: args,
+  args: {
+    value: "Something went wrong!",
+  },
 };
