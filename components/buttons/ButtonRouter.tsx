@@ -1,15 +1,15 @@
 "use client"
 
+import { ColorSwatch } from "@/theme/props";
 import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
 import Button from "./Button";
-import { ButtonColor } from "./types";
 
 interface ButtonRouterProps {
     /**
      * Button color
      */
-    color?: ButtonColor;
+    color?: ColorSwatch;
     /**
      * Button text
      */
@@ -26,11 +26,12 @@ interface ButtonRouterProps {
 
 export default function ButtonRouter(props: ButtonRouterProps) {
     const router = useRouter();
+
     return (
         <Button onClick={() => router.push(props.route)}
             text={props.text}
-            dataCy="router-button"
-            color={props.color} // todo: this is wrong lol
+            dataCy="button-router"
+            color={props.color}
         />
     );
 }

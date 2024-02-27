@@ -1,11 +1,12 @@
+import { ThemeColorPicker } from "@/theme/color";
+import { ColorSwatch } from "@/theme/props";
 import { MouseEventHandler } from "react";
-import { ButtonColor } from "./types";
 
 export interface ButtonProps {
     /**
      * Button color
      */
-    color?: ButtonColor;
+    color?: ColorSwatch;
     /**
      * Button text
      */
@@ -21,9 +22,9 @@ export interface ButtonProps {
 }
 
 export default function Button(props: ButtonProps) {
-    const color = chooseColor(props.color);
+    const color = ThemeColorPicker.backgroundColor(props.color);
     const cypressSelector = props.dataCy ?? "button";
-    
+
     return (
         <button className={`${color} rounded-full px-10 py-4 transition-all hover:shadow-md`}
             data-cy={cypressSelector}
@@ -31,14 +32,4 @@ export default function Button(props: ButtonProps) {
             {props.text}
         </button>
     );
-}
-
-// todo: move to colorthemepicker
-function chooseColor(color?: ButtonColor) {
-    switch (color) {
-        case "secondary": return "bg-orange-600";
-        case "tertiary": return "bg-cyan-300";
-        case "primary": return "bg-amber-400";
-        default: return "bg-amber-400";
-    }
 }

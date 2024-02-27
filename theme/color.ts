@@ -1,4 +1,4 @@
-import { Theme } from "./props";
+import { ColorSwatch, Theme } from "./props";
 
 interface ThemeColor {
   primary: string;
@@ -40,13 +40,13 @@ export class ThemeColorPicker {
    * @returns Text color
    */
   static textColor(theme?: Theme): string {
-    let color = defaultColors.text.dark;
+    let value = defaultColors.text.dark;
 
-    if (theme === "Light") {
-      color = defaultColors.text.light;
+    if (theme === "light") {
+      value = defaultColors.text.light;
     }
 
-    return `text-${color}`;
+    return `text-${value}`;
   }
 
   /**
@@ -54,13 +54,21 @@ export class ThemeColorPicker {
    * @param theme Theme
    * @returns Background color
    */
-  static backgroundColor(theme?: Theme): string {
-    let color = defaultColors.primary;
+  static backgroundColor(color?: ColorSwatch): string {
+    let value = defaultColors.primary;
 
-    if (theme === "Light") {
-      color = defaultColors.text.light;
+    switch (color) {
+      case "primary":
+        value = defaultColors.primary;
+        break;
+      case "secondary":
+        value = defaultColors.secondary;
+        break;
+      case "tertiary":
+        value = defaultColors.tertiary;
+        break;
     }
 
-    return `bg-${color}`;
+    return `bg-${value}`;
   }
 }

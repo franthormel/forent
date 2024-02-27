@@ -1,7 +1,7 @@
 import Button, { ButtonProps } from "@/components/buttons/Button";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta = {
+const meta: Meta<typeof Button> = {
   title: "Button",
   component: Button,
   tags: ["autodocs"],
@@ -13,23 +13,21 @@ type Story = StoryObj<typeof meta>;
 const args: ButtonProps = {
   text: "Button",
   onClick: () => console.log("Clicked 🐭!"),
+  color: "primary",
 };
 
-export const PrimaryColor: Story = {
+export const Primary: Story = {
   args: args,
 };
-export const SecondaryColor: Story = {
+export const Secondary: Story = {
   args: {
     ...args,
     color: "secondary",
   },
 };
-
-const tertiaryArgs: ButtonProps = {
-  ...args,
-  color: "tertiary",
-};
-
-export const TertiaryColor: Story = {
-  args: tertiaryArgs,
+export const Tertiary: Story = {
+  args: {
+    ...args,
+    color: "tertiary",
+  },
 };
