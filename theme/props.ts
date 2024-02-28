@@ -1,5 +1,5 @@
 export type Theme = "dark" | "light";
-export type ColorSwatch = "primary" | "secondary" | "tertiary";
+export type ColorSwatch = "primary" | "secondary";
 
 export default interface PropsTheme {
   theme?: Theme;
