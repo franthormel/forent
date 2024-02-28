@@ -3,9 +3,6 @@ import type { Preview } from "@storybook/react";
 import "./storybook.css";
 
 const preview: Preview = {
-  args: {
-    theme: "Dark",
-  },
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {

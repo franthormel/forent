@@ -10,8 +10,4 @@ const meta: Meta<typeof HeaderLogo> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Example: Story = {
-  args: {
-    theme: "dark"
-  }
-};
+export const Example: Story = {};

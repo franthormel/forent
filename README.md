@@ -53,30 +53,10 @@ Wanted to try all the technologies listed below.
 
 This is possible when workflows are too complex for `e2e` tests that it makes more sense to test it manually in the browser or when live data is difficult to be provided when testing `component`s.
 
-## How was the design created
-
-The following sections describe the fonts and color palette.
-
-### What fonts are displayed 🔤
+## What fonts are displayed 🔤
 
 | Category  | Font                                                                                     | Purpose |
 | --------- | ---------------------------------------------------------------------------------------- | ------- |
 | Primary   | [DM Sans](https://fonts.google.com/specimen/DM+Sans)                                     | Text    |
 | Secondary | [DM Serif Display](https://fonts.google.com/specimen/DM+Serif+Display)                   | Header  |
 | Tertiary  | [Libre Baskerville](https://fonts.google.com/specimen/Libre+Baskerville) Bold 700 Italic | Logo    |
-
-### What colors were chosen 🎨
-
-| Category      | Color Value | Tailwind CSS Value |
-| ------------- | ----------- | ------------------ |
-| Primary       | #FBBF24     | `amber-400`        |
-| Secondary     | #EA580C     | `orange-600`       |
-| Tertiary      | #67E8F9     | `cyan-300`         |
-| Text          | #1F2937     | `gray-800`         |
-| Warning       | #DC2626     | `red-600`          |
-| URL (Visited) | #2563EB     | `blue-600`         |
-| URL (Active)  | #581C87     | `purple-900`       |
-
-## Thank you 😻
-
-1. [Krzysztof Kotkowicz](https://unsplash.com/@lancaster83?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) from [Unsplash](https://unsplash.com/photos/yellow-and-white-concrete-building-at-daytime-yBW0vUO82AA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)

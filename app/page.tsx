@@ -8,6 +8,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return <div className='flex flex-row gap-4'>
     <ButtonRouter route='/listings' text='View Listings' />
-    <ButtonRouter route='/listings/create' text='Create a Listing' color='tertiary' />
+    <ButtonRouter route='/listings/create' text='Create a Listing' />
   </div>;
 }
