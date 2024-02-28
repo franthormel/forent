@@ -1,6 +1,6 @@
 import { getSessionUser } from "@/lib/auth";
+import ButtonRouter from "../buttons/ButtonRouter";
 import SignOutButton from "./SignOutButton";
-import SignInButton from "./SignInButton";
 
 export default async function AuthButton() {
     const user = await getSessionUser();
@@ -11,5 +11,5 @@ export default async function AuthButton() {
         </div>
     }
 
-    return <SignInButton />
+    return <ButtonRouter route="/api/auth/signin" text="Sign In" />
 }

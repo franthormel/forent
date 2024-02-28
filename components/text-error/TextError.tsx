@@ -7,6 +7,7 @@ interface TextErrorProps {
     value?: string;
 }
 
+// todo: is this really needed?
 export default function TextError(props: TextErrorProps) {
     const showError = StringUtils.checkInput(props.value);
 
