@@ -1,8 +1,8 @@
 import { getSessionUser } from "@/lib/auth";
-import ButtonRouter from "../buttons/ButtonRouter";
+import ButtonRouter from "../button-router";
 import SignOutButton from "./SignOutButton";
 
-export default async function AuthButton() {
+export default async function ButtonAuth() {
     const user = await getSessionUser();
 
     if (user) {

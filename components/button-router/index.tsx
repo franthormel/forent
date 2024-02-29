@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
-import Button from "./Button";
+import Button from "../button";
 
 interface ButtonRouterProps {
     /**

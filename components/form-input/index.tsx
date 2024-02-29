@@ -1,6 +1,6 @@
 import { StringUtils } from "@/lib/commons/string_utils";
-import TextError from "../text-error/TextError";
-import TextOptional from "../text-optional/TextOptional";
+import TextError from "../text-error";
+import TextOptional from "../text-optional";
 
 type FormInputType = "text" | "date" | "number";
 

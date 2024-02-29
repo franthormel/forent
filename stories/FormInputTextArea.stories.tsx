@@ -1,4 +1,4 @@
-import FormInputTextArea from "@/components/form-inputs/FormInputTextArea";
+import FormInputTextArea from "@/components/form-input-textarea";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof FormInputTextArea> = {

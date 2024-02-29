@@ -7,13 +7,10 @@ interface TextErrorProps {
     value?: string;
 }
 
-// todo: is this really needed?
 export default function TextError(props: TextErrorProps) {
     const showError = StringUtils.checkInput(props.value);
 
     if (showError) {
-        return <span className="text-sm font-medium text-red-600">{props.value}</span>;
+        return <span className="text-sm text-red-600">{props.value}</span>;
     }
-
-    return null;
 }

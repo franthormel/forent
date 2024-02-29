@@ -1,15 +1,14 @@
 "use client"
 
-import TextError from '@/components/text-error/TextError';
-import FormInput from '@/components/form-inputs/FormInput';
-import FormInputTextArea from '@/components/form-inputs/FormInputTextArea';
-import FormReset from '@/components/form-reset/FormReset';
-import FormMap from '@/components/form-map/FormMap';
+import Button from '@/components/button';
+import FormInput from '@/components/form-input';
+import FormInputTextArea from '@/components/form-input-textarea';
+import FormMap from '@/components/form-map';
+import FormReset from '@/components/form-reset';
+import TextError from '@/components/text-error';
 import { fetchDateOneYearFromToday, fetchToday } from "@/lib/date";
 import { useFormState } from 'react-dom';
 import { createListing } from './action';
-import Button from '@/components/buttons/Button';
-import { useState } from 'react';
 
 export default function CreateListing() {
     const [formState, formAction] = useFormState(createListing, '')
