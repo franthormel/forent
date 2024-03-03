@@ -1,4 +1,4 @@
-import SignOutButton from '@/components/auth-buttons/SignOutButton';
+import SignOutButton from '@/components/button-auth/SignOutButton';
 
 describe('<SignOutButton />', () => {
   it('works', () => {

@@ -1,4 +1,4 @@
-import HeaderLogo from '@/components/header-logo/HeaderLogo'
+import HeaderLogo from '@/components/header-logo'
 
 describe('HeaderLogo', () => {
   it('works', () => {
