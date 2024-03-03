@@ -4,31 +4,35 @@ import searchIcon from "@/public/icon/search.svg"
 import Image from 'next/image'
 import { useState } from 'react'
 
-type SearchbarWidth = "small" | "regular" | "large"
-interface SearchbarProps {
+type SearchWidth = "small" | "regular" | "large"
+interface SearchProps {
     onSubmit?: Function
     placeholder?: string
     /**
      * Default is 'regular'
      */
-    width?: SearchbarWidth
-
+    width?: SearchWidth
+    dataCyInput?: string
+    dataCyButtonIcon?: string
 }
 
-export default function Searchbar(props: SearchbarProps) {
+export default function Search(props: SearchProps) {
     const action = () => searchAction(props.onSubmit)
     const [searchValue, setSearchValue] = useState('')
-    const width = searchbarWidth(props.width)
+    const width = searchWidth(props.width)
+    const dataCyInput = props.dataCyInput ?? "searchInput";
+    const dataCyButtonIcon = props.dataCyButtonIcon ?? "searchButtonIcon";
 
     // if drop shadow is removed, outline must be added
     return (
-        <div className="flex w-fit justify-between rounded-full bg-slate-50 px-6 py-4 shadow-md">
+        <div className="flex w-fit justify-between rounded-full bg-slate-50 px-6 py-0 shadow-md">
             <input type='search'
                 autoCapitalize='none'
+                data-cy={dataCyInput}
                 maxLength={128}
                 placeholder={props.placeholder}
                 spellCheck='false'
-                className={`bg-slate-50 focus:outline-none ${width} `}
+                className={`bg-slate-50 focus:outline-none ${width} h-12`}
                 onChange={(e) => setSearchValue(e.target.value)}
                 onKeyDown={(e) => {
                     const key = e.key.toLowerCase()
@@ -42,6 +46,7 @@ export default function Searchbar(props: SearchbarProps) {
             <Image
                 className='ml-4 bg-slate-50 hover:cursor-pointer'
                 alt="Search"
+                data-cy={dataCyButtonIcon}
                 src={searchIcon}
                 onClick={action}
             />
@@ -57,7 +62,7 @@ export function searchAction(func?: Function) {
     }
 }
 
-export function searchbarWidth(width?: SearchbarWidth): string {
+export function searchWidth(width?: SearchWidth): string {
     let value
 
     switch (width) {

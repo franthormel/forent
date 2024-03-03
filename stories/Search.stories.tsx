@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import Searchbar from '@/components/searchbar'
+import Search from '@/components/search'
 
-const meta: Meta<typeof Searchbar> = {
-    title: 'Searchbar',
-    component: Searchbar,
+const meta: Meta<typeof Search> = {
+    title: 'Search',
+    component: Search,
     tags: ['autodocs'],
-} satisfies Meta<typeof Searchbar>
+} satisfies Meta<typeof Search>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -28,6 +28,7 @@ export const RegularWidth: Story = {
 export const LargeWidth: Story = {
     args: {
         onSubmit: submit,
-        width: 'large'
+        width: 'large',
+        placeholder: "fer"
     }
 }
