@@ -1,4 +1,5 @@
-import { FormDataUtils, NumberUtils } from "../lib/commons";
+import { NumberUtils } from "../lib/commons/number_utils";
+import { FormDataUtils } from "../lib/commons/formdata_utils";
 
 describe("commons", () => {
   describe("NumberUtils", () => {

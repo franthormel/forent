@@ -15,7 +15,7 @@ import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { useEffect, useRef, useState } from "react";
 import TextError from '../text-error';
 
-// TODO: Add custom icon, optimize geolocation, and pan animation when map point is selected
+// FUTURE: Add custom icon, optimize geolocation, and pan animation when map point is selected
 // https://openlayers.org/en/latest/examples/animation.html
 const mapZoomDefault = 2;
 

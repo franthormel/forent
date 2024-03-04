@@ -16,7 +16,8 @@ model Listing {
   description   String
   beds          Int
   baths         Int
-  area          Decimal   @db.Decimal(24, 2)
+  // Unit of measurement is in meters squared (sqm)
+  area          Decimal   @db.Decimal(24, 2) // FUTURE: this should be flexible in terms of units of measurement (sqft, etc.)
   availableDate DateTime? @db.Date
   /// Current and previous prices of the listing. The current price is the first entry in the list.
   prices        Price[]
@@ -40,6 +41,7 @@ model Price {
   isCurrent Boolean  @default(true)
   listing   Listing  @relation(fields: [listingId], references: [id])
   listingId String
+  // FUTURE: Add currency to support intl
 
   @@map("price")
 }

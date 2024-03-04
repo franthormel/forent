@@ -21,8 +21,8 @@ export default function Search(props: SearchProps) {
     const action = () => searchAction(props.onSubmit)
     const [searchValue, setSearchValue] = useState('')
     const width = searchWidth(props.width)
-    const dataCyInput = props.dataCyInput ?? "searchInput";
-    const dataCyButtonIcon = props.dataCyButtonIcon ?? "searchButtonIcon";
+    const dataCyInput = props.dataCyInput ?? "search-input";
+    const dataCyButtonIcon = props.dataCyButtonIcon ?? "search-button-icon";
 
     // if drop shadow is removed, outline must be added
     return (
