@@ -3,8 +3,9 @@
 import searchIcon from "@/public/icon/search.svg"
 import Image from 'next/image'
 import { useState } from 'react'
+import { searchAction, searchWidth } from "./functions"
+import { SearchWidth } from "./type"
 
-type SearchWidth = "small" | "regular" | "large"
 interface SearchProps {
     onSubmit?: Function
     placeholder?: string
@@ -53,29 +54,3 @@ export default function Search(props: SearchProps) {
         </div>
     )
 }
-
-export function searchAction(func?: Function) {
-    if (func) {
-        func()
-    } else {
-        console.log("Searchbar not working 🙀!")
-    }
-}
-
-export function searchWidth(width?: SearchWidth): string {
-    let value
-
-    switch (width) {
-        case 'small': value = "w-52"; break
-        case 'large': value = "w-96"; break
-        default: value = "w-72"; break
-    }
-
-    return value
-}
-
-// TODO:
-// 1. fix cypress (all)
-// 2. cypress (this)
-// 3. jest (this)
-// 4. check

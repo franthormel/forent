@@ -29,6 +29,6 @@ export const LargeWidth: Story = {
     args: {
         onSubmit: submit,
         width: 'large',
-        placeholder: "fer"
+        placeholder: "Search"
     }
 }
