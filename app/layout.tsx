@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: 'Forent is a convenient platform for rental properties for you! Start exploring and find your ideal rental today!',
   referrer: 'no-referrer',
   keywords: ['apartment', 'forent', 'lease', 'property', 'rent',],
-  authors: { name: 'Francis Anthony Carmel', url: 'mailto:fcaboyo@gmail.com' },
+  authors: { name: 'franthormel', url: 'mailto:fcaboyo@gmail.com' },
   creator: 'franthormel',
   publisher: 'franthormel',
   openGraph: {
