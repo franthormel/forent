@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { textFont } from './fonts'
 
-import NavMenu from '@/components/navmenu'
+import NavigationMenu from '@/components/navigation-menu'
 import './global.css'
 
 export const metadata: Metadata = {
@@ -33,10 +33,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${textFont.className} px-14 py-8`}>
-      <body className='flex flex-col gap-5'>
-        <NavMenu />
+    <html lang="en" className={`${textFont.className}`}>
+      <body>
+        <NavigationMenu />
         {children}
+        {/* TODO: add footer */}
       </body>
     </html>
   )
