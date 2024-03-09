@@ -19,6 +19,7 @@ export const textFont = DM_Sans({
 export const headerFont = DM_Serif_Display({
   subsets: ["latin"],
   weight: "400",
+  adjustFontFallback: true,
 });
 
 export const logoFont = Libre_Baskerville({
