@@ -46,7 +46,7 @@ export default function RootLayout({
           </div>
         </div>
         {children}
-        <div className='flex p-20 border-t-2 border-gray-200'>
+        <div className='mt-20 flex border-t-2 border-gray-200 p-20'>
           <div className='grid auto-cols-max grid-flow-col content-center gap-x-20'>
             {/* TODO: Use HeaderLink */}
             <Header value='About' />

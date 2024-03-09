@@ -4,7 +4,7 @@ import { NumberUtils } from "@/lib/commons/number_utils"
 import { StringUtils } from "@/lib/commons/string_utils"
 import Image from 'next/image'
 
-interface CardListingProps {
+export interface CardListingProps {
     addressLine1: string
     addressLine2: string
     area: number | string
@@ -36,15 +36,15 @@ export default function CardListing(props: CardListingProps) {
     const dataCyAddressLine2 = props.dataCyAddressLine2 ?? "card-listing-address-line2"
 
     return (
-        <div className="h-fit w-80 cursor-pointer rounded-md bg-slate-50 p-0 shadow-md transition-all hover:shadow-lg"
+        <div className="h-fit w-80 cursor-pointer rounded-md bg-slate-50 p-0 shadow-md transition-all hover:shadow-2xl"
             // FUTURE: Action, prepare for view listing route page but for now use func() only
             onClick={() => console.log("Card 🃏")}>
             <Image
                 className="w-full rounded-t-md object-cover"
                 alt="Search"
                 src={props.imgUrl}
-                height={100}
-                width={100}
+                height={300}
+                width={300}
                 data-cy={dataCyImage}
             />
             <div className="grid grid-flow-row auto-rows-max gap-2 p-5">
@@ -70,6 +70,3 @@ export default function CardListing(props: CardListingProps) {
         </div>
     )
 }
-
-// TODO: component
-// component test
