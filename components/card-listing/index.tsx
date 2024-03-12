@@ -4,7 +4,7 @@ import { NumberUtils } from "@/lib/commons/number_utils"
 import { StringUtils } from "@/lib/commons/string_utils"
 import Image from 'next/image'
 
-export interface CardListingProps {
+interface CardListingProps {
     addressLine1: string
     addressLine2: string
     area: number | string
@@ -36,11 +36,11 @@ export default function CardListing(props: CardListingProps) {
     const dataCyAddressLine2 = props.dataCyAddressLine2 ?? "card-listing-address-line2"
 
     return (
-        <div className="h-fit w-80 cursor-pointer rounded-md bg-slate-50 p-0 shadow-md transition-all hover:shadow-2xl"
+        <div className="w-80 cursor-pointer rounded-md bg-slate-50 p-0 shadow-md transition-all hover:shadow-xl"
             // FUTURE: Action, prepare for view listing route page but for now use func() only
             onClick={() => console.log("Card 🃏")}>
             <Image
-                className="w-full rounded-t-md object-cover"
+                className="h-3/5 w-full rounded-t-md object-cover"
                 alt="Search"
                 src={props.imgUrl}
                 height={300}

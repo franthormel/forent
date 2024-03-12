@@ -1,64 +1,47 @@
-import Button from '@/components/button';
-import CardListing, { CardListingProps } from '@/components/card-listing';
-import { Metadata } from 'next';
-import Image from 'next/image';
-import bacgkroundImage from '../public/home.jpg';
-import Search from '@/components/search';
+import Button from '@/components/button'
+import CardListing from '@/components/card-listing'
+import Search from '@/components/search'
+import prisma from '@/lib/db'
+import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Rent Property | Forent',
+  description: 'Forent is a convenient platform for rental properties for you! Start exploring and find your ideal rental today!',
+  keywords: ['apartment', 'forent', 'lease', 'property', 'rent',],
+  authors: { name: 'franthormel', url: 'mailto:fcaboyo@gmail.com' },
+  creator: 'franthormel',
+  publisher: 'franthormel',
 }
 
-const listings: CardListingProps[] = [
-  {
-    addressLine1: 'Carmelray Industrial Park II, Brgy. Punto',
-    addressLine2: 'Calamba, Laguna',
-    area: '95',
-    baths: '3',
-    beds: '4',
-    imgUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: '₱ 96,400/mo',
-  },
-  {
-    addressLine1: 'Carmelray Industrial Park II, Brgy. Punto',
-    addressLine2: 'Calamba, Laguna',
-    area: '95',
-    baths: '3',
-    beds: '4',
-    imgUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: '₱ 96,400/mo',
-  },
-  {
-    addressLine1: 'Carmelray Industrial Park II, Brgy. Punto',
-    addressLine2: 'Calamba, Laguna',
-    area: '95',
-    baths: '3',
-    beds: '4',
-    imgUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: '₱ 96,400/mo',
-  },
-  {
-    addressLine1: 'Carmelray Industrial Park II, Brgy. Punto',
-    addressLine2: 'Calamba, Laguna',
-    area: '95',
-    baths: '3',
-    beds: '4',
-    imgUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    price: '₱ 96,400/mo',
-  },
-]
+export default async function Home() {
+  // Take four (4) listings
+  const dbListings = await prisma.listing.findMany({ take: 4 })
 
-export default function Home() {
-  const cardListings = listings.map(listing => {
+  // Transform those four (4) listings into components
+  const cardListings = dbListings.map(async listing => {
+    // Fetch the listing's address
+    const address = await prisma.address.findUnique({
+      where: {
+        listingId: listing.id
+      }
+    })
+    // Fetch the listing's current price value
+    const prices = await prisma.price.findMany({
+      where: {
+        listingId: listing.id,
+      }
+    })
+    const currentPrice = prices.filter(price => price.isCurrent).at(0);
+
     return <CardListing
       key={crypto.randomUUID()}
-      addressLine1={listing.addressLine1}
-      addressLine2={listing.addressLine2}
-      area={listing.area}
+      addressLine1={address!.addressLine}
+      addressLine2={`${address!.city}, ${address!.state}`}
+      area={listing.area.toString()}
       baths={listing.baths}
       beds={listing.beds}
-      imgUrl={listing.imgUrl}
-      price={listing.price}
+      imgUrl={listing.imageUrls[0]}
+      price={`$ ${currentPrice!.value}`}
     />
   })
 
@@ -77,10 +60,7 @@ export default function Home() {
         <Button text='View more listings' />
       </div>
     </div >
-  );
+  )
 }
 
-// todo:
-// 1. get listings from actual data
-// 2. metadata do not forget
-// 3. e2e
+// todo: e2e test
