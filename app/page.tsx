@@ -53,10 +53,12 @@ export default async function Home() {
           <Search placeholder='Search for an address' />
         </div>
       </div>
+      {/* TODO: fix DOM hydration error */}
       <div className='grid auto-cols-min grid-flow-col justify-center gap-12'>
         {cardListings}
       </div>
       <div className='grid justify-center'>
+        {/* TODO: Make button router or link */}
         <Button text='View more listings' />
       </div>
     </div >
