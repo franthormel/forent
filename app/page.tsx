@@ -1,8 +1,7 @@
 import Button from '@/components/button'
-import CardListing from '@/components/card-listing'
 import Search from '@/components/search'
-import prisma from '@/lib/db'
 import { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 
 export const metadata: Metadata = {
   title: 'Rent Property | Forent',
@@ -13,38 +12,9 @@ export const metadata: Metadata = {
   publisher: 'franthormel',
 }
 
-export default async function Home() {
-  // Take four (4) listings
-  const dbListings = await prisma.listing.findMany({ take: 4 })
+const CardListings = dynamic(() => import('./_component/card-listings'), { ssr: false })
 
-  // Transform those four (4) listings into components
-  const cardListings = dbListings.map(async listing => {
-    // Fetch the listing's address
-    const address = await prisma.address.findUnique({
-      where: {
-        listingId: listing.id
-      }
-    })
-    // Fetch the listing's current price value
-    const prices = await prisma.price.findMany({
-      where: {
-        listingId: listing.id,
-      }
-    })
-    const currentPrice = prices.filter(price => price.isCurrent).at(0);
-
-    return <CardListing
-      key={crypto.randomUUID()}
-      addressLine1={address!.addressLine}
-      addressLine2={`${address!.city}, ${address!.state}`}
-      area={listing.area.toString()}
-      baths={listing.baths}
-      beds={listing.beds}
-      imgUrl={listing.imageUrls[0]}
-      price={`$ ${currentPrice!.value}`}
-    />
-  })
-
+export default function Home() {
   return (
     <div className='grid grid-flow-row auto-rows-auto gap-24'>
       <div className="bg-[url('/home.jpg')] bg-cover bg-center">
@@ -53,10 +23,7 @@ export default async function Home() {
           <Search placeholder='Search for an address' />
         </div>
       </div>
-      {/* TODO: fix DOM hydration error */}
-      <div className='grid auto-cols-min grid-flow-col justify-center gap-12'>
-        {cardListings}
-      </div>
+      <CardListings />
       <div className='grid justify-center'>
         {/* TODO: Make button router or link */}
         <Button text='View more listings' />
@@ -64,5 +31,4 @@ export default async function Home() {
     </div >
   )
 }
-
 // todo: e2e test
