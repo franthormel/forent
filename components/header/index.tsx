@@ -1,6 +1,6 @@
 import { headerFont } from "@/app/fonts";
 
-interface HeaderProps {
+export interface HeaderProps {
     /**
      * Text to display
      */
