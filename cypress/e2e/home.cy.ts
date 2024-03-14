@@ -3,7 +3,7 @@ describe("homepage", () => {
     cy.visit("/");
   });
 
-  describe("display correct UI and labels", () => {
+  describe("should display correct UI and labels", () => {
     it("header", () => {
       cy.get('[data-cy="logo-header"]').should("have.text", "Forent");
 
@@ -49,23 +49,30 @@ describe("homepage", () => {
     });
   });
 
-  // TODO: Fix
-  describe("authentication", () => {
-    it("Google OAuth", () => {
+  describe("should display proper authentication options", () => {
+    it("when user is not authenticated", () => {
+      cy.get('[data-cy="header-link-sign-in"]')
+        .should("exist")
+        .and("be.visible");
+    });
+
+    it("when user is authenticated via Google OAuth", () => {
       cy.loginByGoogleApi();
     });
 
     it("sign-in then sign-out", () => {
-      // Sign-in
       cy.login();
       cy.reload();
 
-      // Sign-out button is displayed after signing in.
-      cy.get('[data-cy="signout-button"]').should("exist");
+      cy.get('[data-cy="header-action-sign-out"]')
+        .should("exist")
+        .and("be.visible")
+        .click();
+      cy.reload();
 
-      // Sign-out
-      cy.visit("/api/auth/signout");
-      cy.get("#submitButton").click();
+      cy.get('[data-cy="header-link-sign-in"]')
+        .should("exist")
+        .and("be.visible");
     });
   });
 });

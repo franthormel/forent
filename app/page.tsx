@@ -33,4 +33,3 @@ export default function Home() {
     </div >
   )
 }
-// todo: e2e test

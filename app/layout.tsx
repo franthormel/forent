@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { textFont } from './fonts'
 
 import Header from '@/components/header'
+import HeaderAuth from '@/components/header/auth'
 import HeaderLink from '@/components/header/link'
 import HeaderLogo from '@/components/header/logo'
 import './global.css'
@@ -42,15 +43,11 @@ export default function RootLayout({
           <HeaderLogo />
           <div className='grid auto-cols-max grid-flow-col content-center gap-x-20'>
             <HeaderLink value='Create Listing'
-              link='/listings/create/'
+              href='/listings/create/'
               dataCyHeader='header-create-listing'
               dataCyHeaderLink='header-link-create-listing'
             />
-            {/* TODO: Show Sign Out if user has logged in */}
-            <HeaderLink value='Sign In'
-              link='/api/auth/signin'
-              dataCyHeader='header-sign-in'
-              dataCyHeaderLink='header-link-sign-in' />
+            <HeaderAuth />
           </div>
         </div>
         {/* Content */}
