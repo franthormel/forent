@@ -1,4 +1,4 @@
-import HeaderLogo from "@/components/header-logo";
+import HeaderLogo from "@/components/header/logo";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof HeaderLogo> = {

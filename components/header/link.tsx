@@ -1,6 +1,5 @@
-import { headerFont } from "@/app/fonts";
-import Header, { HeaderProps } from "../header";
 import Link from "next/link";
+import Header, { HeaderProps } from ".";
 
 interface HeaderLinkProps extends HeaderProps {
     link: string;

@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { textFont } from './fonts'
 
 import Header from '@/components/header'
-import HeaderLink from '@/components/header-link'
-import HeaderLogo from '@/components/header-logo'
+import HeaderLink from '@/components/header/link'
+import HeaderLogo from '@/components/header/logo'
 import './global.css'
 
 export const metadata: Metadata = {
