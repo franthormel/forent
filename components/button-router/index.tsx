@@ -25,7 +25,7 @@ export default function ButtonRouter(props: ButtonRouterProps) {
     return (
         <Button onClick={() => router.push(props.route)}
             text={props.text}
-            dataCy="button-router"
+            dataCyBtn="button-router"
         />
     );
 }

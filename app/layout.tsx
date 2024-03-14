@@ -46,6 +46,7 @@ export default function RootLayout({
               dataCyHeader='header-create-listing'
               dataCyHeaderLink='header-link-create-listing'
             />
+            {/* TODO: Show Sign Out if user has logged in */}
             <HeaderLink value='Sign In'
               link='/api/auth/signin'
               dataCyHeader='header-sign-in'
@@ -60,7 +61,7 @@ export default function RootLayout({
             <Header value='About' dataCyHeader='header-about' />
             <Header value='Privacy' dataCyHeader='header-privacy' />
             <Header value='Accessibility' dataCyHeader='header-a11y' />
-            <Header value='Sitemap' dataCyHeader='data-sitemap' />
+            <Header value='Sitemap' dataCyHeader='header-sitemap' />
           </div>
         </div>
       </body>

@@ -19,14 +19,16 @@ export default function Home() {
     <div className='grid grid-flow-row auto-rows-auto gap-24'>
       <div className="bg-[url('/home.jpg')] bg-cover bg-center">
         <div className="grid h-96 w-full grid-flow-row auto-rows-max gap-5 bg-gray-800/30 px-20 pt-20">
-          <header className='text-8xl text-slate-50'>Renting made simple</header>
+          <header className='text-8xl text-slate-50'
+            data-cy="header-main">
+            Renting made simple
+          </header>
           <Search placeholder='Search for an address' />
         </div>
       </div>
       <CardListings />
       <div className='grid justify-center'>
-        {/* TODO: Make button router or link */}
-        <Button text='View more listings' />
+        <Button text='View more listings' dataCyBtn='btn-view-listings' />
       </div>
     </div >
   )
