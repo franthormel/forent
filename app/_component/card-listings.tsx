@@ -5,6 +5,10 @@ export default async function CardListings() {
     // Take four (4) listings
     const dbListings = await prisma.listing.findMany({ take: 4 })
 
+    if (dbListings.length === 0) {
+        return null;
+    }
+
     // Transform those four (4) listings into components
     const cardListings = dbListings.map(async listing => {
         // Fetch the listing's address
