@@ -7,7 +7,7 @@ export function fetchToday(): Date {
   return new Date(year, month, day);
 }
 
-// TODO: Make offset functions (for year, month, day)
+// FUTURE: Make offset functions (for year, month, day)
 export function fetchDateOneYearFromToday(): Date {
   const today = new Date();
   const year = today.getFullYear() + 1;

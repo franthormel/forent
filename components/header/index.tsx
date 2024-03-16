@@ -1,0 +1,18 @@
+import { headerFont } from "@/app/fonts";
+
+export interface HeaderProps {
+    /**
+     * Text to display
+     */
+    value: string;
+    dataCyHeader?: string;
+}
+
+export default function Header(props: HeaderProps) {
+    return (
+        <header className={`${headerFont.className} text-gray-800 text-2xl`}
+            data-cy={props.dataCyHeader ?? "header"}>
+            {props.value ?? "Header"}
+        </header>
+    );
+}
