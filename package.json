@@ -48,7 +48,7 @@
   "scripts": {
     "build": "next build",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --exit-zero-changes",
+    "chromatic": "npx chromatic --only-changed --exit-zero-changes --externals 'public/**'",
     "cypress-open": "cypress open",
     "cypress-run-component": "cypress run --component",
     "cypress-run-e2e": "cypress run",
