@@ -2,6 +2,10 @@ const { PrismaClient } = require('@prisma/client')
 const { faker } = require('@faker-js/faker');
 const prisma = new PrismaClient()
 
+function generateRandomNumber(limit) {
+  return Math.floor(Math.random() * limit)
+}
+
 function fetchRandomImageURL() {
   const imgURLs = [
     "https://images.unsplash.com/photo-1449247613801-ab06418e2861",
@@ -101,20 +105,19 @@ function fetchRandomImageURL() {
     "https://images.unsplash.com/photo-1658218635253-64728f6234be",
     "https://images.unsplash.com/photo-1658218729615-167c32d70537",
   ]
-  const limit = imgURLs.length
-  const index = Math.floor(Math.random() * limit)
+  const index = generateRandomNumber(imgURLs.length)
   return imgURLs[index]
 }
 
-const unverified = 10;
-const verified = 5;
+const unverified = 2;
+const verified = 3;
 const userCount = unverified + verified;
 
 // Listing count
-const variantA = 10;
-const variantB = 14;
-const variantC = 12;
-const variantD = 9;
+const variantA = 3;
+const variantB = 4;
+const variantC = 5;
+const variantD = 3;
 
 async function main() {
   // Reset
@@ -125,9 +128,8 @@ async function main() {
   await prisma.user.deleteMany();
 
   const users = [];
-  // Create users with verified emails
   for (let i = 0; i < verified; i++) {
-    const newUser = await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         name: faker.person.fullName(),
         contactNumber: faker.phone.number(),
@@ -135,18 +137,17 @@ async function main() {
         emailVerified: faker.date.past()
       },
     });
-    users.push(newUser);
+    users.push(user);
   }
-  // Create users with unverified emails
   for (let i = 0; i < unverified; i++) {
-    const newUser = await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         name: faker.person.fullName(),
         contactNumber: faker.phone.number(),
         email: faker.internet.exampleEmail(),
       },
     });
-    users.push(newUser);
+    users.push(user);
   }
 
   // Listing Variant A
@@ -156,7 +157,7 @@ async function main() {
   // One (1) pricing
   for (let i = 0; i < variantA; i++) {
     // Choose random user
-    const userIndex = Math.floor(Math.random() * userCount);
+    const userIndex = generateRandomNumber(userCount);
     const user = users[userIndex];
 
     await prisma.listing.create({
@@ -202,7 +203,7 @@ async function main() {
   // Two (2) pricings
   for (let i = 0; i < variantB; i++) {
     // Choose random user
-    const userIndex = Math.floor(Math.random() * userCount);
+    const userIndex = generateRandomNumber(userCount);
     const user = users[userIndex];
 
     const endDate = faker.date.past();
@@ -266,7 +267,7 @@ async function main() {
   // Three (3) pricings
   for (let i = 0; i < variantC; i++) {
     // Choose random user
-    const userIndex = Math.floor(Math.random() * userCount);
+    const userIndex = generateRandomNumber(userCount);
     const user = users[userIndex];
 
     const endDateA = faker.date.past();
@@ -338,7 +339,7 @@ async function main() {
   // Three (3) pricings
   for (let i = 0; i < variantD; i++) {
     // Choose random user
-    const userIndex = Math.floor(Math.random() * userCount);
+    const userIndex = generateRandomNumber(userCount);
     const user = users[userIndex];
 
     const date202312 = faker.date.past();
