@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { textFont } from './fonts'
 
+import ButtonIconMenu from '@/components/button-icons/menu'
 import Header from '@/components/header'
 import HeaderAuth from '@/components/header/auth'
 import HeaderLink from '@/components/header/link'
@@ -40,8 +41,13 @@ export default function RootLayout({
       <body>
         {/* Header */}
         <div className='flex justify-between p-20'>
+          {/* Header Logo */}
           <HeaderLogo />
-          <div className='grid auto-cols-max grid-flow-col content-center gap-x-20'>
+          {/* Header Action(s) */}
+          <div className='lg:hidden'>
+            <ButtonIconMenu />
+          </div>
+          <div className='hidden auto-cols-max grid-flow-col content-center gap-x-20 lg:grid'>
             <HeaderLink value='Create Listing'
               href='/listings/create/'
               dataCyHeader='header-create-listing'
