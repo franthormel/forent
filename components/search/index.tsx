@@ -1,8 +1,7 @@
 "use client"
 
-import searchIcon from "@/public/icon/search.svg"
-import Image from 'next/image'
 import { useState } from 'react'
+import ButtonIconSearch from '../button-icons/search'
 import { searchAction, searchWidth } from "./functions"
 import { SearchWidth } from "./type"
 
@@ -14,7 +13,7 @@ interface SearchProps {
      */
     width?: SearchWidth
     dataCyInput?: string
-    dataCyButtonIcon?: string
+    dataCyButtonIconSearch?: string
 }
 
 export default function Search(props: SearchProps) {
@@ -22,7 +21,7 @@ export default function Search(props: SearchProps) {
     const [searchValue, setSearchValue] = useState('')
     const width = searchWidth(props.width)
     const dataCyInput = props.dataCyInput ?? "search-input";
-    const dataCyButtonIcon = props.dataCyButtonIcon ?? "search-button-icon";
+    const dataCyButtonIcon = props.dataCyButtonIconSearch ?? "search-btn-icon";
 
     // if drop shadow is removed, outline must be added
     return (
@@ -44,13 +43,7 @@ export default function Search(props: SearchProps) {
                     }
                 }}
             />
-            <Image
-                className='ml-4 bg-slate-50 hover:cursor-pointer'
-                alt="Search"
-                data-cy={dataCyButtonIcon}
-                src={searchIcon}
-                onClick={action}
-            />
+            <ButtonIconSearch onClick={action} dataCy={dataCyButtonIcon} />
         </div>
     )
 }
