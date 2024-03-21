@@ -45,7 +45,7 @@ export default function RootLayout({
           <HeaderLogo />
           {/* Header Action(s) */}
           <div className='lg:hidden'>
-            <ButtonIconMenu />
+            <ButtonIconMenu size={48} />
           </div>
           <div className='hidden auto-cols-max grid-flow-col content-center gap-x-20 lg:grid'>
             <HeaderLink value='Create Listing'

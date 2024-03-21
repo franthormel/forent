@@ -6,14 +6,14 @@ import { searchAction, searchWidth } from "./functions"
 import { SearchWidth } from "./type"
 
 interface SearchProps {
-    onSubmit?: Function
+    dataCyInput?: string
+    dataCyButtonIconSearch?: string
     placeholder?: string
     /**
      * Default is 'regular'
      */
     width?: SearchWidth
-    dataCyInput?: string
-    dataCyButtonIconSearch?: string
+    onSubmit?: Function
 }
 
 export default function Search(props: SearchProps) {
