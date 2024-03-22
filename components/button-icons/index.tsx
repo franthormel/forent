@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { ButtonIconProps } from "./types";
 
 // TODO: make component test
-// TODO: make story
 export default function ButtonIcon({ children, props }: {
     props: ButtonIconProps,
     children: ReactNode

@@ -5,7 +5,6 @@ import { iconSize } from "./functions"
 import { ButtonIconActualProps } from "./types"
 
 // TODO: make component test
-// TODO: make story
 export default function ButtonIconMenu(props: ButtonIconActualProps) {
     const size = iconSize(props.size)
 
