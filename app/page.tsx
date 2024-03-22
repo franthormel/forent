@@ -24,7 +24,9 @@ export default function Home() {
             data-cy="header-main">
             Renting made simple
           </header>
-          <Search placeholder='Search for an address' />
+          <div className='w-5/6 md:max-w-lg'>
+            <Search placeholder='Search for an address' />
+          </div>
         </div>
       </div>
       {/* TODO: Carousel */}
