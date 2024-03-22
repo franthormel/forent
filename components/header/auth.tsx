@@ -11,6 +11,6 @@ export default async function HeaderAuth() {
 
     return <HeaderLink value="Sign In"
         href="/api/auth/signin"
-        dataCyHeader='header-sign-in'
+        dataCy='header-sign-in'
         dataCyHeaderLink='header-link-sign-in' />
 }

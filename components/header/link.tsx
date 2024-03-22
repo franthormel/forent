@@ -9,7 +9,7 @@ interface HeaderLinkProps extends HeaderProps {
 export default function HeaderLink(props: HeaderLinkProps) {
     return (
         <Link href={props.href} data-cy={props.dataCyHeaderLink ?? "header-link"}>
-            <Header value={props.value} dataCyHeader={props.dataCyHeader} />
+            <Header value={props.value} dataCy={props.dataCy} />
         </Link>
     );
 }

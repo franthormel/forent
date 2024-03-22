@@ -11,7 +11,7 @@ export default function HeaderAction(props: HeaderActionsProps) {
         <div onClick={props.onClick}
             className="cursor-pointer"
             data-cy={props.dataCyHeaderAction ?? "header-action"}>
-            <Header value={props.value} dataCyHeader={props.dataCyHeader} />
+            <Header value={props.value} dataCy={props.dataCy} />
         </div>
     )
 }

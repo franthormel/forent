@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { textFont } from './fonts'
 
-import Header from '@/components/header'
+import ButtonIconMenu from '@/components/button-icons/menu'
+import Footer from '@/components/footer'
 import HeaderAuth from '@/components/header/auth'
 import HeaderLink from '@/components/header/link'
 import HeaderLogo from '@/components/header/logo'
@@ -40,11 +41,17 @@ export default function RootLayout({
       <body>
         {/* Header */}
         <div className='flex justify-between p-20'>
+          {/* Header Logo */}
           <HeaderLogo />
-          <div className='grid auto-cols-max grid-flow-col content-center gap-x-20'>
+          {/* Header Action(s) */}
+          <div className='lg:hidden'>
+            {/* TODO: Show sidemenu when clicked */}
+            <ButtonIconMenu size={48} />
+          </div>
+          <div className='hidden auto-cols-max grid-flow-col content-center gap-x-20 lg:grid'>
             <HeaderLink value='Create Listing'
               href='/listings/create/'
-              dataCyHeader='header-create-listing'
+              dataCy='header-create-listing'
               dataCyHeaderLink='header-link-create-listing'
             />
             <HeaderAuth />
@@ -52,15 +59,7 @@ export default function RootLayout({
         </div>
         {/* Content */}
         {children}
-        {/* Footer */}
-        <div className='mt-20 flex border-t-2 border-gray-200 p-20'>
-          <div className='grid auto-cols-max grid-flow-col content-center gap-x-20'>
-            <Header value='About' dataCyHeader='header-about' />
-            <Header value='Privacy' dataCyHeader='header-privacy' />
-            <Header value='Accessibility' dataCyHeader='header-a11y' />
-            <Header value='Sitemap' dataCyHeader='header-sitemap' />
-          </div>
-        </div>
+        <Footer />
       </body>
     </html>
   )

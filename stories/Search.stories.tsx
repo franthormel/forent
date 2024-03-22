@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react'
 import Search from '@/components/search'
+import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<typeof Search> = {
     title: 'Search',
@@ -10,25 +10,10 @@ const meta: Meta<typeof Search> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-function submit() {
-    console.log("Searched for 👇")
-}
-
-export const SmallWidth: Story = {
-    args: {
-        onSubmit: submit,
-        width: 'small'
-    }
-}
 export const RegularWidth: Story = {
     args: {
-        onSubmit: submit
-    }
-}
-export const LargeWidth: Story = {
-    args: {
-        onSubmit: submit,
-        width: 'large',
-        placeholder: "Search"
+        onSubmit: () => {
+            console.log("Searching 🔍")
+        }
     }
 }

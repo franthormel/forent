@@ -12,7 +12,7 @@ describe('Search', () => {
             .should('exist')
             .and('be.visible')
             .and('not.have.text')
-        cy.get('[data-cy="search-button-icon"]')
+        cy.get('[data-cy="search-btn-icon"]')
             .should('exist')
             .and('be.visible')
     })
