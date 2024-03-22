@@ -29,7 +29,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {/* TODO: Carousel */}
+      {/* Carousel */}
       {/* TODO: <CardListings /> */}
       {/* Button */}
       <div className='grid justify-center'>
