@@ -60,13 +60,11 @@ export default function RootLayout({
         {/* Content */}
         {children}
         {/* Footer */}
-        <div className='mt-20 flex border-t-2 border-gray-200 p-20'>
-          <div className='grid auto-cols-max grid-flow-col content-center gap-x-20'>
-            <Header value='About' dataCyHeader='header-about' />
-            <Header value='Privacy' dataCyHeader='header-privacy' />
-            <Header value='Accessibility' dataCyHeader='header-a11y' />
-            <Header value='Sitemap' dataCyHeader='header-sitemap' />
-          </div>
+        <div className='mt-20 flex gap-x-20  border-t-2 border-gray-200 p-20'>
+          <Header value='About' dataCyHeader='header-about' />
+          <Header value='Privacy' dataCyHeader='header-privacy' />
+          <Header value='Accessibility' dataCyHeader='header-a11y' />
+          <Header value='Sitemap' dataCyHeader='header-sitemap' />
         </div>
       </body>
     </html>
