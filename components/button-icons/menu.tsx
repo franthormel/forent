@@ -4,7 +4,6 @@ import ButtonIcon from "."
 import { iconSize } from "./functions"
 import { ButtonIconActualProps } from "./types"
 
-// TODO: make component test
 export default function ButtonIconMenu(props: ButtonIconActualProps) {
     const size = iconSize(props.size)
 

@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { ButtonIconProps } from "./types";
 
-// TODO: make component test
 export default function ButtonIcon({ children, props }: {
     props: ButtonIconProps,
     children: ReactNode

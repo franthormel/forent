@@ -1,6 +1,6 @@
 import HeaderLink from '@/components/header/link'
 
-describe('HeaderLink', () => {
+describe('Header Link', () => {
     it('works (variant A)', () => {
         cy.mount(<HeaderLink value='Header' href='/' />)
         cy.get('[data-cy="header-link"]')
