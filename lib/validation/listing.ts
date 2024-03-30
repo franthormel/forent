@@ -28,7 +28,7 @@ export class FormListingValidator implements Validator<FormListing> {
       .number()
       .min(Number(process.env.LISTING_DEPOSIT_MIN ?? 0))
       .max(Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)),
-    availableDate: z.date(), // todo: min and max dates
+    availableDate: z.date(), // FUTURE: min and max dates
     beds: z
       .number()
       .min(Number(process.env.LISTING_BEDS_MIN ?? 1))

@@ -2,13 +2,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// todo: fix for prod env
+// FUTURE: fix for prod env
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// todo: need to implement `on delete cascade` https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/referential-actions#cascade
+// FUTURE: need to implement `on delete cascade` https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/referential-actions#cascade
 
 model Listing {
   id            String    @id @default(cuid())
@@ -57,7 +57,7 @@ model Rating {
   @@map("rating")
 }
 
-// todo: user must only be able to give one rating per listing ;3
+// FUTURE: user must only be able to give one rating per listing ;3
 
 /// Each address must be associated with one (1) listing. (for now)
 model Address {

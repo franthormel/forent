@@ -47,7 +47,7 @@ export async function createListing(prevState: any, formData: FormData) {
     },
   });
 
-  // todo: remove city and prov from addressLine (only use nearest.name)
+  // FUTURE: remove city and prov from addressLine (only use nearest.name)
   const addressLine =
     address.nearest.name +
     "," +
@@ -61,7 +61,7 @@ export async function createListing(prevState: any, formData: FormData) {
       description: listing.description,
       beds: listing.beds,
       baths: listing.baths,
-      area: 100.0, // todo: fix
+      area: 100.0, // FUTURE: make this be inputted in form
       availableDate: listing.availableDate,
       user: {
         connect: {
@@ -69,7 +69,7 @@ export async function createListing(prevState: any, formData: FormData) {
         },
       },
       address: {
-        // todo: need to anticipate what if no value from geocode response (for example, user chose a faraway remote location from the map widget)
+        // FUTURE: need to anticipate what if no value from geocode response (for example, user chose a faraway remote location from the map widget)
         create: {
           addressLine: addressLine,
           city: address.nearest.city,
@@ -87,7 +87,5 @@ export async function createListing(prevState: any, formData: FormData) {
     },
   });
 
-  // todo: redirect to preview
-
-  // todo: redirect to create listing
+  // FUTURE: redirect to create listing preview
 }
