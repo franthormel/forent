@@ -29,8 +29,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {/* Carousel */}
-      {/* TODO: <CardListings /> */}
+      <div className='place-self-center'>
+        <CardListings />
+      </div>
       {/* Button */}
       <div className='grid justify-center'>
         <Button text='View more listings' dataCyBtn='btn-view-listings' />

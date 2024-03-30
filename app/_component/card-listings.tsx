@@ -38,7 +38,7 @@ export default async function CardListings() {
     })
 
     return (
-        <div className="grid auto-cols-min grid-flow-col justify-center gap-12">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 2xl:grid-cols-4">
             {cardListings}
         </div>
     )
