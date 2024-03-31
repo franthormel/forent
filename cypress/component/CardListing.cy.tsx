@@ -1,6 +1,6 @@
 import CardListing from '@/components/card-listing';
 
-describe('CardList', () => {
+describe('Card Listing', () => {
     it('should display correct text when there is only one (1) bed or bath', () => {
         cy.mount(<CardListing addressLine1='Address Line A1'
             addressLine2='Address Line A2'

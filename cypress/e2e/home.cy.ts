@@ -3,49 +3,85 @@ describe("homepage", () => {
     cy.visit("/");
   });
 
-  describe("should display correct UI and labels", () => {
-    it("header", () => {
-      cy.get('[data-cy="logo-header"]').should("have.text", "Forent");
+  [640, 768, 1024, 1280, 1536].forEach((width) => {
+    describe(`display correct UI when viewport width is ${width}`, () => {
+      before(() => {
+        cy.viewport(width, 1000);
+      });
 
-      cy.get('[data-cy="header-link-create-listing"]')
-        .should("have.text", "Create Listing")
-        .and("have.attr", "href")
-        .and("include", "/listings/create");
+      it("header", () => {
+        cy.get('[data-cy="logo-header"]')
+          .should("exist")
+          .and("be.visible")
+          .and("have.text", "Forent");
 
-      cy.get('[data-cy="header-link-sign-in"]')
-        .should("have.text", "Sign In")
-        .and("have.attr", "href")
-        .and("include", "/api/auth/signin");
-    });
+        cy.get('[data-cy="header-link-create-listing"]')
+          .should("exist")
+          .and("be.visible")
+          .and("have.text", "Create Listing")
+          .and("have.attr", "href")
+          .and("include", "/listings/create");
 
-    it("footer", () => {
-      cy.get('[data-cy="header-about"]')
-        .should("have.text", "About")
-        .and("not.have.attr", "href");
+        cy.get('[data-cy="header-link-sign-in"]')
+          .should("exist")
+          .and("be.visible")
+          .and("have.text", "Sign In")
+          .and("have.attr", "href")
+          .and("include", "/api/auth/signin");
+      });
 
-      cy.get('[data-cy="header-privacy"]')
-        .should("have.text", "Privacy")
-        .and("not.have.attr", "href");
+      it("footer", () => {
+        cy.get('[data-cy="footer"]')
+          .should("exist")
+          .and("be.visible")
+          .and("have.css", "border-top-color", "rgb(229, 231, 235)");
+        cy.get('[data-cy="footer"]')
+          .children()
+          .should("exist")
+          .and("have.length", 4);
 
-      cy.get('[data-cy="header-a11y"]')
-        .should("have.text", "Accessibility")
-        .and("not.have.attr", "href");
+        cy.get('[data-cy="footer-text-about"]')
+          .should("exist")
+          .and("be.visible")
+          .and("have.text", "About");
 
-      cy.get('[data-cy="header-sitemap"]')
-        .should("have.text", "Sitemap")
-        .and("not.have.attr", "href");
-    });
+        cy.get('[data-cy="footer-text-privacy"]')
+          .should("have.text", "Privacy")
+          .and("not.have.attr", "href");
 
-    it("body", () => {
-      cy.get('[data-cy="header-main"]').should(
-        "have.text",
-        "Renting made simple"
-      );
+        cy.get('[data-cy="footer-text-a11y"]')
+          .should("have.text", "Accessibility")
+          .and("not.have.attr", "href");
 
-      cy.get('[data-cy="btn-view-listings"]').should(
-        "have.text",
-        "View more listings"
-      );
+        cy.get('[data-cy="footer-text-sitemap"]')
+          .should("have.text", "Sitemap")
+          .and("not.have.attr", "href");
+      });
+
+      it("body", () => {
+        cy.get('[data-cy="header-main"]')
+          .should("exist")
+          .and("be.visible")
+          .and("have.text", "Renting made simple");
+
+        // Search bar
+        cy.get('[data-cy="search-address"]').should("exist");
+        cy.get('[data-cy="search-address"]')
+          .children()
+          .should("have.length", 2);
+        cy.get('[data-cy="search-address-input')
+          .should("exist")
+          .and("be.visible")
+          .type("Address");
+        cy.get('[data-cy="search-address-btn-icon')
+          .should("exist")
+          .and("be.visible");
+
+        cy.get('[data-cy="btn-view-listings"]')
+          .should("exist")
+          .and("be.visible")
+          .and("have.text", "View more listings");
+      });
     });
   });
 

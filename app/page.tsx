@@ -16,17 +16,26 @@ const CardListings = dynamic(() => import('./_component/card-listings'), { ssr: 
 
 export default function Home() {
   return (
-    <div className='grid grid-flow-row auto-rows-auto gap-24'>
+    <div className='grid grid-flow-row auto-rows-auto gap-24 w-full'>
+      {/* Background image with searchbar & tagline */}
       <div className="bg-[url('/home.jpg')] bg-cover bg-center">
-        <div className="grid h-96 w-full grid-flow-row auto-rows-max gap-5 bg-gray-800/30 px-20 pt-20">
-          <header className='text-8xl text-slate-50'
+        <div className="grid gap-5 bg-gray-800/30 p-20">
+          <header className='text-6xl text-slate-50 lg:text-left md:text-7xl lg:text-8xl'
             data-cy="header-main">
             Renting made simple
           </header>
-          <Search placeholder='Search for an address' />
+          <div className='w-5/6 md:max-w-lg'>
+            <Search placeholder='Search for an address'
+              dataCy='search-address'
+              dataCyButtonIcon='search-address-btn-icon'
+              dataCyInput='search-address-input' />
+          </div>
         </div>
       </div>
-      <CardListings />
+      <div className='place-self-center'>
+        <CardListings dataCy='card-listings' />
+      </div>
+      {/* Button */}
       <div className='grid justify-center'>
         <Button text='View more listings' dataCyBtn='btn-view-listings' />
       </div>

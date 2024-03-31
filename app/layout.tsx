@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { textFont } from './fonts'
 
-import Header from '@/components/header'
+import ButtonIconMenu from '@/components/button-icons/menu'
+import Footer from '@/components/footer'
 import HeaderAuth from '@/components/header/auth'
 import HeaderLink from '@/components/header/link'
 import HeaderLogo from '@/components/header/logo'
@@ -36,31 +37,24 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${textFont.className}`}>
+    <html lang="en" className={`${textFont.className} text-gray-800`}>
       <body>
         {/* Header */}
         <div className='flex justify-between p-20'>
+          {/* Header Logo */}
           <HeaderLogo />
-          <div className='grid auto-cols-max grid-flow-col content-center gap-x-20'>
+          {/* Header Action(s) */}
+          <div className='grid auto-cols-max grid-flow-col content-center gap-x-12 md:gap-x-16 lg:gap-x-20'>
             <HeaderLink value='Create Listing'
               href='/listings/create/'
-              dataCyHeader='header-create-listing'
-              dataCyHeaderLink='header-link-create-listing'
+              dataCy='header-link-create-listing'
             />
             <HeaderAuth />
           </div>
         </div>
         {/* Content */}
         {children}
-        {/* Footer */}
-        <div className='mt-20 flex border-t-2 border-gray-200 p-20'>
-          <div className='grid auto-cols-max grid-flow-col content-center gap-x-20'>
-            <Header value='About' dataCyHeader='header-about' />
-            <Header value='Privacy' dataCyHeader='header-privacy' />
-            <Header value='Accessibility' dataCyHeader='header-a11y' />
-            <Header value='Sitemap' dataCyHeader='header-sitemap' />
-          </div>
-        </div>
+        <Footer />
       </body>
     </html>
   )
