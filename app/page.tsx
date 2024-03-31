@@ -25,12 +25,15 @@ export default function Home() {
             Renting made simple
           </header>
           <div className='w-5/6 md:max-w-lg'>
-            <Search placeholder='Search for an address' />
+            <Search placeholder='Search for an address'
+              dataCy='search-address'
+              dataCyButtonIcon='search-address-btn-icon'
+              dataCyInput='search-address-input' />
           </div>
         </div>
       </div>
       <div className='place-self-center'>
-        <CardListings />
+        <CardListings dataCy='card-listings' />
       </div>
       {/* Button */}
       <div className='grid justify-center'>

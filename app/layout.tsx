@@ -47,8 +47,7 @@ export default function RootLayout({
           <div className='grid auto-cols-max grid-flow-col content-center gap-x-12 md:gap-x-16 lg:gap-x-20'>
             <HeaderLink value='Create Listing'
               href='/listings/create/'
-              dataCy='header-create-listing'
-              dataCyHeaderLink='header-link-create-listing'
+              dataCy='header-link-create-listing'
             />
             <HeaderAuth />
           </div>

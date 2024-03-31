@@ -1,7 +1,11 @@
 import CardListing from "@/components/card-listing";
 import prisma from "@/lib/db";
 
-export default async function CardListings() {
+interface CardListingsProps {
+    dataCy?: string
+}
+
+export default async function CardListings(props: CardListingsProps) {
     // Take four (4) listings
     const dbListings = await prisma.listing.findMany({ take: 4 })
 
@@ -38,7 +42,8 @@ export default async function CardListings() {
     })
 
     return (
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 2xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 2xl:grid-cols-4"
+            data-cy={props.dataCy}>
             {cardListings}
         </div>
     )

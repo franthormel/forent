@@ -5,8 +5,9 @@ import ButtonIconSearch from '../button-icons/search'
 import { searchAction } from "./functions"
 
 interface SearchProps {
+    dataCy?: string
     dataCyInput?: string
-    dataCyButtonIconSearch?: string
+    dataCyButtonIcon?: string
     placeholder?: string
     onSubmit?: Function
 }
@@ -15,11 +16,12 @@ export default function Search(props: SearchProps) {
     const action = () => searchAction(props.onSubmit)
     const [searchValue, setSearchValue] = useState('')
     const dataCyInput = props.dataCyInput ?? "search-input";
-    const dataCyButtonIcon = props.dataCyButtonIconSearch ?? "search-btn-icon";
+    const dataCyButtonIcon = props.dataCyButtonIcon ?? "search-btn-icon";
 
     // if drop shadow is removed, outline must be added
     return (
-        <div className="flex justify-between rounded-full bg-slate-50 px-6 py-0 shadow-md">
+        <div className="flex justify-between rounded-full bg-slate-50 px-6 py-0 shadow-md"
+            data-cy={props.dataCy}>
             <input type='search'
                 autoCapitalize='none'
                 data-cy={dataCyInput}
