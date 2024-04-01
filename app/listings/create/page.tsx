@@ -2,8 +2,8 @@
 
 import Button from '@/components/button';
 import FormInput from '@/components/form-input';
+import FormInputMap from '@/components/form-input-map';
 import FormInputTextArea from '@/components/form-input-textarea';
-import FormMap from '@/components/form-map';
 import FormReset from '@/components/form-reset';
 import TextError from '@/components/text-error';
 import { fetchDateOneYearFromToday, fetchToday } from "@/lib/date";
@@ -36,7 +36,7 @@ export default function CreateListing() {
                             {/* Description */}
                             <FormInputTextArea label='Description' name='description' minLength={16} maxLength={1024} />
                             {/* Map */}
-                            <FormMap />
+                            <FormInputMap />
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-x-8 py-8">

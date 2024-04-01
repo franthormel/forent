@@ -47,7 +47,7 @@ const mapLayers = [
     })
 ];
 
-interface FormMapProps {
+interface FormInputMapProps {
     /**
      * Error message
      */
@@ -58,7 +58,7 @@ interface FormMapProps {
     targetId?: string;
 }
 
-export default function FormMap(props: FormMapProps) {
+export default function FormInputMap(props: FormInputMapProps) {
     const mapId = props.targetId ?? "map";
     const zoom = useRef<number>(mapZoomDefault);
     const [lonLat, setLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 });
