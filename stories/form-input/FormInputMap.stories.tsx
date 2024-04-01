@@ -1,4 +1,4 @@
-import FormInputMap from "@/components/form-input-map";
+import FormInputMap from "@/components/form-input/map";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof FormInputMap> = {
