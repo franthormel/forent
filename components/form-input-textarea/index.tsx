@@ -1,6 +1,6 @@
 import { StringUtils } from "@/lib/commons/string_utils";
-import TextError from "../text-error";
 import TextOptional from "../text-optional";
+import TextError from "../text/error";
 
 interface FormInputTextAreaProps {
     /**

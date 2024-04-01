@@ -5,7 +5,7 @@ import FormInput from '@/components/form-input';
 import FormInputMap from '@/components/form-input-map';
 import FormInputTextArea from '@/components/form-input-textarea';
 import FormReset from '@/components/form-reset';
-import TextError from '@/components/text-error';
+import TextError from '@/components/text/error';
 import { fetchDateOneYearFromToday, fetchToday } from "@/lib/date";
 import { useFormState } from 'react-dom';
 import { createListing } from './action';
