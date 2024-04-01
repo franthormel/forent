@@ -1,11 +1,11 @@
-import FormMap from "@/components/form-map";
+import FormInputMap from "@/components/form-input-map";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof FormMap> = {
-  title: "Form Map",
-  component: FormMap,
+const meta: Meta<typeof FormInputMap> = {
+  title: "Form Input/Map",
+  component: FormInputMap,
   tags: ["autodocs"],
-} satisfies Meta<typeof FormMap>;
+} satisfies Meta<typeof FormInputMap>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

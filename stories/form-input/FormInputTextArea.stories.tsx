@@ -2,7 +2,7 @@ import FormInputTextArea from "@/components/form-input-textarea";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof FormInputTextArea> = {
-  title: "Form Input Text Area",
+  title: "Form Input/Text Area",
   component: FormInputTextArea,
   tags: ["autodocs"],
 } satisfies Meta<typeof FormInputTextArea>;
