@@ -14,7 +14,7 @@ export const Example: Story = {
   args: {
     size: 48,
     onClick: () => {
-      console.log("Added to favorites 💗")
-    }
+      console.log("Added to favorites 💗");
+    },
   },
 };
