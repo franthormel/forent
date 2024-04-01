@@ -2,7 +2,7 @@ import HeaderLink from "@/components/header/link";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof HeaderLink> = {
-  title: "Header Link",
+  title: "Header/Link",
   component: HeaderLink,
   tags: ["autodocs"],
 } satisfies Meta<typeof HeaderLink>;
