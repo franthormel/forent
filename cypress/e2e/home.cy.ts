@@ -3,6 +3,33 @@ describe("homepage", () => {
     cy.visit("/");
   });
 
+  describe("should display proper authentication options", () => {
+    it("when user is not authenticated", () => {
+      cy.get('[data-cy="header-link-sign-in"]')
+        .should("exist")
+        .and("be.visible");
+    });
+
+    it("when user is authenticated via Google OAuth", () => {
+      cy.loginByGoogleApi();
+    });
+
+    it("sign-in then sign-out", () => {
+      cy.login();
+      cy.reload();
+
+      cy.get('[data-cy="header-sign-out"]')
+        .should("exist")
+        .and("be.visible")
+        .click();
+      cy.reload();
+
+      cy.get('[data-cy="header-link-sign-in"]')
+        .should("exist")
+        .and("be.visible");
+    });
+  });
+
   [640, 768, 1024, 1280, 1536].forEach((width) => {
     describe(`display correct UI when viewport width is ${width}`, () => {
       before(() => {
@@ -82,33 +109,6 @@ describe("homepage", () => {
           .and("be.visible")
           .and("have.text", "View more listings");
       });
-    });
-  });
-
-  describe("should display proper authentication options", () => {
-    it("when user is not authenticated", () => {
-      cy.get('[data-cy="header-link-sign-in"]')
-        .should("exist")
-        .and("be.visible");
-    });
-
-    it("when user is authenticated via Google OAuth", () => {
-      cy.loginByGoogleApi();
-    });
-
-    it("sign-in then sign-out", () => {
-      cy.login();
-      cy.reload();
-
-      cy.get('[data-cy="header-action-sign-out"]')
-        .should("exist")
-        .and("be.visible")
-        .click();
-      cy.reload();
-
-      cy.get('[data-cy="header-link-sign-in"]')
-        .should("exist")
-        .and("be.visible");
     });
   });
 });
