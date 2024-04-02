@@ -1,66 +1,72 @@
-import { StringUtils } from "@/lib/commons/string_utils";
-import TextError from "../text/error";
-import TextOptional from "../text/optional";
+import { StringUtils } from "@/lib/commons/string_utils"
+import TextError from "../text/error"
+import TextOptional from "../text/optional"
 
-type FormInputType = "text" | "date" | "number";
+// FUTURE: Break into separate component for each of the types
+type FormInputType = "text" | "date" | "number"
 
 interface FormInputProps {
     /**
      * Input type. Default is 'text'
      */
-    type?: FormInputType;
+    type?: FormInputType
     /**
      * Input name
      */
-    name: string;
+    name: string
     /**
      * Input label
      */
-    label: string;
+    label: string
     /**
      * Input placeholder
      */
-    placeholder?: string;
+    placeholder?: string
     /**
      * Is input optional. Default is 'false'
      */
-    optional?: boolean;
+    optional?: boolean
     /**
      * Minimum value
      */
-    min?: number | string;
+    min?: number | string
     /**
      * Maximum value
      */
-    max?: number | string;
+    max?: number | string
     /**
      * Minimum string length
      */
-    minLength?: number;
+    minLength?: number
     /**
      * Maximum string length
      */
-    maxLength?: number;
+    maxLength?: number
     /**
      * Default value
      */
-    defaultValue?: number | string;
+    defaultValue?: number | string
     /**
      * Error message
      */
-    errorMessage?: string;
+    errorMessage?: string
+    dataCyOptional?: string
+    dataCyLabel?: string
+    dataCy?: string
 }
 
 export default function FormInput(props: FormInputProps) {
-    const hasError = StringUtils.checkInput(props.errorMessage);
+    const hasError = StringUtils.checkInput(props.errorMessage)
 
     return (
         <div className="w-5/6 min-w-full">
             <div className="flex justify-between">
-                <label htmlFor={props.name}>
+                <label htmlFor={props.name}
+                    data-cy={props.dataCyLabel ?? "form-input-label"}>
                     {props.label}
                 </label>
-                <TextOptional optional={props.optional} />
+                <TextOptional optional={props.optional}
+                    dataCy={props.dataCyOptional} />
             </div>
             <input type={props.type ?? "text"}
                 placeholder={props.placeholder}
@@ -70,6 +76,7 @@ export default function FormInput(props: FormInputProps) {
                 max={props.max}
                 minLength={props.minLength}
                 defaultValue={props.defaultValue}
+                data-cy={props.dataCy ?? "form-input"}
                 className={`mt-2 w-full rounded-md border-2 px-2 py-1 ${hasError ? 'border-red-600' : 'border-slate-200'}`} />
             <TextError value={props.errorMessage} />
         </div>

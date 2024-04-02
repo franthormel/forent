@@ -1,26 +1,26 @@
 "use client"
 
-import { StringUtils } from '@/lib/commons/string_utils';
-import { LonLat } from '@/lib/types/geography';
-import { Feature, Map, View } from 'ol';
-import Geolocation from 'ol/Geolocation';
-import { ZoomSlider, defaults } from 'ol/control';
-import { Point } from 'ol/geom';
-import TileLayer from 'ol/layer/Tile';
-import VectorLayer from 'ol/layer/Vector';
-import { fromLonLat, toLonLat } from 'ol/proj';
-import OSM from 'ol/source/OSM';
-import VectorSource from 'ol/source/Vector';
-import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
-import { useEffect, useRef, useState } from "react";
-import TextError from '../text/error';
+import { StringUtils } from '@/lib/commons/string_utils'
+import { LonLat } from '@/lib/types/geography'
+import { Feature, Map, View } from 'ol'
+import Geolocation from 'ol/Geolocation'
+import { ZoomSlider, defaults } from 'ol/control'
+import { Point } from 'ol/geom'
+import TileLayer from 'ol/layer/Tile'
+import VectorLayer from 'ol/layer/Vector'
+import { fromLonLat, toLonLat } from 'ol/proj'
+import OSM from 'ol/source/OSM'
+import VectorSource from 'ol/source/Vector'
+import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style'
+import { useEffect, useRef, useState } from "react"
+import TextError from '../text/error'
 
 // FUTURE: Add custom icon, optimize geolocation, and pan animation when map point is selected
 // https://openlayers.org/en/latest/examples/animation.html
-const mapZoomDefault = 2;
+const mapZoomDefault = 2
 
 // Map (Features)
-const positionFeature = new Feature();
+const positionFeature = new Feature()
 positionFeature.setStyle(
     new Style({
         image: new CircleStyle({
@@ -34,7 +34,7 @@ positionFeature.setStyle(
             }),
         }),
     })
-);
+)
 // Map (Layers)
 const mapLayers = [
     new TileLayer({
@@ -45,55 +45,59 @@ const mapLayers = [
             features: [positionFeature],
         }),
     })
-];
+]
 
 interface FormInputMapProps {
     /**
      * Error message
      */
-    errorMessage?: string;
+    errorMessage?: string
     /**
      * Map ID (must be filled if more than once instance of this map is to be displayed)
      */
-    targetId?: string;
+    targetId?: string
+    dataCy?: string
+    dataCyError?: string
+    dataCyLon?: string
+    dataCyLat?: string
 }
 
 export default function FormInputMap(props: FormInputMapProps) {
-    const mapId = props.targetId ?? "map";
-    const zoom = useRef<number>(mapZoomDefault);
-    const [lonLat, setLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 });
+    const mapId = props.targetId ?? "map"
+    const zoom = useRef<number>(mapZoomDefault)
+    const [lonLat, setLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 })
 
     useEffect(() => {
         // Map (View)
         const mapView = new View({
             center: fromLonLat([lonLat.longitude!, lonLat.latitude!]),
             zoom: zoom.current,
-        });
+        })
         // Map (Controls)
-        const mapControls = defaults({ attributionOptions: { collapsible: true } });
-        const mapControlZoomSlider = new ZoomSlider();
+        const mapControls = defaults({ attributionOptions: { collapsible: true } })
+        const mapControlZoomSlider = new ZoomSlider()
         // Map
         const map = new Map({
             target: mapId,
             layers: mapLayers,
             controls: mapControls,
             view: mapView
-        });
-        map.addControl(mapControlZoomSlider);
+        })
+        map.addControl(mapControlZoomSlider)
         map.on("singleclick", (e) => {
-            positionFeature.setGeometry(new Point(e.coordinate));
+            positionFeature.setGeometry(new Point(e.coordinate))
 
             // Retain map zoom level between re-renders
             zoom.current = map.getView().getZoom() ?? mapZoomDefault
 
             // Change input field values
-            const lonLat = toLonLat(e.coordinate);
+            const lonLat = toLonLat(e.coordinate)
             setLonLat({
                 ...lonLat,
                 longitude: lonLat[0],
                 latitude: lonLat[1]
             })
-        });
+        })
 
         // Geolocation
         const geolocation = new Geolocation({
@@ -102,21 +106,29 @@ export default function FormInputMap(props: FormInputMapProps) {
             },
             // tracking: true,
             projection: mapView.getProjection(),
-        });
+        })
         geolocation.on('change:position', function () {
-            const coordinates = geolocation.getPosition();
-            positionFeature.setGeometry(coordinates ? new Point(coordinates) : undefined);
-        });
+            const coordinates = geolocation.getPosition()
+            positionFeature.setGeometry(coordinates ? new Point(coordinates) : undefined)
+        })
 
-        return () => map.dispose();
-    });
+        return () => map.dispose()
+    })
 
-    const hasError = StringUtils.checkInput(props.errorMessage);
+    const hasError = StringUtils.checkInput(props.errorMessage)
 
     return <div className='w-96 min-w-full'>
-        <div className={`h-96 rounded-sm ${hasError && 'border-2 border-red-600'}`} id={mapId} />
-        <TextError value={props.errorMessage} />
-        <input type="hidden" name="inputLongitude" value={lonLat.longitude} />
-        <input type="hidden" name="inputLatitude" value={lonLat.latitude} />
-    </div>;
+        <div className={`h-96 rounded-sm ${hasError && 'border-2 border-red-600'}`}
+            id={mapId}
+            data-cy={props.dataCy ?? "form-input-map"} />
+        <TextError value={props.errorMessage} dataCy={props.dataCyError} />
+        <input type="hidden"
+            name="inputLongitude"
+            value={lonLat.longitude}
+            data-cy={props.dataCyLon ?? "form-input-map-lon"} />
+        <input type="hidden"
+            name="inputLatitude"
+            value={lonLat.latitude}
+            data-cy={props.dataCyLat ?? "form-input-map-lat"} />
+    </div>
 }
