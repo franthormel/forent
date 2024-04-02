@@ -11,7 +11,7 @@ export default defineConfig({
       framework: "next",
       bundler: "webpack",
     },
-    specPattern: ["./cypress/component/*.cy.{ts,tsx}"],
+    specPattern: ["./cypress/component/**/*.cy.{ts,tsx}"],
   },
   e2e: {
     baseUrl: "http://localhost:3000",
