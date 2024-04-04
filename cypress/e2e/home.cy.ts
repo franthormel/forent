@@ -18,6 +18,12 @@ describe("homepage", () => {
       cy.login();
       cy.reload();
 
+      cy.get('[data-cy="header-link-create-listing"]')
+        .should("exist")
+        .and("be.visible")
+        .and("have.text", "Create Listing")
+        .and("have.attr", "href")
+        .and("include", "/listings/create");
       cy.get('[data-cy="header-sign-out"]')
         .should("exist")
         .and("be.visible")
@@ -41,13 +47,6 @@ describe("homepage", () => {
           .should("exist")
           .and("be.visible")
           .and("have.text", "Forent");
-
-        cy.get('[data-cy="header-link-create-listing"]')
-          .should("exist")
-          .and("be.visible")
-          .and("have.text", "Create Listing")
-          .and("have.attr", "href")
-          .and("include", "/listings/create");
 
         cy.get('[data-cy="header-link-sign-in"]')
           .should("exist")
