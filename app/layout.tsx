@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import { textFont } from './fonts'
 
-import ButtonIconMenu from '@/components/button-icons/menu'
 import Footer from '@/components/footer'
 import HeaderAuth from '@/components/header/auth'
-import HeaderLink from '@/components/header/link'
+import HeaderCreateListing from '@/components/header/create-listing'
 import HeaderLogo from '@/components/header/logo'
 import './global.css'
 
@@ -45,10 +44,7 @@ export default function RootLayout({
           <HeaderLogo />
           {/* Header Action(s) */}
           <div className='grid auto-cols-max grid-flow-col content-center gap-x-12 md:gap-x-16 lg:gap-x-20'>
-            <HeaderLink value='Create Listing'
-              href='/listings/create/'
-              dataCy='header-link-create-listing'
-            />
+            <HeaderCreateListing />
             <HeaderAuth />
           </div>
         </div>
