@@ -7,7 +7,7 @@ export default async function HeaderCreateListing() {
     if (user) {
         return (
             <HeaderLink value='Create Listing'
-                href='/listings/create/'
+                href='/listing/create/'
                 dataCy='header-link-create-listing'
             />
         )

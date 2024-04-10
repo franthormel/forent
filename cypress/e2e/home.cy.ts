@@ -23,7 +23,7 @@ describe("homepage", () => {
         .and("be.visible")
         .and("have.text", "Create Listing")
         .and("have.attr", "href")
-        .and("include", "/listings/create");
+        .and("include", "/listing/create");
       cy.get('[data-cy="header-sign-out"]')
         .should("exist")
         .and("be.visible")
