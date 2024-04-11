@@ -1,6 +1,6 @@
 "use client"
 
-import Button from '@/components/button';
+import ButtonFilled from '@/components/buttons/filled';
 import FormInput from '@/components/form-input';
 import FormInputMap from '@/components/form-input/map';
 import FormInputReset from '@/components/form-input/reset';
@@ -58,7 +58,7 @@ export default function CreateListing() {
                     </div>
                     <div className="flex justify-end space-x-8 pt-8">
                         <FormInputReset />
-                        <Button text='Submit' />
+                        <ButtonFilled text='Submit' />
                     </div>
                 </div>
             </form>
