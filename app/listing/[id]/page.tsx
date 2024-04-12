@@ -1,3 +1,4 @@
+import PageLayout from "@/app/_component/page-layout";
 import prisma from "@/lib/db";
 import ListingPageBanner from "./_component/banner";
 import ListingPageContact from "./_component/contact";
@@ -19,7 +20,7 @@ export default async function ListingPage({ params }: { params: { id: string } }
     const currentPrice = listing.prices.filter((p) => p.isCurrent).at(0)!.value;
 
     return (
-        <div className="grid auto-rows-auto gap-y-16 px-24 lg:px-32 xl:px-36 2xl:px-44">
+        <PageLayout>
             {/* Photos & main information */}
             <div className="grid auto-rows-auto gap-y-11">
                 <ListingPageBanner imageUrls={listing.imageUrls} listingId={listing.id} />
@@ -31,6 +32,6 @@ export default async function ListingPage({ params }: { params: { id: string } }
             <ListingPageContact name={listing.user.name} contactNumber={listing.user.contactNumber} email={listing.user.email} />
             <ListingPageDescription description={listing.description} />
             <ListingPageMap lat={listing.address!.latitude.toNumber()} lon={listing.address!.longitude.toNumber()} />
-        </div>
+        </PageLayout>
     )
 }

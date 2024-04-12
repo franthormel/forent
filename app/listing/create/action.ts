@@ -61,7 +61,7 @@ export async function createListing(prevState: any, formData: FormData) {
       description: listing.description,
       beds: listing.beds,
       baths: listing.baths,
-      area: 100.0, // FUTURE: make this be inputted in form
+      area: 100.0, // TODO: make this be inputted in form
       availableDate: listing.availableDate,
       user: {
         connect: {
