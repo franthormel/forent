@@ -6,15 +6,18 @@ import FormInputMap from '@/components/form-input/map';
 import FormInputReset from '@/components/form-input/reset';
 import FormInputTextArea from '@/components/form-input/textarea';
 import TextError from '@/components/text/error';
-import { fetchDateOneYearFromToday, fetchToday } from "@/lib/date";
+import { DateUtils } from '@/lib/commons/date_utils';
 import { useFormState } from 'react-dom';
 import { createListing } from './action';
 
 export default function CreateListing() {
     const [formState, formAction] = useFormState(createListing, '')
 
-    const todayISO = fetchToday().toISOString().substring(0, 10);
-    const oneYearFromTodayISO = fetchDateOneYearFromToday().toISOString().substring(0, 10);
+    const todayDate = new Date();
+    const oneYearFromTodayDate = DateUtils.offsetYear(todayDate, 1);
+
+    const today = todayDate.toISOString().substring(0, 10);
+    const oneYearFromToday = oneYearFromTodayDate.toISOString().substring(0, 10);
 
     return <>
         <div className="min-w-full px-12 py-6 flex flex-col gap-5 scroll-smooth">
@@ -49,7 +52,7 @@ export default function CreateListing() {
                             <FormInput label='Deposit' name='deposit' type="number" optional={true} min={0} max={1_000_000} defaultValue={0} />
                             {/* Availabe Date */}
                             <FormInput label='Available Date' name='availableDate' type='date' optional={true}
-                                min={todayISO} defaultValue={todayISO} max={oneYearFromTodayISO} />
+                                min={today} defaultValue={today} max={oneYearFromToday} />
                             {/* Number of Beds */}
                             <FormInput label='No. of Beds' name='beds' type="number" min={1} max={750} />
                             {/* Number of Baths */}
