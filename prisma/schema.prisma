@@ -9,7 +9,6 @@ datasource db {
 }
 
 // FUTURE: need to implement `on delete cascade` https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/referential-actions#cascade
-
 model Listing {
   id            String    @id @default(cuid())
   deposit       Decimal?  @db.Money
