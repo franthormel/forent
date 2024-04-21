@@ -21,7 +21,6 @@ model Listing {
   availableDate DateTime? @db.Date
   /// Current and previous prices of the listing. The current price is the first entry in the list.
   prices        Price[]
-  ratings       Rating[]
   address       Address?
   /// User that created this listing.
   user          User      @relation(fields: [userId], references: [id])
@@ -45,18 +44,6 @@ model Price {
 
   @@map("price")
 }
-
-/// Each listing may have zero (0) or more ratings.
-model Rating {
-  id        String  @id @default(cuid())
-  value     Int /// Range is between one (1) to five (5)
-  listing   Listing @relation(fields: [listingId], references: [id])
-  listingId String
-
-  @@map("rating")
-}
-
-// FUTURE: user must only be able to give one rating per listing ;3
 
 /// Each address must be associated with one (1) listing. (for now)
 model Address {

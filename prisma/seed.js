@@ -121,7 +121,6 @@ async function main() {
   // Reset
   await prisma.address.deleteMany();
   await prisma.price.deleteMany();
-  await prisma.rating.deleteMany();
   await prisma.listing.deleteMany();
   await prisma.user.deleteMany();
 
@@ -153,7 +152,6 @@ async function main() {
   // Listing Variant A
   // With deposit
   // Without available date
-  // No rating
   // One (1) pricing
   for (let i = 0; i < variantA; i++) {
     // Choose random user
@@ -199,7 +197,6 @@ async function main() {
   // Listing Variant B
   // Without deposit
   // With available date
-  // One (1) rating
   // Two (2) pricings
   for (let i = 0; i < variantB; i++) {
     // Choose random user
@@ -236,11 +233,6 @@ async function main() {
             ]
           }
         },
-        ratings: {
-          create: {
-            value: faker.number.int({ min: 1, max: 5 })
-          }
-        },
         address: {
           create: {
             addressLine: faker.location.streetAddress({ useFullAddress: true }),
@@ -263,7 +255,6 @@ async function main() {
   // Listing Variant C
   // Without deposit
   // Without available date
-  // Two (2) ratings
   // Three (3) pricings
   for (let i = 0; i < variantC; i++) {
     // Choose random user
@@ -305,14 +296,6 @@ async function main() {
             ]
           }
         },
-        ratings: {
-          createMany: {
-            data: [
-              { value: faker.number.int({ min: 1, max: 5 }) },
-              { value: faker.number.int({ min: 1, max: 5 }) },
-            ]
-          }
-        },
         address: {
           create: {
             addressLine: faker.location.streetAddress({ useFullAddress: true }),
@@ -335,7 +318,6 @@ async function main() {
   // Listing Variant D
   // With deposit
   // With available date
-  // Two (2) ratings
   // Three (3) pricings
   for (let i = 0; i < variantD; i++) {
     // Choose random user
@@ -381,14 +363,6 @@ async function main() {
                 value: faker.commerce.price({ min: 2_000, max: 100_000 }),
                 startDate: date202312,
               },
-            ]
-          }
-        },
-        ratings: {
-          createMany: {
-            data: [
-              { value: faker.number.int({ min: 1, max: 5 }) },
-              { value: faker.number.int({ min: 1, max: 5 }) },
             ]
           }
         },
