@@ -30,7 +30,8 @@ export default async function CardListings(props: CardListingsProps) {
         const currentPrice = prices.filter(price => price.isCurrent).at(0);
 
         return <CardListing
-            key={crypto.randomUUID()}
+            key={listing.id}
+            id={listing.id}
             addressLine1={address!.addressLine}
             addressLine2={`${address!.city}, ${address!.state}`}
             area={listing.area.toString()}

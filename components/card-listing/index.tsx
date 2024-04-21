@@ -1,10 +1,9 @@
-"use client"
-
 import { NumberUtils } from "@/lib/commons/number_utils"
-import { StringUtils } from "@/lib/commons/string_utils"
 import Image from 'next/image'
+import Link from "next/link"
 
 interface CardListingProps {
+    id: string
     addressLine1: string
     addressLine2: string
     area: number | string
@@ -36,9 +35,8 @@ export default function CardListing(props: CardListingProps) {
     const dataCyAddressLine2 = props.dataCyAddressLine2 ?? "card-listing-address-line2"
 
     return (
-        <div className="w-80 cursor-pointer rounded-md bg-slate-50 p-0 shadow-md transition-all hover:shadow-xl"
-            // FUTURE: Action, prepare for view listing route page but for now use func() only
-            onClick={() => console.log("Card 🃏")}>
+        <Link className="w-80 cursor-pointer rounded-md bg-slate-50 p-0 shadow-md transition-all hover:shadow-xl"
+            href={`/listing/${props.id}`}>
             <Image
                 className="h-3/5 w-full rounded-t-md object-cover"
                 alt="Search"
@@ -67,6 +65,6 @@ export default function CardListing(props: CardListingProps) {
                     <p data-cy={dataCyAddressLine2}>{props.addressLine2}</p>
                 </p>
             </div>
-        </div>
+        </Link>
     )
 }
