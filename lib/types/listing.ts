@@ -10,7 +10,6 @@ interface Listing {
   area: number;
   availableDate?: string;
   prices: ListingPrice[];
-  ratings: ListingRating[];
   address: ListingAddress;
 }
 
@@ -20,11 +19,6 @@ interface ListingPrice {
   startDate: string;
   endDate: string;
   isCurrent: boolean;
-}
-
-interface ListingRating {
-  id: string;
-  value: number;
 }
 
 interface ListingAddress {
