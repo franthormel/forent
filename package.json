@@ -55,6 +55,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "postinstall": "prisma generate",
+    "prisma-studio": "npx prisma studio",
     "start": "next start",
     "storybook": "storybook dev -p 6006",
     "test": "jest",
