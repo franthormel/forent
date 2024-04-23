@@ -32,7 +32,6 @@ export default async function ListingPage({ params }: { params: { id: string } }
         </div>
     )
 
-
     // TODO: Display Main information (price, beds, baths, availability date, area, address)
 
 
