@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client')
 const { faker } = require('@faker-js/faker');
 const prisma = new PrismaClient()
 
-const imgURLs = [
+const imageURLs = [
   "https://images.unsplash.com/photo-1449247613801-ab06418e2861",
   "https://images.unsplash.com/photo-1455994972514-4624f7f224a7",
   "https://images.unsplash.com/photo-1464890100898-a385f744067f",
@@ -98,13 +98,22 @@ const imgURLs = [
   "https://images.unsplash.com/photo-1653974123177-fe9c05fb79e6",
   "https://images.unsplash.com/photo-1654064550874-3c14a961730e",
   "https://images.unsplash.com/photo-1658218635253-64728f6234be",
-  "https://images.unsplash.com/photo-1658218729615-167c32d70537",
+  "https://images.unsplash.com/photo-1658218729615-167c32d70537"
 ]
 
-function fetchRandomImageURL() {
-  const limit = imgURLs.length
-  const index = Math.floor(Math.random() * limit)
-  return imgURLs[index]
+// TODO: Unit test
+function fetchRandomImages() {
+  const MIN = 6;
+  const limit = imageURLs.length
+  const images = new Set()
+
+  while (images.size !== MIN) {
+    const index = Math.floor(Math.random() * limit)
+    const image = imageURLs[index]
+    images.add(image)
+  }
+
+  return Array.from(images)
 }
 
 const unverified = 10;
@@ -161,11 +170,7 @@ async function main() {
     await prisma.listing.create({
       data: {
         deposit: faker.commerce.price({ min: 1_000, max: 10_000 }),
-        imageUrls: [
-          fetchRandomImageURL(),
-          fetchRandomImageURL(),
-          fetchRandomImageURL()
-        ],
+        imageUrls: fetchRandomImages(),
         description: faker.lorem.paragraph(),
         beds: faker.number.int({ min: 1, max: 15 }),
         baths: faker.number.int({ min: 1, max: 10 }),
@@ -208,10 +213,7 @@ async function main() {
 
     await prisma.listing.create({
       data: {
-        imageUrls: [
-          fetchRandomImageURL(),
-          fetchRandomImageURL()
-        ],
+        imageUrls: fetchRandomImages(),
         description: faker.lorem.paragraph(),
         beds: faker.number.int({ min: 1, max: 15 }),
         baths: faker.number.int({ min: 1, max: 10 }),
@@ -269,7 +271,7 @@ async function main() {
 
     await prisma.listing.create({
       data: {
-        imageUrls: [fetchRandomImageURL()],
+        imageUrls: fetchRandomImages(),
         description: faker.lorem.paragraph(),
         beds: faker.number.int({ min: 1, max: 15 }),
         baths: faker.number.int({ min: 1, max: 10 }),

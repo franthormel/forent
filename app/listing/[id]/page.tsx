@@ -1,7 +1,5 @@
-import ButtonOutlined from "@/components/buttons/outlined";
-import prisma from "@/lib/db"
-import Image from "next/image";
-import { StringUtils } from "@/lib/commons/string_utils";
+import prisma from "@/lib/db";
+import ListingPagePhotos from "../_component/photos";
 
 export default async function ListingPage({ params }: { params: { id: string } }) {
     const listing = await prisma.listing.findUniqueOrThrow({
@@ -9,27 +7,19 @@ export default async function ListingPage({ params }: { params: { id: string } }
             id: params.id
         }
     })
-    const manyPhotos = listing.imageUrls.length > 3;
 
     // TODO: Remove after all display is done
     console.log(listing)
 
-    // TODO: Display photos
-    // TODO: If there are at least 3 photos, display 1 if less than 3
     return (
-        <div className="px-24">
+        // TODO: Display photo viewer when clicked
+        <div className="px-24 lg:px-32 xl:px-36 2xl:px-44">
             {/* Photos */}
-            <div>
-                {/* TODO: adjust for lg layouts */}
-                <Image alt="Listing cover phot" src={listing.imageUrls[0]}
-                    width="800" height="600"
-                    className="w-full" />
-                {/* TODO: Position button inside */}
-                {/* TODO: Make button smaller ;> */}
-                <ButtonOutlined dataCyBtn="btn-photos" size="small"
-                    text={StringUtils.pluralize(listing.imageUrls.length, "Photo")} />
-            </div>
+            <ListingPagePhotos imageUrls={listing.imageUrls} />
         </div>
+        // TODO: Display a button inside
+        // <ButtonOutlined dataCyBtn="btn-photos" size="small"
+        // text={StringUtils.pluralize(listing.imageUrls.length, "Photo")} />
     )
 
     // TODO: Display Main information (price, beds, baths, availability date, area, address)
