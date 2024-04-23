@@ -10,8 +10,15 @@ const meta: Meta<typeof ButtonFilled> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Base: Story = {
   args: {
-    text: "Filled"
+    text: "Base"
+  }
+};
+
+export const Small: Story = {
+  args: {
+    text: "Small",
+    size: "small"
   }
 };
