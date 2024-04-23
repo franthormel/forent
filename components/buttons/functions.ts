@@ -10,7 +10,7 @@ import { ButtonSize } from "./types";
 export function buttonPadding(size: ButtonSize = "base"): string {
   const values = {
     base: "px-10 py-4",
-    small: "px-5 py-3",
+    small: "px-5 py-2.5",
   };
   return values[size];
 }
@@ -25,7 +25,7 @@ export function buttonPadding(size: ButtonSize = "base"): string {
 export function buttonFontSize(size: ButtonSize = "base"): string {
   const values = {
     base: "text-base",
-    small: "text-xs",
+    small: "text-sm",
   };
   return values[size];
 }

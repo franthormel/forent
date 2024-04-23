@@ -26,8 +26,7 @@ export default async function ListingPage({ params }: { params: { id: string } }
                     className="w-full" />
                 {/* TODO: Position button inside */}
                 {/* TODO: Make button smaller ;> */}
-                <ButtonOutlined dataCyBtn="btn-photos"
-                    text={pluralize(listing.imageUrls.length, "Photo")} />
+                <ButtonOutlined dataCyBtn="btn-photos" text={pluralize(listing.imageUrls.length, "Photo")} size="small" />
             </div>
         </div>
     )
