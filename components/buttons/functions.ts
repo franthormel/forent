@@ -1,6 +1,5 @@
 import { ButtonSize } from "./types";
 
-// TODO: Unit test
 /**
  * Decide padding values depending on the given button size
  *
@@ -15,7 +14,6 @@ export function buttonPadding(size: ButtonSize = "base"): string {
   return values[size];
 }
 
-// TODO: Unit test
 /**
  * Decide font size value depending on the given button size
  *

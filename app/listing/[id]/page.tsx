@@ -1,7 +1,7 @@
 import ButtonOutlined from "@/components/buttons/outlined";
 import prisma from "@/lib/db"
-import { pluralize } from "./function";
 import Image from "next/image";
+import { StringUtils } from "@/lib/commons/string_utils";
 
 export default async function ListingPage({ params }: { params: { id: string } }) {
     const listing = await prisma.listing.findUniqueOrThrow({
@@ -26,7 +26,8 @@ export default async function ListingPage({ params }: { params: { id: string } }
                     className="w-full" />
                 {/* TODO: Position button inside */}
                 {/* TODO: Make button smaller ;> */}
-                <ButtonOutlined dataCyBtn="btn-photos" text={pluralize(listing.imageUrls.length, "Photo")} size="small" />
+                <ButtonOutlined dataCyBtn="btn-photos" size="small"
+                    text={StringUtils.pluralize(listing.imageUrls.length, "Photo")} />
             </div>
         </div>
     )
