@@ -51,6 +51,7 @@ jobs:
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ELECTRON_EXTRA_LAUNCH_ARGS: ${{ secrets.ELECTRON_EXTRA_LAUNCH_ARGS }}
         with:
           build: npm run build
           start: npm start
@@ -112,5 +113,6 @@ jobs:
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
+          cypress: true
           # Grab this from the Chromatic manage page
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

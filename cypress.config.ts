@@ -1,5 +1,6 @@
 import { defineConfig } from "cypress";
 import dotenv from "dotenv";
+import { installPlugin } from "@chromatic-com/cypress";
 
 // Only works for non-CI environments
 dotenv.config({ path: "./env.local " });
@@ -16,6 +17,9 @@ export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:3000",
     specPattern: ["./cypress/e2e/*.cy.{ts,tsx}"],
+    setupNodeEvents(on, config) {
+      installPlugin(on, config);
+    },
   },
   env: {
     authSecret: process.env.NEXTAUTH_SECRET,
