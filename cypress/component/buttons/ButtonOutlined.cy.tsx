@@ -10,7 +10,7 @@ describe('Button Outlined', () => {
             .should('exist')
             .and('be.visible')
             .and('have.css', 'border-color', 'rgb(31, 41, 55)')
-            .and('have.css', 'background-color', 'rgba(0, 0, 0, 0)')
+            .and('have.css', 'background-color', 'rgb(248, 250, 252)')
             .and('have.css', 'color', 'rgb(31, 41, 55)')
     })
 
