@@ -17,7 +17,7 @@ describe("String utils", () => {
     { count: 2, base: "paper", expected: "2 papers" },
     { count: 3, base: "towel", expected: "3 towels" },
   ])("pluralize = $count, $base", ({ count, base, expected }) => {
-    const actual = StringUtils.pluralize(count, base);
+    const actual = StringUtils.pluralizeTextCount(count, base);
     expect(actual).toBe(expected);
   });
 });

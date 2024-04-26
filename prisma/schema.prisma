@@ -40,7 +40,6 @@ model Price {
   isCurrent Boolean  @default(true)
   listing   Listing  @relation(fields: [listingId], references: [id])
   listingId String
-  // FUTURE: Add currency to support intl
 
   @@map("price")
 }
@@ -52,7 +51,7 @@ model Address {
   city        String
   state       String
   zipcode     String?
-  country     String
+  country     String // FUTURE: Will be removed, intl will not be supproted, one country one domain 
   latitude    Decimal @db.Decimal(16, 10)
   longitude   Decimal @db.Decimal(16, 10)
   listing     Listing @relation(fields: [listingId], references: [id])

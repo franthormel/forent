@@ -1,12 +1,12 @@
 "use server";
 
+import { getSessionUser } from "@/lib/auth";
+import { FormDataUtils } from "@/lib/commons/formdata_utils";
+import prisma from "@/lib/db";
 import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
 import { FormListing } from "@/lib/types/listing";
 import { ValidatorError } from "@/lib/validation";
 import { FormListingValidator } from "@/lib/validation/listing";
-import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/auth";
-import { FormDataUtils } from "@/lib/commons/formdata_utils";
 
 export async function createListing(prevState: any, formData: FormData) {
   const formUtils = new FormDataUtils(formData);
@@ -15,7 +15,7 @@ export async function createListing(prevState: any, formData: FormData) {
     price: formUtils.getNumber("price", -1),
     description: formUtils.getString("description", ""),
     deposit: formUtils.getNumber("deposit", 0),
-    availableDate: formUtils.getDate("availableDate", new Date()),
+    availableDate: formUtils.getDate("availableDate", new Date()), // FUTURE: Set to a date in the far far future like Y2099
     beds: formUtils.getNumber("beds", -1),
     baths: formUtils.getNumber("baths", -1),
     longitude: formUtils.getNumber("inputLongitude", -999),
