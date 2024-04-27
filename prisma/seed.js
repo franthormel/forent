@@ -101,14 +101,15 @@ const imageURLs = [
   "https://images.unsplash.com/photo-1658218729615-167c32d70537"
 ]
 
-// TODO: Unit test
 function fetchRandomImages() {
   const MIN = 6;
-  const limit = imageURLs.length
+  const MAX = 12;
+  const deviance = Math.floor(Math.random() * (MAX - MIN))
+  const limit = MIN + deviance
   const images = new Set()
 
-  while (images.size !== MIN) {
-    const index = Math.floor(Math.random() * limit)
+  while (images.size !== limit) {
+    const index = Math.floor(Math.random() * imageURLs.length)
     const image = imageURLs[index]
     images.add(image)
   }
