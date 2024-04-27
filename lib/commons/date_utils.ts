@@ -23,11 +23,10 @@ export namespace DateUtils {
    * @param custom Custom date of comparison (defaults to today)
    * @returns boolean
    */
-  // TODO: Unit test (especially with timezones)
   export function dateHasPassed(date: Date, custom?: Date): boolean {
     // Settle which date will be used for comparison (today or the given input)
     let referenceDate;
-    if (custom === null || custom === undefined) {
+    if (custom === undefined) {
       referenceDate = new Date();
     } else {
       referenceDate = custom;
@@ -41,13 +40,12 @@ export namespace DateUtils {
    * Timezone is taken into account.
    *
    * @param date Date to compare
-   * @param today Today date (can provide a custom value)
+   * @param today Today date (can provide a custom value, useful when client is from a different time zone)
    * @returns true if the given date is today or equal to the given custom date
    */
-  // TODO: Unit test (different year, months, days, and timezones)
   export function dateIsToday(date: Date, today?: Date): boolean {
     let todayDate;
-    if (today === null || today === undefined) {
+    if (today === undefined) {
       todayDate = new Date();
     } else {
       todayDate = today;

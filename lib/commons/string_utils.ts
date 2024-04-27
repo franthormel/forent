@@ -44,7 +44,6 @@ export namespace StringUtils {
    * @param text Appending text (must be in singular form)
    * @returns Pluralized text
    */
-  // TODO: Unit test
   export function pluralizeText(count: number, text: string): string {
     if (count > 1) {
       return text + "s";

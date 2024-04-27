@@ -9,7 +9,6 @@ describe('Listing Page Photos', () => {
         'https://images.unsplash.com/photo-1464890100898-a385f744067f',
         'https://images.unsplash.com/photo-1538609589535-bb35f0c034db'
     ];
-
     [640, 768, 1024, 1280, 1536].forEach((width) => {
         it(`should display correct UI  = ${width}`, () => {
             cy.viewport(width, 1000);

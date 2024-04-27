@@ -17,7 +17,8 @@ model Listing {
   beds          Int
   baths         Int
   // Unit of measurement is in meters squared (sqm)
-  area          Decimal   @db.Decimal(24, 2) // FUTURE: this should be flexible in terms of units of measurement (sqft, etc.)
+  // FUTURE: this should be flexible in terms of units of measurement (sqft, etc.) perhaps localize, put in env?
+  area          Decimal   @db.Decimal(24, 2)
   availableDate DateTime? @db.Date
   /// Current and previous prices of the listing. The current price is the first entry in the list.
   prices        Price[]
@@ -51,7 +52,7 @@ model Address {
   city        String
   state       String
   zipcode     String?
-  country     String // FUTURE: Will be removed, intl will not be supproted, one country one domain 
+  country     String // FUTURE: Will be removed, one country one domain 
   latitude    Decimal @db.Decimal(16, 10)
   longitude   Decimal @db.Decimal(16, 10)
   listing     Listing @relation(fields: [listingId], references: [id])

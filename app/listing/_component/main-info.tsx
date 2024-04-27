@@ -1,7 +1,7 @@
 "use client"
 
-import { DateUtils } from "@/lib/commons/date_utils"
 import { StringUtils } from "@/lib/commons/string_utils"
+import { availableDateText } from "./function"
 import ListingPageMainInfoColumn from "./main-info-col"
 
 export interface ListingPageMainInfoProps {
@@ -14,61 +14,56 @@ export interface ListingPageMainInfoProps {
     city: string
     state: string
     zipCode: string | number | null
+    dataCy?: string
+    dataCyPrice?: string
+    dataCyCols?: string
+    dataCyAddress?: string
+    dataCyAddressLine?: string
+    dataCyAddressSpace?: string
+    dataCyAddressCityStateZip?: string
 }
 
-/**
- * Display proper text if the given listing's date is considered available
- * 
- * @param availableDate Listing availability date
- * @returns "Available Now" if it is available otherwise the localized date
- */
-// TODO: Unit test
-function availableDateText(availableDate: Date | null) {
-    // Listing is considered available if ...
-    const text = "Available Now"
-
-    // ... if its null or ...
-    if (availableDate === null) {
-        return text
-    }
-
-    // ... given date already passed.
-    const today = new Date()
-    const isPastDate = DateUtils.dateHasPassed(availableDate, today)
-    const isToday = DateUtils.dateIsToday(availableDate, today);
-    if (isPastDate || isToday) {
-        return text
-    }
-
-    return new Intl.DateTimeFormat('en-PH', {
-        dateStyle: 'long',
-        timeZone: 'Asia/Manila',
-    }).format(availableDate)
-}
-
-// TODO: Component test
 export default function ListingPageMainInfo(props: ListingPageMainInfoProps) {
     return (
-        <div className="grid auto-rows-auto gap-y-3">
+        <div className="grid auto-rows-auto gap-y-3"
+            data-cy={props.dataCy ?? "listing-main-info"}>
             {/* Price */}
-            <div>
-                <span className="text-4xl font-bold">₱ {new Intl.NumberFormat('en-PH', { maximumSignificantDigits: 3 }).format(props.price,)}</span>
+            <div data-cy={props.dataCyPrice ?? "listing-main-info-price"}>
+                {/* FUTURE: Localize currency, put in env */}
+                <span className="text-4xl font-bold">
+                    ₱ {new Intl.NumberFormat('en-PH').format(props.price,)}
+                </span>
                 <span className="text-xl font-bold">/mo</span>
             </div>
             {/* Beds, Baths, Area, Available Date */}
-            <div className="flex gap-x-8">
-                <ListingPageMainInfoColumn value={props.beds} label={StringUtils.pluralizeText(props.beds, "Bed")} />
-                <ListingPageMainInfoColumn value={props.baths} label={StringUtils.pluralizeText(props.baths, "Bath")} />
-                <ListingPageMainInfoColumn value={props.area} label="Area (sqm)" />
-                <ListingPageMainInfoColumn value={availableDateText(props.availableDate)} label="Date Available" />
+            <div className="flex gap-x-8" data-cy={props.dataCyCols ?? "listing-main-info-cols"}>
+                <ListingPageMainInfoColumn value={props.beds} label={StringUtils.pluralizeText(props.beds, "Bed")}
+                    dataCyValue="listing-main-info-col-value-beds"
+                    dataCyLabel="listing-main-info-col-label-beds" />
+                <ListingPageMainInfoColumn value={props.baths} label={StringUtils.pluralizeText(props.baths, "Bath")}
+                    dataCyValue="listing-main-info-col-value-baths"
+                    dataCyLabel="listing-main-info-col-label-baths" />
+                <ListingPageMainInfoColumn value={props.area} label="Area (sqm)"
+                    dataCyValue="listing-main-info-col-value-area"
+                    dataCyLabel="listing-main-info-col-label-area" />
+                <ListingPageMainInfoColumn value={availableDateText(props.availableDate)} label="Date Available"
+                    dataCyValue="listing-main-info-col-value-available-date"
+                    dataCyLabel="listing-main-info-col-label-available-date" />
             </div>
             {/* Address */}
-            <div>
-                <div className="text-gray-700">
-                    <p className="block md:inline-block">{props.addressLine},</p>
-                    <span className="hidden md:inline">&nbsp;</span>
-                    <p className="block md:inline-block">{props.city}, {props.state} {props.zipCode}</p>
-                </div>
+            <div className="text-gray-700" data-cy={props.dataCyAddress ?? "listing-main-info-address"}>
+                <p className="block lg:inline-block"
+                    data-cy={props.dataCyAddressLine ?? "listing-main-info-address-line"}>
+                    {props.addressLine},
+                </p>
+                <span className="hidden lg:inline"
+                    data-cy={props.dataCyAddressSpace ?? "listing-main-info-address-space"}>
+                    &nbsp;
+                </span>
+                <p className="block lg:inline-block"
+                    data-cy={props.dataCyAddressCityStateZip ?? "listing-main-info-address-city-state-zip"}>
+                    {props.city}, {props.state} {props.zipCode}
+                </p>
             </div>
         </div>
     )
