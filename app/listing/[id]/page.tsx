@@ -3,6 +3,8 @@ import { StringUtils } from "@/lib/commons/string_utils";
 import prisma from "@/lib/db";
 import ListingPageMainInfo from "../_component/main-info";
 import ListingPagePhotos from "../_component/photos";
+import SectionHeaderIcon from "@/components/section/header-icon";
+import ListingPageContact from "../_component/contact";
 
 export default async function ListingPage({ params }: { params: { id: string } }) {
     const listing = await prisma.listing.findUniqueOrThrow({
@@ -22,10 +24,9 @@ export default async function ListingPage({ params }: { params: { id: string } }
     console.log(listing)
 
     return (
-        <div className="px-24 lg:px-32 xl:px-36 2xl:px-44">
+        <div className="grid auto-rows-auto gap-y-16 px-24 lg:px-32 xl:px-36 2xl:px-44">
             {/* Photos & main information */}
             <div className="grid auto-rows-auto gap-y-11">
-                {/* Photos */}
                 <div className="relative">
                     <ListingPagePhotos imageUrls={listing.imageUrls} />
                     <div className="absolute bottom-6 right-6">
@@ -34,19 +35,14 @@ export default async function ListingPage({ params }: { params: { id: string } }
                             text={StringUtils.pluralizeTextCount(listing.imageUrls.length, "Photo")} />
                     </div>
                 </div>
-                {/* Main information */}
-                <div>
-                    <ListingPageMainInfo price={currentPrice.toNumber()} beds={listing.beds} baths={listing.baths}
-                        area={listing.area.toNumber()} availableDate={listing.availableDate}
-                        addressLine={listing.address!.addressLine} city={listing.address!.city}
-                        state={listing.address!.state} zipCode={listing.address!.zipcode} />
-                </div>
+                <ListingPageMainInfo price={currentPrice.toNumber()} beds={listing.beds} baths={listing.baths}
+                    area={listing.area.toNumber()} availableDate={listing.availableDate}
+                    addressLine={listing.address!.addressLine} city={listing.address!.city}
+                    state={listing.address!.state} zipCode={listing.address!.zipcode} />
             </div>
+            <ListingPageContact name={listing.user.name} contactNumber={listing.user.contactNumber} email={listing.user.email} />
         </div>
     )
-
-    // TODO: Display Contact
-
 
     // TODO: Display Description
 

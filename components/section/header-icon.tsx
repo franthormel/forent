@@ -14,7 +14,7 @@ export default function SectionHeaderIcon({ children, props }: {
             <div className="fill-gray-600">
                 {children}
             </div>
-            <header className="text-xl text-gray-800">
+            <header className="text-xl font-medium text-gray-800">
                 {props.text}
             </header>
         </div>
