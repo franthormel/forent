@@ -46,7 +46,7 @@ export default function ListingPageMainInfo(props: ListingPageMainInfoProps) {
                 <ListingPageMainInfoColumn value={props.area} label="Area (sqm)"
                     dataCyValue="listing-main-info-col-value-area"
                     dataCyLabel="listing-main-info-col-label-area" />
-                <ListingPageMainInfoColumn value={availableDateText(props.availableDate)} label="Date Available"
+                <ListingPageMainInfoColumn value={availableDateText(props.availableDate, new Date())} label="Date Available"
                     dataCyValue="listing-main-info-col-value-available-date"
                     dataCyLabel="listing-main-info-col-label-available-date" />
             </div>

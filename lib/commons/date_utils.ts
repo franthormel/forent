@@ -20,16 +20,16 @@ export namespace DateUtils {
    * Timezone is taken into account.
    *
    * @param date Date to compare
-   * @param custom Custom date of comparison (defaults to today)
+   * @param customToday Custom today date. Useful when client & server resides in different time zones.
    * @returns boolean
    */
-  export function dateHasPassed(date: Date, custom?: Date): boolean {
+  export function dateHasPassed(date: Date, customToday?: Date): boolean {
     // Settle which date will be used for comparison (today or the given input)
     let referenceDate;
-    if (custom === undefined) {
+    if (customToday === undefined) {
       referenceDate = new Date();
     } else {
-      referenceDate = custom;
+      referenceDate = customToday;
     }
 
     return date < referenceDate;
@@ -40,15 +40,15 @@ export namespace DateUtils {
    * Timezone is taken into account.
    *
    * @param date Date to compare
-   * @param today Today date (can provide a custom value, useful when client is from a different time zone)
+   * @param customToday Custom today date. Useful when client & server resides in different time zones.
    * @returns true if the given date is today or equal to the given custom date
    */
-  export function dateIsToday(date: Date, today?: Date): boolean {
+  export function dateIsToday(date: Date, customToday?: Date): boolean {
     let todayDate;
-    if (today === undefined) {
+    if (customToday === undefined) {
       todayDate = new Date();
     } else {
-      todayDate = today;
+      todayDate = customToday;
     }
 
     const sameYear = todayDate.getUTCFullYear() === date.getUTCFullYear();
