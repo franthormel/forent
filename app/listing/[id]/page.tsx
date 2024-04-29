@@ -5,6 +5,7 @@ import ListingPageContact from "../_component/contact";
 import ListingPageDescription from "../_component/description";
 import ListingPageMainInfo from "../_component/main-info";
 import ListingPagePhotos from "../_component/photos";
+import ListingPageMap from "../_component/map";
 
 export default async function ListingPage({ params }: { params: { id: string } }) {
     const listing = await prisma.listing.findUniqueOrThrow({
@@ -42,8 +43,7 @@ export default async function ListingPage({ params }: { params: { id: string } }
             </div>
             <ListingPageContact name={listing.user.name} contactNumber={listing.user.contactNumber} email={listing.user.email} />
             <ListingPageDescription description={listing.description} />
+            <ListingPageMap lat={listing.address!.latitude.toNumber()} lon={listing.address!.longitude.toNumber()} />
         </div>
     )
-
-    // TODO: Display Map
 }
