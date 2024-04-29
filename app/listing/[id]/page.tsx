@@ -1,10 +1,10 @@
 import ButtonOutlined from "@/components/buttons/outlined";
 import { StringUtils } from "@/lib/commons/string_utils";
 import prisma from "@/lib/db";
+import ListingPageContact from "../_component/contact";
+import ListingPageDescription from "../_component/description";
 import ListingPageMainInfo from "../_component/main-info";
 import ListingPagePhotos from "../_component/photos";
-import SectionHeaderIcon from "@/components/section/header-icon";
-import ListingPageContact from "../_component/contact";
 
 export default async function ListingPage({ params }: { params: { id: string } }) {
     const listing = await prisma.listing.findUniqueOrThrow({
@@ -41,11 +41,9 @@ export default async function ListingPage({ params }: { params: { id: string } }
                     state={listing.address!.state} zipCode={listing.address!.zipcode} />
             </div>
             <ListingPageContact name={listing.user.name} contactNumber={listing.user.contactNumber} email={listing.user.email} />
+            <ListingPageDescription description={listing.description} />
         </div>
     )
-
-    // TODO: Display Description
-
 
     // TODO: Display Map
 }
