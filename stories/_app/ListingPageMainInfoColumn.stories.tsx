@@ -2,7 +2,7 @@ import ListingPageMainInfoColumn from "@/app/listing/_component/main-info-col";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof ListingPageMainInfoColumn> = {
-    title: "App/Listing Main Info Column",
+    title: "App/Listing Page/Main Info Column",
     component: ListingPageMainInfoColumn,
     tags: ["autodocs"],
 } satisfies Meta<typeof ListingPageMainInfoColumn>;

@@ -11,7 +11,7 @@ describe('Listing Page Map', () => {
             cy.get('[data-cy="listing-map"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 2)

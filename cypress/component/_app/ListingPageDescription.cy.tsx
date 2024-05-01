@@ -11,7 +11,7 @@ Arbitro natus caritas volva ocer ara universe.`
         cy.get('[data-cy="listing-description"]')
             .should('be.visible')
             .and('exist')
-            .children()
+            .children() // TODO: Remove, component too
             .should("exist")
             .and('be.visible')
             .and('have.length', 2)

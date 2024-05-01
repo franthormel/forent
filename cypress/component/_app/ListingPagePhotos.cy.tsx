@@ -16,7 +16,7 @@ describe('Listing Page Photos', () => {
             cy.get('[data-cy="listing-photos"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 2)

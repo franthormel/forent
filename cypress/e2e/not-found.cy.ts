@@ -9,7 +9,7 @@ describe("not found page", () => {
 
     cy.get('[data-cy="not-found"]').should("exist");
     cy.get('[data-cy="not-found"]')
-      .children()
+      .children() // TODO: Remove, component too
       .should("exist")
       .and("have.length", 3);
 

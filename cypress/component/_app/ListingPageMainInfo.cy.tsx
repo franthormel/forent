@@ -6,7 +6,7 @@ describe('Listing Page Main Info', () => {
             cy.get('[data-cy="listing-main-info-cols"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 4)
@@ -21,7 +21,7 @@ describe('Listing Page Main Info', () => {
             cy.get('[data-cy="listing-main-info-address"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 3)
@@ -40,7 +40,7 @@ describe('Listing Page Main Info', () => {
             cy.get('[data-cy="listing-main-info"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 3)
@@ -97,7 +97,7 @@ describe('Listing Page Main Info', () => {
             cy.get('[data-cy="listing-main-info"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 3)
@@ -154,7 +154,7 @@ describe('Listing Page Main Info', () => {
             cy.get('[data-cy="listing-main-info"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 3)

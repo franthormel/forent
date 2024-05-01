@@ -26,6 +26,7 @@ export default async function ListingPage({ params }: { params: { id: string } }
             <div className="grid auto-rows-auto gap-y-11">
                 <div className="relative">
                     <ListingPagePhotos imageUrls={listing.imageUrls} />
+                    {/* TODO: Move to listingpagephotos, then adjust component + story */}
                     <div className="absolute bottom-6 right-6">
                         <ButtonLinkOutlined dataCy="btn-photos" size="small" href={`/listing/${params.id}/photos`}
                             text={StringUtils.pluralizeTextCount(listing.imageUrls.length, "Photo")} />

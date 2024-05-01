@@ -8,7 +8,7 @@ describe('Listing Page Main Info Column', () => {
         cy.get('[data-cy="listing-main-info-col"]')
             .should('be.visible')
             .and('exist')
-            .children()
+            .children() // TODO: Remove, component too
             .should("exist")
             .and('be.visible')
             .and('have.length', 2)

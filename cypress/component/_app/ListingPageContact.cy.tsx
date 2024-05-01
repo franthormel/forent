@@ -6,7 +6,7 @@ describe('Listing Page Contact', () => {
             cy.get('[data-cy="listing-contact"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 2)
@@ -14,7 +14,7 @@ describe('Listing Page Contact', () => {
                 .should('be.visible')
                 .and('exist')
                 .and('have.text', "Contact")
-                .children()
+                .children() // TODO: Remove, component too 
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 2)
@@ -25,7 +25,7 @@ describe('Listing Page Contact', () => {
             cy.get('[data-cy="listing-contact-values"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 1)
@@ -46,7 +46,7 @@ describe('Listing Page Contact', () => {
             cy.get('[data-cy="listing-contact-values"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 2)
@@ -69,7 +69,7 @@ describe('Listing Page Contact', () => {
             cy.get('[data-cy="listing-contact-values"]')
                 .should('be.visible')
                 .and('exist')
-                .children()
+                .children() // TODO: Remove, component too
                 .should("exist")
                 .and('be.visible')
                 .and('have.length', 3)

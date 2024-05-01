@@ -62,7 +62,7 @@ describe("homepage", () => {
           .and("be.visible")
           .and("have.css", "border-top-color", "rgb(229, 231, 235)");
         cy.get('[data-cy="footer"]')
-          .children()
+          .children() // TODO: Remove, component too
           .should("exist")
           .and("have.length", 4);
 
@@ -93,7 +93,7 @@ describe("homepage", () => {
         // Search bar
         cy.get('[data-cy="search-address"]').should("exist");
         cy.get('[data-cy="search-address"]')
-          .children()
+          .children() // TODO: Remove, component too
           .should("have.length", 2);
         cy.get('[data-cy="search-address-input')
           .should("exist")

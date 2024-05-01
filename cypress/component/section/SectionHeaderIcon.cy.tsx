@@ -13,7 +13,7 @@ describe('Card Listing', () => {
             .and('be.visible')
             .and('have.text', 'Settings')
         cy.get('[data-cy="section-header-icon"]')
-            .children()
+            .children() // TODO: Remove, component too
             .should("exist")
             .and("have.length", 2);
     })

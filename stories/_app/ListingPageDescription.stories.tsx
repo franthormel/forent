@@ -2,7 +2,7 @@ import ListingPageDescription from "@/app/listing/_component/description";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof ListingPageDescription> = {
-    title: "App/Listing Description",
+    title: "App/Listing Page/Description",
     component: ListingPageDescription,
     tags: ["autodocs"],
 } satisfies Meta<typeof ListingPageDescription>;

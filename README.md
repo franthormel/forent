@@ -47,6 +47,15 @@ Wanted to try all the technologies listed below.
 
 > **Test all (as much as possible)**
 
+1. Unit tests are for general & functional behavior [Jest]
+2. Component tests are for evaluating the component's values (text) and display (existence and visibility in the webpage) [Cypress]
+3. UI tests are for maintaining the component's design consitency [Storybook, Chromatic]
+4. E2E tests are for user behavior [Cypress]
+
+> It is better to test the component's UI in Storybook. Why?
+> 1. In Cypress, you have to explicitly mention (eg.) the color or layout of the component
+> 2. In Storybook w/ Chromatic, it automatically detects the changes and notifies for any changes.
+
 *All* the lines and branches.
 
 *As much as possible*, since some parts (like `component` and `e2e` tests) are better tested manually. 
