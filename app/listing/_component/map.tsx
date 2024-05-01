@@ -70,7 +70,7 @@ export default function ListingPageMap(props: ListingPageMapProps) {
                 </svg>
             </SectionHeaderIcon>
             <div id={mapId} tabIndex={0} data-cy={props.dataCyMap ?? "listing-map-slippy"}
-                className="h-80 w-screen rounded-md md:h-[25rem] lg:h-[30rem] 2xl:w-[60rem]" >
+                className="h-80 w-full rounded-md md:h-[25rem] lg:h-[30rem] 2xl:w-[60rem]" >
             </div>
         </div>
     )

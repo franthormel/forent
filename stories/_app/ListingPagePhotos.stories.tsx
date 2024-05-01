@@ -21,7 +21,8 @@ const imageUrls = [
 
 export const SmallLayout: Story = {
     args: {
-        imageUrls: imageUrls
+        imageUrls: imageUrls,
+        listingId: "listing-id"
     },
     parameters: {
         viewport: {
@@ -32,7 +33,8 @@ export const SmallLayout: Story = {
 
 export const MediumLayout: Story = {
     args: {
-        imageUrls: imageUrls
+        imageUrls: imageUrls,
+        listingId: "listing-id"
     },
     parameters: {
         viewport: {
@@ -43,7 +45,8 @@ export const MediumLayout: Story = {
 
 export const LargeLayout: Story = {
     args: {
-        imageUrls: imageUrls
+        imageUrls: imageUrls,
+        listingId: "listing-id"
     },
     parameters: {
         viewport: {
@@ -54,7 +57,8 @@ export const LargeLayout: Story = {
 
 export const ExtraLargeLayout: Story = {
     args: {
-        imageUrls: imageUrls
+        imageUrls: imageUrls,
+        listingId: "listing-id"
     },
     parameters: {
         viewport: {
@@ -65,7 +69,8 @@ export const ExtraLargeLayout: Story = {
 
 export const ExtraExtraLargeLayout: Story = {
     args: {
-        imageUrls: imageUrls
+        imageUrls: imageUrls,
+        listingId: "listing-id"
     },
     parameters: {
         viewport: {

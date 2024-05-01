@@ -10,18 +10,18 @@ interface ListingPhotosProps {
 }
 
 export default function ListingPhotos(props: ListingPhotosProps) {
-	const listingUrl = `/listing/${props.listingId}`
-
 	const listingPhotos = props.imageUrls.map((imageUrl, i) => {
 		const index = i + 1
-		const id = `listing-photo-${index}`
-		return <Image alt={`Listing Image Number ${index}`}
+		return <Image alt={`Listing Photo Number #${index}`}
 			src={imageUrl}
-			key={id} id={id} data-cy={id}
-			width={1600}
-			height={900}
+			key={`photo-${index}`}
+			id={index.toString()}
+			data-cy={`listing-photo-${index}`}
+			width={1600} // TODO: Use env for image dimensions
+			height={900} // TODO: Use env for image dimensions
 		/>
 	})
+	const listingUrl = `/listing/${props.listingId}`
 
 	return (
 		<div className="grid auto-rows-auto gap-y-12 md:gap-y-14 lg:gap-y-16 xl:gap-y-18">

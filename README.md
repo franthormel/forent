@@ -55,6 +55,9 @@ Wanted to try all the technologies listed below.
 > It is better to test the component's UI in Storybook. Why?
 > 1. In Cypress, you have to explicitly mention (eg.) the color or layout of the component
 > 2. In Storybook w/ Chromatic, it automatically detects the changes and notifies for any changes.
+>
+> > Special cases might apply. Example, different layouts for different screen dimensions requring some components
+> > to be hidden while others are visible.
 
 *All* the lines and branches.
 
