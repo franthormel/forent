@@ -24,13 +24,9 @@ const positionFeature = new Feature()
 positionFeature.setStyle(
     new Style({
         image: new CircleStyle({
-            radius: 6,
+            radius: 7,
             fill: new Fill({
-                color: '#3399CC',
-            }),
-            stroke: new Stroke({
-                color: '#fff',
-                width: 2,
+                color: '#ef4444',
             }),
         }),
     })

@@ -36,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${textFont.className} text-gray-800`}>
+    <html lang="en" className={`${textFont.className} text-gray-800 bg-slate-50`}>
       <body>
         {/* Header */}
         <div className='flex justify-between p-20'>

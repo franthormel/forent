@@ -12,4 +12,50 @@ export namespace DateUtils {
     copy.setFullYear(yearOffset);
     return copy;
   }
+
+  /**
+   * Checks if the given date has passed.
+   * Will compare with today if custom date is not provided.
+   * Will compare with the given custom date, if provided.
+   * Timezone is taken into account.
+   *
+   * @param date Date to compare
+   * @param customToday Custom today date. Useful when client & server resides in different time zones.
+   * @returns boolean
+   */
+  export function dateHasPassed(date: Date, customToday?: Date): boolean {
+    // Settle which date will be used for comparison (today or the given input)
+    let referenceDate;
+    if (customToday === undefined) {
+      referenceDate = new Date();
+    } else {
+      referenceDate = customToday;
+    }
+
+    return date < referenceDate;
+  }
+
+  /**
+   * Check if the given date is today or if equal to the given custom date
+   * Timezone is taken into account.
+   *
+   * @param date Date to compare
+   * @param customToday Custom today date. Useful when client & server resides in different time zones.
+   * @returns true if the given date is today or equal to the given custom date
+   */
+  export function dateIsToday(date: Date, customToday?: Date): boolean {
+    let todayDate;
+    if (customToday === undefined) {
+      todayDate = new Date();
+    } else {
+      todayDate = customToday;
+    }
+
+    const sameYear = todayDate.getUTCFullYear() === date.getUTCFullYear();
+    const sameMonth = todayDate.getUTCMonth() === date.getUTCMonth();
+    const sameDay = todayDate.getUTCDate() === date.getUTCDate();
+    const value = sameYear && sameMonth && sameDay;
+
+    return value;
+  }
 }

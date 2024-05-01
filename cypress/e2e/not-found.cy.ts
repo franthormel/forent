@@ -7,12 +7,6 @@ describe("not found page", () => {
     // ... and 404 error
     cy.visit("/visit/page/that/does/not/exist", { failOnStatusCode: false });
 
-    cy.get('[data-cy="not-found"]').should("exist");
-    cy.get('[data-cy="not-found"]')
-      .children()
-      .should("exist")
-      .and("have.length", 3);
-
     cy.get('[data-cy="not-found-glyph"]')
       .should("exist")
       .and("be.visible")

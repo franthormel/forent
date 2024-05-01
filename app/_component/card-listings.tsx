@@ -7,6 +7,7 @@ interface CardListingsProps {
 
 export default async function CardListings(props: CardListingsProps) {
     // Take four (4) listings
+    // FUTURE: Use findMany include
     const dbListings = await prisma.listing.findMany({ take: 4 })
 
     if (dbListings.length === 0) {
@@ -14,6 +15,7 @@ export default async function CardListings(props: CardListingsProps) {
     }
 
     // Transform those four (4) listings into components
+    // FUTURE: Use findMany include
     const cardListings = dbListings.map(async listing => {
         // Fetch the listing's address
         const address = await prisma.address.findUnique({
@@ -30,7 +32,8 @@ export default async function CardListings(props: CardListingsProps) {
         const currentPrice = prices.filter(price => price.isCurrent).at(0);
 
         return <CardListing
-            key={crypto.randomUUID()}
+            key={listing.id}
+            id={listing.id}
             addressLine1={address!.addressLine}
             addressLine2={`${address!.city}, ${address!.state}`}
             area={listing.area.toString()}

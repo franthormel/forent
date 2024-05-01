@@ -26,7 +26,6 @@ export default function Home() {
           </header>
           <div className='w-5/6 md:max-w-lg'>
             <Search placeholder='Search for an address'
-              dataCy='search-address'
               dataCyButtonIcon='search-address-btn-icon'
               dataCyInput='search-address-input' />
           </div>
@@ -37,7 +36,7 @@ export default function Home() {
       </div>
       {/* Button */}
       <div className='grid justify-center'>
-        <ButtonFilled text='View more listings' dataCyBtn='btn-view-listings' />
+        <ButtonFilled text='View more listings' dataCy='btn-view-listings' />
       </div>
     </div >
   )

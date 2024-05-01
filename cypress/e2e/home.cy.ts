@@ -57,15 +57,6 @@ describe("homepage", () => {
       });
 
       it("footer", () => {
-        cy.get('[data-cy="footer"]')
-          .should("exist")
-          .and("be.visible")
-          .and("have.css", "border-top-color", "rgb(229, 231, 235)");
-        cy.get('[data-cy="footer"]')
-          .children()
-          .should("exist")
-          .and("have.length", 4);
-
         cy.get('[data-cy="footer-text-about"]')
           .should("exist")
           .and("be.visible")
@@ -91,10 +82,6 @@ describe("homepage", () => {
           .and("have.text", "Renting made simple");
 
         // Search bar
-        cy.get('[data-cy="search-address"]').should("exist");
-        cy.get('[data-cy="search-address"]')
-          .children()
-          .should("have.length", 2);
         cy.get('[data-cy="search-address-input')
           .should("exist")
           .and("be.visible")

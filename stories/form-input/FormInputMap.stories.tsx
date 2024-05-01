@@ -4,7 +4,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<typeof FormInputMap> = {
   title: "Form Input/Map",
   component: FormInputMap,
-  tags: ["autodocs"],
+  parameters: {
+    layout: 'fullscreen'
+  }
 } satisfies Meta<typeof FormInputMap>;
 
 export default meta;

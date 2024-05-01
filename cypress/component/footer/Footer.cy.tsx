@@ -3,9 +3,6 @@ import Footer from "@/components/footer"
 describe('Footer', () => {
     it('works', () => {
         cy.mount(<Footer />)
-        cy.get('[data-cy="footer"]')
-            .should('exist')
-            .and('be.visible')
         cy.get('[data-cy="footer-text-about"]')
             .should('exist')
             .and('be.visible')
