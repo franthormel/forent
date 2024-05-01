@@ -3,13 +3,6 @@ import ListingPageMainInfo from "@/app/listing/_component/main-info";
 describe('Listing Page Main Info', () => {
     describe("display correct UI when", () => {
         afterEach(() => {
-            cy.get('[data-cy="listing-main-info-cols"]')
-                .should('be.visible')
-                .and('exist')
-                .children() // TODO: Remove, component too
-                .should("exist")
-                .and('be.visible')
-                .and('have.length', 4)
             cy.get('[data-cy="listing-main-info-col-label-area"]')
                 .should('be.visible')
                 .and('exist')
@@ -18,13 +11,6 @@ describe('Listing Page Main Info', () => {
                 .should('be.visible')
                 .and('exist')
                 .and('have.text', 'Date Available')
-            cy.get('[data-cy="listing-main-info-address"]')
-                .should('be.visible')
-                .and('exist')
-                .children() // TODO: Remove, component too
-                .should("exist")
-                .and('be.visible')
-                .and('have.length', 3)
         })
 
         it("Multiple beds, multiple baths, null available date, null zipcode", () => {
@@ -37,13 +23,6 @@ describe('Listing Page Main Info', () => {
                 city="East Wallace"
                 state="Louisiana"
                 zipCode={null} />)
-            cy.get('[data-cy="listing-main-info"]')
-                .should('be.visible')
-                .and('exist')
-                .children() // TODO: Remove, component too
-                .should("exist")
-                .and('be.visible')
-                .and('have.length', 3)
             cy.get('[data-cy="listing-main-info-price"]')
                 .should('be.visible')
                 .and('exist')
@@ -94,13 +73,6 @@ describe('Listing Page Main Info', () => {
                 city="Prosaccoborough"
                 state="Hawaii"
                 zipCode={88950} />)
-            cy.get('[data-cy="listing-main-info"]')
-                .should('be.visible')
-                .and('exist')
-                .children() // TODO: Remove, component too
-                .should("exist")
-                .and('be.visible')
-                .and('have.length', 3)
             cy.get('[data-cy="listing-main-info-price"]')
                 .should('be.visible')
                 .and('exist')
@@ -151,13 +123,6 @@ describe('Listing Page Main Info', () => {
                 city="North Dagmarshire"
                 state="New Jersey"
                 zipCode="83140" />)
-            cy.get('[data-cy="listing-main-info"]')
-                .should('be.visible')
-                .and('exist')
-                .children() // TODO: Remove, component too
-                .should("exist")
-                .and('be.visible')
-                .and('have.length', 3)
             cy.get('[data-cy="listing-main-info-price"]')
                 .should('be.visible')
                 .and('exist')

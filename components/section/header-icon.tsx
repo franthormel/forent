@@ -2,7 +2,8 @@ import { ReactNode } from "react"
 
 interface SectionHeaderIconProps {
     text: string
-    dataCy?: string
+    dataCyIcon?: string
+    dataCyText?: string
 }
 
 export default function SectionHeaderIcon({ children, props }: {
@@ -10,11 +11,13 @@ export default function SectionHeaderIcon({ children, props }: {
     props: SectionHeaderIconProps
 }) {
     return (
-        <div className="flex gap-x-2" data-cy={props.dataCy ?? "section-header-icon"}>
-            <div className="fill-gray-600">
+        <div className="flex gap-x-2">
+            <div data-cy={props.dataCyIcon ?? "section-header-icon"}
+                className="fill-gray-600">
                 {children}
             </div>
-            <header className="text-xl font-medium text-gray-800">
+            <header data-cy={props.dataCyText ?? "section-header-text"}
+                className="text-xl font-medium text-gray-800">
                 {props.text}
             </header>
         </div>

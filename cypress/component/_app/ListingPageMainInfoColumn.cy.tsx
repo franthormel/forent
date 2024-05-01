@@ -5,13 +5,6 @@ describe('Listing Page Main Info Column', () => {
         cy.mount(<ListingPageMainInfoColumn value="v0.0.1" label="Version"
             dataCyValue="listing-main-info-col-value-version"
             dataCyLabel="listing-main-info-col-label-version" />)
-        cy.get('[data-cy="listing-main-info-col"]')
-            .should('be.visible')
-            .and('exist')
-            .children() // TODO: Remove, component too
-            .should("exist")
-            .and('be.visible')
-            .and('have.length', 2)
         cy.get('[data-cy="listing-main-info-col-value-version"]')
             .should('be.visible')
             .and('exist')

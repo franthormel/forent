@@ -3,32 +3,17 @@ import ListingPageContact from "@/app/listing/_component/contact";
 describe('Listing Page Contact', () => {
     describe("should display correct UI when", () => {
         afterEach(() => {
-            cy.get('[data-cy="listing-contact"]')
+            cy.get('[data-cy="listing-contact-section-icon"]')
                 .should('be.visible')
                 .and('exist')
-                .children() // TODO: Remove, component too
-                .should("exist")
-                .and('be.visible')
-                .and('have.length', 2)
-            cy.get('[data-cy="section-header-icon-contact"]')
+            cy.get('[data-cy="listing-contact-section-text"]')
                 .should('be.visible')
                 .and('exist')
                 .and('have.text', "Contact")
-                .children() // TODO: Remove, component too 
-                .should("exist")
-                .and('be.visible')
-                .and('have.length', 2)
         })
 
         it("Only email is provided", () => {
             cy.mount(<ListingPageContact email="user@email.com" />)
-            cy.get('[data-cy="listing-contact-values"]')
-                .should('be.visible')
-                .and('exist')
-                .children() // TODO: Remove, component too
-                .should("exist")
-                .and('be.visible')
-                .and('have.length', 1)
             cy.get('[data-cy="listing-contact-value-name"]')
                 .should('not.exist')
             cy.get('[data-cy="listing-contact-value-number"]')
@@ -43,13 +28,6 @@ describe('Listing Page Contact', () => {
 
         it("Both name and email are provided", () => {
             cy.mount(<ListingPageContact email="jantonio@email.xyz" name="Jorge Antonio" />)
-            cy.get('[data-cy="listing-contact-values"]')
-                .should('be.visible')
-                .and('exist')
-                .children() // TODO: Remove, component too
-                .should("exist")
-                .and('be.visible')
-                .and('have.length', 2)
             cy.get('[data-cy="listing-contact-value-name"]')
                 .should('exist')
                 .and('be.visible')
@@ -66,13 +44,6 @@ describe('Listing Page Contact', () => {
 
         it("Contact information, name and email are provided", () => {
             cy.mount(<ListingPageContact email="al@martinez.tbd" name="Almeria Martinez" contactNumber="+82-105-223-591" />)
-            cy.get('[data-cy="listing-contact-values"]')
-                .should('be.visible')
-                .and('exist')
-                .children() // TODO: Remove, component too
-                .should("exist")
-                .and('be.visible')
-                .and('have.length', 3)
             cy.get('[data-cy="listing-contact-value-name"]')
                 .should('exist')
                 .and('be.visible')

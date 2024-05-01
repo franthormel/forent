@@ -14,10 +14,7 @@ export interface ListingPageMainInfoProps {
     city: string
     state: string
     zipCode: string | number | null
-    dataCy?: string
     dataCyPrice?: string
-    dataCyCols?: string
-    dataCyAddress?: string
     dataCyAddressLine?: string
     dataCyAddressSpace?: string
     dataCyAddressCityStateZip?: string
@@ -25,8 +22,7 @@ export interface ListingPageMainInfoProps {
 
 export default function ListingPageMainInfo(props: ListingPageMainInfoProps) {
     return (
-        <div className="grid auto-rows-auto gap-y-3"
-            data-cy={props.dataCy ?? "listing-main-info"}>
+        <div className="grid auto-rows-auto gap-y-3">
             {/* Price */}
             <div data-cy={props.dataCyPrice ?? "listing-main-info-price"}>
                 {/* FUTURE: Localize currency, put in env */}
@@ -36,7 +32,7 @@ export default function ListingPageMainInfo(props: ListingPageMainInfoProps) {
                 <span className="text-xl font-bold">/mo</span>
             </div>
             {/* Beds, Baths, Area, Available Date */}
-            <div className="flex gap-x-8" data-cy={props.dataCyCols ?? "listing-main-info-cols"}>
+            <div className="flex gap-x-8">
                 <ListingPageMainInfoColumn value={props.beds} label={StringUtils.pluralizeText(props.beds, "Bed")}
                     dataCyValue="listing-main-info-col-value-beds"
                     dataCyLabel="listing-main-info-col-label-beds" />
@@ -51,7 +47,7 @@ export default function ListingPageMainInfo(props: ListingPageMainInfoProps) {
                     dataCyLabel="listing-main-info-col-label-available-date" />
             </div>
             {/* Address */}
-            <div className="text-gray-700" data-cy={props.dataCyAddress ?? "listing-main-info-address"}>
+            <div className="text-gray-700">
                 <p className="block lg:inline-block"
                     data-cy={props.dataCyAddressLine ?? "listing-main-info-address-line"}>
                     {props.addressLine},

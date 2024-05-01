@@ -26,7 +26,6 @@ export default function Home() {
           </header>
           <div className='w-5/6 md:max-w-lg'>
             <Search placeholder='Search for an address'
-              dataCy='search-address'
               dataCyButtonIcon='search-address-btn-icon'
               dataCyInput='search-address-input' />
           </div>

@@ -17,7 +17,6 @@ interface ListingPageMapProps {
     lat: number
     lon: number
     mapId?: string,
-    dataCy?: string
     dataCyMap?: string
 }
 
@@ -62,8 +61,12 @@ export default function ListingPageMap(props: ListingPageMapProps) {
     })
 
     return (
-        <div className="grid auto-rows-auto gap-y-4" data-cy={props.dataCy ?? "listing-map"}>
-            <SectionHeaderIcon props={{ text: "Map", dataCy: "section-header-icon-map" }}>
+        <div className="grid auto-rows-auto gap-y-4">
+            <SectionHeaderIcon props={{
+                text: "Map",
+                dataCyIcon: "listing-map-section-icon",
+                dataCyText: "listing-map-section-text",
+            }}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 -960 960 960" width="28">
                     <path
                         d="m600-120-240-84-186 72q-20 8-37-4.5T120-170v-560q0-13 7.5-23t20.5-15l212-72 240 84 186-72q20-8 37 4.5t17 33.5v560q0 13-7.5 23T812-192l-212 72Zm-40-98v-468l-160-56v468l160 56Z" />
