@@ -8,7 +8,7 @@ export default function ButtonFilled(props: ButtonProps) {
 
     return (
         <button className={`${padding} ${fontSize} rounded-full bg-amber-400 transition-all hover:shadow-md`}
-            data-cy={props.dataCyBtn ?? "button"}
+            data-cy={props.dataCy ?? "button"}
             onClick={props.onClick}>
             {props.text}
         </button>

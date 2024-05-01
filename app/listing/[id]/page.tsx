@@ -1,11 +1,11 @@
-import ButtonOutlined from "@/components/buttons/outlined";
+import ButtonLinkOutlined from "@/components/button-links/outlined";
 import { StringUtils } from "@/lib/commons/string_utils";
 import prisma from "@/lib/db";
 import ListingPageContact from "../_component/contact";
 import ListingPageDescription from "../_component/description";
 import ListingPageMainInfo from "../_component/main-info";
-import ListingPagePhotos from "../_component/photos";
 import ListingPageMap from "../_component/map";
+import ListingPagePhotos from "../_component/photos";
 
 export default async function ListingPage({ params }: { params: { id: string } }) {
     const listing = await prisma.listing.findUniqueOrThrow({
@@ -18,11 +18,7 @@ export default async function ListingPage({ params }: { params: { id: string } }
             user: true,
         }
     })
-    // NOTE: This will fail if there is no current price
     const currentPrice = listing.prices.filter((p) => p.isCurrent).at(0)!.value;
-
-    // TODO: Remove after all display is done
-    console.log(listing)
 
     return (
         <div className="grid auto-rows-auto gap-y-16 px-24 lg:px-32 xl:px-36 2xl:px-44">
@@ -31,8 +27,7 @@ export default async function ListingPage({ params }: { params: { id: string } }
                 <div className="relative">
                     <ListingPagePhotos imageUrls={listing.imageUrls} />
                     <div className="absolute bottom-6 right-6">
-                        {/* TODO: Display photo viewer from the start when clicked */}
-                        <ButtonOutlined dataCyBtn="btn-photos" size="small"
+                        <ButtonLinkOutlined dataCy="btn-photos" size="small" href={`/listing/${params.id}/photos`}
                             text={StringUtils.pluralizeTextCount(listing.imageUrls.length, "Photo")} />
                     </div>
                 </div>

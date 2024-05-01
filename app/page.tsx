@@ -37,7 +37,7 @@ export default function Home() {
       </div>
       {/* Button */}
       <div className='grid justify-center'>
-        <ButtonFilled text='View more listings' dataCyBtn='btn-view-listings' />
+        <ButtonFilled text='View more listings' dataCy='btn-view-listings' />
       </div>
     </div >
   )

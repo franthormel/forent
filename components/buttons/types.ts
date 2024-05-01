@@ -11,7 +11,7 @@ export interface ButtonProps {
    * Button action when clicked
    */
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  dataCyBtn?: string;
+  dataCy?: string;
   /**
    * Default size is 'base'
    */

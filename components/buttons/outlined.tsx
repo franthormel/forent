@@ -9,7 +9,7 @@ export default function ButtonOutlined(props: ButtonProps) {
     return (
         <button className={`${padding} ${fontSize} rounded-full border-2 border-gray-800 bg-slate-50 text-gray-800 transition-all
                         hover:bg-gray-800 hover:text-slate-50`}
-            data-cy={props.dataCyBtn ?? "button"}
+            data-cy={props.dataCy ?? "button"}
             onClick={props.onClick}>
             {props.text}
         </button>

@@ -6,6 +6,7 @@ interface ListingPagePhotosProps {
 }
 
 export default function ListingPagePhotos(props: ListingPagePhotosProps) {
+    // TODO: Use env for image dimensions
     return (
         <div data-cy={props.dataCy ?? "listing-photos"}>
             {/* TODO: Display photo viewer from the start when clicked */}
@@ -19,7 +20,7 @@ export default function ListingPagePhotos(props: ListingPagePhotosProps) {
                 <Image alt="Listing cover phot" src={props.imageUrls[0]}
                     width="800" height="600"
                     className="h-full rounded-l-md" />
-                {/* TODO: Display photo viewer on which index was clicked */}
+                {/* TODO: Display photo viewer on which index was clicked, use # ids */}
                 <div className="grid grid-rows-2 grid-cols-2 gap-4">
                     <Image alt="Listing cover phot" src={props.imageUrls[1]}
                         width="800" height="600"
