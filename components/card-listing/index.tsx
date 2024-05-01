@@ -41,9 +41,8 @@ export default function CardListing(props: CardListingProps) {
 					className="h-3/5 w-full rounded-t-md object-cover"
 					alt="Search"
 					src={props.imgUrl}
-					// TODO: Use env for image dimensions
-					height={300}
-					width={300}
+					height={NumberUtils.toNumber(process.env.LISTING_CARD_PHOTO_WIDTH, 300)}
+					width={NumberUtils.toNumber(process.env.LISTING_CARD_PHOTO_HEIGHT, 300)}
 					data-cy={dataCyImage}
 				/>
 				<div className="grid grid-flow-row auto-rows-max gap-2 p-5">

@@ -1,4 +1,5 @@
 import ButtonLinkFilled from "@/components/button-links/filled";
+import { NumberUtils } from "@/lib/commons/number_utils";
 import Image from "next/image";
 
 interface ListingPhotosProps {
@@ -17,8 +18,8 @@ export default function ListingPhotos(props: ListingPhotosProps) {
 			key={`photo-${index}`}
 			id={index.toString()}
 			data-cy={`listing-photo-${index}`}
-			width={1600} // TODO: Use env for image dimensions
-			height={900} // TODO: Use env for image dimensions
+			width={NumberUtils.toNumber(process.env.LISTING_FULL_PHOTO_WIDTH, 1600)}
+			height={NumberUtils.toNumber(process.env.LISTING_FULL_PHOTO_HEIGHT, 900)}
 		/>
 	})
 	const listingUrl = `/listing/${props.listingId}`
