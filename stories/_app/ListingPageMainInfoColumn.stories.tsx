@@ -1,4 +1,4 @@
-import ListingPageMainInfoColumn from "@/app/listing/_component/main-info-col";
+import ListingPageMainInfoColumn from "@/app/listing/[id]/_component/main-info-col";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof ListingPageMainInfoColumn> = {

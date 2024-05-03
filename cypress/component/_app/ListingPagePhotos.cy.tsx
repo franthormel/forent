@@ -1,4 +1,4 @@
-import ListingPagePhotos from "@/app/listing/_component/photos";
+import ListingPagePhotos from "@/app/listing/[id]/_component/photos";
 
 describe('Listing Page Photos', () => {
     const imageUrls = [

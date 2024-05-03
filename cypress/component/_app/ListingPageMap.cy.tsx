@@ -1,4 +1,4 @@
-import ListingPageMap from "@/app/listing/_component/map";
+import ListingPageMap from "@/app/listing/[id]/_component/map";
 
 describe('Listing Page Map', () => {
     it("should display correct UI", () => {

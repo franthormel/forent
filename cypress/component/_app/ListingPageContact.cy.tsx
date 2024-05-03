@@ -1,4 +1,4 @@
-import ListingPageContact from "@/app/listing/_component/contact";
+import ListingPageContact from "@/app/listing/[id]/_component/contact";
 
 describe('Listing Page Contact', () => {
     describe("should display correct UI when", () => {

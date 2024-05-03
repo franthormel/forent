@@ -1,10 +1,10 @@
-import { DateUtils } from "../../../lib/commons/date_utils";
+import { DateUtils } from "../../../../lib/commons/date_utils";
 
 /**
  * Display proper text if the given listing's date is considered available
  *
  * @param availableDate Listing availability date
- * @param customToday Custom today 
+ * @param customToday Custom today
  * @returns "Available Now" if it is available otherwise the localized date
  */
 export function availableDateText(

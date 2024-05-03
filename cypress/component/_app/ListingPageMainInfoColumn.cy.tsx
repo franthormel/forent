@@ -1,4 +1,4 @@
-import ListingPageMainInfoColumn from "@/app/listing/_component/main-info-col";
+import ListingPageMainInfoColumn from "@/app/listing/[id]/_component/main-info-col";
 
 describe('Listing Page Main Info Column', () => {
     it("should display correct UI", () => {

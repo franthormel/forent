@@ -1,4 +1,4 @@
-import ListingPageMainInfo from "@/app/listing/_component/main-info";
+import ListingPageMainInfo from "@/app/listing/[id]/_component/main-info";
 
 describe('Listing Page Main Info', () => {
     describe("display correct UI when", () => {

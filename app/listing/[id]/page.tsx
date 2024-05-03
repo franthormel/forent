@@ -1,9 +1,9 @@
 import prisma from "@/lib/db";
-import ListingPageBanner from "../_component/banner";
-import ListingPageContact from "../_component/contact";
-import ListingPageDescription from "../_component/description";
-import ListingPageMainInfo from "../_component/main-info";
-import ListingPageMap from "../_component/map";
+import ListingPageBanner from "./_component/banner";
+import ListingPageContact from "./_component/contact";
+import ListingPageDescription from "./_component/description";
+import ListingPageMainInfo from "./_component/main-info";
+import ListingPageMap from "./_component/map";
 
 export default async function ListingPage({ params }: { params: { id: string } }) {
     const listing = await prisma.listing.findUniqueOrThrow({
