@@ -5,7 +5,7 @@ interface ListingCreateHeaderProps {
 
 export default function ListingCreateHeader(props: ListingCreateHeaderProps) {
 	return (
-		<div className="grid auto-rows-auto gap-1">
+		<div className="grid auto-rows-auto gap-y-1">
 			<header className="font-bold text-xl"
 				data-cy={props.dataCy ?? "listing-create-header"}>
 				Create your listing
