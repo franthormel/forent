@@ -2,7 +2,6 @@
 
 import ButtonFilled from '@/components/buttons/filled';
 import FormInput from '@/components/form-input';
-import FormInputMap from '@/components/form-input/map';
 import FormInputReset from '@/components/form-input/reset';
 import FormInputTextArea from '@/components/form-input/textarea';
 import TextError from '@/components/text/error';
@@ -41,8 +40,6 @@ export default function CreateListing() {
                             <FormInput label='Price' name='price' type="number" min={100} max={100_000_000} />
                             {/* Description */}
                             <FormInputTextArea label='Description' name='description' minLength={16} maxLength={1024} />
-                            {/* Map */}
-                            <FormInputMap />
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-x-8 py-8">

@@ -1,6 +1,9 @@
+"use client"
+
 import { StringUtils } from "@/lib/commons/string_utils"
 import TextError from "../text/error"
 import TextOptional from "../text/optional"
+import { ChangeEventHandler } from "react"
 
 // FUTURE: Break into separate component for each of the types
 type FormInputType = "text" | "date" | "number"
@@ -49,10 +52,12 @@ interface FormInputProps {
     /**
      * Error message
      */
+    onChange?: ChangeEventHandler
     errorMessage?: string
     dataCyOptional?: string
     dataCyLabel?: string
     dataCy?: string
+    // TODO: Component test
     dataCyError?: string
 }
 
@@ -77,6 +82,7 @@ export default function FormInput(props: FormInputProps) {
                 max={props.max}
                 minLength={props.minLength}
                 defaultValue={props.defaultValue}
+                onChange={props.onChange}
                 data-cy={props.dataCy ?? "form-input"}
                 className={`mt-2 w-full rounded-md border-2 px-2 py-1 ${hasError ? 'border-red-600' : 'border-slate-200'}`} />
             <TextError value={props.errorMessage} dataCy={props.dataCyError} />
