@@ -1,11 +1,11 @@
-interface ListingPageMainInfoColumnProps {
+interface ListingMainInfoColumnProps {
     value: string | number
     label: string
     dataCyValue?: string
     dataCyLabel?: string
 }
 
-export default function ListingPageMainInfoColumn(props: ListingPageMainInfoColumnProps) {
+export default function ListingMainInfoColumn(props: ListingMainInfoColumnProps) {
     return (
         <div>
             <span className="font-bold"

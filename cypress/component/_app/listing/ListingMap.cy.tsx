@@ -1,8 +1,8 @@
-import ListingPageMap from "@/app/listing/[id]/_component/map";
+import ListingMap from "@/app/listing/[id]/_component/map";
 
-describe('Listing Page Map', () => {
+describe('Listing Map', () => {
     it("should display correct UI", () => {
-        cy.mount(<ListingPageMap lat={-42.8722343} lon={147.3146128}
+        cy.mount(<ListingMap lat={-42.8722343} lon={147.3146128}
             mapId="mapId-001"
             dataCyMap="listing-map-slippy" />)
         cy.get('[data-cy="listing-map-section-icon"]')

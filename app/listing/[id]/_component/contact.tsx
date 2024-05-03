@@ -1,7 +1,7 @@
 import SectionHeaderIcon from "@/components/section/header-icon";
 import Link from "next/link";
 
-interface ListingPageContactProps {
+interface ListingContactProps {
     name?: string | null
     contactNumber?: string | null
     email: string
@@ -10,7 +10,7 @@ interface ListingPageContactProps {
     dataCyValueEmail?: string
 }
 
-export default function ListingPageContact(props: ListingPageContactProps) {
+export default function ListingContact(props: ListingContactProps) {
     return (
         <div className="grid auto-rows-auto gap-y-4">
             <SectionHeaderIcon props={{

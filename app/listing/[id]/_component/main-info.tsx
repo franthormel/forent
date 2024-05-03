@@ -2,9 +2,9 @@
 
 import { StringUtils } from "@/lib/commons/string_utils"
 import { availableDateText } from "./function"
-import ListingPageMainInfoColumn from "./main-info-col"
+import ListingMainInfoColumn from "./main-info-col"
 
-export interface ListingPageMainInfoProps {
+export interface ListingMainInfoProps {
     price: number
     beds: number
     baths: number
@@ -20,7 +20,7 @@ export interface ListingPageMainInfoProps {
     dataCyAddressCityStateZip?: string
 }
 
-export default function ListingPageMainInfo(props: ListingPageMainInfoProps) {
+export default function ListingMainInfo(props: ListingMainInfoProps) {
     return (
         <div className="grid auto-rows-auto gap-y-3">
             {/* Price */}
@@ -33,16 +33,16 @@ export default function ListingPageMainInfo(props: ListingPageMainInfoProps) {
             </div>
             {/* Beds, Baths, Area, Available Date */}
             <div className="flex gap-x-8">
-                <ListingPageMainInfoColumn value={props.beds} label={StringUtils.pluralizeText(props.beds, "Bed")}
+                <ListingMainInfoColumn value={props.beds} label={StringUtils.pluralizeText(props.beds, "Bed")}
                     dataCyValue="listing-main-info-col-value-beds"
                     dataCyLabel="listing-main-info-col-label-beds" />
-                <ListingPageMainInfoColumn value={props.baths} label={StringUtils.pluralizeText(props.baths, "Bath")}
+                <ListingMainInfoColumn value={props.baths} label={StringUtils.pluralizeText(props.baths, "Bath")}
                     dataCyValue="listing-main-info-col-value-baths"
                     dataCyLabel="listing-main-info-col-label-baths" />
-                <ListingPageMainInfoColumn value={props.area} label="Area (sqm)"
+                <ListingMainInfoColumn value={props.area} label="Area (sqm)"
                     dataCyValue="listing-main-info-col-value-area"
                     dataCyLabel="listing-main-info-col-label-area" />
-                <ListingPageMainInfoColumn value={availableDateText(props.availableDate, new Date())} label="Date Available"
+                <ListingMainInfoColumn value={availableDateText(props.availableDate, new Date())} label="Date Available"
                     dataCyValue="listing-main-info-col-value-available-date"
                     dataCyLabel="listing-main-info-col-label-available-date" />
             </div>

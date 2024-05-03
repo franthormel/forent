@@ -1,16 +1,16 @@
-import ListingPageMainInfo, { ListingPageMainInfoProps } from "@/app/listing/[id]/_component/main-info";
+import ListingMainInfo, { ListingMainInfoProps } from "@/app/listing/[id]/_component/main-info";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof ListingPageMainInfo> = {
-    title: "App/Listing Page/Main Info",
-    component: ListingPageMainInfo,
+const meta: Meta<typeof ListingMainInfo> = {
+    title: "App/Listing/Main Info",
+    component: ListingMainInfo,
     tags: ["autodocs"],
-} satisfies Meta<typeof ListingPageMainInfo>;
+} satisfies Meta<typeof ListingMainInfo>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const defaultArgs: ListingPageMainInfoProps = {
+const defaultArgs: ListingMainInfoProps = {
     price: 10000,
     beds: 2,
     baths: 1,

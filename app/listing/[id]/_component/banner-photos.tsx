@@ -2,12 +2,12 @@ import { NumberUtils } from "@/lib/commons/number_utils";
 import Image from "next/image";
 import Link from "next/link";
 
-interface ListingPagePhotosProps {
+interface ListingBannerPhotosProps {
     imageUrls: string[]
     listingId: string
 }
 
-export default function ListingPagePhotos(props: ListingPagePhotosProps) {
+export default function ListingBannerPhotos(props: ListingBannerPhotosProps) {
     const listingUrl = `/listing/${props.listingId}/photos#`
     const imageWidth = NumberUtils.toNumber(process.env.LISTING_COVER_PHOTO_WIDTH, 800)
     const imageHeight = NumberUtils.toNumber(process.env.LISTING_COVER_PHOTO_HEIGHT, 600)

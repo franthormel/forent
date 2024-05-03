@@ -1,13 +1,13 @@
-import ListingPageBanner from "@/app/listing/[id]/_component/banner"
+import ListingBanner from "@/app/listing/[id]/_component/banner"
 
-describe("Listing Page Banner", () => {
-	// NOTE: ListingPagePhotos already handles the testing of layouts and image links so there is no need to do the same tests here. 
+describe("Listing Banner", () => {
+	// NOTE: ListingPhotos already handles the testing of layouts and image links so there is no need to do the same tests here. 
 	describe('should display correct button text', () => {
 		it("when there is one (1) photo", () => {
 			const imageUrls = [
 				"https://images.unsplash.com/photo-1449247613801-ab06418e2861",
 			]
-			cy.mount(<ListingPageBanner imageUrls={imageUrls} listingId="id" />)
+			cy.mount(<ListingBanner imageUrls={imageUrls} listingId="id" />)
 			cy.get('[data-cy="btn-photos"]')
 				.should('exist')
 				.and('be.visible')
@@ -21,7 +21,7 @@ describe("Listing Page Banner", () => {
 				"https://images.unsplash.com/photo-1534595038511-9f219fe0c979",
 				"https://images.unsplash.com/photo-1535078035266-a0fa7d3b8f65",
 			]
-			cy.mount(<ListingPageBanner imageUrls={imageUrls} listingId="id" />)
+			cy.mount(<ListingBanner imageUrls={imageUrls} listingId="id" />)
 			cy.get('[data-cy="btn-photos"]')
 				.should('exist')
 				.and('be.visible')
@@ -53,7 +53,7 @@ describe("Listing Page Banner", () => {
 				"https://images.unsplash.com/photo-1609767175584-7abe16d3f1fa",
 				"https://images.unsplash.com/photo-1610516258978-461db90b97b4",
 			]
-			cy.mount(<ListingPageBanner imageUrls={imageUrls} listingId="id" />)
+			cy.mount(<ListingBanner imageUrls={imageUrls} listingId="id" />)
 			cy.get('[data-cy="btn-photos"]')
 				.should('exist')
 				.and('be.visible')

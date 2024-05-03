@@ -1,10 +1,10 @@
 import PageLayout from "@/app/_component/page-layout";
 import prisma from "@/lib/db";
-import ListingPageBanner from "./_component/banner";
-import ListingPageContact from "./_component/contact";
-import ListingPageDescription from "./_component/description";
-import ListingPageMainInfo from "./_component/main-info";
-import ListingPageMap from "./_component/map";
+import ListingBanner from "./_component/banner";
+import ListingContact from "./_component/contact";
+import ListingDescription from "./_component/description";
+import ListingMainInfo from "./_component/main-info";
+import ListingMap from "./_component/map";
 
 export default async function ListingPage({ params }: { params: { id: string } }) {
     const listing = await prisma.listing.findUniqueOrThrow({
@@ -23,15 +23,15 @@ export default async function ListingPage({ params }: { params: { id: string } }
         <PageLayout>
             {/* Photos & main information */}
             <div className="grid auto-rows-auto gap-y-11">
-                <ListingPageBanner imageUrls={listing.imageUrls} listingId={listing.id} />
-                <ListingPageMainInfo price={currentPrice.toNumber()} beds={listing.beds} baths={listing.baths}
+                <ListingBanner imageUrls={listing.imageUrls} listingId={listing.id} />
+                <ListingMainInfo price={currentPrice.toNumber()} beds={listing.beds} baths={listing.baths}
                     area={listing.area.toNumber()} availableDate={listing.availableDate}
                     addressLine={listing.address!.addressLine} city={listing.address!.city}
                     state={listing.address!.state} zipCode={listing.address!.zipcode} />
             </div>
-            <ListingPageContact name={listing.user.name} contactNumber={listing.user.contactNumber} email={listing.user.email} />
-            <ListingPageDescription description={listing.description} />
-            <ListingPageMap lat={listing.address!.latitude.toNumber()} lon={listing.address!.longitude.toNumber()} />
+            <ListingContact name={listing.user.name} contactNumber={listing.user.contactNumber} email={listing.user.email} />
+            <ListingDescription description={listing.description} />
+            <ListingMap lat={listing.address!.latitude.toNumber()} lon={listing.address!.longitude.toNumber()} />
         </PageLayout>
     )
 }

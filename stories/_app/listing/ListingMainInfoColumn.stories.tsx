@@ -1,11 +1,11 @@
-import ListingPageMainInfoColumn from "@/app/listing/[id]/_component/main-info-col";
+import ListingMainInfoColumn from "@/app/listing/[id]/_component/main-info-col";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof ListingPageMainInfoColumn> = {
-    title: "App/Listing Page/Main Info Column",
-    component: ListingPageMainInfoColumn,
+const meta: Meta<typeof ListingMainInfoColumn> = {
+    title: "App/Listing/Main Info Column",
+    component: ListingMainInfoColumn,
     tags: ["autodocs"],
-} satisfies Meta<typeof ListingPageMainInfoColumn>;
+} satisfies Meta<typeof ListingMainInfoColumn>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

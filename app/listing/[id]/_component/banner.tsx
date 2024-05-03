@@ -1,16 +1,16 @@
-import ListingPagePhotos from "@/app/listing/[id]/_component/photos";
+import ListingBannerPhotos from "@/app/listing/[id]/_component/banner-photos";
 import ButtonLinkOutlined from "@/components/button-links/outlined";
 import { StringUtils } from "@/lib/commons/string_utils";
 
-interface ListingPageBannerProps {
+interface ListingBannerProps {
 	imageUrls: string[]
 	listingId: string
 }
 
-export default function ListingPageBanner(props: ListingPageBannerProps) {
+export default function ListingBanner(props: ListingBannerProps) {
 	return (
 		<div className="relative">
-			<ListingPagePhotos
+			<ListingBannerPhotos
 				imageUrls={props.imageUrls}
 				listingId={props.listingId} />
 			<div className="absolute bottom-6 right-6">

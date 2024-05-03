@@ -1,11 +1,11 @@
-import ListingPageContact from "@/app/listing/[id]/_component/contact";
+import ListingContact from "@/app/listing/[id]/_component/contact";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof ListingPageContact> = {
-    title: "App/Listing Page/Contact",
-    component: ListingPageContact,
+const meta: Meta<typeof ListingContact> = {
+    title: "App/Listing/Contact",
+    component: ListingContact,
     tags: ["autodocs"],
-} satisfies Meta<typeof ListingPageContact>;
+} satisfies Meta<typeof ListingContact>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

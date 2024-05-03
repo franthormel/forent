@@ -1,8 +1,8 @@
-import ListingPageMainInfoColumn from "@/app/listing/[id]/_component/main-info-col";
+import ListingMainInfoColumn from "@/app/listing/[id]/_component/main-info-col";
 
-describe('Listing Page Main Info Column', () => {
+describe('Listing Main Info Column', () => {
     it("should display correct UI", () => {
-        cy.mount(<ListingPageMainInfoColumn value="v0.0.1" label="Version"
+        cy.mount(<ListingMainInfoColumn value="v0.0.1" label="Version"
             dataCyValue="listing-main-info-col-value-version"
             dataCyLabel="listing-main-info-col-label-version" />)
         cy.get('[data-cy="listing-main-info-col-value-version"]')

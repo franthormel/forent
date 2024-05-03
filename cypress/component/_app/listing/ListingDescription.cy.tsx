@@ -1,11 +1,11 @@
-import ListingPageDescription from "@/app/listing/[id]/_component/description";
+import ListingDescription from "@/app/listing/[id]/_component/description";
 
-describe('Listing Page Description', () => {
+describe('Listing Description', () => {
     it("should display correct UI", () => {
         const description = `Amoveo cunae calcar.
 Adeo usque creator alienus dedecor articulus bestia venustas.
 Arbitro natus caritas volva ocer ara universe.`
-        cy.mount(<ListingPageDescription description={description}
+        cy.mount(<ListingDescription description={description}
             dataCyDescription="listing-description" />)
         cy.get('[data-cy="listing-description-section-icon"]')
             .should('be.visible')

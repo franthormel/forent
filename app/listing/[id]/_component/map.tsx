@@ -13,14 +13,14 @@ import VectorSource from 'ol/source/Vector'
 import { Icon, Style } from 'ol/style'
 import { useEffect } from "react"
 
-interface ListingPageMapProps {
+interface ListingMapProps {
     lat: number
     lon: number
     mapId?: string,
     dataCyMap?: string
 }
 
-export default function ListingPageMap(props: ListingPageMapProps) {
+export default function ListingMap(props: ListingMapProps) {
     const mapId = props.dataCyMap ?? "listing-map-slippy"
 
     useEffect(() => {

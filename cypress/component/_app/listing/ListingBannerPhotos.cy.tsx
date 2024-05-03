@@ -1,4 +1,4 @@
-import ListingPagePhotos from "@/app/listing/[id]/_component/photos";
+import ListingBannerPhotos from "@/app/listing/[id]/_component/banner-photos";
 
 describe('Listing Page Photos', () => {
     const imageUrls = [
@@ -11,7 +11,7 @@ describe('Listing Page Photos', () => {
     ];
 
     it('should display correct links', () => {
-        cy.mount(<ListingPagePhotos imageUrls={imageUrls} listingId="id" />)
+        cy.mount(<ListingBannerPhotos imageUrls={imageUrls} listingId="id" />)
 
         cy.get('[data-cy="listing-sm-md-photo-1-link"]')
             .should('exist')
@@ -44,7 +44,7 @@ describe('Listing Page Photos', () => {
             [640, 768].forEach((width) => {
                 it(`${width}px`, () => {
                     cy.viewport(width, 1000);
-                    cy.mount(<ListingPagePhotos imageUrls={imageUrls} listingId="listing-id" />)
+                    cy.mount(<ListingBannerPhotos imageUrls={imageUrls} listingId="listing-id" />)
 
                     cy.get('[data-cy="listing-sm-md-photo-1"]')
                         .should('be.visible')
@@ -71,7 +71,7 @@ describe('Listing Page Photos', () => {
             [1024, 1280, 1536].forEach((width) => {
                 it(`${width}px`, () => {
                     cy.viewport(width, 1000);
-                    cy.mount(<ListingPagePhotos imageUrls={imageUrls} listingId="listing-id" />)
+                    cy.mount(<ListingBannerPhotos imageUrls={imageUrls} listingId="listing-id" />)
 
                     cy.get('[data-cy="listing-sm-md-photo-1"]')
                         .should('not.be.visible')

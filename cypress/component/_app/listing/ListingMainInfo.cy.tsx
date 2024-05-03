@@ -1,6 +1,6 @@
-import ListingPageMainInfo from "@/app/listing/[id]/_component/main-info";
+import ListingMainInfo from "@/app/listing/[id]/_component/main-info";
 
-describe('Listing Page Main Info', () => {
+describe('Listing Main Info', () => {
     describe("display correct UI when", () => {
         afterEach(() => {
             cy.get('[data-cy="listing-main-info-col-label-area"]')
@@ -14,7 +14,7 @@ describe('Listing Page Main Info', () => {
         })
 
         it("Multiple beds, multiple baths, null available date, null zipcode", () => {
-            cy.mount(<ListingPageMainInfo price={9900}
+            cy.mount(<ListingMainInfo price={9900}
                 beds={3}
                 baths={2}
                 area={55}
@@ -64,7 +64,7 @@ describe('Listing Page Main Info', () => {
                 .and('contain.text', 'East Wallace, Louisiana')
         });
         it("Single bed, single bath, future available date, with zipcode", () => {
-            cy.mount(<ListingPageMainInfo price={12540}
+            cy.mount(<ListingMainInfo price={12540}
                 beds={1}
                 baths={1}
                 area={25}
@@ -114,7 +114,7 @@ describe('Listing Page Main Info', () => {
                 .and('contain.text', 'Prosaccoborough, Hawaii 88950')
         });
         it("Multiple beds, single bath, before available date, with zipcode", () => {
-            cy.mount(<ListingPageMainInfo price={9562}
+            cy.mount(<ListingMainInfo price={9562}
                 beds={2}
                 baths={1}
                 area={32}

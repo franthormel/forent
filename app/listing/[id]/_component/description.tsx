@@ -1,11 +1,11 @@
 import SectionHeaderIcon from "@/components/section/header-icon";
 
-interface ListingPageDescriptionProps {
+interface ListingDescriptionProps {
     description: string
     dataCyDescription?: string
 }
 
-export default function ListingPageDescription(props: ListingPageDescriptionProps) {
+export default function ListingDescription(props: ListingDescriptionProps) {
     return (
         <div className="grid auto-rows-auto gap-y-4">
             <SectionHeaderIcon props={{

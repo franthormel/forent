@@ -1,11 +1,11 @@
-import ListingPageDescription from "@/app/listing/[id]/_component/description";
+import ListingDescription from "@/app/listing/[id]/_component/description";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof ListingPageDescription> = {
-    title: "App/Listing Page/Description",
-    component: ListingPageDescription,
+const meta: Meta<typeof ListingDescription> = {
+    title: "App/Listing/Description",
+    component: ListingDescription,
     tags: ["autodocs"],
-} satisfies Meta<typeof ListingPageDescription>;
+} satisfies Meta<typeof ListingDescription>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
