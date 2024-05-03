@@ -10,7 +10,7 @@ export interface HeaderProps {
 
 export default function Header(props: HeaderProps) {
     return (
-        <header className={`${headerFont.className} text-gray-800 text-2xl`}
+        <header className={`${headerFont.className} text-2xl`}
             data-cy={props.dataCy ?? "header"}>
             {props.value}
         </header>

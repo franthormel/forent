@@ -8,7 +8,7 @@ interface ListingPageMainInfoColumnProps {
 export default function ListingPageMainInfoColumn(props: ListingPageMainInfoColumnProps) {
     return (
         <div>
-            <span className="font-bold text-gray-800"
+            <span className="font-bold"
                 data-cy={props.dataCyValue ?? "listing-main-info-col-value"}>
                 {props.value}
             </span>

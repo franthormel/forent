@@ -17,7 +17,7 @@ export default function SectionHeaderIcon({ children, props }: {
                 {children}
             </div>
             <header data-cy={props.dataCyText ?? "section-header-text"}
-                className="text-xl font-medium text-gray-800">
+                className="text-xl font-medium">
                 {props.text}
             </header>
         </div>
