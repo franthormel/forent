@@ -1,11 +1,11 @@
 import PageLayout from "@/app/_component/page-layout";
+import ListingCreateHeader from "./_components/header";
 
 export default function ListingCreatePage() {
 	return (
 		<PageLayout>
-			<div>
-				<header>Create your listing</header>
-				<p>By providing the following information</p>
+			<div className="grid auto-rows-auto gap-4">
+				<ListingCreateHeader />
 			</div>
 		</PageLayout>
 	)
