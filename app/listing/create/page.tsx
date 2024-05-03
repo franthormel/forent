@@ -104,6 +104,23 @@ export default function ListingCreatePage() {
 						</div>
 					</div>
 				</div>
+				{/* Photos */}
+				<div className="space-y-4">
+					<SectionHeaderIcon props={{
+						text: "Photos",
+						dataCyIcon: "listing-create-section-photos-icon",
+						dataCyText: "listing-create-section-photos-text",
+					}}>
+						<svg xmlns="http://www.w3.org/2000/svg" height="28" viewBox="0 -960 960 960" width="28">
+							<path
+								d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm40-160h480L570-480 450-320l-90-120-120 160Z" />
+						</svg>
+					</SectionHeaderIcon>
+					<p className="text-gray-500"
+						data-cy="listing-create-photos-text">
+						*Chosen from a random set of images
+					</p>
+				</div>
 			</div>
 		</PageLayout>
 	)
