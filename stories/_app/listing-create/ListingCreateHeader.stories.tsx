@@ -10,4 +10,4 @@ const meta: Meta<typeof ListingCreateHeader> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Email: Story = {}
+export const Example: Story = {}
