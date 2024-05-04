@@ -12,7 +12,6 @@ import TextError from "@/components/text/error";
 import { LonLat } from "@/lib/types/geography";
 import pinIcon from "@/public/icons/home_pin.svg";
 import { Feature, Map, View } from "ol";
-import Geolocation from 'ol/Geolocation';
 import { defaults } from "ol/control";
 import { Point } from "ol/geom";
 import TileLayer from "ol/layer/Tile";
@@ -27,22 +26,23 @@ import ListingCreateHeader from "./_components/header";
 
 const MAP_ZOOM_LVL = 2;
 const MAP_PRELOAD = 4
-
-// Use home icon
-const mapIconStyle = new Style({
-	image: new Icon({
-		src: pinIcon.src,
-	}),
-})
-const mapPositionFeature = new Feature()
-mapPositionFeature.setStyle(mapIconStyle)
+const MAP_ID = "listing-create-form-address-map";
 
 export default function ListingCreatePage() {
 	// TODO: Use geo location api https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
 	// Map related
 	const [mapLonLat, setMapLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 })
 	const mapZoomLevel = useRef<number>(MAP_ZOOM_LVL)
-	const mapId = "listing-create-form-address-map";
+
+	// Use home icon
+	const mapIconStyle = new Style({
+		image: new Icon({
+			src: pinIcon.src,
+		}),
+	})
+	const mapPositionFeature = new Feature()
+	mapPositionFeature.setStyle(mapIconStyle)
+	mapPositionFeature.setGeometry(new Point(fromLonLat([mapLonLat.longitude!, mapLonLat.latitude!])))
 
 	useEffect(() => {
 		const mapView = new View({
@@ -50,10 +50,9 @@ export default function ListingCreatePage() {
 			zoom: mapZoomLevel.current,
 		})
 		const map = new Map({
-			target: mapId,
+			target: MAP_ID,
 			layers: [
 				new TileLayer({
-					preload: MAP_PRELOAD,
 					source: new OSM()
 				}),
 				new VectorLayer({
@@ -114,6 +113,7 @@ export default function ListingCreatePage() {
 							</svg>
 						</SectionHeaderIcon>
 						<div className="grid grid-cols-2 gap-x-4">
+							{/* Price */}
 							<FormInput
 								label='Price'
 								name='price'
@@ -124,6 +124,7 @@ export default function ListingCreatePage() {
 								dataCyLabel="listing-create-form-price-input-label"
 								dataCyOptional="listing-create-form-price-input-optional"
 								dataCyError="listing-create-form-price-input-error" />
+							{/* Deposit */}
 							<FormInput
 								label='Deposit'
 								name='deposit'
@@ -131,12 +132,12 @@ export default function ListingCreatePage() {
 								optional={true}
 								min={0}
 								max={1_000_000}
-								defaultValue={0}
 								dataCy="listing-create-form-deposit-input"
 								dataCyLabel="listing-create-form-deposit-input-label"
 								dataCyOptional="listing-create-form-deposit-input-optional"
 								dataCyError="listing-create-form-deposit-input-error" />
 						</div>
+						{/* Description */}
 						<FormInputTextArea
 							label='Description'
 							name='description'
@@ -147,6 +148,7 @@ export default function ListingCreatePage() {
 							dataCyOptional="listing-create-form-description-input-textarea-optional"
 							dataCyError="listing-create-form-description-input-textarea-error" />
 						<div className="grid grid-cols-3 gap-x-4">
+							{/* No. of Beds */}
 							<FormInput
 								label='No. of Beds'
 								name='beds'
@@ -157,6 +159,7 @@ export default function ListingCreatePage() {
 								dataCyLabel="listing-create-form-beds-input-label"
 								dataCyOptional="listing-create-form-beds-input-optional"
 								dataCyError="listing-create-form-beds-input-error" />
+							{/* No. of Baths */}
 							<FormInput
 								label='No. of Baths'
 								name='baths'
@@ -167,6 +170,7 @@ export default function ListingCreatePage() {
 								dataCyLabel="listing-create-form-baths-input-label"
 								dataCyOptional="listing-create-form-baths-input-optional"
 								dataCyError="listing-create-form-baths-input-error" />
+							{/* Area */}
 							<FormInput
 								label='Area (sqm)'
 								name='area'
@@ -179,6 +183,7 @@ export default function ListingCreatePage() {
 								dataCyError="listing-create-form-area-input-error" />
 						</div>
 						<div className="grid grid-cols-3">
+							{/* Available Date */}
 							<div className="col-span-2">
 								<FormInput label='Available Date' name='availableDate' type='date' optional={true} />
 							</div>
@@ -195,6 +200,7 @@ export default function ListingCreatePage() {
 									d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm40-160h480L570-480 450-320l-90-120-120 160Z" />
 							</svg>
 						</SectionHeaderIcon>
+						{/* Photos */}
 						<p className="text-gray-500"
 							data-cy="listing-create-photos-text">
 							*Chosen from a random set of images
@@ -211,35 +217,41 @@ export default function ListingCreatePage() {
 									d="M480-480q33 0 56.5-23.5T560-560q0-33-23.5-56.5T480-640q-33 0-56.5 23.5T400-560q0 33 23.5 56.5T480-480Zm0 400Q319-217 239.5-334.5T160-552q0-150 96.5-239T480-880q127 0 223.5 89T800-552q0 100-79.5 217.5T480-80Z" />
 							</svg>
 						</SectionHeaderIcon>
+						{/* Address */}
 						<div className="grid auto-rows-auto gap-y-2">
+							{/* Map */}
 							<div className="h-96">
-								<div id={mapId}
+								<div id={MAP_ID}
 									className="h-full"
 									data-cy="listing-create-form-address-map"
 									tabIndex={0} />
 							</div>
+							{/* Map error (if any) */}
 							<TextError
 								value="error"
 								dataCy="listing-create-form-address-map-error" />
+							{/* TODO: Get Pin Address */}
 							<div className="w-fit">
-								{/* TODO: Get pin address */}
 								<ButtonOutlined
-									text="Get pin address"
+									text="Get Pin Address"
 									size="small"
 									dataCy="listing-create-form-address-button"
 									onClick={() => console.log("TODO: Get address")} />
 							</div>
+							{/* Address longitude */}
 							<input type="hidden"
 								name="addressLongitude"
 								value={mapLonLat.longitude}
-								data-cy="listing-create-form-address-lon" />
+								data-cy="listing-create-form-address-longitude" />
+							{/* Address latitude */}
 							<input type="hidden"
 								name="addressLatitude"
 								value={mapLonLat.latitude}
-								data-cy="listing-create-form-address-lat" />
+								data-cy="listing-create-form-address-latitude" />
 						</div>
 						{/* TODO: Hidden until user clicks Get Address button */}
 						<div className="space-y-4">
+							{/* Address Line */}
 							<FormInput
 								label='Address Line'
 								name='addressLine'
@@ -252,6 +264,7 @@ export default function ListingCreatePage() {
 								dataCyOptional="listing-create-form-address-line-input-optional"
 								dataCyError="listing-create-form-address-line-input-error" />
 							<div className="grid grid-cols-2 gap-x-4">
+								{/* City */}
 								<FormInput
 									label='City'
 									name='city'
@@ -262,6 +275,7 @@ export default function ListingCreatePage() {
 									dataCyLabel="listing-create-form-city-input-label"
 									dataCyOptional="listing-create-form-city-input-optional"
 									dataCyError="listing-create-form-city-input-error" />
+								{/* State */}
 								<FormInput
 									label='State'
 									name='state'
@@ -273,9 +287,10 @@ export default function ListingCreatePage() {
 									dataCyOptional="listing-create-form-state-input-optional"
 									dataCyError="listing-create-form-state-input-error" />
 							</div>
-							<div className="grid grid-cols-2">
+							<div className="grid grid-cols-2 gap-x-4">
+								{/* ZIP Code */}
 								<FormInput
-									label='Zip Code'
+									label='ZIP Code'
 									name='zipcode'
 									type="text"
 									minLength={1}
@@ -288,14 +303,14 @@ export default function ListingCreatePage() {
 						</div>
 					</div>
 				</div>
-				<div className="flex gap-x-8 justify-end">
+				<div className="flex justify-end gap-x-8">
 					<FormInputReset
 						dataCy="listing-create-reset-btn" />
 					<ButtonText
 						text="Preview"
 						dataCy="listing-create-preview-btn" />
 					<ButtonFilled
-						text="Create Listing"
+						text="Create"
 						dataCy="listing-create-submit-btn"
 					/>
 				</div>
