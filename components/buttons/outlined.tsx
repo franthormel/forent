@@ -10,7 +10,9 @@ export default function ButtonOutlined(props: ButtonProps) {
         <button className={`${padding} ${fontSize} rounded-full border-2 border-gray-800 bg-slate-50 transition-all
                         hover:bg-gray-800 hover:text-slate-50`}
             data-cy={props.dataCy ?? "button"}
-            onClick={props.onClick}>
+            onClick={props.onClick}
+            // NOTE: This prevents it from submitting HTML forms
+            type="button">
             {props.text}
         </button>
     );

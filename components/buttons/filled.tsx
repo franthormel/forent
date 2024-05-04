@@ -9,7 +9,9 @@ export default function ButtonFilled(props: ButtonProps) {
     return (
         <button className={`${padding} ${fontSize} rounded-full bg-amber-400 transition-all hover:shadow-md`}
             data-cy={props.dataCy ?? "button"}
-            onClick={props.onClick}>
+            onClick={props.onClick}
+            // NOTE: This prevents it from submitting HTML forms
+            type="button">
             {props.text}
         </button>
     );

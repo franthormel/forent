@@ -9,7 +9,9 @@ export default function ButtonText(props: ButtonProps) {
     return (
         <button className={`${fontSize}`}
             data-cy={props.dataCy ?? "btn-text"}
-            onClick={props.onClick}>
+            onClick={props.onClick}
+            // NOTE: This prevents it from submitting HTML forms
+            type="button">
             {props.text}
         </button>
     );

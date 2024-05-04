@@ -13,7 +13,7 @@ import { LonLat } from "@/lib/types/geography";
 import pinIcon from "@/public/icons/home_pin.svg";
 import { Feature, Map, View } from "ol";
 import Geolocation from 'ol/Geolocation';
-import { ZoomSlider, defaults } from "ol/control";
+import { defaults } from "ol/control";
 import { Point } from "ol/geom";
 import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
@@ -25,69 +25,62 @@ import { useEffect, useRef, useState } from "react";
 import ListingCreateErrorMessages from "./_components/error-messages";
 import ListingCreateHeader from "./_components/header";
 
-const positionFeature = new Feature()
-const iconStlye = new Style({
+const MAP_ZOOM_LVL = 2;
+const MAP_PRELOAD = 4
+
+// Use home icon
+const mapIconStyle = new Style({
 	image: new Icon({
 		src: pinIcon.src,
 	}),
 })
-positionFeature.setStyle(iconStlye)
-
-const mapLayers = [
-	new TileLayer({
-		source: new OSM()
-	}),
-	new VectorLayer({
-		source: new VectorSource({
-			features: [positionFeature],
-		}),
-	})
-]
+const mapPositionFeature = new Feature()
+mapPositionFeature.setStyle(mapIconStyle)
 
 export default function ListingCreatePage() {
 	// TODO: Use geo location api https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
-	const [lonLat, setLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 })
-	const zoom = useRef<number>(2)
+	// Map related
+	const [mapLonLat, setMapLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 })
+	const mapZoomLevel = useRef<number>(MAP_ZOOM_LVL)
 	const mapId = "listing-create-form-address-map";
 
 	useEffect(() => {
 		const mapView = new View({
-			center: fromLonLat([lonLat.longitude!, lonLat.latitude!]),
-			zoom: zoom.current,
+			center: fromLonLat([mapLonLat.longitude!, mapLonLat.latitude!]),
+			zoom: mapZoomLevel.current,
 		})
-		const mapControls = defaults({ attributionOptions: { collapsible: true } })
 		const map = new Map({
 			target: mapId,
-			layers: mapLayers,
-			controls: mapControls,
+			layers: [
+				new TileLayer({
+					preload: MAP_PRELOAD,
+					source: new OSM()
+				}),
+				new VectorLayer({
+					source: new VectorSource({
+						features: [mapPositionFeature],
+					}),
+				})
+			],
+			controls: defaults({ attributionOptions: { collapsible: true } }),
 			view: mapView
 		})
 		map.on("singleclick", (e) => {
-			positionFeature.setGeometry(new Point(e.coordinate))
+			// Change displayed icon's position
+			mapPositionFeature.setGeometry(new Point(e.coordinate))
 
-			// Retain map zoom level between re-renders
-			zoom.current = map.getView().getZoom() ?? 2
+			// Retain map zoom level between renders
+			const currentMapZoom = map.getView().getZoom()
+			if (currentMapZoom) {
+				mapZoomLevel.current = currentMapZoom;
+			}
 
-			// Change input field values
-			const lonLat = toLonLat(e.coordinate)
-			setLonLat({
-				...lonLat, // TODO: Is this spread needed?
-				longitude: lonLat[0],
-				latitude: lonLat[1]
+			// Change hidden input field values
+			const newLonLat = toLonLat(e.coordinate)
+			setMapLonLat({
+				longitude: newLonLat[0],
+				latitude: newLonLat[1]
 			})
-		})
-
-		const geolocation = new Geolocation({
-			trackingOptions: {
-				enableHighAccuracy: true
-			},
-			// TODO: Stop asking for permission every redraw, perhaps set this in a stateful variable?
-			tracking: true,
-			projection: mapView.getProjection(),
-		})
-		geolocation.on('change:position', function () {
-			const coordinates = geolocation.getPosition()
-			positionFeature.setGeometry(coordinates ? new Point(coordinates) : undefined)
 		})
 
 		return () => map.dispose()
@@ -229,21 +222,21 @@ export default function ListingCreatePage() {
 								value="error"
 								dataCy="listing-create-form-address-map-error" />
 							<div className="w-fit">
+								{/* TODO: Get pin address */}
 								<ButtonOutlined
-									text="Get address"
+									text="Get pin address"
 									size="small"
 									dataCy="listing-create-form-address-button"
 									onClick={() => console.log("TODO: Get address")} />
 							</div>
 							<input type="hidden"
 								name="addressLongitude"
-								value={lonLat.longitude}
+								value={mapLonLat.longitude}
 								data-cy="listing-create-form-address-lon" />
 							<input type="hidden"
 								name="addressLatitude"
-								value={lonLat.latitude}
+								value={mapLonLat.latitude}
 								data-cy="listing-create-form-address-lat" />
-							{/* TODO: Get Address */}
 						</div>
 						{/* TODO: Hidden until user clicks Get Address button */}
 						<div className="space-y-4">
