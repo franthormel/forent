@@ -112,7 +112,7 @@ export default function ListingCreatePage() {
 									d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z" />
 							</svg>
 						</SectionHeaderIcon>
-						<div className="grid grid-cols-2 gap-x-4">
+						<div className="grid grid-cols-2 gap-x-4 md:w-[36rem]">
 							{/* Price */}
 							<FormInput
 								label='Price'
@@ -138,16 +138,18 @@ export default function ListingCreatePage() {
 								dataCyError="listing-create-form-deposit-input-error" />
 						</div>
 						{/* Description */}
-						<FormInputTextArea
-							label='Description'
-							name='description'
-							minLength={16}
-							maxLength={1024}
-							dataCy="listing-create-form-description-input-textarea"
-							dataCyLabel="listing-create-form-description-input-textarea-label"
-							dataCyOptional="listing-create-form-description-input-textarea-optional"
-							dataCyError="listing-create-form-description-input-textarea-error" />
-						<div className="grid grid-cols-3 gap-x-4">
+						<div className="lg:w-[48rem]">
+							<FormInputTextArea
+								label='Description'
+								name='description'
+								minLength={16}
+								maxLength={1024}
+								dataCy="listing-create-form-description-input-textarea"
+								dataCyLabel="listing-create-form-description-input-textarea-label"
+								dataCyOptional="listing-create-form-description-input-textarea-optional"
+								dataCyError="listing-create-form-description-input-textarea-error" />
+						</div>
+						<div className="grid grid-cols-3 gap-x-4 md:w-[36rem]">
 							{/* No. of Beds */}
 							<FormInput
 								label='No. of Beds'
@@ -182,7 +184,7 @@ export default function ListingCreatePage() {
 								dataCyOptional="listing-create-form-area-input-optional"
 								dataCyError="listing-create-form-area-input-error" />
 						</div>
-						<div className="grid grid-cols-3">
+						<div className="grid grid-cols-3 md:w-[36rem]">
 							{/* Available Date */}
 							<div className="col-span-2">
 								<FormInput label='Available Date' name='availableDate' type='date' optional={true} />
@@ -220,7 +222,7 @@ export default function ListingCreatePage() {
 						{/* Address */}
 						<div className="grid auto-rows-auto gap-y-2">
 							{/* Map */}
-							<div className="h-96">
+							<div className="h-96 md:h-[30rem] lg:h-[35rem]">
 								<div id={MAP_ID}
 									className="h-full"
 									data-cy="listing-create-form-address-map"
@@ -250,7 +252,7 @@ export default function ListingCreatePage() {
 								data-cy="listing-create-form-address-latitude" />
 						</div>
 						{/* TODO: Hidden until user clicks Get Address button */}
-						<div className="space-y-4">
+						<div className="space-y-4 md:w-[36rem]">
 							{/* Address Line */}
 							<FormInput
 								label='Address Line'
