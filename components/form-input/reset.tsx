@@ -3,8 +3,6 @@ import { ButtonProps } from "../buttons/types";
 
 type FormInputResetProps = Omit<ButtonProps, "text">
 
-// TODO: Story
-// TODO: Component
 export default function FormInputReset(props: FormInputResetProps) {
     const fontSize = buttonFontSize(props.size);
 

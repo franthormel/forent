@@ -57,7 +57,6 @@ interface FormInputProps {
     dataCyOptional?: string
     dataCyLabel?: string
     dataCy?: string
-    // TODO: Component test
     dataCyError?: string
 }
 
@@ -84,7 +83,9 @@ export default function FormInput(props: FormInputProps) {
                 defaultValue={props.defaultValue}
                 onChange={props.onChange}
                 data-cy={props.dataCy ?? "form-input"}
-                className={`mt-2 w-full rounded-md border-2 px-2 py-1 ${hasError ? 'border-red-600' : 'border-slate-200'}`} />
+                className={`mt-2 w-full rounded-md border-2 px-2 py-1 
+                    ${hasError ? 'border-red-600' : 'border-slate-200'} 
+                    focus:${hasError && 'outline-none'}`} />
             <TextError value={props.errorMessage} dataCy={props.dataCyError} />
         </div>
     )
