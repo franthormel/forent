@@ -21,8 +21,6 @@ interface CardListingProps {
 }
 
 export default function CardListing(props: CardListingProps) {
-	// FUTURE: Do validation, if default value is used, that means the given value is not correct
-	// might as well not to display this data
 	const beds = NumberUtils.toNumber(props.beds, 0)
 	const baths = NumberUtils.toNumber(props.baths, 0)
 

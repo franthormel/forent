@@ -9,6 +9,7 @@ import FormInputReset from "@/components/form-input/reset";
 import FormInputTextArea from "@/components/form-input/textarea";
 import SectionHeaderIcon from "@/components/section/header-icon";
 import TextError from "@/components/text/error";
+import { DateUtils } from "@/lib/commons/date_utils";
 import { LonLat } from "@/lib/types/geography";
 import pinIcon from "@/public/icons/home_pin.svg";
 import { Feature, Map, View } from "ol";
@@ -21,15 +22,27 @@ import OSM from "ol/source/OSM";
 import VectorSource from "ol/source/Vector";
 import { Icon, Style } from "ol/style";
 import { useEffect, useRef, useState } from "react";
-import ListingCreateErrorMessages from "./_components/error-messages";
+import { useFormState } from "react-dom";
+import ListingCreateError from "./_components/error";
 import ListingCreateHeader from "./_components/header";
+import { createListingNew } from "./action";
 
 const MAP_ZOOM_LVL = 2;
 const MAP_PRELOAD = 4
 const MAP_ID = "listing-create-form-address-map";
 
 export default function ListingCreatePage() {
-	// TODO: Use geo location api https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
+	// Form submission
+	// TODO: Display validation errors if any
+	const [formState, formAction] = useFormState(createListingNew, {
+		errors: new globalThis.Map()
+	});
+
+	const todayDate = new Date();
+	const today = DateUtils.formatDate(todayDate)
+	const oneYearFromTodayDate = DateUtils.offsetYear(todayDate, 1);
+	const oneYearFromToday = DateUtils.formatDate(oneYearFromTodayDate)
+
 	// Map related
 	const [mapLonLat, setMapLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 })
 	const mapZoomLevel = useRef<number>(MAP_ZOOM_LVL)
@@ -86,18 +99,18 @@ export default function ListingCreatePage() {
 	})
 
 	return (
-		<form>
+		<form action={formAction}>
 			<PageLayout>
 				{/* Top */}
 				<div className="space-y-4">
 					<ListingCreateHeader
 						dataCy="listing-create-header"
 						dataCySubHeader="listing-create-subheader" />
-					<ListingCreateErrorMessages
-						showError={true}
-						title="Check errors below"
+					<ListingCreateError
+						showError={formState.errors.size > 0}
+						error="Check errors below"
 						dataCyIcon="listing-create-error-icon"
-						dataCyTitle="listing-create-error-title" />
+						dataCyTitle="listing-create-error" />
 				</div>
 				{/* Form */}
 				<div className="space-y-11">
@@ -187,7 +200,14 @@ export default function ListingCreatePage() {
 						<div className="grid grid-cols-3 md:w-[36rem]">
 							{/* Available Date */}
 							<div className="col-span-2">
-								<FormInput label='Available Date' name='availableDate' type='date' optional={true} />
+								<FormInput
+									label='Available Date'
+									name='availableDate'
+									type='date'
+									optional={true}
+									min={today}
+									max={oneYearFromToday}
+									defaultValue={today} />
 							</div>
 						</div>
 					</div>
@@ -314,9 +334,11 @@ export default function ListingCreatePage() {
 					<ButtonFilled
 						text="Create"
 						dataCy="listing-create-submit-btn"
+						type="submit"
 					/>
 				</div>
 			</PageLayout>
 		</form>
 	)
 }
+

@@ -32,7 +32,7 @@ interface ListingAddress {
   longitude: number;
 }
 
-export interface FormListing {
+export interface CreateListingForm {
   price: number;
   description: string;
   deposit: number;
@@ -41,4 +41,5 @@ export interface FormListing {
   baths: number;
   longitude: number;
   latitude: number;
+  // TODO: Add area
 }

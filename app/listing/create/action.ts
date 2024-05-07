@@ -4,25 +4,43 @@ import { getSessionUser } from "@/lib/auth";
 import { FormDataUtils } from "@/lib/commons/formdata_utils";
 import prisma from "@/lib/db";
 import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
-import { FormListing } from "@/lib/types/listing";
+import { CreateListingForm } from "@/lib/types/listing";
 import { ValidatorError } from "@/lib/validation";
-import { FormListingValidator } from "@/lib/validation/listing";
+import { CreateListingFormValidator } from "@/lib/validation/listing";
+import { ListingCreateFormState } from "./type";
+
+// TODO: Rename when done
+export async function createListingNew(
+  previousState: ListingCreateFormState,
+  formData: FormData
+) {
+  // Validate
+  const x = CreateListingFormValidator.validatePrice();
+  console.log(x);
+
+  // TODO: Validate form, return object if any error
+  const formState: ListingCreateFormState = {
+    errors: new Map(),
+  };
+  return formState;
+}
 
 export async function createListing(prevState: any, formData: FormData) {
   const formUtils = new FormDataUtils(formData);
-  // Default values, if the field is required, must be fail safes
-  const listing: FormListing = {
+  // NOTE: Default values, if the field is required, must be fail safes
+  const listing: CreateListingForm = {
     price: formUtils.getNumber("price", -1),
     description: formUtils.getString("description", ""),
     deposit: formUtils.getNumber("deposit", 0),
-    availableDate: formUtils.getDate("availableDate", new Date()), // FUTURE: Set to a date in the far far future like Y2099
+    availableDate: formUtils.getDate("availableDate", new Date()), // TODO: Set to a date in the far far future like Y2099
     beds: formUtils.getNumber("beds", -1),
     baths: formUtils.getNumber("baths", -1),
     longitude: formUtils.getNumber("inputLongitude", -999),
     latitude: formUtils.getNumber("inputLatitude", -999),
   };
 
-  const validator = new FormListingValidator(listing);
+  // Validate
+  const validator = new CreateListingFormValidator(listing);
   try {
     validator.validate();
   } catch (e) {
@@ -31,6 +49,7 @@ export async function createListing(prevState: any, formData: FormData) {
     }
   }
 
+  // TODO: 👇👇👇 Move fetching of data from the map
   const geocodeProvider = new GeonamesProvider(
     listing.latitude,
     listing.longitude
@@ -39,6 +58,7 @@ export async function createListing(prevState: any, formData: FormData) {
 
   // Fetch data from the geocode provider
   const address: GeonamesResponse = await fetch(url).then((res) => res.json());
+  // TODO: 👆👆👆 Move fetching of data from the map
 
   const userSession = await getSessionUser();
   const userDB = await prisma.user.findUnique({
@@ -55,6 +75,7 @@ export async function createListing(prevState: any, formData: FormData) {
     "," +
     address.nearest.prov;
 
+  // Persist
   const createdListing = await prisma.listing.create({
     data: {
       deposit: listing.deposit,
@@ -69,7 +90,6 @@ export async function createListing(prevState: any, formData: FormData) {
         },
       },
       address: {
-        // FUTURE: need to anticipate what if no value from geocode response (for example, user chose a faraway remote location from the map widget)
         create: {
           addressLine: addressLine,
           city: address.nearest.city,

@@ -1,12 +1,12 @@
-interface ListingCreateErrorMessagesProps {
+interface ListingCreateErrorProps {
     showError?: boolean
-    title?: string
+    error?: string
     dataCyIcon?: string
     dataCyTitle?: string
 }
 
-export default function ListingCreateErrorMessages(props: ListingCreateErrorMessagesProps) {
-    if (props.showError) {
+export default function ListingCreateError(props: ListingCreateErrorProps) {
+    if (props.showError && props.error !== undefined) {
         return (
             <div className="bg-red-100 p-4 rounded-md">
                 <div className="flex gap-x-3">
@@ -19,8 +19,8 @@ export default function ListingCreateErrorMessages(props: ListingCreateErrorMess
                     </svg>
                     {/* Error title */}
                     <p className="text-red-700 font-semibold"
-                        data-cy={props.dataCyTitle ?? "listing-create-error-title"}>
-                        {props.title}
+                        data-cy={props.dataCyTitle ?? "listing-create-error"}>
+                        {props.error}
                     </p>
                 </div>
             </div>

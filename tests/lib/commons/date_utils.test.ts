@@ -45,11 +45,11 @@ describe("Date utils", () => {
 
   test.each([
     {
-      date: new Date(2000, 0, 2),
+      date: new Date("2000-01-01T00:00:00.000Z"),
       output: "2000-01-01",
     },
     {
-      date: new Date(2024, 11, 26),
+      date: new Date("2024-12-25T00:00:00.000Z"),
       output: "2024-12-25",
     },
   ])("date format = $date", ({ date, output }) => {
