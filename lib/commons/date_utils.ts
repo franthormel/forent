@@ -58,4 +58,16 @@ export namespace DateUtils {
 
     return value;
   }
+
+  /**
+   * Returns date in `YYYY-MM-DD` format.
+   * Only suitable when the given date is originates from the client.
+   *
+   * @param date Date, preferably from the client side otherwise other effects will occur.
+   */
+  export function formatDate(date: Date): string {
+    const isoFormat = date.toISOString();
+    const value = isoFormat.slice(0, 10);
+    return value;
+  }
 }
