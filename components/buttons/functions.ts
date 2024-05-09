@@ -1,4 +1,4 @@
-import { ButtonSize } from "./types";
+import { ButtonSize, ButtonType } from "./types";
 
 /**
  * Decide padding values depending on the given button size
@@ -26,4 +26,17 @@ export function buttonFontSize(size: ButtonSize = "base"): string {
     small: "text-sm",
   };
   return values[size];
+}
+
+/**
+ * Returns default type `button` if undefined
+ *
+ * @param type Button type
+ * @returns Button type
+ */
+export function buttonType(type?: ButtonType): ButtonType {
+  if (type === undefined) {
+    return "button";
+  }
+  return type;
 }

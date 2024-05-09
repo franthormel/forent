@@ -1,5 +1,9 @@
-import { ButtonSize } from "@/components/buttons/types";
-import { buttonFontSize, buttonPadding } from "../../components/buttons/functions";
+import { ButtonSize, ButtonType } from "@/components/buttons/types";
+import {
+  buttonFontSize,
+  buttonPadding,
+  buttonType,
+} from "../../components/buttons/functions";
 
 describe("button", () => {
   test.each([
@@ -21,6 +25,19 @@ describe("button", () => {
     output: string;
   }>)("fontSize = $size", ({ size, output }) => {
     const actual = buttonFontSize(size);
+    expect(actual).toBe(output);
+  });
+
+  test.each([
+    { type: undefined, output: "button" },
+    { type: "button", output: "button" },
+    { type: "reset", output: "reset" },
+    { type: "submit", output: "submit" },
+  ] as Array<{
+    type?: ButtonType;
+    output: ButtonType;
+  }>)("buttonType = $type", ({ type, output }) => {
+    const actual = buttonType(type);
     expect(actual).toBe(output);
   });
 });
