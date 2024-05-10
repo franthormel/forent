@@ -42,4 +42,18 @@ describe("Date utils", () => {
     const actual = DateUtils.dateIsToday(date, customToday);
     expect(actual).toBe(output);
   });
+
+  test.each([
+    {
+      date: new Date("2000-01-01T00:00:00.000Z"),
+      output: "2000-01-01",
+    },
+    {
+      date: new Date("2024-12-25T00:00:00.000Z"),
+      output: "2024-12-25",
+    },
+  ])("date format = $date", ({ date, output }) => {
+    const actual = DateUtils.formatDate(date);
+    expect(actual).toBe(output);
+  });
 });

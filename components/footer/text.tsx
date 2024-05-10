@@ -7,7 +7,7 @@ interface FooterTextProps {
 
 export default function FooterText(props: FooterTextProps) {
     return (
-        <p className={`${headerFont.className} text-gray-800 text-lg`}
+        <p className={`${headerFont.className} text-lg`}
             data-cy={props.dataCy ?? "text-footer"}>
             {props.value}
         </p>

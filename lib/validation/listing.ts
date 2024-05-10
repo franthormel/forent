@@ -1,8 +1,42 @@
 import { z } from "zod";
-import { FormListing } from "../types/listing";
+import { CreateListingForm } from "../types/listing";
 import { Validator, ValidatorError } from "./index";
 
-export class FormListingValidator implements Validator<FormListing> {
+const validator = z.object({
+  price: z
+    .number()
+    .min(Number(process.env.LISTING_PRICE_MIN ?? 100))
+    .max(Number(process.env.LISTING_PRICE_MAX ?? 100_000_000)),
+  description: z
+    .string()
+    .min(Number(process.env.LISTING_DESC_MIN ?? 16))
+    .max(Number(process.env.LISTING_DESC_MAX ?? 1024)),
+  deposit: z
+    .number()
+    .min(Number(process.env.LISTING_DEPOSIT_MIN ?? 0))
+    .max(Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)),
+  availableDate: z.date(),
+  beds: z
+    .number()
+    .min(Number(process.env.LISTING_BEDS_MIN ?? 1))
+    .max(Number(process.env.LISTING_BEDS_MAX ?? 750)),
+  baths: z
+    .number()
+    .min(Number(process.env.LISTING_BATHS_MIN ?? 1))
+    .max(Number(process.env.LISTING_BATHS_MAX ?? 250)),
+  longitude: z
+    .number()
+    .min(Number(process.env.LISTING_LONGT_MIN ?? -180))
+    .max(Number(process.env.LISTING_LONGT_MAX ?? 180)),
+  latitude: z
+    .number()
+    .min(Number(process.env.LISTING_LATT_MIN ?? -90))
+    .max(Number(process.env.LISTING_LATT_MAX ?? 90)),
+});
+
+export class CreateListingFormValidator
+  implements Validator<CreateListingForm>
+{
   readonly errorMessages: Map<string, string> = new Map([
     ["price", "Price is required and must be valid"],
     ["description", "Description is required and must be valid"],
@@ -14,46 +48,23 @@ export class FormListingValidator implements Validator<FormListing> {
     ["latitude", "Map address is required"],
   ]);
 
-  readonly #validator = z.object({
-    price: z
-      .number()
-      .min(Number(process.env.LISTING_PRICE_MIN ?? 100))
-      .max(Number(process.env.LISTING_PRICE_MAX ?? 100_000_000)),
-    description: z
-      .string()
-      .min(Number(process.env.LISTING_DESC_MIN ?? 16))
-      .max(Number(process.env.LISTING_DESC_MAX ?? 1024)),
-    deposit: z
-      .number()
-      .min(Number(process.env.LISTING_DEPOSIT_MIN ?? 0))
-      .max(Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)),
-    availableDate: z.date(), // FUTURE: min and max dates
-    beds: z
-      .number()
-      .min(Number(process.env.LISTING_BEDS_MIN ?? 1))
-      .max(Number(process.env.LISTING_BEDS_MAX ?? 750)),
-    baths: z
-      .number()
-      .min(Number(process.env.LISTING_BATHS_MIN ?? 1))
-      .max(Number(process.env.LISTING_BATHS_MAX ?? 250)),
-    longitude: z
-      .number()
-      .min(Number(process.env.LISTING_LONGT_MIN ?? -180))
-      .max(Number(process.env.LISTING_LONGT_MAX ?? 180)),
-    latitude: z
-      .number()
-      .min(Number(process.env.LISTING_LATT_MIN ?? -90))
-      .max(Number(process.env.LISTING_LATT_MAX ?? 90)),
-  });
+  input: CreateListingForm;
 
-  input: FormListing;
-
-  constructor(input: FormListing) {
+  constructor(input: CreateListingForm) {
     this.input = input;
   }
 
+  static validatePrice() {
+    return validator.safeParse(1).success;
+  }
+
+  /**
+   * Validate the form
+   *
+   * @throws `ValidatorError` if any part of the form is invalid
+   */
   validate() {
-    const result = this.#validator.safeParse(this.input);
+    const result = validator.safeParse(this.input);
 
     if (!result.success) {
       const errors = result.error.errors;

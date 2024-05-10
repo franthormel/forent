@@ -130,5 +130,4 @@ describe("Form Input Text Area", () => {
         const input = "Aenean consectetur accumsan dui, nec pretium nunc hendrerit id. Maecenas sit amet nunc tellus. Cras quis placerat nibh."
         cy.get('[data-cy="form-input-textarea"]').type(input)
     })
-
 })

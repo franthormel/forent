@@ -54,7 +54,7 @@ export default function FormInputTextArea(props: FormInputTextAreaProps) {
                 required={!props.optional}
                 minLength={props.minLength}
                 maxLength={props.maxLength}
-                className={`mt-2 w-full rounded-md border-2 px-2 py-1 ${hasError ? 'border-red-600' : 'border-slate-200'}`}
+                className={`mt-2 w-full rounded-md border-2 px-2 py-1 ${hasError ? 'border-red-600' : 'border-slate-200'} h-16`}
                 data-cy={props.dataCy ?? "form-input-textarea"} />
             <TextError value={props.errorMessage} dataCy={props.dataCyError} />
         </div>

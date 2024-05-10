@@ -1,12 +1,15 @@
-interface FormInputResetProps {
-    dataCy?: string
-}
+import { buttonFontSize } from "../buttons/functions";
+import { ButtonProps } from "../buttons/types";
+
+type FormInputResetProps = Omit<ButtonProps, "text">
 
 export default function FormInputReset(props: FormInputResetProps) {
+    const fontSize = buttonFontSize(props.size);
+
     return (
         <input type="reset"
             value="Reset"
-            className="cursor-pointer rounded-md border-2 border-transparent px-6 py-3 transition-all hover:border-slate-200"
+            className={`${fontSize} cursor-pointer`}
             data-cy={props.dataCy ?? "form-input-reset"} />
     )
 }
