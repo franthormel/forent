@@ -10,7 +10,9 @@ import FormInputTextArea from "@/components/form-input/textarea";
 import SectionHeaderIcon from "@/components/section/header-icon";
 import TextError from "@/components/text/error";
 import { DateUtils } from "@/lib/commons/date_utils";
+import { NumberUtils } from "@/lib/commons/number_utils";
 import { LonLat } from "@/lib/types/geography";
+import { CreateListingFormValidator } from "@/lib/validation/listing";
 import pinIcon from "@/public/icons/home_pin.svg";
 import { Feature, Map, View } from "ol";
 import { defaults } from "ol/control";
@@ -32,11 +34,17 @@ const MAP_PRELOAD = 4
 const MAP_ID = "listing-create-form-address-map";
 
 export default function ListingCreatePage() {
-	// Form submission
+	// Form submission (Server)
 	// TODO: Display validation errors if any
 	const [formState, formAction] = useFormState(createListingNew, {
 		errors: new globalThis.Map()
 	});
+	const hasServerValidationError = formState.errors.size > 0
+
+	// Validation errors (Client)
+	const [priceError, setPriceError] = useState<string | undefined>(undefined);
+	const errorMessages = [priceError]
+	const hasClientValidationError = errorMessages.filter((error) => error !== undefined).length > 0
 
 	const todayDate = new Date();
 	const today = DateUtils.formatDate(todayDate)
@@ -106,8 +114,10 @@ export default function ListingCreatePage() {
 					<ListingCreateHeader
 						dataCy="listing-create-header"
 						dataCySubHeader="listing-create-subheader" />
+					{/* FUTURE: Animate when it pops up */}
 					<ListingCreateError
-						showError={formState.errors.size > 0}
+						// Form state is backend while error messages is frontend
+						showError={hasServerValidationError || hasClientValidationError}
 						error="Check errors below"
 						dataCyIcon="listing-create-error-icon"
 						dataCyTitle="listing-create-error" />
@@ -133,6 +143,21 @@ export default function ListingCreatePage() {
 								type="number"
 								min={100}
 								max={100_000_000}
+								onChange={(e) => {
+									const value = NumberUtils.toNumber(e.target.value, -1);
+									const result = CreateListingFormValidator.validatePrice(value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (priceError !== error) {
+											setPriceError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && priceError !== undefined) {
+										setPriceError(undefined)
+									}
+								}}
+								errorMessage={priceError}
 								dataCy="listing-create-form-price-input"
 								dataCyLabel="listing-create-form-price-input-label"
 								dataCyOptional="listing-create-form-price-input-optional"

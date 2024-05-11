@@ -52,7 +52,7 @@ interface FormInputProps {
     /**
      * Error message
      */
-    onChange?: ChangeEventHandler
+    onChange?: ChangeEventHandler<HTMLInputElement>
     errorMessage?: string
     dataCyOptional?: string
     dataCyLabel?: string
@@ -86,6 +86,7 @@ export default function FormInput(props: FormInputProps) {
                 className={`mt-2 w-full rounded-md border-2 px-2 py-1 
                     ${hasError ? 'border-red-600' : 'border-slate-200'} 
                     focus:${hasError && 'outline-none'}`} />
+            {/* FUTURE: Animate when it pops up */}
             <TextError value={props.errorMessage} dataCy={props.dataCyError} />
         </div>
     )

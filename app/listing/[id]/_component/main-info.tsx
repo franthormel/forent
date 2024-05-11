@@ -25,9 +25,13 @@ export default function ListingMainInfo(props: ListingMainInfoProps) {
         <div className="grid auto-rows-auto gap-y-3">
             {/* Price */}
             <div data-cy={props.dataCyPrice ?? "listing-main-info-price"}>
-                {/* FUTURE: Localize currency, put in env */}
                 <span className="text-4xl font-bold">
-                    ₱ {new Intl.NumberFormat('en-PH').format(props.price,)}
+                    {/* FUTURE: Localize currency, put in env */}
+                    {new Intl.NumberFormat("en-PH", {
+                        style: "currency",
+                        currency: "PHP",
+                        maximumFractionDigits: 0,
+                    }).format(props.price)}
                 </span>
                 <span className="text-xl font-bold">/mo</span>
             </div>
