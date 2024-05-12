@@ -29,7 +29,13 @@ export default async function CardListings(props: CardListingsProps) {
                 listingId: listing.id,
             }
         })
-        const currentPrice = prices.filter(price => price.isCurrent).at(0);
+        const price = prices.filter(price => price.isCurrent).at(0)!.value.toNumber();
+        // FUTURE: Localize currency, put in env
+        const priceFormatted = new Intl.NumberFormat("en-PH", {
+            style: "currency",
+            currency: "PHP",
+            maximumFractionDigits: 0,
+        }).format(price);
 
         return <CardListing
             key={listing.id}
@@ -40,7 +46,7 @@ export default async function CardListings(props: CardListingsProps) {
             baths={listing.baths}
             beds={listing.beds}
             imgUrl={listing.imageUrls[0]}
-            price={`$ ${currentPrice!.value}`}
+            price={priceFormatted}
         />
     })
 
