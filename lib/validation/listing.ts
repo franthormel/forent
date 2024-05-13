@@ -7,13 +7,13 @@ import { StringUtils } from "../commons/string_utils";
 const PRICE_MIN = Number(process.env.LISTING_PRICE_MIN ?? 100);
 const PRICE_MAX = Number(process.env.LISTING_PRICE_MAX ?? 100_000_000);
 // FUTURE: Localize currency, put in env
-const PRICE_FORMATTER = new Intl.NumberFormat("en-PH", {
+const CURRENCY_FORMATTER = new Intl.NumberFormat("en-PH", {
   style: "currency",
   currency: "PHP",
   maximumFractionDigits: 0,
 });
-const PRICE_MIN_FORMATTED = PRICE_FORMATTER.format(PRICE_MIN);
-const PRICE_MAX_FORMATTED = PRICE_FORMATTER.format(PRICE_MAX);
+const PRICE_MIN_FORMATTED = CURRENCY_FORMATTER.format(PRICE_MIN);
+const PRICE_MAX_FORMATTED = CURRENCY_FORMATTER.format(PRICE_MAX);
 const PRICE_VALIDATOR = z
   .number({
     required_error: "Price is required",
@@ -23,7 +23,21 @@ const PRICE_VALIDATOR = z
     message: `Price must be at least ${PRICE_MIN_FORMATTED}`,
   })
   .max(PRICE_MAX, {
-    message: `Price must be lesser than ${PRICE_MAX_FORMATTED}`,
+    message: `Price cannot exceed ${PRICE_MAX_FORMATTED}`,
+  });
+
+const DEPOSIT_MIN = Number(process.env.LISTING_DEPOSIT_MIN ?? 0);
+const DEPOSIT_MAX = Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000);
+const DEPOSIT_MAX_FORMATTED = CURRENCY_FORMATTER.format(DEPOSIT_MAX);
+const DEPOSIT_VALIDATOR = z
+  .number({
+    invalid_type_error: "Deposit must be a number",
+  })
+  .min(DEPOSIT_MIN, {
+    message: "Deposit must be a positive number",
+  })
+  .max(DEPOSIT_MAX, {
+    message: `Deposit cannot exceed ${DEPOSIT_MAX_FORMATTED}`,
   });
 
 // Description
@@ -58,7 +72,6 @@ export class CreateListingFormValidator
 {
   // TODO: Gradually remove errors
   readonly errorMessages: Map<string, string> = new Map([
-    ["deposit", "Deposit is required and must be valid"],
     ["availableDate", "Available Date is required and must be valid"],
     ["beds", "No. of Beds is required and must be valid"],
     ["baths", "No. of Baths is required and must be valid"],
@@ -83,6 +96,16 @@ export class CreateListingFormValidator
   }
 
   /**
+   * Validate deposit
+   *
+   * @param deposit Listing deposit
+   * @returns Validation result (either success or error message)
+   */
+  static validateDeposit(deposit: number) {
+    return DEPOSIT_VALIDATOR.safeParse(deposit);
+  }
+
+  /**
    * Validate description
    *
    * @param description Listing description
@@ -100,10 +123,7 @@ export class CreateListingFormValidator
   validate() {
     const validator = z.object({
       price: PRICE_VALIDATOR,
-      deposit: z
-        .number()
-        .min(Number(process.env.LISTING_DEPOSIT_MIN ?? 0))
-        .max(Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)),
+      deposit: DEPOSIT_VALIDATOR,
       description: DESCRIPTION_VALIDATOR,
       availableDate: z.date(),
       beds: z

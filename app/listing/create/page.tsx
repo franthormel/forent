@@ -43,6 +43,7 @@ export default function ListingCreatePage() {
 	// Validation errors (Client)
 	const [priceError, setPriceError] = useState<string | undefined>(undefined);
 	const [descriptionError, setDescriptionError] = useState<string | undefined>(undefined);
+	const [depositError, setDepositError] = useState<string | undefined>(undefined);
 
 	const todayDate = new Date();
 	const today = DateUtils.formatDate(todayDate)
@@ -166,8 +167,23 @@ export default function ListingCreatePage() {
 								name='deposit'
 								type="number"
 								optional={true}
-								min={0}
-								max={1_000_000}
+								min={Number(process.env.LISTING_DEPOSIT_MIN ?? 100)}
+								max={Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)}
+								onChange={(e) => {
+									const value = NumberUtils.toNumber(e.target.value, -1);
+									const result = CreateListingFormValidator.validateDeposit(value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (depositError !== error) {
+											setDepositError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && depositError !== undefined) {
+										setDepositError(undefined)
+									}
+								}}
+								errorMessage={depositError}
 								dataCy="listing-create-form-deposit-input"
 								dataCyLabel="listing-create-form-deposit-input-label"
 								dataCyOptional="listing-create-form-deposit-input-optional"
