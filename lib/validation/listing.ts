@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { CreateListingForm } from "../types/listing";
 import { Validator, ValidatorError } from "./index";
+import { StringUtils } from "../commons/string_utils";
 
 // Price
 const PRICE_MIN = Number(process.env.LISTING_PRICE_MIN ?? 100);
@@ -15,8 +16,8 @@ const PRICE_MIN_FORMATTED = PRICE_FORMATTER.format(PRICE_MIN);
 const PRICE_MAX_FORMATTED = PRICE_FORMATTER.format(PRICE_MAX);
 const PRICE_VALIDATOR = z
   .number({
-    required_error: `Price is required`,
-    invalid_type_error: `Price must be a number`,
+    required_error: "Price is required",
+    invalid_type_error: "Price must be a number",
   })
   .min(PRICE_MIN, {
     message: `Price must be at least ${PRICE_MIN_FORMATTED}`,
@@ -25,12 +26,38 @@ const PRICE_VALIDATOR = z
     message: `Price must be lesser than ${PRICE_MAX_FORMATTED}`,
   });
 
+// Description
+const DESCRIPTION_MIN = Number(process.env.LISTING_DESC_MIN ?? 16);
+const DESCRIPTION_MAX = Number(process.env.LISTING_DESC_MAX ?? 1024);
+const DESCRIPTION_VALIDATOR = z
+  .string({
+    errorMap: (issue, ctx) => {
+      const input = new String(ctx.data);
+
+      switch (issue.code) {
+        case "invalid_type":
+          return { message: "Description must be in text format" };
+        case "too_small":
+          return {
+            message: `Description must contain at least ${DESCRIPTION_MIN} characters. Current input contains ${input.length} characters`,
+          };
+        case "too_big":
+          return {
+            message: `Description must not exceed ${DESCRIPTION_MAX} characters`,
+          };
+        default:
+          return { message: ctx.defaultError };
+      }
+    },
+  })
+  .min(DESCRIPTION_MIN)
+  .max(DESCRIPTION_MAX);
+
 export class CreateListingFormValidator
   implements Validator<CreateListingForm>
 {
+  // TODO: Gradually remove errors
   readonly errorMessages: Map<string, string> = new Map([
-    ["price", "Price is required and must be valid"],
-    ["description", "Description is required and must be valid"],
     ["deposit", "Deposit is required and must be valid"],
     ["availableDate", "Available Date is required and must be valid"],
     ["beds", "No. of Beds is required and must be valid"],
@@ -56,6 +83,16 @@ export class CreateListingFormValidator
   }
 
   /**
+   * Validate description
+   *
+   * @param description Listing description
+   * @returns Validation result (either success or error message)
+   */
+  static validateDescription(description: string) {
+    return DESCRIPTION_VALIDATOR.safeParse(description);
+  }
+
+  /**
    * Validate the form
    *
    * @throws `ValidatorError` if any part of the form is invalid
@@ -63,14 +100,11 @@ export class CreateListingFormValidator
   validate() {
     const validator = z.object({
       price: PRICE_VALIDATOR,
-      description: z
-        .string()
-        .min(Number(process.env.LISTING_DESC_MIN ?? 16))
-        .max(Number(process.env.LISTING_DESC_MAX ?? 1024)),
       deposit: z
         .number()
         .min(Number(process.env.LISTING_DEPOSIT_MIN ?? 0))
         .max(Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)),
+      description: DESCRIPTION_VALIDATOR,
       availableDate: z.date(),
       beds: z
         .number()
@@ -95,6 +129,7 @@ export class CreateListingFormValidator
     if (!result.success) {
       const errors = result.error.errors;
 
+      // TODO: Return all error messages in a map (key = field name, value = 1st error message)
       for (const error of errors) {
         const errorKey = error.path.at(0)?.toString();
 

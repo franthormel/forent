@@ -35,16 +35,14 @@ const MAP_ID = "listing-create-form-address-map";
 
 export default function ListingCreatePage() {
 	// Form submission (Server)
-	// TODO: Display validation errors if any
 	const [formState, formAction] = useFormState(createListingNew, {
 		errors: new globalThis.Map()
 	});
-	const hasServerValidationError = formState.errors.size > 0
+	const hasServerError = formState.errors.size > 0
 
 	// Validation errors (Client)
 	const [priceError, setPriceError] = useState<string | undefined>(undefined);
-	const errorMessages = [priceError]
-	const hasClientValidationError = errorMessages.filter((error) => error !== undefined).length > 0
+	const [descriptionError, setDescriptionError] = useState<string | undefined>(undefined);
 
 	const todayDate = new Date();
 	const today = DateUtils.formatDate(todayDate)
@@ -116,8 +114,8 @@ export default function ListingCreatePage() {
 						dataCySubHeader="listing-create-subheader" />
 					{/* FUTURE: Animate when it pops up */}
 					<ListingCreateError
-						// Form state is backend while error messages is frontend
-						showError={hasServerValidationError || hasClientValidationError}
+						// Only shown for server error
+						showError={hasServerError}
 						error="Check errors below"
 						dataCyIcon="listing-create-error-icon"
 						dataCyTitle="listing-create-error" />
@@ -141,8 +139,8 @@ export default function ListingCreatePage() {
 								label='Price'
 								name='price'
 								type="number"
-								min={100}
-								max={100_000_000}
+								min={Number(process.env.LISTING_PRICE_MIN ?? 100)}
+								max={Number(process.env.LISTING_PRICE_MAX ?? 100_000_000)}
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
 									const result = CreateListingFormValidator.validatePrice(value);
@@ -180,8 +178,22 @@ export default function ListingCreatePage() {
 							<FormInputTextArea
 								label='Description'
 								name='description'
-								minLength={16}
-								maxLength={1024}
+								minLength={Number(process.env.LISTING_DESC_MIN ?? 16)}
+								maxLength={Number(process.env.LISTING_DESC_MAX ?? 1024)}
+								onChange={(e) => {
+									const result = CreateListingFormValidator.validateDescription(e.target.value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (descriptionError !== error) {
+											setDescriptionError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && descriptionError !== undefined) {
+										setDescriptionError(undefined)
+									}
+								}}
+								errorMessage={descriptionError}
 								dataCy="listing-create-form-description-input-textarea"
 								dataCyLabel="listing-create-form-description-input-textarea-label"
 								dataCyOptional="listing-create-form-description-input-textarea-optional"
