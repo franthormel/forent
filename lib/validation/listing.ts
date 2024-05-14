@@ -83,13 +83,27 @@ const BEDS_VALIDATOR = z
     message: `Number of beds must not exceed ${BEDS_MAX}`,
   });
 
+// Baths
+const BATHS_MIN = Number(process.env.LISTING_BATHS_MIN ?? 1);
+const BATHS_MAX = Number(process.env.LISTING_BATHS_MAX ?? 250);
+const BATHS_VALIDATOR = z
+  .number({
+    required_error: "Number of baths is required",
+    invalid_type_error: "Number of baths must be a number",
+  })
+  .min(BATHS_MIN, {
+    message: `There must be at least ${BATHS_MIN} bath(s)`,
+  })
+  .max(BATHS_MAX, {
+    message: `Number of beds must not exceed ${BATHS_MAX}`,
+  });
+
 export class CreateListingFormValidator
   implements Validator<CreateListingForm>
 {
   // TODO: Gradually remove errors
   readonly errorMessages: Map<string, string> = new Map([
     ["availableDate", "Available Date is required and must be valid"],
-    ["baths", "No. of Baths is required and must be valid"],
     ["longitude", "Map address is required"],
     ["latitude", "Map address is required"],
   ]);
@@ -141,6 +155,16 @@ export class CreateListingFormValidator
   }
 
   /**
+   * Validate number of baths
+   *
+   * @param description Listing baths
+   * @returns Validation result (either success or error message)
+   */
+  static validateBaths(baths: number | string) {
+    return BATHS_VALIDATOR.safeParse(baths);
+  }
+
+  /**
    * Validate the form
    *
    * @throws `ValidatorError` if any part of the form is invalid
@@ -151,10 +175,7 @@ export class CreateListingFormValidator
       deposit: DEPOSIT_VALIDATOR,
       description: DESCRIPTION_VALIDATOR,
       beds: BEDS_VALIDATOR,
-      baths: z
-        .number()
-        .min(Number(process.env.LISTING_BATHS_MIN ?? 1))
-        .max(Number(process.env.LISTING_BATHS_MAX ?? 250)),
+      baths: BATHS_VALIDATOR,
       availableDate: z.date(),
       longitude: z
         .number()

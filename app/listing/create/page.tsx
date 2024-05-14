@@ -45,6 +45,7 @@ export default function ListingCreatePage() {
 	const [descriptionError, setDescriptionError] = useState<string | undefined>(undefined);
 	const [depositError, setDepositError] = useState<string | undefined>(undefined);
 	const [bedsError, setBedsError] = useState<string | undefined>(undefined);
+	const [bathsError, setBathsError] = useState<string | undefined>(undefined);
 
 	const todayDate = new Date();
 	const today = DateUtils.formatDate(todayDate)
@@ -248,8 +249,23 @@ export default function ListingCreatePage() {
 								label='No. of Baths'
 								name='baths'
 								type="number"
-								min={1}
-								max={250}
+								min={Number(process.env.LISTING_BATHS_MIN ?? 1)}
+								max={Number(process.env.LISTING_BATHS_MAX ?? 250)}
+								onChange={(e) => {
+									const value = NumberUtils.toNumber(e.target.value, -1);
+									const result = CreateListingFormValidator.validateBaths(value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (bathsError !== error) {
+											setBathsError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && bathsError !== undefined) {
+										setBathsError(undefined)
+									}
+								}}
+								errorMessage={bathsError}
 								dataCy="listing-create-form-baths-input"
 								dataCyLabel="listing-create-form-baths-input-label"
 								dataCyOptional="listing-create-form-baths-input-optional"
