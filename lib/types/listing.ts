@@ -41,5 +41,5 @@ export interface CreateListingForm {
   baths: number;
   longitude: number;
   latitude: number;
-  // TODO: Add area
+  area: number;
 }

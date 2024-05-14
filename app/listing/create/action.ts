@@ -33,6 +33,7 @@ export async function createListing(prevState: any, formData: FormData) {
     baths: formUtils.getNumber("baths", -1),
     longitude: formUtils.getNumber("inputLongitude", -999),
     latitude: formUtils.getNumber("inputLatitude", -999),
+    area: 100, // TODO: Remove soon
   };
 
   // Validate

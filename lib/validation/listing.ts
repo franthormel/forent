@@ -98,6 +98,23 @@ const BATHS_VALIDATOR = z
     message: `Number of beds must not exceed ${BATHS_MAX}`,
   });
 
+// Area
+const AREA_MIN = Number(process.env.LISTING_AREA_MIN ?? 10);
+const AREA_MAX = Number(process.env.LISTING_AREA_MAX ?? 1_000_000);
+const AREA_VALIDATOR = z
+  .number({
+    required_error: "Area is required",
+    invalid_type_error: "Area must be a number",
+  })
+  .min(AREA_MIN, {
+    // FUTURE: Localize `sqm`
+    message: `Area must be at least ${AREA_MIN} sqm.`,
+  })
+  .max(AREA_MAX, {
+    // FUTURE: Localize `sqm`
+    message: `Area must not exceed ${AREA_MAX} sqm.`,
+  });
+
 export class CreateListingFormValidator
   implements Validator<CreateListingForm>
 {
@@ -160,8 +177,18 @@ export class CreateListingFormValidator
    * @param description Listing baths
    * @returns Validation result (either success or error message)
    */
-  static validateBaths(baths: number | string) {
+  static validateBaths(baths: number) {
     return BATHS_VALIDATOR.safeParse(baths);
+  }
+
+  /**
+   * Validate area
+   *
+   * @param description Listing area
+   * @returns Validation result (either success or error message)
+   */
+  static validateArea(area: number) {
+    return AREA_VALIDATOR.safeParse(area);
   }
 
   /**
@@ -176,6 +203,7 @@ export class CreateListingFormValidator
       description: DESCRIPTION_VALIDATOR,
       beds: BEDS_VALIDATOR,
       baths: BATHS_VALIDATOR,
+      area: AREA_VALIDATOR,
       availableDate: z.date(),
       longitude: z
         .number()

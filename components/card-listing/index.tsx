@@ -55,6 +55,7 @@ export default function CardListing(props: CardListingProps) {
 							<span className="font-bold">{baths}</span> bath{baths > 1 && "s"}
 						</span>
 						<span className="ml-3" data-cy={dataCyArea}>
+							{/* FUTURE: Localize `sqm` */}
 							<span className="font-bold">{props.area}</span> sqm
 						</span>
 					</p>

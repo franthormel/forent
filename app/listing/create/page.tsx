@@ -46,6 +46,7 @@ export default function ListingCreatePage() {
 	const [depositError, setDepositError] = useState<string | undefined>(undefined);
 	const [bedsError, setBedsError] = useState<string | undefined>(undefined);
 	const [bathsError, setBathsError] = useState<string | undefined>(undefined);
+	const [areaError, setAreaError] = useState<string | undefined>(undefined);
 
 	const todayDate = new Date();
 	const today = DateUtils.formatDate(todayDate)
@@ -272,11 +273,27 @@ export default function ListingCreatePage() {
 								dataCyError="listing-create-form-baths-input-error" />
 							{/* Area */}
 							<FormInput
+								// FUTURE: Localize `sqm`
 								label='Area (sqm)'
 								name='area'
 								type="number"
 								min={Number(process.env.LISTING_AREA_MIN ?? 10)}
 								max={Number(process.env.LISTING_AREA_MAX ?? 1_000_000)}
+								onChange={(e) => {
+									const value = NumberUtils.toNumber(e.target.value, -1);
+									const result = CreateListingFormValidator.validateArea(value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (areaError !== error) {
+											setAreaError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && areaError !== undefined) {
+										setAreaError(undefined)
+									}
+								}}
+								errorMessage={areaError}
 								dataCy="listing-create-form-area-input"
 								dataCyLabel="listing-create-form-area-input-label"
 								dataCyOptional="listing-create-form-area-input-optional"

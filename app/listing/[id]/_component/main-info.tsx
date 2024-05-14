@@ -43,6 +43,7 @@ export default function ListingMainInfo(props: ListingMainInfoProps) {
                 <ListingMainInfoColumn value={props.baths} label={StringUtils.pluralizeText(props.baths, "Bath")}
                     dataCyValue="listing-main-info-col-value-baths"
                     dataCyLabel="listing-main-info-col-label-baths" />
+                {/* FUTURE: Localize `sqm` */}
                 <ListingMainInfoColumn value={props.area} label="Area (sqm)"
                     dataCyValue="listing-main-info-col-value-area"
                     dataCyLabel="listing-main-info-col-label-area" />
