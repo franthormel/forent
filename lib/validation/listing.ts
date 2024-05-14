@@ -26,6 +26,7 @@ const PRICE_VALIDATOR = z
     message: `Price cannot exceed ${PRICE_MAX_FORMATTED}`,
   });
 
+// Deposit
 const DEPOSIT_MIN = Number(process.env.LISTING_DEPOSIT_MIN ?? 0);
 const DEPOSIT_MAX = Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000);
 const DEPOSIT_MAX_FORMATTED = CURRENCY_FORMATTER.format(DEPOSIT_MAX);
@@ -67,13 +68,27 @@ const DESCRIPTION_VALIDATOR = z
   .min(DESCRIPTION_MIN)
   .max(DESCRIPTION_MAX);
 
+// Beds
+const BEDS_MIN = Number(process.env.LISTING_BEDS_MIN ?? 1);
+const BEDS_MAX = Number(process.env.LISTING_BEDS_MAX ?? 750);
+const BEDS_VALIDATOR = z
+  .number({
+    required_error: "Number of beds is required",
+    invalid_type_error: "Number of beds must be a number",
+  })
+  .min(BEDS_MIN, {
+    message: `There must be at least ${BEDS_MIN} bed(s)`,
+  })
+  .max(BEDS_MAX, {
+    message: `Number of beds must not exceed ${BEDS_MAX}`,
+  });
+
 export class CreateListingFormValidator
   implements Validator<CreateListingForm>
 {
   // TODO: Gradually remove errors
   readonly errorMessages: Map<string, string> = new Map([
     ["availableDate", "Available Date is required and must be valid"],
-    ["beds", "No. of Beds is required and must be valid"],
     ["baths", "No. of Baths is required and must be valid"],
     ["longitude", "Map address is required"],
     ["latitude", "Map address is required"],
@@ -116,6 +131,16 @@ export class CreateListingFormValidator
   }
 
   /**
+   * Validate number of beds
+   *
+   * @param description Listing beds
+   * @returns Validation result (either success or error message)
+   */
+  static validateBeds(beds: number) {
+    return BEDS_VALIDATOR.safeParse(beds);
+  }
+
+  /**
    * Validate the form
    *
    * @throws `ValidatorError` if any part of the form is invalid
@@ -125,15 +150,12 @@ export class CreateListingFormValidator
       price: PRICE_VALIDATOR,
       deposit: DEPOSIT_VALIDATOR,
       description: DESCRIPTION_VALIDATOR,
-      availableDate: z.date(),
-      beds: z
-        .number()
-        .min(Number(process.env.LISTING_BEDS_MIN ?? 1))
-        .max(Number(process.env.LISTING_BEDS_MAX ?? 750)),
+      beds: BEDS_VALIDATOR,
       baths: z
         .number()
         .min(Number(process.env.LISTING_BATHS_MIN ?? 1))
         .max(Number(process.env.LISTING_BATHS_MAX ?? 250)),
+      availableDate: z.date(),
       longitude: z
         .number()
         .min(Number(process.env.LISTING_LONGT_MIN ?? -180))

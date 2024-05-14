@@ -44,6 +44,7 @@ export default function ListingCreatePage() {
 	const [priceError, setPriceError] = useState<string | undefined>(undefined);
 	const [descriptionError, setDescriptionError] = useState<string | undefined>(undefined);
 	const [depositError, setDepositError] = useState<string | undefined>(undefined);
+	const [bedsError, setBedsError] = useState<string | undefined>(undefined);
 
 	const todayDate = new Date();
 	const today = DateUtils.formatDate(todayDate)
@@ -221,8 +222,23 @@ export default function ListingCreatePage() {
 								label='No. of Beds'
 								name='beds'
 								type="number"
-								min={1}
-								max={750}
+								min={Number(process.env.LISTING_BEDS_MIN ?? 1)}
+								max={Number(process.env.LISTING_BEDS_MAX ?? 750)}
+								onChange={(e) => {
+									const value = NumberUtils.toNumber(e.target.value, -1);
+									const result = CreateListingFormValidator.validateBeds(value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (bedsError !== error) {
+											setBedsError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && bedsError !== undefined) {
+										setBedsError(undefined)
+									}
+								}}
+								errorMessage={bedsError}
 								dataCy="listing-create-form-beds-input"
 								dataCyLabel="listing-create-form-beds-input-label"
 								dataCyOptional="listing-create-form-beds-input-optional"
