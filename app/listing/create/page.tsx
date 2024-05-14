@@ -47,6 +47,7 @@ export default function ListingCreatePage() {
 	const [bedsError, setBedsError] = useState<string | undefined>(undefined);
 	const [bathsError, setBathsError] = useState<string | undefined>(undefined);
 	const [areaError, setAreaError] = useState<string | undefined>(undefined);
+	const [availableDateError, setAvailableDateError] = useState<string | undefined>(undefined);
 
 	const todayDate = new Date();
 	const today = DateUtils.formatDate(todayDate)
@@ -309,7 +310,26 @@ export default function ListingCreatePage() {
 									optional={true}
 									min={today}
 									max={oneYearFromToday}
-									defaultValue={today} />
+									defaultValue={today}
+									onChange={(e) => {
+										const inputDate = e.target.value;
+										const result = CreateListingFormValidator.validateAvailableDate(inputDate, todayDate, oneYearFromTodayDate);
+										if (!result.success) {
+											const error = result.error.errors[0].message
+											// Only change into a new error message
+											if (availableDateError !== error) {
+												setAvailableDateError(error);
+											}
+											// Only remove previous error message
+										} else if (result.success && availableDateError !== undefined) {
+											setAvailableDateError(undefined)
+										}
+									}}
+									errorMessage={availableDateError}
+									dataCy="listing-create-form-available-date-input"
+									dataCyLabel="listing-create-form-available-date-input-label"
+									dataCyOptional="listing-create-form-available-date-input-optional"
+									dataCyError="listing-create-form-available-date-input-error" />
 							</div>
 						</div>
 					</div>

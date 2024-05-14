@@ -2,6 +2,7 @@ import { z } from "zod";
 import { CreateListingForm } from "../types/listing";
 import { Validator, ValidatorError } from "./index";
 import { StringUtils } from "../commons/string_utils";
+import { DateUtils } from "../commons/date_utils";
 
 // Price
 const PRICE_MIN = Number(process.env.LISTING_PRICE_MIN ?? 100);
@@ -137,6 +138,7 @@ export class CreateListingFormValidator
    * @param price Listing price
    * @returns Validation result (either success or error message)
    */
+  // TODO: Unit test
   static validatePrice(price: number) {
     return PRICE_VALIDATOR.safeParse(price);
   }
@@ -147,6 +149,7 @@ export class CreateListingFormValidator
    * @param deposit Listing deposit
    * @returns Validation result (either success or error message)
    */
+  // TODO: Unit test
   static validateDeposit(deposit: number) {
     return DEPOSIT_VALIDATOR.safeParse(deposit);
   }
@@ -157,6 +160,7 @@ export class CreateListingFormValidator
    * @param description Listing description
    * @returns Validation result (either success or error message)
    */
+  // TODO: Unit test
   static validateDescription(description: string) {
     return DESCRIPTION_VALIDATOR.safeParse(description);
   }
@@ -167,6 +171,7 @@ export class CreateListingFormValidator
    * @param description Listing beds
    * @returns Validation result (either success or error message)
    */
+  // TODO: Unit test
   static validateBeds(beds: number) {
     return BEDS_VALIDATOR.safeParse(beds);
   }
@@ -177,6 +182,7 @@ export class CreateListingFormValidator
    * @param description Listing baths
    * @returns Validation result (either success or error message)
    */
+  // TODO: Unit test
   static validateBaths(baths: number) {
     return BATHS_VALIDATOR.safeParse(baths);
   }
@@ -187,8 +193,39 @@ export class CreateListingFormValidator
    * @param description Listing area
    * @returns Validation result (either success or error message)
    */
+  // TODO: Unit test
   static validateArea(area: number) {
     return AREA_VALIDATOR.safeParse(area);
+  }
+
+  /**
+   * Validate available date.
+   * Suitable for client-side validation.
+   *
+   * @param description Listing available date
+   * @param today Today's date (client-side). Unsafe to be provided by the server since client & server timezones might be different
+   * @param oneYearFromToday? Maximum date (client-side). Will be derived by offsetting today's date by one (1) year if this param is not provided.
+   * @returns Validation result (either success or error message)
+   */
+  // TODO: Unit test
+  static validateAvailableDate(
+    date: string,
+    today: Date,
+    oneYearFromToday?: Date
+  ) {
+    let max = oneYearFromToday ?? DateUtils.offsetYear(today, 1);
+    const validator = z.coerce
+      .date({
+        invalid_type_error: "Available date must be in the correct date format",
+      })
+      .min(today, {
+        message: "Available date must only be set on a future date.",
+      })
+      .max(max, {
+        message: "Available date cannot exceed one (1) year from today",
+      });
+
+    return validator.safeParse(date);
   }
 
   /**
