@@ -179,12 +179,12 @@ export class CreateListingFormValidator
       availableDate: z.date(),
       longitude: z
         .number()
-        .min(Number(process.env.LISTING_LONGT_MIN ?? -180))
-        .max(Number(process.env.LISTING_LONGT_MAX ?? 180)),
+        .min(Number(process.env.LISTING_ADDRESS_LON_MIN ?? -180))
+        .max(Number(process.env.LISTING_ADDRESS_LON_MAX ?? 180)),
       latitude: z
         .number()
-        .min(Number(process.env.LISTING_LATT_MIN ?? -90))
-        .max(Number(process.env.LISTING_LATT_MAX ?? 90)),
+        .min(Number(process.env.LISTING_ADDRESS_LAT_MIN ?? -90))
+        .max(Number(process.env.LISTING_ADDRESS_LAT_MAX ?? 90)),
     });
 
     const result = validator.safeParse(this.input);

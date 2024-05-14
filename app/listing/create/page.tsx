@@ -275,8 +275,8 @@ export default function ListingCreatePage() {
 								label='Area (sqm)'
 								name='area'
 								type="number"
-								min={10}
-								max={1_000_000}
+								min={Number(process.env.LISTING_AREA_MIN ?? 10)}
+								max={Number(process.env.LISTING_AREA_MAX ?? 1_000_000)}
 								dataCy="listing-create-form-area-input"
 								dataCyLabel="listing-create-form-area-input-label"
 								dataCyOptional="listing-create-form-area-input-optional"
@@ -363,9 +363,8 @@ export default function ListingCreatePage() {
 								label='Address Line'
 								name='addressLine'
 								type="text"
-								minLength={1}
-								maxLength={128}
-								onChange={(e) => { console.log(e.target.nodeValue) }}
+								minLength={Number(process.env.LISTING_ADDRESS_LINE_MIN ?? 1)}
+								maxLength={Number(process.env.LISTING_ADDRESS_LINE_MAX ?? 128)}
 								dataCy="listing-create-form-address-line-input"
 								dataCyLabel="listing-create-form-address-line-input-label"
 								dataCyOptional="listing-create-form-address-line-input-optional"
@@ -376,8 +375,8 @@ export default function ListingCreatePage() {
 									label='City'
 									name='city'
 									type="text"
-									minLength={1}
-									maxLength={64}
+									minLength={Number(process.env.LISTING_ADDRESS_CITY_MIN ?? 1)}
+									maxLength={Number(process.env.LISTING_ADDRESS_CITY_MAX ?? 64)}
 									dataCy="listing-create-form-city-input"
 									dataCyLabel="listing-create-form-city-input-label"
 									dataCyOptional="listing-create-form-city-input-optional"
@@ -387,8 +386,8 @@ export default function ListingCreatePage() {
 									label='State'
 									name='state'
 									type="text"
-									minLength={1}
-									maxLength={64}
+									minLength={Number(process.env.LISTING_ADDRESS_STATE_MIN ?? 1)}
+									maxLength={Number(process.env.LISTING_ADDRESS_STATE_MAX ?? 64)}
 									dataCy="listing-create-form-state-input"
 									dataCyLabel="listing-create-form-state-input-label"
 									dataCyOptional="listing-create-form-state-input-optional"
@@ -400,8 +399,8 @@ export default function ListingCreatePage() {
 									label='ZIP Code'
 									name='zipcode'
 									type="text"
-									minLength={1}
-									maxLength={64}
+									minLength={Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1)}
+									maxLength={Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64)}
 									dataCy="listing-create-form-zipcode-input"
 									dataCyLabel="listing-create-form-zipcode-input-label"
 									dataCyOptional="listing-create-form-zipcode-input-optional"
