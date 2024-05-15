@@ -116,6 +116,66 @@ const AREA_VALIDATOR = z
     message: `Area must not exceed ${AREA_MAX} sqm.`,
   });
 
+// Address line
+const ADDRESS_LINE_MIN = Number(process.env.LISTING_ADDRESS_LINE_MIN ?? 1);
+const ADDRESS_LINE_MAX = Number(process.env.LISTING_ADDRESS_LINE_MAX ?? 128);
+const ADDRESS_LINE_VALIDATOR = z
+  .string({
+    invalid_type_error: "Address line must be in text format",
+    required_error: "Address line is required",
+  })
+  .min(ADDRESS_LINE_MIN, {
+    message: `Address line must contain at least ${ADDRESS_LINE_MIN} character(s)`,
+  })
+  .max(ADDRESS_LINE_MAX, {
+    message: `Address line must not exceed ${ADDRESS_LINE_MAX} characters`,
+  });
+
+// Address city
+const ADDRESS_CITY_MIN = Number(process.env.LISTING_ADDRESS_CITY_MIN ?? 1);
+const ADDRESS_CITY_MAX = Number(process.env.LISTING_ADDRESS_CITY_MAX ?? 64);
+const ADDRESS_CITY_VALIDATOR = z
+  .string({
+    invalid_type_error: "City address must be in text format",
+    required_error: "City address is required",
+  })
+  .min(ADDRESS_CITY_MIN, {
+    message: `City address must contain at least ${ADDRESS_CITY_MIN} character(s)`,
+  })
+  .max(ADDRESS_CITY_MAX, {
+    message: `City address must not exceed ${ADDRESS_CITY_MAX} characters`,
+  });
+
+// Address state
+const ADDRESS_STATE_MIN = Number(process.env.LISTING_ADDRESS_STATE_MIN ?? 1);
+const ADDRESS_STATE_MAX = Number(process.env.LISTING_ADDRESS_STATE_MAX ?? 64);
+const ADDRESS_STATE_VALIDATOR = z
+  .string({
+    invalid_type_error: "State address must be in text format",
+    required_error: "State address is required",
+  })
+  .min(ADDRESS_STATE_MIN, {
+    message: `State address must contain at least ${ADDRESS_STATE_MIN} character(s)`,
+  })
+  .max(ADDRESS_STATE_MAX, {
+    message: `State address must not exceed ${ADDRESS_STATE_MAX} characters`,
+  });
+
+// Address zip
+const ADDRESS_ZIP_MIN = Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1);
+const ADDRESS_ZIP_MAX = Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64);
+const ADDRESS_ZIP_VALIDATOR = z
+  .string({
+    invalid_type_error: "ZIP code address must be in text format",
+    required_error: "ZIP code address is required",
+  })
+  .min(ADDRESS_ZIP_MIN, {
+    message: `ZIP code address must contain at least ${ADDRESS_ZIP_MIN} character(s)`,
+  })
+  .max(ADDRESS_ZIP_MAX, {
+    message: `ZIP code address must not exceed ${ADDRESS_ZIP_MAX} characters`,
+  });
+
 export class CreateListingFormValidator
   implements Validator<CreateListingForm>
 {
@@ -229,7 +289,52 @@ export class CreateListingFormValidator
   }
 
   /**
-   * Validate the form
+   * Validate address line
+   *
+   * @param addressLine Listing address line
+   * @returns Validation result (either success or error message)
+   */
+  // TODO: Unit test
+  static validateAddressLine(addressLine: string) {
+    return ADDRESS_LINE_VALIDATOR.safeParse(addressLine);
+  }
+
+  /**
+   * Validate city address
+   *
+   * @param city Listing city address
+   * @returns Validation result (either success or error message)
+   */
+  // TODO: Unit test
+  static validateAddressCity(city: string) {
+    return ADDRESS_CITY_VALIDATOR.safeParse(city);
+  }
+
+  /**
+   * Validate state address
+   *
+   * @param state Listing state address
+   * @returns Validation result (either success or error message)
+   */
+  // TODO: Unit test
+  static validateAddressState(state: string) {
+    return ADDRESS_STATE_VALIDATOR.safeParse(state);
+  }
+
+  /**
+   * Validate zip code address
+   *
+   * @param zipCode Listing zip code address
+   * @returns Validation result (either success or error message)
+   */
+  // TODO: Unit test
+  static validateAddressZip(zipCode: string) {
+    return ADDRESS_ZIP_VALIDATOR.safeParse(zipCode);
+  }
+
+  /**
+   * Validate the form.
+   * Suitable for server actions.
    *
    * @throws `ValidatorError` if any part of the form is invalid
    */

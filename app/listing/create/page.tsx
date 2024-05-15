@@ -48,6 +48,10 @@ export default function ListingCreatePage() {
 	const [bathsError, setBathsError] = useState<string | undefined>(undefined);
 	const [areaError, setAreaError] = useState<string | undefined>(undefined);
 	const [availableDateError, setAvailableDateError] = useState<string | undefined>(undefined);
+	const [addressLineError, setAddressLineError] = useState<string | undefined>(undefined);
+	const [addressCityError, setAddressCityError] = useState<string | undefined>(undefined);
+	const [addressStateError, setAddressStateError] = useState<string | undefined>(undefined);
+	const [addressZipcodeError, setAddressZipcodeError] = useState<string | undefined>(undefined);
 
 	const todayDate = new Date();
 	const today = DateUtils.formatDate(todayDate)
@@ -402,6 +406,20 @@ export default function ListingCreatePage() {
 								type="text"
 								minLength={Number(process.env.LISTING_ADDRESS_LINE_MIN ?? 1)}
 								maxLength={Number(process.env.LISTING_ADDRESS_LINE_MAX ?? 128)}
+								onChange={(e) => {
+									const result = CreateListingFormValidator.validateAddressLine(e.target.value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (addressLineError !== error) {
+											setAddressLineError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && addressLineError !== undefined) {
+										setAddressLineError(undefined)
+									}
+								}}
+								errorMessage={addressLineError}
 								dataCy="listing-create-form-address-line-input"
 								dataCyLabel="listing-create-form-address-line-input-label"
 								dataCyOptional="listing-create-form-address-line-input-optional"
@@ -414,6 +432,20 @@ export default function ListingCreatePage() {
 									type="text"
 									minLength={Number(process.env.LISTING_ADDRESS_CITY_MIN ?? 1)}
 									maxLength={Number(process.env.LISTING_ADDRESS_CITY_MAX ?? 64)}
+									onChange={(e) => {
+										const result = CreateListingFormValidator.validateAddressCity(e.target.value)
+										if (!result.success) {
+											const error = result.error.errors[0].message
+											// Only change into a new error message
+											if (addressCityError !== error) {
+												setAddressCityError(error);
+											}
+											// Only remove previous error message
+										} else if (result.success && addressCityError !== undefined) {
+											setAddressCityError(undefined)
+										}
+									}}
+									errorMessage={addressCityError}
 									dataCy="listing-create-form-city-input"
 									dataCyLabel="listing-create-form-city-input-label"
 									dataCyOptional="listing-create-form-city-input-optional"
@@ -425,6 +457,20 @@ export default function ListingCreatePage() {
 									type="text"
 									minLength={Number(process.env.LISTING_ADDRESS_STATE_MIN ?? 1)}
 									maxLength={Number(process.env.LISTING_ADDRESS_STATE_MAX ?? 64)}
+									onChange={(e) => {
+										const result = CreateListingFormValidator.validateAddressState(e.target.value)
+										if (!result.success) {
+											const error = result.error.errors[0].message
+											// Only change into a new error message
+											if (addressStateError !== error) {
+												setAddressStateError(error);
+											}
+											// Only remove previous error message
+										} else if (result.success && addressStateError !== undefined) {
+											setAddressStateError(undefined)
+										}
+									}}
+									errorMessage={addressStateError}
 									dataCy="listing-create-form-state-input"
 									dataCyLabel="listing-create-form-state-input-label"
 									dataCyOptional="listing-create-form-state-input-optional"
@@ -438,6 +484,20 @@ export default function ListingCreatePage() {
 									type="text"
 									minLength={Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1)}
 									maxLength={Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64)}
+									onChange={(e) => {
+										const result = CreateListingFormValidator.validateAddressZip(e.target.value)
+										if (!result.success) {
+											const error = result.error.errors[0].message
+											// Only change into a new error message
+											if (addressZipcodeError !== error) {
+												setAddressZipcodeError(error);
+											}
+											// Only remove previous error message
+										} else if (result.success && addressZipcodeError !== undefined) {
+											setAddressZipcodeError(undefined)
+										}
+									}}
+									errorMessage={addressZipcodeError}
 									dataCy="listing-create-form-zipcode-input"
 									dataCyLabel="listing-create-form-zipcode-input-label"
 									dataCyOptional="listing-create-form-zipcode-input-optional"

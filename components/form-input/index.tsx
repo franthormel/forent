@@ -80,6 +80,7 @@ export default function FormInput(props: FormInputProps) {
 				min={props.min}
 				max={props.max}
 				minLength={props.minLength}
+				maxLength={props.maxLength}
 				defaultValue={props.defaultValue}
 				onChange={props.onChange}
 				data-cy={props.dataCy ?? "form-input"}
