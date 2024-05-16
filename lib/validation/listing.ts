@@ -51,8 +51,6 @@ const DESCRIPTION_VALIDATOR = z
       const input = new String(ctx.data);
 
       switch (issue.code) {
-        case "invalid_type":
-          return { message: "Description must be in text format" };
         case "too_small":
           return {
             message: `Description must contain at least ${DESCRIPTION_MIN} characters. Current input contains ${input.length} characters`,
@@ -179,9 +177,8 @@ const ADDRESS_ZIP_VALIDATOR = z
 export class CreateListingFormValidator
   implements Validator<CreateListingForm>
 {
-  // TODO: Gradually remove errors
+  // FUTURE: Gradually remove errors
   readonly errorMessages: Map<string, string> = new Map([
-    ["availableDate", "Available Date is required and must be valid"],
     ["longitude", "Map address is required"],
     ["latitude", "Map address is required"],
   ]);
@@ -198,7 +195,6 @@ export class CreateListingFormValidator
    * @param price Listing price
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validatePrice(price: number) {
     return PRICE_VALIDATOR.safeParse(price);
   }
@@ -209,7 +205,6 @@ export class CreateListingFormValidator
    * @param deposit Listing deposit
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validateDeposit(deposit: number) {
     return DEPOSIT_VALIDATOR.safeParse(deposit);
   }
@@ -220,7 +215,6 @@ export class CreateListingFormValidator
    * @param description Listing description
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validateDescription(description: string) {
     return DESCRIPTION_VALIDATOR.safeParse(description);
   }
@@ -231,7 +225,6 @@ export class CreateListingFormValidator
    * @param description Listing beds
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validateBeds(beds: number) {
     return BEDS_VALIDATOR.safeParse(beds);
   }
@@ -242,7 +235,6 @@ export class CreateListingFormValidator
    * @param description Listing baths
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validateBaths(baths: number) {
     return BATHS_VALIDATOR.safeParse(baths);
   }
@@ -253,7 +245,6 @@ export class CreateListingFormValidator
    * @param description Listing area
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validateArea(area: number) {
     return AREA_VALIDATOR.safeParse(area);
   }
@@ -267,7 +258,6 @@ export class CreateListingFormValidator
    * @param oneYearFromToday? Maximum date (client-side). Will be derived by offsetting today's date by one (1) year if this param is not provided.
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validateAvailableDate(
     date: string,
     today: Date,
@@ -294,7 +284,6 @@ export class CreateListingFormValidator
    * @param addressLine Listing address line
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validateAddressLine(addressLine: string) {
     return ADDRESS_LINE_VALIDATOR.safeParse(addressLine);
   }
@@ -305,7 +294,6 @@ export class CreateListingFormValidator
    * @param city Listing city address
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validateAddressCity(city: string) {
     return ADDRESS_CITY_VALIDATOR.safeParse(city);
   }
@@ -316,7 +304,6 @@ export class CreateListingFormValidator
    * @param state Listing state address
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validateAddressState(state: string) {
     return ADDRESS_STATE_VALIDATOR.safeParse(state);
   }
@@ -327,7 +314,6 @@ export class CreateListingFormValidator
    * @param zipCode Listing zip code address
    * @returns Validation result (either success or error message)
    */
-  // TODO: Unit test
   static validateAddressZip(zipCode: string) {
     return ADDRESS_ZIP_VALIDATOR.safeParse(zipCode);
   }
@@ -338,6 +324,7 @@ export class CreateListingFormValidator
    *
    * @throws `ValidatorError` if any part of the form is invalid
    */
+  // FUTURE: Unit test on backend form submission
   validate() {
     const validator = z.object({
       price: PRICE_VALIDATOR,
@@ -362,7 +349,6 @@ export class CreateListingFormValidator
     if (!result.success) {
       const errors = result.error.errors;
 
-      // TODO: Return all error messages in a map (key = field name, value = 1st error message)
       for (const error of errors) {
         const errorKey = error.path.at(0)?.toString();
 
