@@ -10,7 +10,9 @@ import FormInputTextArea from "@/components/form-input/textarea";
 import SectionHeaderIcon from "@/components/section/header-icon";
 import TextError from "@/components/text/error";
 import { DateUtils } from "@/lib/commons/date_utils";
+import { NumberUtils } from "@/lib/commons/number_utils";
 import { LonLat } from "@/lib/types/geography";
+import { CreateListingFormValidator } from "@/lib/validation/listing";
 import pinIcon from "@/public/icons/home_pin.svg";
 import { Feature, Map, View } from "ol";
 import { defaults } from "ol/control";
@@ -32,11 +34,24 @@ const MAP_PRELOAD = 4
 const MAP_ID = "listing-create-form-address-map";
 
 export default function ListingCreatePage() {
-	// Form submission
-	// TODO: Display validation errors if any
+	// Form submission (Server)
 	const [formState, formAction] = useFormState(createListingNew, {
 		errors: new globalThis.Map()
 	});
+	const hasServerError = formState.errors.size > 0
+
+	// Validation errors (Client)
+	const [priceError, setPriceError] = useState<string | undefined>(undefined);
+	const [descriptionError, setDescriptionError] = useState<string | undefined>(undefined);
+	const [depositError, setDepositError] = useState<string | undefined>(undefined);
+	const [bedsError, setBedsError] = useState<string | undefined>(undefined);
+	const [bathsError, setBathsError] = useState<string | undefined>(undefined);
+	const [areaError, setAreaError] = useState<string | undefined>(undefined);
+	const [availableDateError, setAvailableDateError] = useState<string | undefined>(undefined);
+	const [addressLineError, setAddressLineError] = useState<string | undefined>(undefined);
+	const [addressCityError, setAddressCityError] = useState<string | undefined>(undefined);
+	const [addressStateError, setAddressStateError] = useState<string | undefined>(undefined);
+	const [addressZipcodeError, setAddressZipcodeError] = useState<string | undefined>(undefined);
 
 	const todayDate = new Date();
 	const today = DateUtils.formatDate(todayDate)
@@ -106,8 +121,10 @@ export default function ListingCreatePage() {
 					<ListingCreateHeader
 						dataCy="listing-create-header"
 						dataCySubHeader="listing-create-subheader" />
+					{/* FUTURE: Animate when it pops up */}
 					<ListingCreateError
-						showError={formState.errors.size > 0}
+						// Only shown for server error
+						showError={hasServerError}
 						error="Check errors below"
 						dataCyIcon="listing-create-error-icon"
 						dataCyTitle="listing-create-error" />
@@ -131,8 +148,23 @@ export default function ListingCreatePage() {
 								label='Price'
 								name='price'
 								type="number"
-								min={100}
-								max={100_000_000}
+								min={Number(process.env.LISTING_PRICE_MIN ?? 100)}
+								max={Number(process.env.LISTING_PRICE_MAX ?? 100_000_000)}
+								onChange={(e) => {
+									const value = NumberUtils.toNumber(e.target.value, -1);
+									const result = CreateListingFormValidator.validatePrice(value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (priceError !== error) {
+											setPriceError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && priceError !== undefined) {
+										setPriceError(undefined)
+									}
+								}}
+								errorMessage={priceError}
 								dataCy="listing-create-form-price-input"
 								dataCyLabel="listing-create-form-price-input-label"
 								dataCyOptional="listing-create-form-price-input-optional"
@@ -143,8 +175,23 @@ export default function ListingCreatePage() {
 								name='deposit'
 								type="number"
 								optional={true}
-								min={0}
-								max={1_000_000}
+								min={Number(process.env.LISTING_DEPOSIT_MIN ?? 100)}
+								max={Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)}
+								onChange={(e) => {
+									const value = NumberUtils.toNumber(e.target.value, -1);
+									const result = CreateListingFormValidator.validateDeposit(value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (depositError !== error) {
+											setDepositError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && depositError !== undefined) {
+										setDepositError(undefined)
+									}
+								}}
+								errorMessage={depositError}
 								dataCy="listing-create-form-deposit-input"
 								dataCyLabel="listing-create-form-deposit-input-label"
 								dataCyOptional="listing-create-form-deposit-input-optional"
@@ -155,8 +202,22 @@ export default function ListingCreatePage() {
 							<FormInputTextArea
 								label='Description'
 								name='description'
-								minLength={16}
-								maxLength={1024}
+								minLength={Number(process.env.LISTING_DESC_MIN ?? 16)}
+								maxLength={Number(process.env.LISTING_DESC_MAX ?? 1024)}
+								onChange={(e) => {
+									const result = CreateListingFormValidator.validateDescription(e.target.value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (descriptionError !== error) {
+											setDescriptionError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && descriptionError !== undefined) {
+										setDescriptionError(undefined)
+									}
+								}}
+								errorMessage={descriptionError}
 								dataCy="listing-create-form-description-input-textarea"
 								dataCyLabel="listing-create-form-description-input-textarea-label"
 								dataCyOptional="listing-create-form-description-input-textarea-optional"
@@ -168,8 +229,23 @@ export default function ListingCreatePage() {
 								label='No. of Beds'
 								name='beds'
 								type="number"
-								min={1}
-								max={750}
+								min={Number(process.env.LISTING_BEDS_MIN ?? 1)}
+								max={Number(process.env.LISTING_BEDS_MAX ?? 750)}
+								onChange={(e) => {
+									const value = NumberUtils.toNumber(e.target.value, -1);
+									const result = CreateListingFormValidator.validateBeds(value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (bedsError !== error) {
+											setBedsError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && bedsError !== undefined) {
+										setBedsError(undefined)
+									}
+								}}
+								errorMessage={bedsError}
 								dataCy="listing-create-form-beds-input"
 								dataCyLabel="listing-create-form-beds-input-label"
 								dataCyOptional="listing-create-form-beds-input-optional"
@@ -179,19 +255,50 @@ export default function ListingCreatePage() {
 								label='No. of Baths'
 								name='baths'
 								type="number"
-								min={1}
-								max={250}
+								min={Number(process.env.LISTING_BATHS_MIN ?? 1)}
+								max={Number(process.env.LISTING_BATHS_MAX ?? 250)}
+								onChange={(e) => {
+									const value = NumberUtils.toNumber(e.target.value, -1);
+									const result = CreateListingFormValidator.validateBaths(value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (bathsError !== error) {
+											setBathsError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && bathsError !== undefined) {
+										setBathsError(undefined)
+									}
+								}}
+								errorMessage={bathsError}
 								dataCy="listing-create-form-baths-input"
 								dataCyLabel="listing-create-form-baths-input-label"
 								dataCyOptional="listing-create-form-baths-input-optional"
 								dataCyError="listing-create-form-baths-input-error" />
 							{/* Area */}
 							<FormInput
+								// FUTURE: Localize `sqm`
 								label='Area (sqm)'
 								name='area'
 								type="number"
-								min={10}
-								max={1_000_000}
+								min={Number(process.env.LISTING_AREA_MIN ?? 10)}
+								max={Number(process.env.LISTING_AREA_MAX ?? 1_000_000)}
+								onChange={(e) => {
+									const value = NumberUtils.toNumber(e.target.value, -1);
+									const result = CreateListingFormValidator.validateArea(value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (areaError !== error) {
+											setAreaError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && areaError !== undefined) {
+										setAreaError(undefined)
+									}
+								}}
+								errorMessage={areaError}
 								dataCy="listing-create-form-area-input"
 								dataCyLabel="listing-create-form-area-input-label"
 								dataCyOptional="listing-create-form-area-input-optional"
@@ -207,7 +314,26 @@ export default function ListingCreatePage() {
 									optional={true}
 									min={today}
 									max={oneYearFromToday}
-									defaultValue={today} />
+									defaultValue={today}
+									onChange={(e) => {
+										const inputDate = e.target.value;
+										const result = CreateListingFormValidator.validateAvailableDate(inputDate, todayDate, oneYearFromTodayDate);
+										if (!result.success) {
+											const error = result.error.errors[0].message
+											// Only change into a new error message
+											if (availableDateError !== error) {
+												setAvailableDateError(error);
+											}
+											// Only remove previous error message
+										} else if (result.success && availableDateError !== undefined) {
+											setAvailableDateError(undefined)
+										}
+									}}
+									errorMessage={availableDateError}
+									dataCy="listing-create-form-available-date-input"
+									dataCyLabel="listing-create-form-available-date-input-label"
+									dataCyOptional="listing-create-form-available-date-input-optional"
+									dataCyError="listing-create-form-available-date-input-error" />
 							</div>
 						</div>
 					</div>
@@ -278,9 +404,22 @@ export default function ListingCreatePage() {
 								label='Address Line'
 								name='addressLine'
 								type="text"
-								minLength={1}
-								maxLength={128}
-								onChange={(e) => { console.log(e.target.nodeValue) }}
+								minLength={Number(process.env.LISTING_ADDRESS_LINE_MIN ?? 1)}
+								maxLength={Number(process.env.LISTING_ADDRESS_LINE_MAX ?? 128)}
+								onChange={(e) => {
+									const result = CreateListingFormValidator.validateAddressLine(e.target.value);
+									if (!result.success) {
+										const error = result.error.errors[0].message
+										// Only change into a new error message
+										if (addressLineError !== error) {
+											setAddressLineError(error);
+										}
+										// Only remove previous error message
+									} else if (result.success && addressLineError !== undefined) {
+										setAddressLineError(undefined)
+									}
+								}}
+								errorMessage={addressLineError}
 								dataCy="listing-create-form-address-line-input"
 								dataCyLabel="listing-create-form-address-line-input-label"
 								dataCyOptional="listing-create-form-address-line-input-optional"
@@ -291,8 +430,22 @@ export default function ListingCreatePage() {
 									label='City'
 									name='city'
 									type="text"
-									minLength={1}
-									maxLength={64}
+									minLength={Number(process.env.LISTING_ADDRESS_CITY_MIN ?? 1)}
+									maxLength={Number(process.env.LISTING_ADDRESS_CITY_MAX ?? 64)}
+									onChange={(e) => {
+										const result = CreateListingFormValidator.validateAddressCity(e.target.value)
+										if (!result.success) {
+											const error = result.error.errors[0].message
+											// Only change into a new error message
+											if (addressCityError !== error) {
+												setAddressCityError(error);
+											}
+											// Only remove previous error message
+										} else if (result.success && addressCityError !== undefined) {
+											setAddressCityError(undefined)
+										}
+									}}
+									errorMessage={addressCityError}
 									dataCy="listing-create-form-city-input"
 									dataCyLabel="listing-create-form-city-input-label"
 									dataCyOptional="listing-create-form-city-input-optional"
@@ -302,8 +455,22 @@ export default function ListingCreatePage() {
 									label='State'
 									name='state'
 									type="text"
-									minLength={1}
-									maxLength={64}
+									minLength={Number(process.env.LISTING_ADDRESS_STATE_MIN ?? 1)}
+									maxLength={Number(process.env.LISTING_ADDRESS_STATE_MAX ?? 64)}
+									onChange={(e) => {
+										const result = CreateListingFormValidator.validateAddressState(e.target.value)
+										if (!result.success) {
+											const error = result.error.errors[0].message
+											// Only change into a new error message
+											if (addressStateError !== error) {
+												setAddressStateError(error);
+											}
+											// Only remove previous error message
+										} else if (result.success && addressStateError !== undefined) {
+											setAddressStateError(undefined)
+										}
+									}}
+									errorMessage={addressStateError}
 									dataCy="listing-create-form-state-input"
 									dataCyLabel="listing-create-form-state-input-label"
 									dataCyOptional="listing-create-form-state-input-optional"
@@ -315,8 +482,22 @@ export default function ListingCreatePage() {
 									label='ZIP Code'
 									name='zipcode'
 									type="text"
-									minLength={1}
-									maxLength={64}
+									minLength={Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1)}
+									maxLength={Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64)}
+									onChange={(e) => {
+										const result = CreateListingFormValidator.validateAddressZip(e.target.value)
+										if (!result.success) {
+											const error = result.error.errors[0].message
+											// Only change into a new error message
+											if (addressZipcodeError !== error) {
+												setAddressZipcodeError(error);
+											}
+											// Only remove previous error message
+										} else if (result.success && addressZipcodeError !== undefined) {
+											setAddressZipcodeError(undefined)
+										}
+									}}
+									errorMessage={addressZipcodeError}
 									dataCy="listing-create-form-zipcode-input"
 									dataCyLabel="listing-create-form-zipcode-input-label"
 									dataCyOptional="listing-create-form-zipcode-input-optional"

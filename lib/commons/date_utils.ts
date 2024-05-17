@@ -60,6 +60,23 @@ export namespace DateUtils {
   }
 
   /**
+   * Adds a preceding zero (0) if the given digit is less than 10.
+   *
+   * @param digit Must be a positive number
+   * @returns 01, 02, ..., 09, 10, 11, ...
+   */
+  function addPrecedingZero(digit: number) {
+    const SINGLE_DIGITS = 9;
+    let value;
+    if (digit <= SINGLE_DIGITS) {
+      value = `0${digit}`;
+    } else {
+      value = digit;
+    }
+    return value;
+  }
+
+  /**
    * Returns date in `YYYY-MM-DD` format.
    * Only suitable when the given date is originates from the client.
    *
@@ -67,8 +84,11 @@ export namespace DateUtils {
    */
   export function formatDate(date: Date): string {
     // NOTE: Read for more info https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
-    const isoFormat = date.toISOString();
-    const value = isoFormat.slice(0, 10);
+    const year = date.getFullYear();
+    const day = addPrecedingZero(date.getDate());
+    const month = addPrecedingZero(date.getMonth() + 1);
+
+    const value = `${year}-${month}-${day}`;
     return value;
   }
 }

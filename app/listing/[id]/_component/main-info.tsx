@@ -25,9 +25,13 @@ export default function ListingMainInfo(props: ListingMainInfoProps) {
         <div className="grid auto-rows-auto gap-y-3">
             {/* Price */}
             <div data-cy={props.dataCyPrice ?? "listing-main-info-price"}>
-                {/* FUTURE: Localize currency, put in env */}
                 <span className="text-4xl font-bold">
-                    ₱ {new Intl.NumberFormat('en-PH').format(props.price,)}
+                    {/* FUTURE: Localize currency, put in env */}
+                    {new Intl.NumberFormat("en-PH", {
+                        style: "currency",
+                        currency: "PHP",
+                        maximumFractionDigits: 0,
+                    }).format(props.price)}
                 </span>
                 <span className="text-xl font-bold">/mo</span>
             </div>
@@ -39,6 +43,7 @@ export default function ListingMainInfo(props: ListingMainInfoProps) {
                 <ListingMainInfoColumn value={props.baths} label={StringUtils.pluralizeText(props.baths, "Bath")}
                     dataCyValue="listing-main-info-col-value-baths"
                     dataCyLabel="listing-main-info-col-label-baths" />
+                {/* FUTURE: Localize `sqm` */}
                 <ListingMainInfoColumn value={props.area} label="Area (sqm)"
                     dataCyValue="listing-main-info-col-value-area"
                     dataCyLabel="listing-main-info-col-label-area" />

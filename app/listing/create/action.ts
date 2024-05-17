@@ -14,10 +14,6 @@ export async function createListingNew(
   previousState: ListingCreateFormState,
   formData: FormData
 ) {
-  // Validate
-  const x = CreateListingFormValidator.validatePrice();
-  console.log(x);
-
   // TODO: Validate form, return object if any error
   const formState: ListingCreateFormState = {
     errors: new Map(),
@@ -37,6 +33,7 @@ export async function createListing(prevState: any, formData: FormData) {
     baths: formUtils.getNumber("baths", -1),
     longitude: formUtils.getNumber("inputLongitude", -999),
     latitude: formUtils.getNumber("inputLatitude", -999),
+    area: 100, // TODO: Remove soon
   };
 
   // Validate
