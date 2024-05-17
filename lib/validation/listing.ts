@@ -263,7 +263,12 @@ export class CreateListingFormValidator
     today: Date,
     oneYearFromToday?: Date
   ) {
-    let max = oneYearFromToday ?? DateUtils.offsetYear(today, 1);
+    // Set to the start of the day so that user can choose this date otherwise validation will throw an error
+    today.setHours(0, 0, 0, 0);
+    const max = oneYearFromToday ?? DateUtils.offsetYear(today, 1);
+    // Set to the end of the day (just before midnight strikes) so that user can choose this date otherwise validation will throw an error
+    max.setHours(23, 59, 59, 999);
+
     const validator = z.coerce
       .date({
         invalid_type_error: "Available date must be in the correct date format",

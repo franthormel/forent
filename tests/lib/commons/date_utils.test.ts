@@ -52,6 +52,22 @@ describe("Date utils", () => {
       date: new Date("2024-12-25T00:00:00.000Z"),
       output: "2024-12-25",
     },
+    {
+      date: new Date("2000-08-11T00:00:00.000Z"),
+      output: "2000-08-11",
+    },
+    {
+      date: new Date("2000-09-21T00:00:00.000Z"),
+      output: "2000-09-21",
+    },
+    {
+      date: new Date("2000-10-04T00:00:00.000Z"),
+      output: "2000-10-04",
+    },
+    {
+      date: new Date("2000-11-09T00:00:00.000Z"),
+      output: "2000-11-09",
+    },
   ])("date format = $date", ({ date, output }) => {
     const actual = DateUtils.formatDate(date);
     expect(actual).toBe(output);
