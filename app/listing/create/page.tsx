@@ -29,10 +29,6 @@ import ListingCreateError from "./_components/error";
 import ListingCreateHeader from "./_components/header";
 import { createListingNew } from "./action";
 
-const MAP_ZOOM_LVL = 2;
-const MAP_PRELOAD = 4
-const MAP_ID = "listing-create-form-address-map";
-
 export default function ListingCreatePage() {
 	// Form submission (Server)
 	const [formState, formAction] = useFormState(createListingNew, {
@@ -59,6 +55,10 @@ export default function ListingCreatePage() {
 	const oneYearFromToday = DateUtils.formatDate(oneYearFromTodayDate)
 
 	// Map related
+	const MAP_ZOOM_LVL = 2;
+	const MAP_PRELOAD = 4
+	const MAP_ID = "listing-create-form-address-map";
+
 	const [mapLonLat, setMapLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 })
 	const mapZoomLevel = useRef<number>(MAP_ZOOM_LVL)
 
