@@ -59,24 +59,35 @@ export default function ListingCreatePage() {
 	const MAP_PRELOAD = 4
 	const MAP_ID = "listing-create-form-address-map";
 
-	const [mapLonLat, setMapLonLat] = useState<LonLat>({ longitude: 0, latitude: 0 })
+	const [mapLonLat, setMapLonLat] = useState<LonLat | undefined>(undefined)
 	const mapZoomLevel = useRef<number>(MAP_ZOOM_LVL)
 
-	// Use home icon
+	// Map icon
 	const mapIconStyle = new Style({
 		image: new Icon({
 			src: pinIcon.src,
 		}),
 	})
+
+	// Map position
 	const mapPositionFeature = new Feature()
 	mapPositionFeature.setStyle(mapIconStyle)
-	mapPositionFeature.setGeometry(new Point(fromLonLat([mapLonLat.longitude!, mapLonLat.latitude!])))
+
+	// Map view
+	const mapView = new View({
+		center: fromLonLat([0, 0]),
+		zoom: mapZoomLevel.current,
+	})
+
+	// Only switch views when position has changed
+	if (mapLonLat) {
+		const coords = fromLonLat([mapLonLat.longitude, mapLonLat.latitude]);
+		const point = new Point(coords);
+		mapPositionFeature.setGeometry(point)
+		mapView.setCenter(coords);
+	}
 
 	useEffect(() => {
-		const mapView = new View({
-			center: fromLonLat([mapLonLat.longitude!, mapLonLat.latitude!]),
-			zoom: mapZoomLevel.current,
-		})
 		const map = new Map({
 			target: MAP_ID,
 			layers: [
@@ -375,9 +386,7 @@ export default function ListingCreatePage() {
 									tabIndex={0} />
 							</div>
 							{/* Map error (if any) */}
-							<TextError
-								value="error"
-								dataCy="listing-create-form-address-map-error" />
+							<TextError dataCy="listing-create-form-address-map-error" />
 							{/* TODO: Get Pin Address */}
 							<div className="w-fit">
 								<ButtonOutlined
@@ -389,16 +398,16 @@ export default function ListingCreatePage() {
 							{/* Address longitude */}
 							<input type="hidden"
 								name="addressLongitude"
-								value={mapLonLat.longitude}
+								value={mapLonLat?.longitude}
 								data-cy="listing-create-form-address-longitude" />
 							{/* Address latitude */}
 							<input type="hidden"
 								name="addressLatitude"
-								value={mapLonLat.latitude}
+								value={mapLonLat?.latitude}
 								data-cy="listing-create-form-address-latitude" />
 						</div>
-						{/* TODO: Hidden until user clicks Get Address button */}
-						<div className="space-y-4 md:w-[36rem]">
+						<div className="space-y-4 md:w-[36rem]"
+							hidden={mapLonLat === undefined}>
 							{/* Address Line */}
 							<FormInput
 								label='Address Line'
