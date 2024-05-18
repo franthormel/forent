@@ -1,4 +1,6 @@
-interface GeocodeProvider {
+import { CreateListingFormAddress } from "../types/listing";
+
+export interface GeocodeProvider {
   /**
    * Latitude
    */
@@ -12,4 +14,9 @@ interface GeocodeProvider {
    * Create endpoint for the geocoding provider
    */
   url(): string;
+
+  /**
+   * Fetch address response from the geocoding provider
+   */
+  fetch(): Promise<CreateListingFormAddress>;
 }

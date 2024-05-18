@@ -1,3 +1,6 @@
+import { GeocodeProvider } from ".";
+import { CreateListingFormAddress } from "../types/listing";
+
 /**
  * Reverse Geocode provider using 3Geonames API.
  */
@@ -8,6 +11,42 @@ export class GeonamesProvider implements GeocodeProvider {
   constructor(latitude: number, longitude: number) {
     this.latitude = latitude;
     this.longitude = longitude;
+  }
+
+  async fetch(): Promise<CreateListingFormAddress> {
+    const response: GeonamesResponse = await fetch(this.url()).then((res) =>
+      res.json()
+    );
+    // Address line
+    const addressLine = response.nearest.name ?? "";
+
+    // NOTE: There are two (2) types of responses for 3Geonames for province and city. If {} it is empty otherwise it is string
+
+    // Adrress city
+    let city;
+    const responseCity = response.nearest.city;
+    if (typeof responseCity === "string") {
+      city = responseCity;
+    } else {
+      city = "";
+      console.log("Response for city address is invalid");
+    }
+
+    // Address state
+    let state;
+    const responseState = response.nearest.prov;
+    if (typeof responseState === "string") {
+      state = responseState;
+    } else {
+      state = "";
+      console.log("Response for state address is invalid");
+    }
+
+    return {
+      addressLine: addressLine,
+      city: city,
+      state: state,
+    };
   }
 
   url(): string {
@@ -23,16 +62,16 @@ export interface GeonamesResponse {
 }
 
 interface GeonamesResponseNearest {
-  city: string;
-  distance: string;
-  elevation: string;
-  inlatt: string;
-  inlongt: string;
-  latt: string;
-  longt: string;
-  name: string;
-  prov: string;
-  region: string;
-  state: string;
-  timezone: string;
+  city?: string;
+  distance?: string;
+  elevation?: string;
+  inlatt?: string;
+  inlongt?: string;
+  latt?: string;
+  longt?: string;
+  name?: string;
+  prov?: string;
+  region?: string;
+  state?: string;
+  timezone?: string;
 }

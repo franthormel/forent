@@ -27,7 +27,7 @@ import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import ListingCreateError from "./_components/error";
 import ListingCreateHeader from "./_components/header";
-import { createListingNew } from "./action";
+import { createListingNew, fetchAddresss } from "./action";
 
 export default function ListingCreatePage() {
 	// Form submission (Server)
@@ -35,6 +35,10 @@ export default function ListingCreatePage() {
 		errors: new globalThis.Map()
 	});
 	const hasServerError = formState.errors.size > 0
+
+	const [addressLine, setAddressLine] = useState<string>('')
+	const [addressCity, setAddressCity] = useState<string>('')
+	const [addressState, setAddressState] = useState<string>('')
 
 	// Validation errors (Client)
 	const [priceError, setPriceError] = useState<string | undefined>(undefined);
@@ -387,13 +391,23 @@ export default function ListingCreatePage() {
 							</div>
 							{/* Map error (if any) */}
 							<TextError dataCy="listing-create-form-address-map-error" />
-							{/* TODO: Get Pin Address */}
 							<div className="w-fit">
+								{/* TODO: Show loading state while fetchinga address response */}
 								<ButtonOutlined
 									text="Get Pin Address"
 									size="small"
 									dataCy="listing-create-form-address-button"
-									onClick={() => console.log("TODO: Get address")} />
+									onClick={async () => {
+										// Only if there are coordinates present in the slippy map
+										if (!mapLonLat) {
+											return;
+										}
+
+										const response = await fetchAddresss(mapLonLat.latitude, mapLonLat.longitude);
+										setAddressLine(response.addressLine);
+										setAddressCity(response.city);
+										setAddressState(response.state)
+									}} />
 							</div>
 							{/* Address longitude */}
 							<input type="hidden"
@@ -428,6 +442,7 @@ export default function ListingCreatePage() {
 										setAddressLineError(undefined)
 									}
 								}}
+								value={addressLine}
 								errorMessage={addressLineError}
 								dataCy="listing-create-form-address-line-input"
 								dataCyLabel="listing-create-form-address-line-input-label"
@@ -454,6 +469,7 @@ export default function ListingCreatePage() {
 											setAddressCityError(undefined)
 										}
 									}}
+									value={addressCity}
 									errorMessage={addressCityError}
 									dataCy="listing-create-form-city-input"
 									dataCyLabel="listing-create-form-city-input-label"
@@ -479,6 +495,7 @@ export default function ListingCreatePage() {
 											setAddressStateError(undefined)
 										}
 									}}
+									value={addressState}
 									errorMessage={addressStateError}
 									dataCy="listing-create-form-state-input"
 									dataCyLabel="listing-create-form-state-input-label"
