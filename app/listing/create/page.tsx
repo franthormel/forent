@@ -491,6 +491,7 @@ export default function ListingCreatePage() {
 									label='ZIP Code'
 									name='zipcode'
 									type="text"
+									optional={true}
 									minLength={Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1)}
 									maxLength={Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64)}
 									onChange={(e) => {

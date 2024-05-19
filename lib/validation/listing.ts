@@ -165,7 +165,6 @@ const ADDRESS_ZIP_MAX = Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64);
 const ADDRESS_ZIP_VALIDATOR = z
   .string({
     invalid_type_error: "ZIP code address must be in text format",
-    required_error: "ZIP code address is required",
   })
   .min(ADDRESS_ZIP_MIN, {
     message: `ZIP code address must contain at least ${ADDRESS_ZIP_MIN} character(s)`,
