@@ -9,6 +9,18 @@ import { ValidatorError } from "@/lib/validation";
 import { CreateListingFormValidator } from "@/lib/validation/listing";
 import { ListingCreateFormState } from "./type";
 
+/**
+ * Fetch address using the given coordinates.
+ *
+ * @param latitude Latitude coordinate
+ * @param longitude Longitude coordinate
+ * @returns Address
+ */
+export async function fetchAddresss(latitude: number, longitude: number) {
+  const provider = new GeonamesProvider(latitude, longitude);
+  return await provider.fetch();
+}
+
 // TODO: Rename when done
 export async function createListingNew(
   previousState: ListingCreateFormState,
@@ -89,11 +101,11 @@ export async function createListing(prevState: any, formData: FormData) {
       address: {
         create: {
           addressLine: addressLine,
-          city: address.nearest.city,
-          state: address.nearest.prov,
-          country: address.nearest.state,
-          latitude: address.nearest.latt,
-          longitude: address.nearest.longt,
+          city: address.nearest.city ?? "", // TODO: Remove soon on either #100 or #101
+          state: address.nearest.prov ?? "", // TODO: Remove soon on either #100 or #101
+          country: address.nearest.state ?? "", // TODO: Remove soon on either #100 or #101
+          latitude: address.nearest.latt ?? "", // TODO: Remove soon on either #100 or #101
+          longitude: address.nearest.longt ?? "", // TODO: Remove soon on either #100 or #101
         },
       },
       prices: {

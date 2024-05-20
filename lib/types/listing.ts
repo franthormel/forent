@@ -32,6 +32,12 @@ interface ListingAddress {
   longitude: number;
 }
 
+export interface CreateListingFormAddress {
+  addressLine: string;
+  city: string;
+  state: string;
+}
+
 export interface CreateListingForm {
   price: number;
   description: string;

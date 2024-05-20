@@ -49,6 +49,7 @@ interface FormInputProps {
 	 * Default value
 	 */
 	defaultValue?: number | string
+	value?: string | ReadonlyArray<string> | number
 	onChange?: ChangeEventHandler<HTMLInputElement>
 	/**
 	 * Error message
@@ -82,6 +83,7 @@ export default function FormInput(props: FormInputProps) {
 				minLength={props.minLength}
 				maxLength={props.maxLength}
 				defaultValue={props.defaultValue}
+				value={props.value}
 				onChange={props.onChange}
 				data-cy={props.dataCy ?? "form-input"}
 				className={`${hasError ? 'border-red-600' : 'border-slate-200'} 

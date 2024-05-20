@@ -32,6 +32,7 @@ interface FormInputTextAreaProps {
 	 * Error message
 	 */
 	errorMessage?: string
+	value?: string | ReadonlyArray<string> | number
 	onChange?: ChangeEventHandler<HTMLTextAreaElement>
 	dataCy?: string
 	dataCyLabel?: string
@@ -57,6 +58,7 @@ export default function FormInputTextArea(props: FormInputTextAreaProps) {
 				minLength={props.minLength}
 				maxLength={props.maxLength}
 				onChange={props.onChange}
+				value={props.value}
 				className={`${hasError ? 'border-red-600' : 'border-slate-200'}
 							focus:${hasError && 'outline-none'}
 							mt-2 h-16 w-full rounded-md border-2 px-2 py-1`}

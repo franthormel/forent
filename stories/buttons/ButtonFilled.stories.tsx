@@ -22,3 +22,18 @@ export const Small: Story = {
     size: "small"
   }
 };
+
+export const BaseLoading: Story = {
+  args: {
+    text: "Base",
+    loading: true
+  }
+};
+
+export const SmallLoading: Story = {
+  args: {
+    text: "Small",
+    size: "small",
+    loading: true
+  }
+};

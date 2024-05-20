@@ -40,3 +40,27 @@ export function buttonType(type?: ButtonType): ButtonType {
   }
   return type;
 }
+
+/**
+ * Decide which type of cursor to use depending on the given loading param
+ *
+ * @param loading Loading state
+ * @returns Cursor not allowed if loading or undefined if not loading
+ */
+export function buttonCursor(loading?: boolean) {
+  if (loading) {
+    return "cursor-not-allowed";
+  }
+}
+
+/**
+ * Decide which text to display  to use depending on the given loading param
+ *
+ * @param loading Loading state
+ * @returns Loading if loading or undefined if not
+ */
+export function buttonText(loading?: boolean) {
+  if (loading) {
+    return "Loading...";
+  }
+}
