@@ -128,7 +128,7 @@ export default function ListingCreatePage() {
 		})
 
 		return () => map.dispose()
-	})
+	}, [])
 
 	return (
 		<form action={formAction}>
@@ -438,6 +438,10 @@ export default function ListingCreatePage() {
 								minLength={Number(process.env.LISTING_ADDRESS_LINE_MIN ?? 1)}
 								maxLength={Number(process.env.LISTING_ADDRESS_LINE_MAX ?? 128)}
 								onChange={(e) => {
+									// Change input state variable
+									setAddressLine(e.target.value)
+
+									// Validate input
 									const result = CreateListingFormValidator.validateAddressLine(e.target.value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
@@ -465,6 +469,10 @@ export default function ListingCreatePage() {
 									minLength={Number(process.env.LISTING_ADDRESS_CITY_MIN ?? 1)}
 									maxLength={Number(process.env.LISTING_ADDRESS_CITY_MAX ?? 64)}
 									onChange={(e) => {
+										// Change input
+										setAddressLine(e.target.value)
+
+										// Validated input
 										const result = CreateListingFormValidator.validateAddressCity(e.target.value)
 										if (!result.success) {
 											const error = result.error.errors[0].message
@@ -491,6 +499,10 @@ export default function ListingCreatePage() {
 									minLength={Number(process.env.LISTING_ADDRESS_STATE_MIN ?? 1)}
 									maxLength={Number(process.env.LISTING_ADDRESS_STATE_MAX ?? 64)}
 									onChange={(e) => {
+										// Change input state variable
+										setAddressState(e.target.value);
+										
+										// Validated input
 										const result = CreateListingFormValidator.validateAddressState(e.target.value)
 										if (!result.success) {
 											const error = result.error.errors[0].message
