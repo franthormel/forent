@@ -21,4 +21,8 @@ export interface ButtonProps {
    * Default type is `button`
    */
   type?: ButtonType;
+  /**
+   * Default is `false`. Set to `true` to show loading state and animation.
+   */
+  loading?: boolean;
 }

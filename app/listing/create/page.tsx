@@ -40,6 +40,8 @@ export default function ListingCreatePage() {
 	const [addressCity, setAddressCity] = useState<string>('')
 	const [addressState, setAddressState] = useState<string>('')
 
+	const [fetchingAddress, setFetchingAddress] = useState<boolean>(false);
+
 	// Validation errors (Client)
 	const [priceError, setPriceError] = useState<string | undefined>(undefined);
 	const [descriptionError, setDescriptionError] = useState<string | undefined>(undefined);
@@ -392,10 +394,10 @@ export default function ListingCreatePage() {
 							{/* Map error (if any) */}
 							<TextError dataCy="listing-create-form-address-map-error" />
 							<div className="w-fit">
-								{/* TODO: Show loading state while fetchinga address response */}
 								<ButtonOutlined
 									text="Get Pin Address"
 									size="small"
+									loading={fetchingAddress}
 									dataCy="listing-create-form-address-button"
 									onClick={async () => {
 										// Only if there are coordinates present in the slippy map
@@ -403,10 +405,16 @@ export default function ListingCreatePage() {
 											return;
 										}
 
+										// Show loading state
+										setFetchingAddress(true)
+
 										const response = await fetchAddresss(mapLonLat.latitude, mapLonLat.longitude);
 										setAddressLine(response.addressLine);
 										setAddressCity(response.city);
 										setAddressState(response.state)
+
+										// Remove loading state
+										setFetchingAddress(false)
 									}} />
 							</div>
 							{/* Address longitude */}
