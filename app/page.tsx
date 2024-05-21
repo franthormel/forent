@@ -24,11 +24,6 @@ export default function Home() {
             data-cy="header-main">
             Renting made simple
           </header>
-          <div className='w-5/6 md:max-w-lg'>
-            <Search placeholder='Search for an address'
-              dataCyButtonIcon='search-address-btn-icon'
-              dataCyInput='search-address-input' />
-          </div>
         </div>
       </div>
       <div className='place-self-center'>
