@@ -1,30 +1,18 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import type {
   GetServerSidePropsContext,
   NextApiRequest,
   NextApiResponse,
 } from "next";
-import type { NextAuthOptions, SessionStrategy } from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "./db";
 
-/**
- * The JWT strategy is for dev or CI environments.
- * The database strategy is for production environment.
- */
-export function decideSessionStrategy(): SessionStrategy {
-  if (process.env.ENVIRONMENT === "production") {
-    return "database";
-  }
-  return "jwt";
-}
-
 export const authOptions = {
   session: {
-    strategy: decideSessionStrategy(),
+    strategy: "jwt",
   },
   adapter: PrismaAdapter(prisma),
   providers: [
