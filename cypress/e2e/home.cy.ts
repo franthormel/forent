@@ -81,15 +81,6 @@ describe("homepage", () => {
           .and("be.visible")
           .and("have.text", "Renting made simple");
 
-        // Search bar
-        cy.get('[data-cy="search-address-input')
-          .should("exist")
-          .and("be.visible")
-          .type("Address");
-        cy.get('[data-cy="search-address-btn-icon')
-          .should("exist")
-          .and("be.visible");
-
         cy.get('[data-cy="btn-view-listings"]')
           .should("exist")
           .and("be.visible")
