@@ -4,6 +4,118 @@ Apartment rental clone website.
 
 [![Test](https://github.com/franthormel/forent/actions/workflows/test.yml/badge.svg)](https://github.com/franthormel/forent/actions/workflows/test.yml)
 
+## Setup
+
+### Requirements:
+
+1. Node.js (preferably thel latest version)
+2. PostgreSQL (preferably thel latest version also)
+
+### Developer Environment:
+
+Run the following commands:
+
+1. Install packages `npm ci`
+2. Seed database `npx prisma db seed`'
+3. Run it `npm run dev`
+
+### Deployment
+
+This project is automatically deployed to Vercel:
+1. [Managed Next.js with Vercel](https://nextjs.org/docs/pages/building-your-application/deploying#managed-nextjs-with-vercel)
+2. [Next.js on Vercel](https://vercel.com/docs/frameworks/nextjs)
+
+Check [Next.js deployment documentation site](https://nextjs.org/docs/pages/building-your-application/deploying) for further details.
+
+### Environment Variables
+
+Provide the following values also:
+- For developer environment, use a `.env` file
+- For the Vercel environment, check [this guide](https://vercel.com/docs/projects/environment-variables).
+
+```
+# Check following guides for each variable
+
+# https://www.prisma.io/docs/orm/reference/connection-urls
+# https://www.prisma.io/dataguide/postgresql/short-guides/connection-uris
+DATABASE_URL=
+
+# https://next-auth.js.org/configuration/options#nextauth_secret
+NEXTAUTH_SECRET=
+
+# https://next-auth.js.org/configuration/options#nextauth_url
+NEXTAUTH_URL=
+
+# https://next-auth.js.org/providers/email
+# https://next-auth.js.org/providers/email#smtp
+EMAIL_SERVER_HOST=
+EMAIL_SERVER_PORT=
+EMAIL_SERVER_USER=
+EMAIL_SERVER_PASSWORD=
+EMAIL_FROM=
+
+# https://next-auth.js.org/providers/google
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REFRESH_TOKEN=
+
+# https://www.chromatic.com/docs/storybook/#set-up-chromatic-cli-for-storybook
+CHROMATIC_PROJECT_TOKEN=
+
+# The following variables can be further customized
+# However, ensure that the changes integrate well
+
+# Reverse geocoding
+GEOCODE_URL_GEONAMES="http://api.3geonames.org/lat,lon.json"
+
+# Listing image dimensions
+LISTING_CARD_PHOTO_WIDTH=300
+LISTING_CARD_PHOTO_HEIGHT=300
+
+LISTING_COVER_PHOTO_WIDTH=800
+LISTING_COVER_PHOTO_HEIGHT=600
+
+LISTING_FULL_PHOTO_WIDTH=1600
+LISTING_FULL_PHOTO_HEIGHT=900
+
+# Listing min-max values
+LISTING_PRICE_MIN=100
+LISTING_PRICE_MAX=100_000_000
+
+LISTING_DEPOSIT_MIN=0
+LISTING_DEPOSIT_MAX=1_000_000
+
+LISTING_DESC_MIN=16
+LISTING_DESC_MAX=1024
+
+LISTING_BEDS_MIN=1
+LISTING_BEDS_MAX=750
+
+LISTING_BATHS_MIN=1
+LISTING_BATHS_MAX=250
+
+LISTING_AREA_MIN=10
+LISTING_AREA_MAX=1_000_000
+
+LISTING_ADDRESS_LINE_MIN=1
+LISTING_ADDRESS_LINE_MAX=128
+
+LISTING_ADDRESS_CITY_MIN=1
+LISTING_ADDRESS_CITY_MAX=64
+
+LISTING_ADDRESS_STATE_MIN=1
+LISTING_ADDRESS_STATE_MAX=64
+
+LISTING_ADDRESS_ZIP_MIN=1
+LISTING_ADDRESS_ZIP_MAX=64
+
+LISTING_ADDRESS_LON_MIN =180
+LISTING_ADDRESS_LON_MAX=180
+
+LISTING_ADDRESS_LAT_MIN =90
+LISTING_ADDRESS_LAT_MAX=90
+```
+
 ## Why this was created 👷‍♂️
 
 Wanted to try all the technologies listed below.
