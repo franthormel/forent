@@ -21,10 +21,6 @@ Run the following commands:
 
 ### Deployment
 
-This project is automatically deployed to Vercel:
-1. [Managed Next.js with Vercel](https://nextjs.org/docs/pages/building-your-application/deploying#managed-nextjs-with-vercel)
-2. [Next.js on Vercel](https://vercel.com/docs/frameworks/nextjs)
-
 Check [Next.js deployment documentation site](https://nextjs.org/docs/pages/building-your-application/deploying) for further details.
 
 ### Environment Variables
