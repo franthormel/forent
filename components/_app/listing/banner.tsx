@@ -1,4 +1,4 @@
-import ListingBannerPhotos from "@/app/listing/[id]/_component/banner-photos";
+import ListingBannerPhotos from "@/components/_app/listing/banner-photos";
 import ButtonLinkOutlined from "@/components/button-links/outlined";
 import { StringUtils } from "@/lib/commons/string_utils";
 
