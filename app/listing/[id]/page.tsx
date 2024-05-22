@@ -1,4 +1,4 @@
-import PageLayout from "@/app/_component/page-layout";
+import PageLayout from "@/components/_app/page-layout";
 import prisma from "@/lib/db";
 import ListingBanner from "./_component/banner";
 import ListingContact from "./_component/contact";
@@ -20,6 +20,7 @@ export default async function ListingPage({ params }: { params: { id: string } }
     const currentPrice = listing.prices.filter((p) => p.isCurrent).at(0)!.value;
 
     return (
+        // TODO: Convert this into another component so it can be reused in the Preview page
         <PageLayout>
             {/* Photos & main information */}
             <div className="grid auto-rows-auto gap-y-11">

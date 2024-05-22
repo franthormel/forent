@@ -1,6 +1,6 @@
 "use client"
 
-import PageLayout from "@/app/_component/page-layout";
+import PageLayout from "@/components/_app/page-layout";
 import ButtonFilled from "@/components/buttons/filled";
 import ButtonOutlined from "@/components/buttons/outlined";
 import ButtonText from "@/components/buttons/text";
