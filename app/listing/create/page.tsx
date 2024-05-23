@@ -501,7 +501,7 @@ export default function ListingCreatePage() {
 									onChange={(e) => {
 										// Change input state variable
 										setAddressState(e.target.value);
-										
+
 										// Validated input
 										const result = CreateListingFormValidator.validateAddressState(e.target.value)
 										if (!result.success) {
@@ -558,7 +558,16 @@ export default function ListingCreatePage() {
 						dataCy="listing-create-reset-btn" />
 					<ButtonText
 						text="Preview"
-						dataCy="listing-create-preview-btn" />
+						dataCy="listing-create-preview-btn"
+						onClick={() => {
+							// TODO: Validate form data
+
+							// TODO: Only authenticated users must be preview
+
+							// TODO: Prepare form data
+
+							// TODO: Show Listing component inside a modal
+						}} />
 					<ButtonFilled
 						text="Create"
 						dataCy="listing-create-submit-btn"

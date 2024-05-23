@@ -1,4 +1,4 @@
-import ListingDescription from "@/app/listing/[id]/_component/description";
+import ListingDescription from "@/components/_app/listing/description";
 
 describe('Listing Description', () => {
     it("should display correct UI", () => {
