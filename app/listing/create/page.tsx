@@ -27,7 +27,7 @@ import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import ListingCreateError from "./_components/error";
 import ListingCreateHeader from "./_components/header";
-import { createListingNew, fetchAddresss } from "./action";
+import { createListingNew, fetchAddresss, isUserAuthenticated } from "./action";
 
 export default function ListingCreatePage() {
 	// Form submission (Server)
@@ -36,9 +36,18 @@ export default function ListingCreatePage() {
 	});
 	const hasServerError = formState.errors.size > 0
 
+	// Form 
+	// TODO: Get price value from form
+	// TODO: Get deposit value from form
+	// TODO: Get description value from form
+	// TODO: Get no. of beds value from form
+	// TODO: Get no. of baths value from form
+	// TODO: Get area (sqm) value from form
+	// TODO: Get available date value from form
 	const [addressLine, setAddressLine] = useState<string>('')
 	const [addressCity, setAddressCity] = useState<string>('')
 	const [addressState, setAddressState] = useState<string>('')
+	// TODO: Get address zip value from form
 
 	const [fetchingAddress, setFetchingAddress] = useState<boolean>(false);
 
@@ -559,12 +568,16 @@ export default function ListingCreatePage() {
 					<ButtonText
 						text="Preview"
 						dataCy="listing-create-preview-btn"
-						onClick={() => {
-							// TODO: Validate form data
+						onClick={async () => {
+							const isAuthenticated = await isUserAuthenticated();
 
-							// TODO: Only authenticated users must be preview
+							if (!isAuthenticated) {
+								return;
+							}
 
 							// TODO: Prepare form data
+
+							// TODO: Validate form data
 
 							// TODO: Show Listing component inside a modal
 						}} />

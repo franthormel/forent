@@ -173,6 +173,24 @@ const ADDRESS_ZIP_VALIDATOR = z
     message: `ZIP code address must not exceed ${ADDRESS_ZIP_MAX} characters`,
   });
 
+const validator = z.object({
+  price: PRICE_VALIDATOR,
+  deposit: DEPOSIT_VALIDATOR,
+  description: DESCRIPTION_VALIDATOR,
+  beds: BEDS_VALIDATOR,
+  baths: BATHS_VALIDATOR,
+  area: AREA_VALIDATOR,
+  availableDate: z.date(),
+  longitude: z
+    .number()
+    .min(Number(process.env.LISTING_ADDRESS_LON_MIN ?? -180))
+    .max(Number(process.env.LISTING_ADDRESS_LON_MAX ?? 180)),
+  latitude: z
+    .number()
+    .min(Number(process.env.LISTING_ADDRESS_LAT_MIN ?? -90))
+    .max(Number(process.env.LISTING_ADDRESS_LAT_MAX ?? 90)),
+});
+
 export class CreateListingFormValidator
   implements Validator<CreateListingForm>
 {
@@ -320,6 +338,10 @@ export class CreateListingFormValidator
    */
   static validateAddressZip(zipCode: string) {
     return ADDRESS_ZIP_VALIDATOR.safeParse(zipCode);
+  }
+
+  previewValidate() {
+    
   }
 
   /**

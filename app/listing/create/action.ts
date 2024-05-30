@@ -10,6 +10,19 @@ import { CreateListingFormValidator } from "@/lib/validation/listing";
 import { ListingCreateFormState } from "./type";
 
 /**
+ * Checks if user is logged in.
+ * 
+ * @returns true if user is logged in, otherwise false.
+ */
+export async function isUserAuthenticated() {
+  const user = await getSessionUser();
+  if (user) {
+    return true;
+  }
+  return false;
+}
+
+/**
  * Fetch address using the given coordinates.
  *
  * @param latitude Latitude coordinate
