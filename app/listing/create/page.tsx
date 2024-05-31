@@ -12,6 +12,7 @@ import TextError from "@/components/text/error";
 import { DateUtils } from "@/lib/commons/date_utils";
 import { NumberUtils } from "@/lib/commons/number_utils";
 import { LonLat } from "@/lib/types/geography";
+import { PreviewListingForm } from "@/lib/types/listing";
 import { CreateListingFormValidator } from "@/lib/validation/listing";
 import pinIcon from "@/public/icons/home_pin.svg";
 import { Feature, Map, View } from "ol";
@@ -36,18 +37,20 @@ export default function ListingCreatePage() {
 	});
 	const hasServerError = formState.errors.size > 0
 
-	// Form 
-	// TODO: Get price value from form
-	// TODO: Get deposit value from form
-	// TODO: Get description value from form
-	// TODO: Get no. of beds value from form
-	// TODO: Get no. of baths value from form
-	// TODO: Get area (sqm) value from form
-	// TODO: Get available date value from form
+	// Form
+	const priceRef = useRef<number>()
+	const depositRef = useRef<number>()
+	const descriptionRef = useRef<string>()
+	const bedsRef = useRef<number>()
+	const bathsRef = useRef<number>()
+	const areaRef = useRef<number>()
+	const availableDateRef = useRef<string>()
+	const addressLongitudeRef = useRef<number>()
+	const addressLatitudeRef = useRef<number>()
 	const [addressLine, setAddressLine] = useState<string>('')
 	const [addressCity, setAddressCity] = useState<string>('')
 	const [addressState, setAddressState] = useState<string>('')
-	// TODO: Get address zip value from form
+	const addressZipcodeRef = useRef<string>()
 
 	const [fetchingAddress, setFetchingAddress] = useState<boolean>(false);
 
@@ -178,6 +181,9 @@ export default function ListingCreatePage() {
 								max={Number(process.env.LISTING_PRICE_MAX ?? 100_000_000)}
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
+
+									priceRef.current = value;
+
 									const result = CreateListingFormValidator.validatePrice(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
@@ -205,6 +211,9 @@ export default function ListingCreatePage() {
 								max={Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)}
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
+
+									depositRef.current = value;
+
 									const result = CreateListingFormValidator.validateDeposit(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
@@ -231,7 +240,11 @@ export default function ListingCreatePage() {
 								minLength={Number(process.env.LISTING_DESC_MIN ?? 16)}
 								maxLength={Number(process.env.LISTING_DESC_MAX ?? 1024)}
 								onChange={(e) => {
-									const result = CreateListingFormValidator.validateDescription(e.target.value);
+									const value = e.target.value;
+
+									descriptionRef.current = value;
+
+									const result = CreateListingFormValidator.validateDescription(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
 										// Only change into a new error message
@@ -259,6 +272,9 @@ export default function ListingCreatePage() {
 								max={Number(process.env.LISTING_BEDS_MAX ?? 750)}
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
+
+									bedsRef.current = value;
+
 									const result = CreateListingFormValidator.validateBeds(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
@@ -285,6 +301,9 @@ export default function ListingCreatePage() {
 								max={Number(process.env.LISTING_BATHS_MAX ?? 250)}
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
+
+									bathsRef.current = value;
+
 									const result = CreateListingFormValidator.validateBaths(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
@@ -312,6 +331,9 @@ export default function ListingCreatePage() {
 								max={Number(process.env.LISTING_AREA_MAX ?? 1_000_000)}
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
+
+									areaRef.current = value;
+
 									const result = CreateListingFormValidator.validateArea(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
@@ -342,8 +364,11 @@ export default function ListingCreatePage() {
 									max={oneYearFromToday}
 									defaultValue={today}
 									onChange={(e) => {
-										const inputDate = e.target.value;
-										const result = CreateListingFormValidator.validateAvailableDate(inputDate, todayDate, oneYearFromTodayDate);
+										const value = e.target.value;
+
+										availableDateRef.current = value;
+
+										const result = CreateListingFormValidator.validateAvailableDate(value, todayDate, oneYearFromTodayDate);
 										if (!result.success) {
 											const error = result.error.errors[0].message
 											// Only change into a new error message
@@ -430,12 +455,22 @@ export default function ListingCreatePage() {
 							<input type="hidden"
 								name="addressLongitude"
 								value={mapLonLat?.longitude}
-								data-cy="listing-create-form-address-longitude" />
+								data-cy="listing-create-form-address-longitude"
+								onChange={(e) => {
+									// NOTE: Longitude is -180, ..., 180
+									const value = NumberUtils.toNumber(e.target.value, 200)
+									addressLongitudeRef.current = value
+								}} />
 							{/* Address latitude */}
 							<input type="hidden"
 								name="addressLatitude"
 								value={mapLonLat?.latitude}
-								data-cy="listing-create-form-address-latitude" />
+								data-cy="listing-create-form-address-latitude"
+								onChange={(e) => {
+									// NOTE: Longitude is -90, ..., 90
+									const value = NumberUtils.toNumber(e.target.value, 100)
+									addressLatitudeRef.current = value
+								}} />
 						</div>
 						<div className="space-y-4 md:w-[36rem]"
 							hidden={mapLonLat === undefined}>
@@ -541,7 +576,11 @@ export default function ListingCreatePage() {
 									minLength={Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1)}
 									maxLength={Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64)}
 									onChange={(e) => {
-										const result = CreateListingFormValidator.validateAddressZip(e.target.value)
+										const value = e.target.value;
+
+										addressZipcodeRef.current = value;
+
+										const result = CreateListingFormValidator.validateAddressZip(value);
 										if (!result.success) {
 											const error = result.error.errors[0].message
 											// Only change into a new error message
@@ -569,13 +608,32 @@ export default function ListingCreatePage() {
 						text="Preview"
 						dataCy="listing-create-preview-btn"
 						onClick={async () => {
+							// Only authenticated users can preview
 							const isAuthenticated = await isUserAuthenticated();
 
 							if (!isAuthenticated) {
 								return;
 							}
 
-							// TODO: Prepare form data
+							// NOTE: Prepare form data
+							const previewListingData: PreviewListingForm = {
+								price: priceRef.current,
+								deposit: depositRef.current,
+								description: descriptionRef.current,
+								beds: bedsRef.current,
+								baths: bathsRef.current,
+								area: areaRef.current,
+								availableDate: availableDateRef.current,
+								addressLongitude: addressLongitudeRef.current,
+								addressLatitude: addressLatitudeRef.current,
+								addressLine: addressLine,
+								addressCity: addressCity,
+								addressState: addressState,
+								addressZipcode: addressZipcodeRef.current,
+							}
+
+							// TODO: Remove
+							console.log("Preview data", previewListingData);
 
 							// TODO: Validate form data
 

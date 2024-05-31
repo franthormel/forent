@@ -49,3 +49,19 @@ export interface CreateListingForm {
   latitude: number;
   area: number;
 }
+
+export interface PreviewListingForm {
+  price?: number;
+  deposit?: number;
+  description?: string;
+  beds?: number;
+  baths?: number;
+  area?: number;
+  availableDate?: string;
+  addressLongitude?: number;
+  addressLatitude?: number;
+  addressLine?: string;
+  addressCity?: string;
+  addressState?: string;
+  addressZipcode?: string;
+}
