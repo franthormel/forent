@@ -25,7 +25,6 @@ export interface ListingProps {
     longitude: number
 }
 
-// TODO: Story
 export default function Listing(props: ListingProps) {
     return <PageLayout>
         {/* Photos & main information */}

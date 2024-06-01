@@ -2,10 +2,6 @@
  * Validator
  */
 export interface Validator<T> {
-  /**
-   * Error messages
-   */
-  readonly errorMessages: Map<string, string>;
 
   /**
    * Object to be validated

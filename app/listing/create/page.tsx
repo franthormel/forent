@@ -12,8 +12,9 @@ import TextError from "@/components/text/error";
 import { DateUtils } from "@/lib/commons/date_utils";
 import { NumberUtils } from "@/lib/commons/number_utils";
 import { LonLat } from "@/lib/types/geography";
-import { PreviewListingForm } from "@/lib/types/listing";
-import { CreateListingFormValidator } from "@/lib/validation/listing";
+import { ListingPreviewForm } from "@/lib/types/listing";
+import { ListingFormValidator } from "@/lib/validation/listing";
+import { ListingPreviewFormValidator } from "@/lib/validation/listing/preview";
 import pinIcon from "@/public/icons/home_pin.svg";
 import { Feature, Map, View } from "ol";
 import { defaults } from "ol/control";
@@ -24,11 +25,23 @@ import { fromLonLat, toLonLat } from "ol/proj";
 import OSM from "ol/source/OSM";
 import VectorSource from "ol/source/Vector";
 import { Icon, Style } from "ol/style";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import ListingCreateError from "./_components/error";
 import ListingCreateHeader from "./_components/header";
 import { createListingNew, fetchAddresss, isUserAuthenticated } from "./action";
+
+/**
+ * Remove any error message
+ * 
+ * @param value Error message state value
+ * @param setStateAction Set state function
+ */
+function removeAnyErrorMessage(value: string | undefined, setStateAction: Dispatch<SetStateAction<string | undefined>>) {
+	if (value !== undefined && value.length > 0) {
+		setStateAction(undefined);
+	}
+}
 
 export default function ListingCreatePage() {
 	// Form submission (Server)
@@ -37,35 +50,36 @@ export default function ListingCreatePage() {
 	});
 	const hasServerError = formState.errors.size > 0
 
-	// Form
-	const priceRef = useRef<number>()
-	const depositRef = useRef<number>()
-	const descriptionRef = useRef<string>()
-	const bedsRef = useRef<number>()
-	const bathsRef = useRef<number>()
-	const areaRef = useRef<number>()
-	const availableDateRef = useRef<string>()
-	const addressLongitudeRef = useRef<number>()
-	const addressLatitudeRef = useRef<number>()
+	// Form values
+	const priceValueRef = useRef<number>()
+	const depositValueRef = useRef<number>()
+	const descriptionValueRef = useRef<string>()
+	const bedsValueRef = useRef<number>()
+	const bathsValueRef = useRef<number>()
+	const areaValueRef = useRef<number>()
+	const availableDateValueRef = useRef<string>()
 	const [addressLine, setAddressLine] = useState<string>('')
 	const [addressCity, setAddressCity] = useState<string>('')
 	const [addressState, setAddressState] = useState<string>('')
-	const addressZipcodeRef = useRef<string>()
+	const addressZipcodeValueRef = useRef<string>()
 
+	// Loading states
 	const [fetchingAddress, setFetchingAddress] = useState<boolean>(false);
 
 	// Validation errors (Client)
-	const [priceError, setPriceError] = useState<string | undefined>(undefined);
-	const [descriptionError, setDescriptionError] = useState<string | undefined>(undefined);
-	const [depositError, setDepositError] = useState<string | undefined>(undefined);
-	const [bedsError, setBedsError] = useState<string | undefined>(undefined);
-	const [bathsError, setBathsError] = useState<string | undefined>(undefined);
-	const [areaError, setAreaError] = useState<string | undefined>(undefined);
-	const [availableDateError, setAvailableDateError] = useState<string | undefined>(undefined);
-	const [addressLineError, setAddressLineError] = useState<string | undefined>(undefined);
-	const [addressCityError, setAddressCityError] = useState<string | undefined>(undefined);
-	const [addressStateError, setAddressStateError] = useState<string | undefined>(undefined);
-	const [addressZipcodeError, setAddressZipcodeError] = useState<string | undefined>(undefined);
+	const [priceInputError, setPriceInputError] = useState<string | undefined>(undefined);
+	const [descriptionInputError, setDescriptionInputError] = useState<string | undefined>(undefined);
+	const [depositInputError, setDepositInputError] = useState<string | undefined>(undefined);
+	const [bedsInputError, setBedsInputError] = useState<string | undefined>(undefined);
+	const [bathsInputError, setBathsInputError] = useState<string | undefined>(undefined);
+	const [areaInputError, setAreaInputError] = useState<string | undefined>(undefined);
+	const [availableDateInputError, setAvailableDateInputError] = useState<string | undefined>(undefined);
+	// Used by slippy map 
+	const [addressInputError, setAddressInputError] = useState<string | undefined>(undefined);
+	const [addressLineInputError, setAddressLineInputError] = useState<string | undefined>(undefined);
+	const [addressCityInputError, setAddressCityInputError] = useState<string | undefined>(undefined);
+	const [addressStateInputError, setAddressStateInputError] = useState<string | undefined>(undefined);
+	const [addressZipcodeInputError, setAddressZipcodeInputError] = useState<string | undefined>(undefined);
 
 	const todayDate = new Date();
 	const today = DateUtils.formatDate(todayDate)
@@ -73,12 +87,10 @@ export default function ListingCreatePage() {
 	const oneYearFromToday = DateUtils.formatDate(oneYearFromTodayDate)
 
 	// Map related
-	const MAP_ZOOM_LVL = 2;
 	const MAP_PRELOAD = 4
 	const MAP_ID = "listing-create-form-address-map";
 
 	const [mapLonLat, setMapLonLat] = useState<LonLat | undefined>(undefined)
-	const mapZoomLevel = useRef<number>(MAP_ZOOM_LVL)
 
 	// Map icon
 	const mapIconStyle = new Style({
@@ -94,7 +106,7 @@ export default function ListingCreatePage() {
 	// Map view
 	const mapView = new View({
 		center: fromLonLat([0, 0]),
-		zoom: mapZoomLevel.current,
+		zoom: 2,
 	})
 
 	// Only switch views when position has changed
@@ -123,13 +135,8 @@ export default function ListingCreatePage() {
 		})
 		map.on("singleclick", (e) => {
 			// Change displayed icon's position
-			mapPositionFeature.setGeometry(new Point(e.coordinate))
-
-			// Retain map zoom level between renders
-			const currentMapZoom = map.getView().getZoom()
-			if (currentMapZoom) {
-				mapZoomLevel.current = currentMapZoom;
-			}
+			const point = new Point(e.coordinate);
+			mapPositionFeature.setGeometry(point)
 
 			// Change hidden input field values
 			const newLonLat = toLonLat(e.coordinate)
@@ -182,21 +189,21 @@ export default function ListingCreatePage() {
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
 
-									priceRef.current = value;
+									priceValueRef.current = value;
 
-									const result = CreateListingFormValidator.validatePrice(value);
+									const result = ListingFormValidator.validatePrice(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
 										// Only change into a new error message
-										if (priceError !== error) {
-											setPriceError(error);
+										if (priceInputError !== error) {
+											setPriceInputError(error);
 										}
 										// Only remove previous error message
-									} else if (result.success && priceError !== undefined) {
-										setPriceError(undefined)
+									} else if (result.success && priceInputError !== undefined) {
+										setPriceInputError(undefined)
 									}
 								}}
-								errorMessage={priceError}
+								errorMessage={priceInputError}
 								dataCy="listing-create-form-price-input"
 								dataCyLabel="listing-create-form-price-input-label"
 								dataCyOptional="listing-create-form-price-input-optional"
@@ -212,21 +219,21 @@ export default function ListingCreatePage() {
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
 
-									depositRef.current = value;
+									depositValueRef.current = value;
 
-									const result = CreateListingFormValidator.validateDeposit(value);
+									const result = ListingFormValidator.validateDeposit(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
 										// Only change into a new error message
-										if (depositError !== error) {
-											setDepositError(error);
+										if (depositInputError !== error) {
+											setDepositInputError(error);
 										}
 										// Only remove previous error message
-									} else if (result.success && depositError !== undefined) {
-										setDepositError(undefined)
+									} else if (result.success && depositInputError !== undefined) {
+										setDepositInputError(undefined)
 									}
 								}}
-								errorMessage={depositError}
+								errorMessage={depositInputError}
 								dataCy="listing-create-form-deposit-input"
 								dataCyLabel="listing-create-form-deposit-input-label"
 								dataCyOptional="listing-create-form-deposit-input-optional"
@@ -242,21 +249,21 @@ export default function ListingCreatePage() {
 								onChange={(e) => {
 									const value = e.target.value;
 
-									descriptionRef.current = value;
+									descriptionValueRef.current = value;
 
-									const result = CreateListingFormValidator.validateDescription(value);
+									const result = ListingFormValidator.validateDescription(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
 										// Only change into a new error message
-										if (descriptionError !== error) {
-											setDescriptionError(error);
+										if (descriptionInputError !== error) {
+											setDescriptionInputError(error);
 										}
 										// Only remove previous error message
-									} else if (result.success && descriptionError !== undefined) {
-										setDescriptionError(undefined)
+									} else if (result.success && descriptionInputError !== undefined) {
+										setDescriptionInputError(undefined)
 									}
 								}}
-								errorMessage={descriptionError}
+								errorMessage={descriptionInputError}
 								dataCy="listing-create-form-description-input-textarea"
 								dataCyLabel="listing-create-form-description-input-textarea-label"
 								dataCyOptional="listing-create-form-description-input-textarea-optional"
@@ -273,21 +280,21 @@ export default function ListingCreatePage() {
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
 
-									bedsRef.current = value;
+									bedsValueRef.current = value;
 
-									const result = CreateListingFormValidator.validateBeds(value);
+									const result = ListingFormValidator.validateBeds(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
 										// Only change into a new error message
-										if (bedsError !== error) {
-											setBedsError(error);
+										if (bedsInputError !== error) {
+											setBedsInputError(error);
 										}
 										// Only remove previous error message
-									} else if (result.success && bedsError !== undefined) {
-										setBedsError(undefined)
+									} else if (result.success && bedsInputError !== undefined) {
+										setBedsInputError(undefined)
 									}
 								}}
-								errorMessage={bedsError}
+								errorMessage={bedsInputError}
 								dataCy="listing-create-form-beds-input"
 								dataCyLabel="listing-create-form-beds-input-label"
 								dataCyOptional="listing-create-form-beds-input-optional"
@@ -302,21 +309,21 @@ export default function ListingCreatePage() {
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
 
-									bathsRef.current = value;
+									bathsValueRef.current = value;
 
-									const result = CreateListingFormValidator.validateBaths(value);
+									const result = ListingFormValidator.validateBaths(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
 										// Only change into a new error message
-										if (bathsError !== error) {
-											setBathsError(error);
+										if (bathsInputError !== error) {
+											setBathsInputError(error);
 										}
 										// Only remove previous error message
-									} else if (result.success && bathsError !== undefined) {
-										setBathsError(undefined)
+									} else if (result.success && bathsInputError !== undefined) {
+										setBathsInputError(undefined)
 									}
 								}}
-								errorMessage={bathsError}
+								errorMessage={bathsInputError}
 								dataCy="listing-create-form-baths-input"
 								dataCyLabel="listing-create-form-baths-input-label"
 								dataCyOptional="listing-create-form-baths-input-optional"
@@ -332,21 +339,21 @@ export default function ListingCreatePage() {
 								onChange={(e) => {
 									const value = NumberUtils.toNumber(e.target.value, -1);
 
-									areaRef.current = value;
+									areaValueRef.current = value;
 
-									const result = CreateListingFormValidator.validateArea(value);
+									const result = ListingFormValidator.validateArea(value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
 										// Only change into a new error message
-										if (areaError !== error) {
-											setAreaError(error);
+										if (areaInputError !== error) {
+											setAreaInputError(error);
 										}
 										// Only remove previous error message
-									} else if (result.success && areaError !== undefined) {
-										setAreaError(undefined)
+									} else if (result.success && areaInputError !== undefined) {
+										setAreaInputError(undefined)
 									}
 								}}
-								errorMessage={areaError}
+								errorMessage={areaInputError}
 								dataCy="listing-create-form-area-input"
 								dataCyLabel="listing-create-form-area-input-label"
 								dataCyOptional="listing-create-form-area-input-optional"
@@ -366,21 +373,21 @@ export default function ListingCreatePage() {
 									onChange={(e) => {
 										const value = e.target.value;
 
-										availableDateRef.current = value;
+										availableDateValueRef.current = value;
 
-										const result = CreateListingFormValidator.validateAvailableDate(value, todayDate, oneYearFromTodayDate);
+										const result = ListingFormValidator.validateAvailableDate(value, todayDate, oneYearFromTodayDate);
 										if (!result.success) {
 											const error = result.error.errors[0].message
 											// Only change into a new error message
-											if (availableDateError !== error) {
-												setAvailableDateError(error);
+											if (availableDateInputError !== error) {
+												setAvailableDateInputError(error);
 											}
 											// Only remove previous error message
-										} else if (result.success && availableDateError !== undefined) {
-											setAvailableDateError(undefined)
+										} else if (result.success && availableDateInputError !== undefined) {
+											setAvailableDateInputError(undefined)
 										}
 									}}
-									errorMessage={availableDateError}
+									errorMessage={availableDateInputError}
 									dataCy="listing-create-form-available-date-input"
 									dataCyLabel="listing-create-form-available-date-input-label"
 									dataCyOptional="listing-create-form-available-date-input-optional"
@@ -426,7 +433,7 @@ export default function ListingCreatePage() {
 									tabIndex={0} />
 							</div>
 							{/* Map error (if any) */}
-							<TextError dataCy="listing-create-form-address-map-error" />
+							<TextError dataCy="listing-create-form-address-map-error" value={addressInputError} />
 							<div className="w-fit">
 								<ButtonOutlined
 									text="Get Pin Address"
@@ -442,35 +449,30 @@ export default function ListingCreatePage() {
 										// Show loading state
 										setFetchingAddress(true)
 
+										// Fetch data from reverse geocoding provider and ...
 										const response = await fetchAddresss(mapLonLat.latitude, mapLonLat.longitude);
+										// ... display returned values
 										setAddressLine(response.addressLine);
 										setAddressCity(response.city);
 										setAddressState(response.state)
 
 										// Remove loading state
 										setFetchingAddress(false)
+
+										// Hide any address input error
+										removeAnyErrorMessage(addressInputError, setAddressInputError);
 									}} />
 							</div>
 							{/* Address longitude */}
 							<input type="hidden"
 								name="addressLongitude"
 								value={mapLonLat?.longitude}
-								data-cy="listing-create-form-address-longitude"
-								onChange={(e) => {
-									// NOTE: Longitude is -180, ..., 180
-									const value = NumberUtils.toNumber(e.target.value, 200)
-									addressLongitudeRef.current = value
-								}} />
+								data-cy="listing-create-form-address-longitude" />
 							{/* Address latitude */}
 							<input type="hidden"
 								name="addressLatitude"
 								value={mapLonLat?.latitude}
-								data-cy="listing-create-form-address-latitude"
-								onChange={(e) => {
-									// NOTE: Longitude is -90, ..., 90
-									const value = NumberUtils.toNumber(e.target.value, 100)
-									addressLatitudeRef.current = value
-								}} />
+								data-cy="listing-create-form-address-latitude" />
 						</div>
 						<div className="space-y-4 md:w-[36rem]"
 							hidden={mapLonLat === undefined}>
@@ -486,20 +488,20 @@ export default function ListingCreatePage() {
 									setAddressLine(e.target.value)
 
 									// Validate input
-									const result = CreateListingFormValidator.validateAddressLine(e.target.value);
+									const result = ListingFormValidator.validateAddressLine(e.target.value);
 									if (!result.success) {
 										const error = result.error.errors[0].message
 										// Only change into a new error message
-										if (addressLineError !== error) {
-											setAddressLineError(error);
+										if (addressLineInputError !== error) {
+											setAddressLineInputError(error);
 										}
 										// Only remove previous error message
-									} else if (result.success && addressLineError !== undefined) {
-										setAddressLineError(undefined)
+									} else if (result.success && addressLineInputError !== undefined) {
+										setAddressLineInputError(undefined)
 									}
 								}}
 								value={addressLine}
-								errorMessage={addressLineError}
+								errorMessage={addressLineInputError}
 								dataCy="listing-create-form-address-line-input"
 								dataCyLabel="listing-create-form-address-line-input-label"
 								dataCyOptional="listing-create-form-address-line-input-optional"
@@ -514,23 +516,23 @@ export default function ListingCreatePage() {
 									maxLength={Number(process.env.LISTING_ADDRESS_CITY_MAX ?? 64)}
 									onChange={(e) => {
 										// Change input
-										setAddressLine(e.target.value)
+										setAddressCity(e.target.value)
 
 										// Validated input
-										const result = CreateListingFormValidator.validateAddressCity(e.target.value)
+										const result = ListingFormValidator.validateAddressCity(e.target.value)
 										if (!result.success) {
 											const error = result.error.errors[0].message
 											// Only change into a new error message
-											if (addressCityError !== error) {
-												setAddressCityError(error);
+											if (addressCityInputError !== error) {
+												setAddressCityInputError(error);
 											}
 											// Only remove previous error message
-										} else if (result.success && addressCityError !== undefined) {
-											setAddressCityError(undefined)
+										} else if (result.success && addressCityInputError !== undefined) {
+											setAddressCityInputError(undefined)
 										}
 									}}
 									value={addressCity}
-									errorMessage={addressCityError}
+									errorMessage={addressCityInputError}
 									dataCy="listing-create-form-city-input"
 									dataCyLabel="listing-create-form-city-input-label"
 									dataCyOptional="listing-create-form-city-input-optional"
@@ -547,20 +549,20 @@ export default function ListingCreatePage() {
 										setAddressState(e.target.value);
 
 										// Validated input
-										const result = CreateListingFormValidator.validateAddressState(e.target.value)
+										const result = ListingFormValidator.validateAddressState(e.target.value)
 										if (!result.success) {
 											const error = result.error.errors[0].message
 											// Only change into a new error message
-											if (addressStateError !== error) {
-												setAddressStateError(error);
+											if (addressStateInputError !== error) {
+												setAddressStateInputError(error);
 											}
 											// Only remove previous error message
-										} else if (result.success && addressStateError !== undefined) {
-											setAddressStateError(undefined)
+										} else if (result.success && addressStateInputError !== undefined) {
+											setAddressStateInputError(undefined)
 										}
 									}}
 									value={addressState}
-									errorMessage={addressStateError}
+									errorMessage={addressStateInputError}
 									dataCy="listing-create-form-state-input"
 									dataCyLabel="listing-create-form-state-input-label"
 									dataCyOptional="listing-create-form-state-input-optional"
@@ -578,21 +580,21 @@ export default function ListingCreatePage() {
 									onChange={(e) => {
 										const value = e.target.value;
 
-										addressZipcodeRef.current = value;
+										addressZipcodeValueRef.current = value;
 
-										const result = CreateListingFormValidator.validateAddressZip(value);
+										const result = ListingFormValidator.validateAddressZip(value);
 										if (!result.success) {
 											const error = result.error.errors[0].message
 											// Only change into a new error message
-											if (addressZipcodeError !== error) {
-												setAddressZipcodeError(error);
+											if (addressZipcodeInputError !== error) {
+												setAddressZipcodeInputError(error);
 											}
 											// Only remove previous error message
-										} else if (result.success && addressZipcodeError !== undefined) {
-											setAddressZipcodeError(undefined)
+										} else if (result.success && addressZipcodeInputError !== undefined) {
+											setAddressZipcodeInputError(undefined)
 										}
 									}}
-									errorMessage={addressZipcodeError}
+									errorMessage={addressZipcodeInputError}
 									dataCy="listing-create-form-zipcode-input"
 									dataCyLabel="listing-create-form-zipcode-input-label"
 									dataCyOptional="listing-create-form-zipcode-input-optional"
@@ -616,28 +618,71 @@ export default function ListingCreatePage() {
 							}
 
 							// NOTE: Prepare form data
-							const previewListingData: PreviewListingForm = {
-								price: priceRef.current,
-								deposit: depositRef.current,
-								description: descriptionRef.current,
-								beds: bedsRef.current,
-								baths: bathsRef.current,
-								area: areaRef.current,
-								availableDate: availableDateRef.current,
-								addressLongitude: addressLongitudeRef.current,
-								addressLatitude: addressLatitudeRef.current,
+							const previewListingData: ListingPreviewForm = {
+								price: priceValueRef.current,
+								deposit: depositValueRef.current,
+								description: descriptionValueRef.current,
+								beds: bedsValueRef.current,
+								baths: bathsValueRef.current,
+								area: areaValueRef.current,
+								availableDate: availableDateValueRef.current,
+								addressLongitude: mapLonLat?.longitude,
+								addressLatitude: mapLonLat?.latitude,
 								addressLine: addressLine,
 								addressCity: addressCity,
 								addressState: addressState,
-								addressZipcode: addressZipcodeRef.current,
+								addressZipcode: addressZipcodeValueRef.current,
 							}
 
-							// TODO: Remove
+							// FUTURE: Remove
 							console.log("Preview data", previewListingData);
 
-							// TODO: Validate form data
+							const validator = new ListingPreviewFormValidator(previewListingData);
+							const result = validator.validate()
 
-							// TODO: Show Listing component inside a modal
+							// FUTURE: The following validation logic might be reusable for create also, please anticipate
+							if (result.success) {
+								// TODO: Show Listing component inside a modal
+								return;
+							}
+
+							const errors = result.error.errors;
+
+							for (const error of errors) {
+								const path = error.path.at(0)?.toString();
+								const message = error.message;
+
+								switch (path) {
+									case 'price': setPriceInputError(message); break;
+									case 'deposit': setDepositInputError(message); break;
+									case 'description': setDescriptionInputError(message); break;
+									case 'beds': setBedsInputError(message); break;
+									case 'baths': setBathsInputError(message); break;
+									case 'area': setAreaInputError(message); break;
+									case 'availableDate': setAvailableDateInputError(message); break;
+									case 'addressLongitude' || 'addressLatitude': setAddressInputError(message); break;
+								}
+
+								// Address input fields are only visible if the user already selected a location in the slippy map
+								if (mapLonLat) {
+									switch (path) {
+										case 'addressLine': setAddressLineInputError(message); break;
+										case 'addressCity': setAddressCityInputError(message); break;
+										case 'addressState': setAddressStateInputError(message); break;
+										case 'addressZipcode': setAddressZipcodeInputError(message); break;
+									}
+								}
+							}
+
+							// Remove map input error
+							// NOTE: We do this because we do not want the entire slippy map to re-render for every time we validate the form.
+							// Other input fields are "revalidated" for every time their inputs are changed due to the `onChange` function. 
+							// However for the slippy map text error, the`onClick` function is inside a side effect function.
+							const errorPaths = errors.map((e) => e.path.toString());
+							const noMapInputError = !(errorPaths.includes('addressLongitude') || errorPaths.includes('addressLatitude'));
+							if (noMapInputError) {
+								setAddressInputError(undefined);
+							}
 						}} />
 					<ButtonFilled
 						text="Create"

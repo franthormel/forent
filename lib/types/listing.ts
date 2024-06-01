@@ -32,13 +32,13 @@ interface ListingAddress {
   longitude: number;
 }
 
-export interface CreateListingFormAddress {
+export interface ListingCreateFormAddress {
   addressLine: string;
   city: string;
   state: string;
 }
 
-export interface CreateListingForm {
+export interface ListingCreateForm {
   price: number;
   description: string;
   deposit: number;
@@ -50,7 +50,7 @@ export interface CreateListingForm {
   area: number;
 }
 
-export interface PreviewListingForm {
+export interface ListingPreviewForm {
   price?: number;
   deposit?: number;
   description?: string;
