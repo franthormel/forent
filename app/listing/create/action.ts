@@ -7,7 +7,38 @@ import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
 import { ListingCreateForm } from "@/lib/types/listing";
 import { ValidatorError } from "@/lib/validation";
 import { ListingCreateFormValidator } from "@/lib/validation/listing/create";
+import { IMAGE_URLS } from "./_data/listing-images";
 import { ListingCreateFormState } from "./type";
+
+/**
+ * Fetch six (6) to 12 image URLs meant to be used for listing photos.
+ *
+ * @returns image URLs
+ */
+export async function fetchRandomImages() {
+  const MIN = 6;
+  const MAX = 12;
+  const deviance = Math.floor(Math.random() * (MAX - MIN));
+  const limit = MIN + deviance;
+  const images = new Set<string>();
+
+  while (images.size !== limit) {
+    const index = Math.floor(Math.random() * IMAGE_URLS.length);
+    const image = IMAGE_URLS[index];
+    images.add(image);
+  }
+
+  return Array.from(images);
+}
+
+/**
+ * Return user session object
+ *
+ * @returns User session if user is logged in, otherwise `null`.
+ */
+export async function fetchUser() {
+  return await getSessionUser();
+}
 
 /**
  * Checks if user is logged in.
@@ -34,19 +65,19 @@ export async function fetchAddresss(latitude: number, longitude: number) {
   return await provider.fetch();
 }
 
-// TODO: Rename when done
+// FUTURE: Rename when done
 export async function createListingNew(
   previousState: ListingCreateFormState,
   formData: FormData
 ) {
-  // TODO: Validate form, return object if any error
+  // FUTURE: Validate form, return object if any error
   const formState: ListingCreateFormState = {
     errors: new Map(),
   };
   return formState;
 }
 
-// TODO: Remove soon
+// FUTURE: Remove soon
 export async function createListing(prevState: any, formData: FormData) {
   const formUtils = new FormDataUtils(formData);
   // NOTE: Default values, if the field is required, must be fail safes
@@ -54,6 +85,7 @@ export async function createListing(prevState: any, formData: FormData) {
     price: formUtils.getNumber("price", -1),
     description: formUtils.getString("description", ""),
     deposit: formUtils.getNumber("deposit", 0),
+    imageUrls: [], // FUTURE: Add more data soon
     availableDate: formUtils.getDate("availableDate", new Date(2000)),
     beds: formUtils.getNumber("beds", -1),
     baths: formUtils.getNumber("baths", -1),

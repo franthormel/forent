@@ -42,6 +42,7 @@ export interface ListingCreateForm {
   price: number;
   description: string;
   deposit: number;
+  imageUrls: string[];
   availableDate: Date;
   beds: number;
   baths: number;
@@ -54,6 +55,7 @@ export interface ListingPreviewForm {
   price?: number;
   deposit?: number;
   description?: string;
+  imageUrls?: string[];
   beds?: number;
   baths?: number;
   area?: number;

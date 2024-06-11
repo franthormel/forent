@@ -17,7 +17,7 @@ export default function ListingBanner(props: ListingBannerProps) {
 				<ButtonLinkOutlined
 					dataCy="btn-photos"
 					size="small"
-					href={`/listing/${props.listingId}/photos`}
+					href={`/listing/${props.listingId}/photos`} // FUTURE: These must not be clickable if viewing in preview mode
 					text={StringUtils.pluralizeTextCount(props.imageUrls.length, "Photo")} />
 			</div>
 		</div>
