@@ -3,18 +3,28 @@ import { MouseEventHandler, ReactNode } from "react"
 export interface ModalProps {
     show?: boolean
     close: MouseEventHandler<HTMLDivElement>
+    dataCy?: string
+    dataCyBackdrop?: string
+    dataCyContent?: string
 }
-
 
 export default function Modal({ children, props }: {
     props: ModalProps,
     children: ReactNode
 }) {
-    return <div className={`${props.show ? 'block' : 'hidden'} fixed left-0 top-0 z-10 h-full w-full bg-slate-800/60`}
-        onClick={props.close}>
-        {/* TODO: Fix not scrollable See https://stackoverflow.com/a/18366583*/}
-        <section className="shadow-md rounded-sm p-4 fixed bg-slate-50 w-4/5 h-auto">
-            {children}
-        </section>
-    </div>
+    if (props.show) {
+        return (
+            <div className="relative"
+                data-cy={props.dataCy ?? "modal"}>
+                <div className="fixed left-0 top-0 z-20 h-full w-full overflow-y-hidden bg-slate-800/60"
+                    onClick={props.close}
+                    data-cy={props.dataCyBackdrop ?? "modal-backrop"} />
+                <section className="fixed left-0 top-0 z-30 h-fit max-h-full w-max max-w-[80%] bg-slate-50 overflow-y-auto"
+                    data-cy={props.dataCyContent ?? "modal-content"}>
+                    {/* NOTE: The child element should be responsible for its own spacing (padding, margin, etc.) */}
+                    {children}
+                </section>
+            </div>
+        )
+    }
 }

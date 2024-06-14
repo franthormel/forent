@@ -94,7 +94,7 @@ export default function ListingCreatePage() {
 	const MAP_PRELOAD = 4
 	const MAP_ID = "listing-create-form-address-map";
 
-	const [mapLonLat, setMapLonLat] = useState<LonLat | undefined>(undefined)
+	const [mapLonLat, setMapLonLat] = useState<LonLat | undefined>()
 
 	// Map icon
 	const mapIconStyle = new Style({
@@ -158,24 +158,31 @@ export default function ListingCreatePage() {
 
 	return (
 		<div>
-			<Modal props={{ show: showModalState, close: () => { setShowModalState(false) } }}>
+			<Modal props={{
+				show: showModalState,
+				close: (e) => {
+					setShowModalState(false)
+				}
+			}}>
 				{/* FUTURE: Show deposit */}
-				<Listing id="preview"
-					imageUrls={imageUrlsRef.current}
-					price={priceValueRef.current!}
-					description={descriptionValueRef.current!}
-					beds={bedsValueRef.current!}
-					baths={bathsValueRef.current!}
-					area={areaValueRef.current!}
-					availableDate={new Date(availableDateValueRef.current ?? '2000-01-01')}
-					longitude={mapLonLat?.longitude!}
-					latitude={mapLonLat?.latitude!}
-					addressLine={addressLine}
-					city={addressCity}
-					state={addressState}
-					zipCode={addressZipcodeValueRef.current!}
-					email={userEmailRef.current}
-				/>
+				<div className="py-16">
+					<Listing id="preview"
+						imageUrls={imageUrlsRef.current}
+						price={priceValueRef.current!}
+						description={descriptionValueRef.current!}
+						beds={bedsValueRef.current!}
+						baths={bathsValueRef.current!}
+						area={areaValueRef.current!}
+						availableDate={new Date(availableDateValueRef.current ?? '2000-01-01')}
+						longitude={mapLonLat?.longitude!}
+						latitude={mapLonLat?.latitude!}
+						addressLine={addressLine}
+						city={addressCity}
+						state={addressState}
+						zipCode={addressZipcodeValueRef.current!}
+						email={userEmailRef.current}
+					/>
+				</div>
 			</Modal>
 			<form action={formAction}>
 				<PageLayout>
@@ -184,7 +191,6 @@ export default function ListingCreatePage() {
 						<ListingCreateHeader
 							dataCy="listing-create-header"
 							dataCySubHeader="listing-create-subheader" />
-						{/* FUTURE: Animate when it pops up */}
 						<ListingCreateError
 							// Only shown for server error
 							showError={hasServerError}
