@@ -10,8 +10,6 @@ import { useFormState } from 'react-dom';
 import { createListing } from './action';
 
 export default function CreateListing() {
-    // TODO: (A) Turn `formState` into a map
-    // TODO: (A) Show errors for each input fields when key matches
     const [formState, formAction] = useFormState(createListing, '')
 
     const todayDate = new Date();
@@ -22,7 +20,6 @@ export default function CreateListing() {
 
     return <>
         <div className="min-w-full px-12 py-6 flex flex-col gap-5 scroll-smooth">
-            {/* TODO: (A) Show general error key if corresponding key exists */}
             <TextError value={formState} />
             <form action={formAction}>
                 <div className="grid grid-cols-1 divide-y-2">

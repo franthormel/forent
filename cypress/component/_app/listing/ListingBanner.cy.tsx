@@ -1,4 +1,4 @@
-import ListingBanner from "@/app/listing/[id]/_component/banner"
+import ListingBanner from "@/components/_app/listing/banner";
 
 describe("Listing Banner", () => {
 	// NOTE: ListingPhotos already handles the testing of layouts and image links so there is no need to do the same tests here. 

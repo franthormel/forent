@@ -32,20 +32,38 @@ interface ListingAddress {
   longitude: number;
 }
 
-export interface CreateListingFormAddress {
+export interface ListingCreateFormAddress {
   addressLine: string;
   city: string;
   state: string;
 }
 
-export interface CreateListingForm {
+export interface ListingCreateForm {
   price: number;
   description: string;
   deposit: number;
+  imageUrls: string[];
   availableDate: Date;
   beds: number;
   baths: number;
   longitude: number;
   latitude: number;
   area: number;
+}
+
+export interface ListingPreviewForm {
+  price?: number;
+  deposit?: number;
+  description?: string;
+  imageUrls?: string[];
+  beds?: number;
+  baths?: number;
+  area?: number;
+  availableDate?: string;
+  addressLongitude?: number;
+  addressLatitude?: number;
+  addressLine?: string;
+  addressCity?: string;
+  addressState?: string;
+  addressZipcode?: string;
 }

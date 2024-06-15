@@ -1,18 +1,18 @@
-import { CreateListingFormValidator } from "../../../lib/validation/listing";
+import { ListingFormValidator } from "../../../lib/validation/listing";
 
 describe("Create listing form validation", () => {
   describe("price", () => {
     test.each([{ price: 100 }, { price: 1_000 }, { price: 100_000_000 }])(
       "valid = $price",
       ({ price }) => {
-        const actual = CreateListingFormValidator.validatePrice(price);
+        const actual = ListingFormValidator.validatePrice(price);
         expect(actual.success).toBeTruthy();
       }
     );
     test.each([{ price: -100 }, { price: 0 }, { price: 999_000_000 }])(
       "invalid = $price",
       ({ price }) => {
-        const actual = CreateListingFormValidator.validatePrice(price);
+        const actual = ListingFormValidator.validatePrice(price);
         expect(actual.success).toBeFalsy();
       }
     );
@@ -22,14 +22,14 @@ describe("Create listing form validation", () => {
     test.each([{ deposit: 5 }, { deposit: 12_000 }, { deposit: 50_000 }])(
       "valid = $deposit",
       ({ deposit }) => {
-        const actual = CreateListingFormValidator.validateDeposit(deposit);
+        const actual = ListingFormValidator.validateDeposit(deposit);
         expect(actual.success).toBeTruthy();
       }
     );
     test.each([{ deposit: -100 }, { deposit: -1 }, { deposit: 99_000_000 }])(
       "invalid = $deposit",
       ({ deposit }) => {
-        const actual = CreateListingFormValidator.validateDeposit(deposit);
+        const actual = ListingFormValidator.validateDeposit(deposit);
         expect(actual.success).toBeFalsy();
       }
     );
@@ -50,8 +50,7 @@ describe("Create listing form validation", () => {
           "Phasellus pretium id eros faucibus fermentum. Aenean fermentum lectus sit amet malesuada.",
       },
     ])("valid", ({ description }) => {
-      const actual =
-        CreateListingFormValidator.validateDescription(description);
+      const actual = ListingFormValidator.validateDescription(description);
       expect(actual.success).toBeTruthy();
     });
     test.each([
@@ -87,8 +86,7 @@ describe("Create listing form validation", () => {
       Pellentesque elit augue, pulvinar eu porta id, tempor vel dui.`,
       },
     ])("invalid", ({ description }) => {
-      const actual =
-        CreateListingFormValidator.validateDescription(description);
+      const actual = ListingFormValidator.validateDescription(description);
       expect(actual.success).toBeFalsy();
     });
   });
@@ -97,14 +95,14 @@ describe("Create listing form validation", () => {
     test.each([{ beds: 1 }, { beds: 25 }, { beds: 749 }])(
       "valid = $beds",
       ({ beds }) => {
-        const actual = CreateListingFormValidator.validateBeds(beds);
+        const actual = ListingFormValidator.validateBeds(beds);
         expect(actual.success).toBeTruthy();
       }
     );
     test.each([{ beds: -1 }, { beds: 0 }, { beds: 1_000 }])(
       "invalid = $beds",
       ({ beds }) => {
-        const actual = CreateListingFormValidator.validateBeds(beds);
+        const actual = ListingFormValidator.validateBeds(beds);
         expect(actual.success).toBeFalsy();
       }
     );
@@ -114,14 +112,14 @@ describe("Create listing form validation", () => {
     test.each([{ baths: 1 }, { baths: 12 }, { baths: 230 }])(
       "valid = $baths",
       ({ baths }) => {
-        const actual = CreateListingFormValidator.validateBaths(baths);
+        const actual = ListingFormValidator.validateBaths(baths);
         expect(actual.success).toBeTruthy();
       }
     );
     test.each([{ baths: -12 }, { baths: 0 }, { baths: 101_000 }])(
       "invalid = $baths",
       ({ baths }) => {
-        const actual = CreateListingFormValidator.validateBaths(baths);
+        const actual = ListingFormValidator.validateBaths(baths);
         expect(actual.success).toBeFalsy();
       }
     );
@@ -131,14 +129,14 @@ describe("Create listing form validation", () => {
     test.each([{ area: 12 }, { area: 32 }, { area: 462 }])(
       "valid = $area",
       ({ area }) => {
-        const actual = CreateListingFormValidator.validateArea(area);
+        const actual = ListingFormValidator.validateArea(area);
         expect(actual.success).toBeTruthy();
       }
     );
     test.each([{ area: -21 }, { area: 9 }, { area: 45_007_912 }])(
       "invalid = $area",
       ({ area }) => {
-        const actual = CreateListingFormValidator.validateArea(area);
+        const actual = ListingFormValidator.validateArea(area);
         expect(actual.success).toBeFalsy();
       }
     );
@@ -153,10 +151,7 @@ describe("Create listing form validation", () => {
       { date: "2024-12-24T00:00:00.000Z" },
       { date: "2025-01-01T00:00:00.000Z" },
     ])("valid = $date", ({ date }) => {
-      const actual = CreateListingFormValidator.validateAvailableDate(
-        date,
-        today
-      );
+      const actual = ListingFormValidator.validateAvailableDate(date, today);
       expect(actual.success).toBeTruthy();
     });
     test.each([
@@ -169,10 +164,7 @@ describe("Create listing form validation", () => {
       { date: "2026-11-14T00:00:00.000Z" },
       { date: "2027-02-20T00:00:00.000Z" },
     ])("invalid = $date", ({ date }) => {
-      const actual = CreateListingFormValidator.validateAvailableDate(
-        date,
-        today
-      );
+      const actual = ListingFormValidator.validateAvailableDate(date, today);
       expect(actual.success).toBeFalsy();
     });
   });
@@ -183,8 +175,7 @@ describe("Create listing form validation", () => {
       { addressLine: "est odio ultricies odio" },
       { addressLine: "sit amet dictum orci erat sed lacus" },
     ])("valid", ({ addressLine }) => {
-      const actual =
-        CreateListingFormValidator.validateAddressLine(addressLine);
+      const actual = ListingFormValidator.validateAddressLine(addressLine);
       expect(actual.success).toBeTruthy();
     });
     test.each([
@@ -196,8 +187,7 @@ describe("Create listing form validation", () => {
         Morbi vitae velit non neque pretium ultrices.`,
       },
     ])("invalid", ({ addressLine }) => {
-      const actual =
-        CreateListingFormValidator.validateAddressLine(addressLine);
+      const actual = ListingFormValidator.validateAddressLine(addressLine);
       expect(actual.success).toBeFalsy();
     });
   });
@@ -208,7 +198,7 @@ describe("Create listing form validation", () => {
       { city: "est odio ultricies odio" },
       { city: "sit amet dictum orci erat sed lacus" },
     ])("valid", ({ city }) => {
-      const actual = CreateListingFormValidator.validateAddressCity(city);
+      const actual = ListingFormValidator.validateAddressCity(city);
       expect(actual.success).toBeTruthy();
     });
     test.each([
@@ -217,7 +207,7 @@ describe("Create listing form validation", () => {
         city: `Vestibulum sollicitudin nibh magna, et elementum purus elementum eget.`,
       },
     ])("invalid", ({ city }) => {
-      const actual = CreateListingFormValidator.validateAddressCity(city);
+      const actual = ListingFormValidator.validateAddressCity(city);
       expect(actual.success).toBeFalsy();
     });
   });
@@ -228,7 +218,7 @@ describe("Create listing form validation", () => {
       { state: "est odio ultricies odio" },
       { state: "sit amet dictum orci erat sed lacus" },
     ])("valid", ({ state }) => {
-      const actual = CreateListingFormValidator.validateAddressState(state);
+      const actual = ListingFormValidator.validateAddressState(state);
       expect(actual.success).toBeTruthy();
     });
     test.each([
@@ -237,7 +227,7 @@ describe("Create listing form validation", () => {
         state: `Vestibulum sollicitudin nibh magna, et elementum purus elementum eget.`,
       },
     ])("invalid", ({ state }) => {
-      const actual = CreateListingFormValidator.validateAddressState(state);
+      const actual = ListingFormValidator.validateAddressState(state);
       expect(actual.success).toBeFalsy();
     });
   });
@@ -248,7 +238,7 @@ describe("Create listing form validation", () => {
       { zipCode: "est odio ultricies odio" },
       { zipCode: "sit amet dictum orci erat sed lacus" },
     ])("valid", ({ zipCode }) => {
-      const actual = CreateListingFormValidator.validateAddressZip(zipCode);
+      const actual = ListingFormValidator.validateAddressZip(zipCode);
       expect(actual.success).toBeTruthy();
     });
     test.each([
@@ -257,7 +247,7 @@ describe("Create listing form validation", () => {
         zipCode: `Vestibulum sollicitudin nibh magna, et elementum purus elementum eget.`,
       },
     ])("invalid", ({ zipCode }) => {
-      const actual = CreateListingFormValidator.validateAddressZip(zipCode);
+      const actual = ListingFormValidator.validateAddressZip(zipCode);
       expect(actual.success).toBeFalsy();
     });
   });

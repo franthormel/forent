@@ -1,4 +1,4 @@
-import ListingBannerPhotos from "@/app/listing/[id]/_component/banner-photos";
+import ListingBannerPhotos from "@/components/_app/listing/banner-photos";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof ListingBannerPhotos> = {

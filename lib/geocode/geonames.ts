@@ -1,5 +1,5 @@
 import { GeocodeProvider } from ".";
-import { CreateListingFormAddress } from "../types/listing";
+import { ListingCreateFormAddress } from "../types/listing";
 
 /**
  * Reverse Geocode provider using 3Geonames API.
@@ -13,7 +13,7 @@ export class GeonamesProvider implements GeocodeProvider {
     this.longitude = longitude;
   }
 
-  async fetch(): Promise<CreateListingFormAddress> {
+  async fetch(): Promise<ListingCreateFormAddress> {
     const response: GeonamesResponse = await fetch(this.url()).then((res) =>
       res.json()
     );

@@ -1,4 +1,4 @@
-import ListingBannerPhotos from "@/app/listing/[id]/_component/banner-photos";
+import ListingBannerPhotos from "@/components/_app/listing/banner-photos";
 import ButtonLinkOutlined from "@/components/button-links/outlined";
 import { StringUtils } from "@/lib/commons/string_utils";
 
@@ -17,7 +17,7 @@ export default function ListingBanner(props: ListingBannerProps) {
 				<ButtonLinkOutlined
 					dataCy="btn-photos"
 					size="small"
-					href={`/listing/${props.listingId}/photos`}
+					href={`/listing/${props.listingId}/photos`} // FUTURE: These must not be clickable if viewing in preview mode
 					text={StringUtils.pluralizeTextCount(props.imageUrls.length, "Photo")} />
 			</div>
 		</div>

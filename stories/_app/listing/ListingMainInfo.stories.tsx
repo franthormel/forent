@@ -1,4 +1,4 @@
-import ListingMainInfo, { ListingMainInfoProps } from "@/app/listing/[id]/_component/main-info";
+import ListingMainInfo, { ListingMainInfoProps } from "@/components/_app/listing/main-info";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof ListingMainInfo> = {

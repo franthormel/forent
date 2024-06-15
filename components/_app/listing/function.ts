@@ -1,4 +1,4 @@
-import { DateUtils } from "../../../../lib/commons/date_utils";
+import { DateUtils } from "../../../lib/commons/date_utils";
 
 /**
  * Display proper text if the given listing's date is considered available

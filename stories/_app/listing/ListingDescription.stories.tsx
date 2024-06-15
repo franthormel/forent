@@ -1,4 +1,4 @@
-import ListingDescription from "@/app/listing/[id]/_component/description";
+import ListingDescription from "@/components/_app/listing/description";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof ListingDescription> = {

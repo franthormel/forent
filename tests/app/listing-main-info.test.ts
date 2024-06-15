@@ -1,4 +1,4 @@
-import { availableDateText } from "../../app/listing/[id]/_component/function";
+import { availableDateText } from "../../components/_app/listing/function";
 
 describe("listing page main info", () => {
   test.each([

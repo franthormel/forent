@@ -1,4 +1,4 @@
-import ListingContact from "@/app/listing/[id]/_component/contact";
+import ListingContact from "@/components/_app/listing/contact";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof ListingContact> = {

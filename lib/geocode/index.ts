@@ -1,4 +1,4 @@
-import { CreateListingFormAddress } from "../types/listing";
+import { ListingCreateFormAddress } from "../types/listing";
 
 export interface GeocodeProvider {
   /**
@@ -18,5 +18,5 @@ export interface GeocodeProvider {
   /**
    * Fetch address response from the geocoding provider
    */
-  fetch(): Promise<CreateListingFormAddress>;
+  fetch(): Promise<ListingCreateFormAddress>;
 }
