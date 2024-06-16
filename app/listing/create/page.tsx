@@ -246,10 +246,10 @@ export default function ListingCreatePage() {
 									name='deposit'
 									type="number"
 									optional={true}
-									min={Number(process.env.LISTING_DEPOSIT_MIN ?? 100)}
+									min={Number(process.env.LISTING_DEPOSIT_MIN ?? 0)}
 									max={Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)}
 									onChange={(e) => {
-										const value = NumberUtils.toNumber(e.target.value, -1);
+										const value = NumberUtils.toNumber(e.target.value, 0);
 
 										depositValueRef.current = value;
 
