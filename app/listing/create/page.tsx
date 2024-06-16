@@ -31,7 +31,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import ListingCreateError from "./_components/error";
 import ListingCreateHeader from "./_components/header";
-import { createListingNew, fetchAddresss, fetchRandomImages, fetchUser, isUserAuthenticated } from "./action";
+import { createListingNew, fetchAddresss, fetchRandomImages, fetchUser, userIsAuthenticated } from "./action";
 
 /**
  * Remove any error message
@@ -47,10 +47,8 @@ function removeAnyErrorMessage(value: string | undefined, setStateAction: Dispat
 
 export default function ListingCreatePage() {
 	// Form submission (Server)
-	const [formState, formAction] = useFormState(createListingNew, {
-		errors: new globalThis.Map()
-	});
-	const hasServerError = formState.errors.size > 0
+	const [formState, formAction] = useFormState(createListingNew, {errors: []});
+	const hasServerError = formState.errors.length > 0
 
 	// Form values
 	const priceValueRef = useRef<number>()
@@ -644,7 +642,7 @@ export default function ListingCreatePage() {
 							dataCy="listing-create-preview-btn"
 							onClick={async () => {
 								// Only authenticated users can preview
-								const isAuthenticated = await isUserAuthenticated();
+								const isAuthenticated = await userIsAuthenticated();
 
 								if (!isAuthenticated) {
 									return;

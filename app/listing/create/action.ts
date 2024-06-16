@@ -45,7 +45,7 @@ export async function fetchUser() {
  *
  * @returns true if user is logged in, otherwise false.
  */
-export async function isUserAuthenticated() {
+export async function userIsAuthenticated() {
   const user = await getSessionUser();
   if (user) {
     return true;
@@ -72,8 +72,9 @@ export async function createListingNew(
 ) {
   // FUTURE: Validate form, return object if any error
   const formState: ListingCreateFormState = {
-    errors: new Map(),
+    errors: [],
   };
+
   return formState;
 }
 
