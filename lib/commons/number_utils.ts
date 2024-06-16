@@ -3,7 +3,7 @@
  */
 export namespace NumberUtils {
   /**
-   * Safely convert the input into a number
+   * Safely convert the input into its numerical value
    *
    * @param input Input value
    * @param defaultValue Default value to be returned if input is not a number
@@ -23,6 +23,38 @@ export namespace NumberUtils {
       const parsed = parseInt(input);
 
       if (Number.isInteger(parsed)) {
+        return parsed;
+      } else {
+        return defaultValue;
+      }
+    }
+
+    // ... NaN, undefined, others
+    return defaultValue;
+  }
+
+  /**
+   * Safely convert the input into its decimal value
+   *
+   * @param input Input value
+   * @param defaultValue Default value to be returned if input is neither a number nor finite.
+   * @returns conversion
+   */
+  // TODO: Unit test
+  export function toDecimal(
+    input: string | number | undefined,
+    defaultValue: number
+  ): number {
+    // Number ...
+    if (typeof input === "number" && Number.isFinite(input)) {
+      return input;
+    }
+
+    // ... string ...
+    if (typeof input === "string") {
+      const parsed = parseFloat(input);
+
+      if (Number.isFinite(parsed)) {
         return parsed;
       } else {
         return defaultValue;

@@ -20,6 +20,11 @@ export class FormDataUtils {
   getNumber(key: string, defaultValue: number): number {
     return NumberUtils.toNumber(this.getFormValue(key), defaultValue);
   }
+  
+  // TODO: Unit test
+  getDecimal(key: string, defaultValue: number): number {
+    return NumberUtils.toDecimal(this.getFormValue(key), defaultValue);
+  }
 
   /**
    * Get the form string value using the given key
