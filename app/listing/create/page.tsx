@@ -542,7 +542,7 @@ export default function ListingCreatePage() {
 									{/* City */}
 									<FormInput
 										label='City'
-										name='city'
+										name='addressCity'
 										type="text"
 										minLength={Number(process.env.LISTING_ADDRESS_CITY_MIN ?? 1)}
 										maxLength={Number(process.env.LISTING_ADDRESS_CITY_MAX ?? 64)}
@@ -572,7 +572,7 @@ export default function ListingCreatePage() {
 									{/* State */}
 									<FormInput
 										label='State'
-										name='state'
+										name='addressState'
 										type="text"
 										minLength={Number(process.env.LISTING_ADDRESS_STATE_MIN ?? 1)}
 										maxLength={Number(process.env.LISTING_ADDRESS_STATE_MAX ?? 64)}
@@ -604,7 +604,7 @@ export default function ListingCreatePage() {
 									{/* ZIP Code */}
 									<FormInput
 										label='ZIP Code'
-										name='zipcode'
+										name='addressZipcode'
 										type="text"
 										optional={true}
 										minLength={Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1)}

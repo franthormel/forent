@@ -4,7 +4,7 @@ import { getSessionUser } from "@/lib/auth";
 import { FormDataUtils } from "@/lib/commons/formdata_utils";
 import prisma from "@/lib/db";
 import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
-import { ListingCreateForm } from "@/lib/types/listing";
+import { ListingCreateForm, ListingPreviewForm } from "@/lib/types/listing";
 import { ValidatorError } from "@/lib/validation";
 import { ListingCreateFormValidator } from "@/lib/validation/listing/create";
 import { IMAGE_URLS } from "./_data/listing-images";
@@ -80,7 +80,28 @@ export async function createListingNew(
     return noErrorState;
   }
 
-  // TODO: Prepare submitted data
+  // Prepare submitted form data
+  const formDataUtils = new FormDataUtils(formData);
+  const imageUrls = await fetchRandomImages();
+  const formListing: ListingCreateForm = {
+    price: formDataUtils.getNumber("price", 0),
+    deposit: formDataUtils.getNumber("deposit", 0),
+    description: formDataUtils.getString("description", ""),
+    imageUrls: imageUrls,
+    beds: formDataUtils.getNumber("beds", 0),
+    baths: formDataUtils.getNumber("baths", 0),
+    area: formDataUtils.getNumber("area", 0),
+    availableDate: formDataUtils.getDate("availableDate", new Date(2000)),
+    addressLongitude: formDataUtils.getNumber("addressLongitude", -1000),
+    addressLatitude: formDataUtils.getNumber("addressLatitude", -1000),
+    addressLine: formDataUtils.getString("addressLine", ""),
+    addressCity: formDataUtils.getString("addressCity", ""),
+    addressState: formDataUtils.getString("addressState", ""),
+    addressZipcode: formDataUtils.getString("addressZipcode", ""),
+  };
+
+  console.log("Form = ", formListing);
+
   // TODO: Validated submitted data
   // TODO: If valid, go to create
   // TODO: If not valid, return errors
@@ -100,9 +121,13 @@ export async function createListing(prevState: any, formData: FormData) {
     availableDate: formUtils.getDate("availableDate", new Date(2000)),
     beds: formUtils.getNumber("beds", -1),
     baths: formUtils.getNumber("baths", -1),
-    longitude: formUtils.getNumber("inputLongitude", -999),
-    latitude: formUtils.getNumber("inputLatitude", -999),
+    addressLongitude: formUtils.getNumber("inputLongitude", -999),
+    addressLatitude: formUtils.getNumber("inputLatitude", -999),
     area: 100,
+    addressLine: "",
+    addressCity: "",
+    addressState: "",
+    addressZipcode: "",
   };
 
   // Validate
@@ -116,8 +141,8 @@ export async function createListing(prevState: any, formData: FormData) {
   }
 
   const geocodeProvider = new GeonamesProvider(
-    listing.latitude,
-    listing.longitude
+    listing.addressLongitude,
+    listing.addressLongitude
   );
   const url = geocodeProvider.url();
 
