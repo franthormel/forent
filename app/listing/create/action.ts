@@ -70,12 +70,22 @@ export async function createListingNew(
   previousState: ListingCreateFormState,
   formData: FormData
 ) {
-  // FUTURE: Validate form, return object if any error
-  const formState: ListingCreateFormState = {
+  const noErrorState: ListingCreateFormState = {
     errors: [],
   };
 
-  return formState;
+  // Only authenticated users
+  const isAuthenticated = await userIsAuthenticated();
+  if (!isAuthenticated) {
+    return noErrorState;
+  }
+
+  // TODO: Prepare submitted data
+  // TODO: Validated submitted data
+  // TODO: If valid, go to create
+  // TODO: If not valid, return errors
+
+  return noErrorState;
 }
 
 // FUTURE: Remove soon

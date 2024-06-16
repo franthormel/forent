@@ -32,6 +32,7 @@ import { useFormState } from "react-dom";
 import ListingCreateError from "./_components/error";
 import ListingCreateHeader from "./_components/header";
 import { createListingNew, fetchAddresss, fetchRandomImages, fetchUser, userIsAuthenticated } from "./action";
+import { ListingCreateFormState } from "./type";
 
 /**
  * Remove any error message
@@ -47,7 +48,7 @@ function removeAnyErrorMessage(value: string | undefined, setStateAction: Dispat
 
 export default function ListingCreatePage() {
 	// Form submission (Server)
-	const [formState, formAction] = useFormState(createListingNew, {errors: []});
+	const [formState, formAction] = useFormState(createListingNew, { errors: [] });
 	const hasServerError = formState.errors.length > 0
 
 	// Form values
@@ -643,7 +644,6 @@ export default function ListingCreatePage() {
 							onClick={async () => {
 								// Only authenticated users can preview
 								const isAuthenticated = await userIsAuthenticated();
-
 								if (!isAuthenticated) {
 									return;
 								}
