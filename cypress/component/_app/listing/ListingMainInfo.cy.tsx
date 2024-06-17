@@ -1,5 +1,7 @@
 import ListingMainInfo from "@/components/_app/listing/main-info";
 
+// TODO: Add deposit
+
 describe('Listing Main Info', () => {
     describe("display correct UI when", () => {
         afterEach(() => {

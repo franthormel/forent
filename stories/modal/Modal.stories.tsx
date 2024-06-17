@@ -65,6 +65,7 @@ export const LargeSizedContent: Story = {
                     "https://images.unsplash.com/photo-1560448204-61dc36dc98c8",
                 ]}
                 price={12_000}
+                deposit={-10}
                 description={`
                     Situado en una ubicación privilegiada, nuestro apartamento ofrece una experiencia de vida sin igual que satisface todas sus necesidades.
                     

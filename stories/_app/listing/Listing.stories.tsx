@@ -23,6 +23,7 @@ const defaultArgs: ListingProps = {
     id: "421984fd",
     imageUrls: imageUrls,
     price: 12000,
+    deposit: 0,
     beds: 2,
     baths: 1,
     area: 25,
