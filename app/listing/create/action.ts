@@ -9,6 +9,7 @@ import { ValidatorError } from "@/lib/validation";
 import { ListingCreateFormValidator } from "@/lib/validation/listing/create";
 import { IMAGE_URLS } from "./_data/listing-images";
 import { ListingCreateFormState } from "./type";
+import { ListingPreviewFormValidator } from "@/lib/validation/listing/preview";
 
 /**
  * Fetch six (6) to 12 image URLs meant to be used for listing photos.
@@ -80,9 +81,9 @@ export async function createListingNew(
     return noErrorState;
   }
 
-  // Prepare submitted form data
   const formDataUtils = new FormDataUtils(formData);
   const imageUrls = await fetchRandomImages();
+  // Prepare submitted form data
   const formListing: ListingCreateForm = {
     price: formDataUtils.getNumber("price", 0),
     deposit: formDataUtils.getNumber("deposit", 0),
@@ -100,11 +101,17 @@ export async function createListingNew(
     addressZipcode: formDataUtils.getString("addressZipcode", ""),
   };
 
-  console.log("Form = ", formListing);
+  // Validate form data
+  const validator = new ListingPreviewFormValidator(formListing);
+  const result = validator.validate();
 
-  // TODO: Validated submitted data
-  // TODO: If valid, go to create
-  // TODO: If not valid, return errors
+  if (result.success) {
+    // TODO: If valid, go to create
+    // TODO: .. then redirect to its details page
+  } else {
+    // TODO: If not valid, return errors
+    console.log("errors: ", result.error.errors);
+  }
 
   return noErrorState;
 }
@@ -195,6 +202,6 @@ export async function createListing(prevState: any, formData: FormData) {
       },
     },
   });
-
+  
   // FUTURE: redirect to create listing preview
 }

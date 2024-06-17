@@ -187,7 +187,7 @@ export const ADDRESS_STATE_VALIDATOR = z
   });
 
 // Address zip
-const ADDRESS_ZIP_MIN = Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1);
+const ADDRESS_ZIP_MIN = Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 0);
 const ADDRESS_ZIP_MAX = Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64);
 export const ADDRESS_ZIP_VALIDATOR = z
   .string({

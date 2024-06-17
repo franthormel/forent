@@ -607,7 +607,7 @@ export default function ListingCreatePage() {
 										name='addressZipcode'
 										type="text"
 										optional={true}
-										minLength={Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1)}
+										minLength={Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 0)}
 										maxLength={Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64)}
 										onChange={(e) => {
 											const value = e.target.value;
