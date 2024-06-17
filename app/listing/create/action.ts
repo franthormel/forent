@@ -10,6 +10,7 @@ import { ListingCreateFormValidator } from "@/lib/validation/listing/create";
 import { IMAGE_URLS } from "./_data/listing-images";
 import { ListingCreateFormState } from "./type";
 import { ListingPreviewFormValidator } from "@/lib/validation/listing/preview";
+import { RedirectType, redirect } from "next/navigation";
 
 /**
  * Fetch six (6) to 12 image URLs meant to be used for listing photos.
@@ -84,7 +85,7 @@ export async function createListingNew(
   const formDataUtils = new FormDataUtils(formData);
   const imageUrls = await fetchRandomImages();
   // Prepare submitted form data
-  const formListing: ListingCreateForm = {
+  const listingForm: ListingCreateForm = {
     price: formDataUtils.getNumber("price", 0),
     deposit: formDataUtils.getNumber("deposit", 0),
     description: formDataUtils.getString("description", ""),
@@ -102,15 +103,58 @@ export async function createListingNew(
   };
 
   // Validate form data
-  const validator = new ListingPreviewFormValidator(formListing);
+  const validator = new ListingPreviewFormValidator(listingForm);
   const result = validator.validate();
-
   if (result.success) {
-    // TODO: If valid, go to create
-    // TODO: .. then redirect to its details page
+    const userSession = await getSessionUser();
+    const userDB = await prisma.user.findUnique({
+      where: {
+        email: userSession?.email!,
+      },
+    });
+
+    // If valid, record listing in DB ...
+    const listingDB = await prisma.listing.create({
+      data: {
+        user: {
+          connect: {
+            id: userDB?.id,
+          },
+        },
+        prices: {
+          create: {
+            value: listingForm.price,
+          },
+        },
+        deposit: listingForm.deposit,
+        description: listingForm.description,
+        imageUrls: listingForm.imageUrls,
+        beds: listingForm.beds,
+        baths: listingForm.baths,
+        area: listingForm.area,
+        availableDate: listingForm.availableDate,
+        address: {
+          create: {
+            longitude: listingForm.addressLongitude,
+            latitude: listingForm.addressLatitude,
+            addressLine: listingForm.addressLine,
+            city: listingForm.addressCity,
+            state: listingForm.addressState,
+            zipcode: listingForm.addressZipcode,
+            country: "", // FUTURE: Remove soon
+          },
+        },
+      },
+    });
+
+    // .. then redirect to its details page
+    redirect(`/listing/${listingDB.id}`, RedirectType.push);
   } else {
-    // TODO: If not valid, return errors
-    console.log("errors: ", result.error.errors);
+    // If not valid, return errors
+    const errorState: ListingCreateFormState = {
+      errors: result.error.errors,
+    };
+    return errorState;
   }
 
   return noErrorState;
@@ -202,6 +246,6 @@ export async function createListing(prevState: any, formData: FormData) {
       },
     },
   });
-  
+
   // FUTURE: redirect to create listing preview
 }
