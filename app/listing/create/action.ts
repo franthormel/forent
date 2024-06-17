@@ -69,14 +69,15 @@ export async function createListing(
   previousState: ListingCreateFormState,
   formData: FormData
 ) {
-  const noErrorState: ListingCreateFormState = {
-    errors: [],
+  const okState: ListingCreateFormState = {
+    success: true,
+    errors: {},
   };
 
   // Only authenticated users
   const isAuthenticated = await userIsAuthenticated();
   if (!isAuthenticated) {
-    return noErrorState;
+    return okState;
   }
 
   const formDataUtils = new FormDataUtils(formData);
@@ -149,10 +150,60 @@ export async function createListing(
   } else {
     // If not valid, return errors
     const errorState: ListingCreateFormState = {
-      errors: result.error.errors,
+      success: false,
+      errors: {},
     };
+
+    // Parse errors
+    const errors = result.error.errors;
+    for (const error of errors) {
+      const path = error.path.at(0)?.toString();
+      const message = error.message;
+
+      switch (path) {
+        case "price":
+          errorState.errors.price = message;
+          break;
+        case "deposit":
+          errorState.errors.deposit = message;
+          break;
+        case "description":
+          errorState.errors.description = message;
+          break;
+        case "beds":
+          errorState.errors.beds = message;
+          break;
+        case "baths":
+          errorState.errors.baths = message;
+          break;
+        case "area":
+          errorState.errors.area = message;
+          break;
+        case "availableDate":
+          errorState.errors.availableDate = message;
+          break;
+        case "addressLongitude" || "addressLatitude":
+          errorState.errors.addressMap = message;
+          break;
+        case "addressLine":
+          errorState.errors.addressLine = message;
+          break;
+        case "addressCity":
+          errorState.errors.addressCity = message;
+          break;
+        case "addressState":
+          errorState.errors.addressState = message;
+          break;
+        case "addressZipcode":
+          errorState.errors.addressZipcode = message;
+          break;
+      }
+    }
+
+    console.log(errorState);
+
     return errorState;
   }
 
-  return noErrorState;
+  return okState;
 }
