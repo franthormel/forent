@@ -40,7 +40,6 @@ export namespace NumberUtils {
    * @param defaultValue Default value to be returned if input is neither a number nor finite.
    * @returns conversion
    */
-  // TODO: Unit test
   export function toDecimal(
     input: string | number | undefined,
     defaultValue: number

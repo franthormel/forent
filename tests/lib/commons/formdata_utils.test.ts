@@ -5,6 +5,7 @@ describe("Form data utils", () => {
   form.set("num", "101");
   form.set("text", "abc");
   form.set("date", "2020-01-01T00:00:00.000Z");
+  form.set("decimal", "-25.00071");
 
   const sut = new FormDataUtils(form);
 
@@ -15,6 +16,17 @@ describe("Form data utils", () => {
     { key: "none", defaultValue: 0, expected: 0 },
   ])("getNumber($key, $defaultValue)", ({ key, defaultValue, expected }) => {
     const actual = sut.getNumber(key, defaultValue);
+    expect(actual).toBe(expected);
+  });
+
+  test.each([
+    { key: "num", defaultValue: 1, expected: 101 },
+    { key: "", defaultValue: 22, expected: 22 },
+    { key: "text", defaultValue: 53, expected: 53 },
+    { key: "none", defaultValue: 14, expected: 14 },
+    { key: "decimal", defaultValue: 0, expected: -25.00071 },
+  ])("getDecimal($key, $defaultValue)", ({ key, defaultValue, expected }) => {
+    const actual = sut.getDecimal(key, defaultValue);
     expect(actual).toBe(expected);
   });
 
