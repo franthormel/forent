@@ -3,10 +3,10 @@
 import { getSessionUser } from "@/lib/auth";
 import { FormDataUtils } from "@/lib/commons/formdata_utils";
 import prisma from "@/lib/db";
-import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
+import { GeonamesProvider } from "@/lib/geocode/geonames";
 import { ListingCreateForm } from "@/lib/types/listing";
-import { ValidatorError } from "@/lib/validation";
 import { ListingCreateFormValidator } from "@/lib/validation/listing/create";
+import { RedirectType, redirect } from "next/navigation";
 import { IMAGE_URLS } from "./_data/listing-images";
 import { ListingCreateFormState } from "./type";
 
@@ -45,7 +45,7 @@ export async function fetchUser() {
  *
  * @returns true if user is logged in, otherwise false.
  */
-export async function isUserAuthenticated() {
+export async function userIsAuthenticated() {
   const user = await getSessionUser();
   if (user) {
     return true;
@@ -65,100 +65,145 @@ export async function fetchAddresss(latitude: number, longitude: number) {
   return await provider.fetch();
 }
 
-// FUTURE: Rename when done
-export async function createListingNew(
+export async function createListing(
   previousState: ListingCreateFormState,
   formData: FormData
 ) {
-  // FUTURE: Validate form, return object if any error
-  const formState: ListingCreateFormState = {
-    errors: new Map(),
-  };
-  return formState;
-}
-
-// FUTURE: Remove soon
-export async function createListing(prevState: any, formData: FormData) {
-  const formUtils = new FormDataUtils(formData);
-  // NOTE: Default values, if the field is required, must be fail safes
-  const listing: ListingCreateForm = {
-    price: formUtils.getNumber("price", -1),
-    description: formUtils.getString("description", ""),
-    deposit: formUtils.getNumber("deposit", 0),
-    imageUrls: [], // FUTURE: Add more data soon
-    availableDate: formUtils.getDate("availableDate", new Date(2000)),
-    beds: formUtils.getNumber("beds", -1),
-    baths: formUtils.getNumber("baths", -1),
-    longitude: formUtils.getNumber("inputLongitude", -999),
-    latitude: formUtils.getNumber("inputLatitude", -999),
-    area: 100,
+  const okState: ListingCreateFormState = {
+    success: true,
+    errors: {},
   };
 
-  // Validate
-  const validator = new ListingCreateFormValidator(listing);
-  try {
-    validator.validate();
-  } catch (e) {
-    if (e instanceof ValidatorError) {
-      return e.getErrorMessage();
-    }
+  // Only authenticated users
+  const isAuthenticated = await userIsAuthenticated();
+  if (!isAuthenticated) {
+    return okState;
   }
 
-  const geocodeProvider = new GeonamesProvider(
-    listing.latitude,
-    listing.longitude
-  );
-  const url = geocodeProvider.url();
+  const formDataUtils = new FormDataUtils(formData);
+  const imageUrls = await fetchRandomImages();
+  // Prepare submitted form data
+  const listingForm: ListingCreateForm = {
+    price: formDataUtils.getNumber("price", 0),
+    deposit: formDataUtils.getNumber("deposit", 0),
+    description: formDataUtils.getString("description", ""),
+    imageUrls: imageUrls,
+    beds: formDataUtils.getNumber("beds", 0),
+    baths: formDataUtils.getNumber("baths", 0),
+    area: formDataUtils.getNumber("area", 0),
+    availableDate: formDataUtils.getDate("availableDate", new Date(2000)),
+    addressLongitude: formDataUtils.getDecimal("addressLongitude", -1000),
+    addressLatitude: formDataUtils.getDecimal("addressLatitude", -1000),
+    addressLine: formDataUtils.getString("addressLine", ""),
+    addressCity: formDataUtils.getString("addressCity", ""),
+    addressState: formDataUtils.getString("addressState", ""),
+    addressZipcode: formDataUtils.getString("addressZipcode", ""),
+  };
 
-  // Fetch data from the geocode provider
-  const address: GeonamesResponse = await fetch(url).then((res) => res.json());
+  // Validate form data
+  const validator = new ListingCreateFormValidator(listingForm);
+  const result = validator.validate();
+  if (result.success) {
+    const userSession = await getSessionUser();
+    const userDB = await prisma.user.findUnique({
+      where: {
+        email: userSession?.email!,
+      },
+    });
 
-  const userSession = await getSessionUser();
-  const userDB = await prisma.user.findUnique({
-    where: {
-      email: userSession?.email!,
-    },
-  });
-
-  // FUTURE: remove city and prov from addressLine (only use nearest.name)
-  const addressLine =
-    address.nearest.name +
-    "," +
-    address.nearest.city +
-    "," +
-    address.nearest.prov;
-
-  // Persist
-  const createdListing = await prisma.listing.create({
-    data: {
-      deposit: listing.deposit,
-      description: listing.description,
-      beds: listing.beds,
-      baths: listing.baths,
-      area: 100.0,
-      availableDate: listing.availableDate,
-      user: {
-        connect: {
-          id: userDB?.id,
+    // If valid, record listing in DB ...
+    const listingDB = await prisma.listing.create({
+      data: {
+        user: {
+          connect: {
+            id: userDB?.id,
+          },
+        },
+        prices: {
+          create: {
+            value: listingForm.price,
+          },
+        },
+        deposit: listingForm.deposit,
+        description: listingForm.description,
+        imageUrls: listingForm.imageUrls,
+        beds: listingForm.beds,
+        baths: listingForm.baths,
+        area: listingForm.area,
+        availableDate: listingForm.availableDate,
+        address: {
+          create: {
+            longitude: listingForm.addressLongitude,
+            latitude: listingForm.addressLatitude,
+            addressLine: listingForm.addressLine,
+            city: listingForm.addressCity,
+            state: listingForm.addressState,
+            zipcode: listingForm.addressZipcode,
+            country: "", // FUTURE: Remove soon
+          },
         },
       },
-      address: {
-        create: {
-          addressLine: addressLine,
-          city: address.nearest.city ?? "",
-          state: address.nearest.prov ?? "",
-          country: address.nearest.state ?? "",
-          latitude: address.nearest.latt ?? "",
-          longitude: address.nearest.longt ?? "",
-        },
-      },
-      prices: {
-        create: {
-          value: listing.price,
-        },
-      },
-    },
-  });
+    });
 
-  // FUTURE: redirect to create listing preview
+    // .. then redirect to its details page
+    redirect(`/listing/${listingDB.id}`, RedirectType.push);
+  } else {
+    // If not valid, return errors
+    const errorState: ListingCreateFormState = {
+      success: false,
+      errors: {},
+    };
+
+    // Parse errors
+    const errors = result.error.errors;
+    for (const error of errors) {
+      const path = error.path.at(0)?.toString();
+      const message = error.message;
+
+      switch (path) {
+        case "price":
+          errorState.errors.price = message;
+          break;
+        case "deposit":
+          errorState.errors.deposit = message;
+          break;
+        case "description":
+          errorState.errors.description = message;
+          break;
+        case "beds":
+          errorState.errors.beds = message;
+          break;
+        case "baths":
+          errorState.errors.baths = message;
+          break;
+        case "area":
+          errorState.errors.area = message;
+          break;
+        case "availableDate":
+          errorState.errors.availableDate = message;
+          break;
+        case "addressLongitude" || "addressLatitude":
+          errorState.errors.addressMap = message;
+          break;
+        case "addressLine":
+          errorState.errors.addressLine = message;
+          break;
+        case "addressCity":
+          errorState.errors.addressCity = message;
+          break;
+        case "addressState":
+          errorState.errors.addressState = message;
+          break;
+        case "addressZipcode":
+          errorState.errors.addressZipcode = message;
+          break;
+      }
+    }
+
+    console.log(errorState);
+
+    return errorState;
+  }
+
+  return okState;
 }

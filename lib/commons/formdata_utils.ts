@@ -22,6 +22,17 @@ export class FormDataUtils {
   }
 
   /**
+   * Get the decimal value of the input field
+   *
+   * @param key Form input name
+   * @param defaultValue Default value
+   * @returns decimal value of the input field or default value
+   */
+  getDecimal(key: string, defaultValue: number): number {
+    return NumberUtils.toDecimal(this.getFormValue(key), defaultValue);
+  }
+
+  /**
    * Get the form string value using the given key
    *
    * @param key Form input name
@@ -46,7 +57,7 @@ export class FormDataUtils {
     if (typeof input === "string") {
       return new Date(input);
     }
-    
+
     return defaultValue;
   }
 

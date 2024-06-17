@@ -187,7 +187,7 @@ export const ADDRESS_STATE_VALIDATOR = z
   });
 
 // Address zip
-const ADDRESS_ZIP_MIN = Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1);
+const ADDRESS_ZIP_MIN = Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 0);
 const ADDRESS_ZIP_MAX = Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64);
 export const ADDRESS_ZIP_VALIDATOR = z
   .string({
@@ -202,18 +202,6 @@ export const ADDRESS_ZIP_VALIDATOR = z
   .optional();
 
 export const LISTING_VALIDATOR = z.object({
-  price: PRICE_VALIDATOR,
-  deposit: DEPOSIT_VALIDATOR,
-  description: DESCRIPTION_VALIDATOR,
-  beds: BEDS_VALIDATOR,
-  baths: BATHS_VALIDATOR,
-  area: AREA_VALIDATOR,
-  availableDate: z.date(),
-  longitude: ADDRESS_LONGITUDE_VALIDATOR,
-  latitude: ADDRESS_LATITUDE_VALIDATOR,
-});
-
-export const LISTING_PREVIEW_VALIDATOR = z.object({
   price: PRICE_VALIDATOR,
   deposit: DEPOSIT_VALIDATOR,
   description: DESCRIPTION_VALIDATOR,

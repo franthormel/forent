@@ -31,7 +31,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import ListingCreateError from "./_components/error";
 import ListingCreateHeader from "./_components/header";
-import { createListingNew, fetchAddresss, fetchRandomImages, fetchUser, isUserAuthenticated } from "./action";
+import { createListing, fetchAddresss, fetchRandomImages, fetchUser, userIsAuthenticated } from "./action";
 
 /**
  * Remove any error message
@@ -47,10 +47,7 @@ function removeAnyErrorMessage(value: string | undefined, setStateAction: Dispat
 
 export default function ListingCreatePage() {
 	// Form submission (Server)
-	const [formState, formAction] = useFormState(createListingNew, {
-		errors: new globalThis.Map()
-	});
-	const hasServerError = formState.errors.size > 0
+	const [formState, formAction] = useFormState(createListing, { success: true, errors: {} });
 
 	// Form values
 	const priceValueRef = useRef<number>()
@@ -192,8 +189,8 @@ export default function ListingCreatePage() {
 							dataCy="listing-create-header"
 							dataCySubHeader="listing-create-subheader" />
 						<ListingCreateError
-							// Only shown for server error
-							showError={hasServerError}
+							// Only use this component for showing error from server-side
+							showError={!formState.success}
 							error="Check errors below"
 							dataCyIcon="listing-create-error-icon"
 							dataCyTitle="listing-create-error" />
@@ -236,7 +233,7 @@ export default function ListingCreatePage() {
 											setPriceInputError(undefined)
 										}
 									}}
-									errorMessage={priceInputError}
+									errorMessage={formState.errors.price ?? priceInputError}
 									dataCy="listing-create-form-price-input"
 									dataCyLabel="listing-create-form-price-input-label"
 									dataCyOptional="listing-create-form-price-input-optional"
@@ -247,10 +244,10 @@ export default function ListingCreatePage() {
 									name='deposit'
 									type="number"
 									optional={true}
-									min={Number(process.env.LISTING_DEPOSIT_MIN ?? 100)}
+									min={Number(process.env.LISTING_DEPOSIT_MIN ?? 0)}
 									max={Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000)}
 									onChange={(e) => {
-										const value = NumberUtils.toNumber(e.target.value, -1);
+										const value = NumberUtils.toNumber(e.target.value, 0);
 
 										depositValueRef.current = value;
 
@@ -266,7 +263,7 @@ export default function ListingCreatePage() {
 											setDepositInputError(undefined)
 										}
 									}}
-									errorMessage={depositInputError}
+									errorMessage={formState.errors.deposit ?? depositInputError}
 									dataCy="listing-create-form-deposit-input"
 									dataCyLabel="listing-create-form-deposit-input-label"
 									dataCyOptional="listing-create-form-deposit-input-optional"
@@ -296,7 +293,7 @@ export default function ListingCreatePage() {
 											setDescriptionInputError(undefined)
 										}
 									}}
-									errorMessage={descriptionInputError}
+									errorMessage={formState.errors.description ?? descriptionInputError}
 									dataCy="listing-create-form-description-input-textarea"
 									dataCyLabel="listing-create-form-description-input-textarea-label"
 									dataCyOptional="listing-create-form-description-input-textarea-optional"
@@ -327,7 +324,7 @@ export default function ListingCreatePage() {
 											setBedsInputError(undefined)
 										}
 									}}
-									errorMessage={bedsInputError}
+									errorMessage={formState.errors.beds ?? bedsInputError}
 									dataCy="listing-create-form-beds-input"
 									dataCyLabel="listing-create-form-beds-input-label"
 									dataCyOptional="listing-create-form-beds-input-optional"
@@ -356,7 +353,7 @@ export default function ListingCreatePage() {
 											setBathsInputError(undefined)
 										}
 									}}
-									errorMessage={bathsInputError}
+									errorMessage={formState.errors.baths ?? bathsInputError}
 									dataCy="listing-create-form-baths-input"
 									dataCyLabel="listing-create-form-baths-input-label"
 									dataCyOptional="listing-create-form-baths-input-optional"
@@ -386,7 +383,7 @@ export default function ListingCreatePage() {
 											setAreaInputError(undefined)
 										}
 									}}
-									errorMessage={areaInputError}
+									errorMessage={formState.errors.area ?? areaInputError}
 									dataCy="listing-create-form-area-input"
 									dataCyLabel="listing-create-form-area-input-label"
 									dataCyOptional="listing-create-form-area-input-optional"
@@ -420,7 +417,7 @@ export default function ListingCreatePage() {
 												setAvailableDateInputError(undefined)
 											}
 										}}
-										errorMessage={availableDateInputError}
+										errorMessage={formState.errors.availableDate ?? availableDateInputError}
 										dataCy="listing-create-form-available-date-input"
 										dataCyLabel="listing-create-form-available-date-input-label"
 										dataCyOptional="listing-create-form-available-date-input-optional"
@@ -466,7 +463,8 @@ export default function ListingCreatePage() {
 										tabIndex={0} />
 								</div>
 								{/* Map error (if any) */}
-								<TextError dataCy="listing-create-form-address-map-error" value={addressInputError} />
+								<TextError dataCy="listing-create-form-address-map-error"
+									value={formState.errors.addressMap ?? addressInputError} />
 								<div className="w-fit">
 									<ButtonOutlined
 										text="Get Pin Address"
@@ -534,7 +532,7 @@ export default function ListingCreatePage() {
 										}
 									}}
 									value={addressLine}
-									errorMessage={addressLineInputError}
+									errorMessage={formState.errors.addressLine ?? addressLineInputError}
 									dataCy="listing-create-form-address-line-input"
 									dataCyLabel="listing-create-form-address-line-input-label"
 									dataCyOptional="listing-create-form-address-line-input-optional"
@@ -543,7 +541,7 @@ export default function ListingCreatePage() {
 									{/* City */}
 									<FormInput
 										label='City'
-										name='city'
+										name='addressCity'
 										type="text"
 										minLength={Number(process.env.LISTING_ADDRESS_CITY_MIN ?? 1)}
 										maxLength={Number(process.env.LISTING_ADDRESS_CITY_MAX ?? 64)}
@@ -565,7 +563,7 @@ export default function ListingCreatePage() {
 											}
 										}}
 										value={addressCity}
-										errorMessage={addressCityInputError}
+										errorMessage={formState.errors.addressCity ?? addressCityInputError}
 										dataCy="listing-create-form-city-input"
 										dataCyLabel="listing-create-form-city-input-label"
 										dataCyOptional="listing-create-form-city-input-optional"
@@ -573,7 +571,7 @@ export default function ListingCreatePage() {
 									{/* State */}
 									<FormInput
 										label='State'
-										name='state'
+										name='addressState'
 										type="text"
 										minLength={Number(process.env.LISTING_ADDRESS_STATE_MIN ?? 1)}
 										maxLength={Number(process.env.LISTING_ADDRESS_STATE_MAX ?? 64)}
@@ -595,7 +593,7 @@ export default function ListingCreatePage() {
 											}
 										}}
 										value={addressState}
-										errorMessage={addressStateInputError}
+										errorMessage={formState.errors.addressState ?? addressStateInputError}
 										dataCy="listing-create-form-state-input"
 										dataCyLabel="listing-create-form-state-input-label"
 										dataCyOptional="listing-create-form-state-input-optional"
@@ -605,10 +603,10 @@ export default function ListingCreatePage() {
 									{/* ZIP Code */}
 									<FormInput
 										label='ZIP Code'
-										name='zipcode'
+										name='addressZipcode'
 										type="text"
 										optional={true}
-										minLength={Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 1)}
+										minLength={Number(process.env.LISTING_ADDRESS_ZIP_MIN ?? 0)}
 										maxLength={Number(process.env.LISTING_ADDRESS_ZIP_MAX ?? 64)}
 										onChange={(e) => {
 											const value = e.target.value;
@@ -627,7 +625,7 @@ export default function ListingCreatePage() {
 												setAddressZipcodeInputError(undefined)
 											}
 										}}
-										errorMessage={addressZipcodeInputError}
+										errorMessage={formState.errors.addressZipcode ?? addressZipcodeInputError}
 										dataCy="listing-create-form-zipcode-input"
 										dataCyLabel="listing-create-form-zipcode-input-label"
 										dataCyOptional="listing-create-form-zipcode-input-optional"
@@ -644,8 +642,7 @@ export default function ListingCreatePage() {
 							dataCy="listing-create-preview-btn"
 							onClick={async () => {
 								// Only authenticated users can preview
-								const isAuthenticated = await isUserAuthenticated();
-
+								const isAuthenticated = await userIsAuthenticated();
 								if (!isAuthenticated) {
 									return;
 								}
@@ -670,7 +667,6 @@ export default function ListingCreatePage() {
 								const validator = new ListingPreviewFormValidator(previewListingData);
 								const result = validator.validate()
 
-								// FUTURE: (START) The following validation logic might be reusable for create also, please anticipate
 								if (result.success) {
 									// Get user details
 									const user = await fetchUser();
@@ -713,8 +709,6 @@ export default function ListingCreatePage() {
 										}
 									}
 								}
-								// FUTURE: (END) The following validation logic might be reusable for create also, please anticipate
-
 								// Remove map input error
 								// NOTE: We do this because we do not want the entire slippy map to re-render for every time we validate the form.
 								// Other input fields are "revalidated" for every time their inputs are changed due to the `onChange` function. 

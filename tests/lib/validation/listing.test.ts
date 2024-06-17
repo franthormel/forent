@@ -242,7 +242,6 @@ describe("Create listing form validation", () => {
       expect(actual.success).toBeTruthy();
     });
     test.each([
-      { zipCode: "" },
       {
         zipCode: `Vestibulum sollicitudin nibh magna, et elementum purus elementum eget.`,
       },
