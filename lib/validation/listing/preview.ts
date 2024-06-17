@@ -1,14 +1,13 @@
-import { ListingCreateForm, ListingPreviewForm } from "@/lib/types/listing";
-import { Validator, ValidatorError } from "..";
-import { LISTING_PREVIEW_VALIDATOR } from "./validators";
+import { ListingPreviewForm } from "@/lib/types/listing";
+import { Validator } from "..";
+import { LISTING_VALIDATOR } from "./validators";
 
-// TODO: Rename
 export class ListingPreviewFormValidator
-  implements Validator<ListingPreviewForm | ListingCreateForm>
+  implements Validator<ListingPreviewForm>
 {
-  input: ListingPreviewForm | ListingCreateForm;
+  input: ListingPreviewForm;
 
-  constructor(input: ListingPreviewForm | ListingCreateForm) {
+  constructor(input: ListingPreviewForm) {
     this.input = input;
   }
 
@@ -17,6 +16,6 @@ export class ListingPreviewFormValidator
    * Suitable for server actions.
    */
   validate() {
-    return LISTING_PREVIEW_VALIDATOR.safeParse(this.input);
+    return LISTING_VALIDATOR.safeParse(this.input);
   }
 }

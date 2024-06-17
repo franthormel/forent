@@ -208,18 +208,6 @@ export const LISTING_VALIDATOR = z.object({
   beds: BEDS_VALIDATOR,
   baths: BATHS_VALIDATOR,
   area: AREA_VALIDATOR,
-  availableDate: z.date(),
-  longitude: ADDRESS_LONGITUDE_VALIDATOR,
-  latitude: ADDRESS_LATITUDE_VALIDATOR,
-});
-
-export const LISTING_PREVIEW_VALIDATOR = z.object({
-  price: PRICE_VALIDATOR,
-  deposit: DEPOSIT_VALIDATOR,
-  description: DESCRIPTION_VALIDATOR,
-  beds: BEDS_VALIDATOR,
-  baths: BATHS_VALIDATOR,
-  area: AREA_VALIDATOR,
   availableDate: AVAILABLE_DATE_VALIDATOR_OPTIONAL,
   addressLongitude: ADDRESS_LONGITUDE_VALIDATOR,
   addressLatitude: ADDRESS_LATITUDE_VALIDATOR,

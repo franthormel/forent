@@ -3,14 +3,12 @@
 import { getSessionUser } from "@/lib/auth";
 import { FormDataUtils } from "@/lib/commons/formdata_utils";
 import prisma from "@/lib/db";
-import { GeonamesProvider, GeonamesResponse } from "@/lib/geocode/geonames";
-import { ListingCreateForm, ListingPreviewForm } from "@/lib/types/listing";
-import { ValidatorError } from "@/lib/validation";
+import { GeonamesProvider } from "@/lib/geocode/geonames";
+import { ListingCreateForm } from "@/lib/types/listing";
 import { ListingCreateFormValidator } from "@/lib/validation/listing/create";
+import { RedirectType, redirect } from "next/navigation";
 import { IMAGE_URLS } from "./_data/listing-images";
 import { ListingCreateFormState } from "./type";
-import { ListingPreviewFormValidator } from "@/lib/validation/listing/preview";
-import { RedirectType, redirect } from "next/navigation";
 
 /**
  * Fetch six (6) to 12 image URLs meant to be used for listing photos.
@@ -67,8 +65,7 @@ export async function fetchAddresss(latitude: number, longitude: number) {
   return await provider.fetch();
 }
 
-// FUTURE: Rename when done
-export async function createListingNew(
+export async function createListing(
   previousState: ListingCreateFormState,
   formData: FormData
 ) {
@@ -103,7 +100,7 @@ export async function createListingNew(
   };
 
   // Validate form data
-  const validator = new ListingPreviewFormValidator(listingForm);
+  const validator = new ListingCreateFormValidator(listingForm);
   const result = validator.validate();
   if (result.success) {
     const userSession = await getSessionUser();
@@ -158,94 +155,4 @@ export async function createListingNew(
   }
 
   return noErrorState;
-}
-
-// FUTURE: Remove soon
-export async function createListing(prevState: any, formData: FormData) {
-  const formUtils = new FormDataUtils(formData);
-  // NOTE: Default values, if the field is required, must be fail safes
-  const listing: ListingCreateForm = {
-    price: formUtils.getNumber("price", -1),
-    description: formUtils.getString("description", ""),
-    deposit: formUtils.getNumber("deposit", 0),
-    imageUrls: [], // FUTURE: Add more data soon
-    availableDate: formUtils.getDate("availableDate", new Date(2000)),
-    beds: formUtils.getNumber("beds", -1),
-    baths: formUtils.getNumber("baths", -1),
-    addressLongitude: formUtils.getNumber("inputLongitude", -999),
-    addressLatitude: formUtils.getNumber("inputLatitude", -999),
-    area: 100,
-    addressLine: "",
-    addressCity: "",
-    addressState: "",
-    addressZipcode: "",
-  };
-
-  // Validate
-  const validator = new ListingCreateFormValidator(listing);
-  try {
-    validator.validate();
-  } catch (e) {
-    if (e instanceof ValidatorError) {
-      return e.getErrorMessage();
-    }
-  }
-
-  const geocodeProvider = new GeonamesProvider(
-    listing.addressLongitude,
-    listing.addressLongitude
-  );
-  const url = geocodeProvider.url();
-
-  // Fetch data from the geocode provider
-  const address: GeonamesResponse = await fetch(url).then((res) => res.json());
-
-  const userSession = await getSessionUser();
-  const userDB = await prisma.user.findUnique({
-    where: {
-      email: userSession?.email!,
-    },
-  });
-
-  // FUTURE: remove city and prov from addressLine (only use nearest.name)
-  const addressLine =
-    address.nearest.name +
-    "," +
-    address.nearest.city +
-    "," +
-    address.nearest.prov;
-
-  // Persist
-  const createdListing = await prisma.listing.create({
-    data: {
-      deposit: listing.deposit,
-      description: listing.description,
-      beds: listing.beds,
-      baths: listing.baths,
-      area: 100.0,
-      availableDate: listing.availableDate,
-      user: {
-        connect: {
-          id: userDB?.id,
-        },
-      },
-      address: {
-        create: {
-          addressLine: addressLine,
-          city: address.nearest.city ?? "",
-          state: address.nearest.prov ?? "",
-          country: address.nearest.state ?? "",
-          latitude: address.nearest.latt ?? "",
-          longitude: address.nearest.longt ?? "",
-        },
-      },
-      prices: {
-        create: {
-          value: listing.price,
-        },
-      },
-    },
-  });
-
-  // FUTURE: redirect to create listing preview
 }

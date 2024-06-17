@@ -31,8 +31,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import ListingCreateError from "./_components/error";
 import ListingCreateHeader from "./_components/header";
-import { createListingNew, fetchAddresss, fetchRandomImages, fetchUser, userIsAuthenticated } from "./action";
-import { ListingCreateFormState } from "./type";
+import { createListing, fetchAddresss, fetchRandomImages, fetchUser, userIsAuthenticated } from "./action";
 
 /**
  * Remove any error message
@@ -48,7 +47,8 @@ function removeAnyErrorMessage(value: string | undefined, setStateAction: Dispat
 
 export default function ListingCreatePage() {
 	// Form submission (Server)
-	const [formState, formAction] = useFormState(createListingNew, { errors: [] });
+	// TODO: Show errors (if any)
+	const [formState, formAction] = useFormState(createListing, { errors: [] });
 	const hasServerError = formState.errors.length > 0
 
 	// Form values
