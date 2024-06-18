@@ -40,7 +40,6 @@ export function availableDateText(
   }).format(availableDate);
 }
 
-// TODO: Unit test
 export function depositText(deposit?: number): string {
   if (deposit === undefined || deposit <= 0) {
     return "None";

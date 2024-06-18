@@ -1,7 +1,5 @@
 import ListingMainInfo from "@/components/_app/listing/main-info";
 
-// TODO: Add deposit
-
 describe('Listing Main Info', () => {
     describe("display correct UI when", () => {
         afterEach(() => {
@@ -13,10 +11,18 @@ describe('Listing Main Info', () => {
                 .should('be.visible')
                 .and('exist')
                 .and('have.text', 'Date Available')
+            cy.get('[data-cy="listing-main-info-address-space"]')
+                .should('not.be.visible')
+                .and('exist')
+            cy.get('[data-cy="listing-main-info-col-label-deposit"]')
+                .should('be.visible')
+                .and('exist')
+                .and('have.text', 'Deposit')
         })
 
-        it("Multiple beds, multiple baths, null available date, null zipcode", () => {
+        it("Multiple beds, multiple baths, null available date, null zipcode, negative deposit", () => {
             cy.mount(<ListingMainInfo price={9900}
+                deposit={-12}
                 beds={3}
                 baths={2}
                 area={55}
@@ -53,20 +59,22 @@ describe('Listing Main Info', () => {
                 .should('be.visible')
                 .and('exist')
                 .and('have.text', 'Available Now')
+            cy.get('[data-cy="listing-main-info-col-value-deposit"]')
+                .should('be.visible')
+                .and('exist')
+                .and('have.text', 'None')
             cy.get('[data-cy="listing-main-info-address-line"]')
                 .should('be.visible')
                 .and('exist')
                 .and('have.text', '8508 Vandervort Crest Apt. 828,')
-            cy.get('[data-cy="listing-main-info-address-space"]')
-                .should('not.be.visible')
-                .and('exist')
             cy.get('[data-cy="listing-main-info-address-city-state-zip"]')
                 .should('be.visible')
                 .and('exist')
                 .and('contain.text', 'East Wallace, Louisiana')
         });
-        it("Single bed, single bath, future available date, with zipcode", () => {
+        it("Single bed, single bath, future available date, with zipcode, zero deposit", () => {
             cy.mount(<ListingMainInfo price={12540}
+                deposit={0}
                 beds={1}
                 baths={1}
                 area={25}
@@ -103,20 +111,22 @@ describe('Listing Main Info', () => {
                 .should('be.visible')
                 .and('exist')
                 .and('have.text', 'June 20, 2035')
+            cy.get('[data-cy="listing-main-info-col-value-deposit"]')
+                .should('be.visible')
+                .and('exist')
+                .and('have.text', 'None')
             cy.get('[data-cy="listing-main-info-address-line"]')
                 .should('be.visible')
                 .and('exist')
                 .and('have.text', '84162 S Front Street Apt. 807,')
-            cy.get('[data-cy="listing-main-info-address-space"]')
-                .should('not.be.visible')
-                .and('exist')
             cy.get('[data-cy="listing-main-info-address-city-state-zip"]')
                 .should('be.visible')
                 .and('exist')
                 .and('contain.text', 'Prosaccoborough, Hawaii 88950')
         });
-        it("Multiple beds, single bath, before available date, with zipcode", () => {
+        it("Multiple beds, single bath, before available date, with zipcode, with deposit", () => {
             cy.mount(<ListingMainInfo price={9562}
+                deposit={1236}
                 beds={2}
                 baths={1}
                 area={32}
@@ -153,13 +163,14 @@ describe('Listing Main Info', () => {
                 .should('be.visible')
                 .and('exist')
                 .and('have.text', 'Available Now')
+            cy.get('[data-cy="listing-main-info-col-value-deposit"]')
+                .should('be.visible')
+                .and('exist')
+                .and('have.text', '₱1,236')
             cy.get('[data-cy="listing-main-info-address-line"]')
                 .should('be.visible')
                 .and('exist')
                 .and('have.text', '26846 Hartmann Trace Apt. 561,')
-            cy.get('[data-cy="listing-main-info-address-space"]')
-                .should('not.be.visible')
-                .and('exist')
             cy.get('[data-cy="listing-main-info-address-city-state-zip"]')
                 .should('be.visible')
                 .and('exist')
