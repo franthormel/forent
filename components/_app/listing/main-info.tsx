@@ -1,6 +1,7 @@
 "use client"
 
 import { StringUtils } from "@/lib/commons/string_utils"
+import { CURRENCY_FORMATTER } from "@/lib/currency"
 import { availableDateText } from "./function"
 import ListingMainInfoColumn from "./main-info-col"
 
@@ -27,11 +28,7 @@ export default function ListingMainInfo(props: ListingMainInfoProps) {
             <div data-cy={props.dataCyPrice ?? "listing-main-info-price"}>
                 <span className="text-4xl font-bold">
                     {/* FUTURE: Localize currency, put in env */}
-                    {new Intl.NumberFormat("en-PH", {
-                        style: "currency",
-                        currency: "PHP",
-                        maximumFractionDigits: 0,
-                    }).format(props.price)}
+                    {CURRENCY_FORMATTER.format(props.price)}
                 </span>
                 <span className="text-xl font-bold">/mo</span>
             </div>
