@@ -1,11 +1,13 @@
 "use client"
 
 import { StringUtils } from "@/lib/commons/string_utils"
-import { availableDateText } from "./function"
+import { CURRENCY_FORMATTER } from "@/lib/currency"
+import { availableDateText, depositText } from "./function"
 import ListingMainInfoColumn from "./main-info-col"
 
 export interface ListingMainInfoProps {
     price: number
+    deposit?: number
     beds: number
     baths: number
     area: number
@@ -26,12 +28,7 @@ export default function ListingMainInfo(props: ListingMainInfoProps) {
             {/* Price */}
             <div data-cy={props.dataCyPrice ?? "listing-main-info-price"}>
                 <span className="text-4xl font-bold">
-                    {/* FUTURE: Localize currency, put in env */}
-                    {new Intl.NumberFormat("en-PH", {
-                        style: "currency",
-                        currency: "PHP",
-                        maximumFractionDigits: 0,
-                    }).format(props.price)}
+                    {CURRENCY_FORMATTER.format(props.price)}
                 </span>
                 <span className="text-xl font-bold">/mo</span>
             </div>
@@ -50,6 +47,9 @@ export default function ListingMainInfo(props: ListingMainInfoProps) {
                 <ListingMainInfoColumn value={availableDateText(props.availableDate, new Date())} label="Date Available"
                     dataCyValue="listing-main-info-col-value-available-date"
                     dataCyLabel="listing-main-info-col-label-available-date" />
+                <ListingMainInfoColumn value={depositText(props.deposit)} label="Deposit"
+                    dataCyValue="listing-main-info-col-value-deposit"
+                    dataCyLabel="listing-main-info-col-label-deposit" />
             </div>
             {/* Address */}
             <div className="text-gray-700">

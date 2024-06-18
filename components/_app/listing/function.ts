@@ -1,4 +1,5 @@
 import { DateUtils } from "../../../lib/commons/date_utils";
+import { CURRENCY_FORMATTER } from "../../../lib/currency";
 
 /**
  * Display proper text if the given listing's date is considered available
@@ -37,4 +38,11 @@ export function availableDateText(
     dateStyle: "long",
     timeZone: "Asia/Manila",
   }).format(availableDate);
+}
+
+export function depositText(deposit?: number): string {
+  if (deposit === undefined || deposit <= 0) {
+    return "None";
+  }
+  return CURRENCY_FORMATTER.format(deposit);
 }

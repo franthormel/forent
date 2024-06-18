@@ -166,6 +166,7 @@ export default function ListingCreatePage() {
 					<Listing id="preview"
 						imageUrls={imageUrlsRef.current}
 						price={priceValueRef.current!}
+						deposit={depositValueRef.current}
 						description={descriptionValueRef.current!}
 						beds={bedsValueRef.current!}
 						baths={bathsValueRef.current!}

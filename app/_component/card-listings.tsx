@@ -1,4 +1,5 @@
 import CardListing from "@/components/card-listing";
+import { CURRENCY_FORMATTER } from "@/lib/currency";
 import prisma from "@/lib/db";
 
 interface CardListingsProps {
@@ -31,11 +32,7 @@ export default async function CardListings(props: CardListingsProps) {
         })
         const price = prices.filter(price => price.isCurrent).at(0)!.value.toNumber();
         // FUTURE: Localize currency, put in env
-        const priceFormatted = new Intl.NumberFormat("en-PH", {
-            style: "currency",
-            currency: "PHP",
-            maximumFractionDigits: 0,
-        }).format(price);
+        const priceFormatted = CURRENCY_FORMATTER.format(price);
 
         return <CardListing
             key={listing.id}

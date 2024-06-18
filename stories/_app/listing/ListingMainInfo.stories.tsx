@@ -12,6 +12,7 @@ type Story = StoryObj<typeof meta>;
 
 const defaultArgs: ListingMainInfoProps = {
     price: 10000,
+    deposit: -20,
     beds: 2,
     baths: 1,
     area: 25,
@@ -35,6 +36,7 @@ export const MediumLayout: Story = {
     args: {
         ...defaultArgs,
         price: 25000,
+        deposit: 0,
         beds: 3,
         baths: 2,
         availableDate: new Date("2035-04-25T00:00:00.000Z"),
@@ -50,6 +52,7 @@ export const MediumLayout: Story = {
 export const LargeLayout: Story = {
     args: {
         ...defaultArgs,
+        deposit: 500,
         beds: 1,
         baths: 1,
     },
@@ -63,6 +66,7 @@ export const LargeLayout: Story = {
 export const ExtraLargeLayout: Story = {
     args: {
         ...defaultArgs,
+        deposit: 20000,
         price: 123456,
         beds: 12,
         baths: 7,

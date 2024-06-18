@@ -18,6 +18,7 @@ export default async function ListingPage({ params }: { params: { id: string } }
         <Listing id={listing.id}
             imageUrls={listing.imageUrls}
             price={currentPrice}
+            deposit={listing.deposit?.toNumber()}
             beds={listing.beds}
             baths={listing.baths}
             area={listing.area.toNumber()}

@@ -9,6 +9,7 @@ export interface ListingProps {
     id: string
     imageUrls: string[]
     price: number
+    deposit?: number
     beds: number
     baths: number
     area: number
@@ -30,9 +31,9 @@ export default function Listing(props: ListingProps) {
         {/* Photos & main information */}
         <div className="grid auto-rows-auto gap-y-11">
             <ListingBanner imageUrls={props.imageUrls} listingId={props.id} />
-            <ListingMainInfo price={props.price} beds={props.beds} baths={props.baths} area={props.area}
-                availableDate={props.availableDate} addressLine={props.addressLine} city={props.city}
-                state={props.state} zipCode={props.zipCode} />
+            <ListingMainInfo price={props.price} deposit={props.deposit} beds={props.beds} baths={props.baths}
+                area={props.area} availableDate={props.availableDate} addressLine={props.addressLine}
+                city={props.city} state={props.state} zipCode={props.zipCode} />
         </div>
         <ListingContact name={props.name} contactNumber={props.contactNumber} email={props.email} />
         <ListingDescription description={props.description} />

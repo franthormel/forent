@@ -1,14 +1,10 @@
 import { z } from "zod";
+import { CURRENCY_FORMATTER } from "../../currency";
 
 // Price
 const PRICE_MIN = Number(process.env.LISTING_PRICE_MIN ?? 100);
 const PRICE_MAX = Number(process.env.LISTING_PRICE_MAX ?? 100_000_000);
-// FUTURE: Localize currency, put in env
-const CURRENCY_FORMATTER = new Intl.NumberFormat("en-PH", {
-  style: "currency",
-  currency: "PHP",
-  maximumFractionDigits: 0,
-});
+
 const PRICE_MIN_FORMATTED = CURRENCY_FORMATTER.format(PRICE_MIN);
 const PRICE_MAX_FORMATTED = CURRENCY_FORMATTER.format(PRICE_MAX);
 export const PRICE_VALIDATOR = z
