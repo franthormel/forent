@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   creator: 'franthormel',
   publisher: 'franthormel',
 }
-
+// NOTE: This is client-side due to some hydration error (https://nextjs.org/docs/messages/react-hydration-error#solution-2-disabling-ssr-on-specific-components)
 const CardListings = dynamic(() => import('./_component/card-listings'), { ssr: false })
 
 export default function Home() {
