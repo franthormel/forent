@@ -1,21 +1,18 @@
 "use client"
 import PageLayout from "@/components/_app/page-layout";
 
-import { Feature, MapBrowserEvent, View } from "ol";
-import Map from 'ol/Map';
+import { Feature, View } from "ol";
 import { Geometry } from "ol/geom";
 import Point from "ol/geom/Point";
 import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
+import Map from 'ol/Map';
 import { fromLonLat } from "ol/proj";
 import OSM from "ol/source/OSM";
 import VectorSource from "ol/source/Vector";
 import { Fill, Stroke, Style, Text } from "ol/style";
 import CircleStyle from "ol/style/Circle";
-import Select from 'ol/interaction/Select';
 import { useEffect } from "react";
-import { click, singleClick } from "ol/events/condition";
-import MapBrowserEventType from "ol/MapBrowserEventType";
 
 export default function Home() {
     // Default styles

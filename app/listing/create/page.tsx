@@ -469,7 +469,7 @@ export default function ListingCreatePage() {
 								<div className="w-fit">
 									<ButtonOutlined
 										text="Get Pin Address"
-										size="small"
+										size="small" // TODO: Make another component
 										loading={fetchingAddress}
 										dataCy="listing-create-form-address-button"
 										onClick={async () => {
