@@ -23,6 +23,7 @@ model Listing {
   /// Current and previous prices of the listing. The current price is the first entry in the list.
   prices        Price[]
   address       Address?
+  createdDate   DateTime  @default(now())
   /// User that created this listing.
   user          User      @relation(fields: [userId], references: [id])
   userId        String
@@ -35,7 +36,7 @@ model Price {
   id        String   @id @default(cuid())
   value     Decimal  @db.Money
   /// The price is effective on the day that it is listed.
-  startDate DateTime @default(dbgenerated("CURRENT_DATE")) @db.Date
+  startDate DateTime @default(now()) @db.Date
   /// Change this to the date when the `value` is changed.
   endDate   DateTime @default("9999-12-31T00:00:00.000Z") @db.Date
   isCurrent Boolean  @default(true)
