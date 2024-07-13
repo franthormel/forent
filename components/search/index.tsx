@@ -17,7 +17,7 @@ export default function Search(props: SearchProps) {
     const dataCyInput = props.dataCyInput ?? "search-input";
     const dataCyButtonIcon = props.dataCyButtonIcon ?? "search-btn-icon";
 
-    // if drop shadow is removed, outline must be added
+    // TODO: Remove drop shadow; add outline
     return (
         <div className="flex justify-between rounded-full bg-slate-50 px-6 py-0 shadow-md">
             <input type='search'

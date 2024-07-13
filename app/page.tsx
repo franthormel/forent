@@ -1,5 +1,4 @@
-import ButtonFilled from '@/components/buttons/filled'
-import Search from '@/components/search'
+import ButtonLinkFilled from '@/components/button-links/filled'
 import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 
@@ -31,7 +30,7 @@ export default function Home() {
       </div>
       {/* Button */}
       <div className='grid justify-center'>
-        <ButtonFilled text='View more listings' dataCy='btn-view-listings' />
+        <ButtonLinkFilled href='/listings' text='View more listings' dataCy='btn-view-listings' />
       </div>
     </div >
   )
