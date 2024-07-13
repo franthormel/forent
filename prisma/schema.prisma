@@ -23,6 +23,7 @@ model Listing {
   /// Current and previous prices of the listing. The current price is the first entry in the list.
   prices        Price[]
   address       Address?
+  createdDate   DateTime  @default(now())
   /// User that created this listing.
   user          User      @relation(fields: [userId], references: [id])
   userId        String
