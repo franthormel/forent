@@ -3,7 +3,7 @@
 import Listing from "@/components/_app/listing";
 import PageLayout from "@/components/_app/page-layout";
 import ButtonFilled from "@/components/buttons/filled";
-import ButtonOutlined from "@/components/buttons/outlined";
+import ButtonSmallOutlined from "@/components/buttons/small/outlined";
 import ButtonText from "@/components/buttons/text";
 import FormInput from "@/components/form-input";
 import FormInputReset from "@/components/form-input/reset";
@@ -467,9 +467,8 @@ export default function ListingCreatePage() {
 								<TextError dataCy="listing-create-form-address-map-error"
 									value={formState.errors.addressMap ?? addressInputError} />
 								<div className="w-fit">
-									<ButtonOutlined
+									<ButtonSmallOutlined
 										text="Get Pin Address"
-										size="small" // TODO: Make another component
 										loading={fetchingAddress}
 										dataCy="listing-create-form-address-button"
 										onClick={async () => {

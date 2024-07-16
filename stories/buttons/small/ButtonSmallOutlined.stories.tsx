@@ -1,18 +1,18 @@
-import ButtonText from "@/components/buttons/text";
+import ButtonSmallOutlined from "@/components/buttons/small/outlined";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof ButtonText> = {
-    title: "Buttons/Text",
-    component: ButtonText,
+const meta: Meta<typeof ButtonSmallOutlined> = {
+    title: "Buttons/Small/Outlined",
+    component: ButtonSmallOutlined,
     tags: ["autodocs"],
-} satisfies Meta<typeof ButtonText>;
+} satisfies Meta<typeof ButtonSmallOutlined>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Example: Story = {
     args: {
-        text: "Base",
+        text: "Base"
     }
 };
 
