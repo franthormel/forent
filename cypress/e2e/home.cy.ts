@@ -81,6 +81,10 @@ describe("homepage", () => {
           .and("be.visible")
           .and("have.text", "Renting made simple");
 
+        cy.get('[data-cy="link-view-listings"]')
+          .should("have.attr", "href")
+          .and("include", "/listings");
+
         cy.get('[data-cy="btn-view-listings"]')
           .should("exist")
           .and("be.visible")

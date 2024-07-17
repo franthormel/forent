@@ -1,6 +1,7 @@
-import ButtonLinkFilled from '@/components/button-links/filled'
+import ButtonFilled from '@/components/buttons/filled'
 import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Rent Property | Forent',
@@ -30,7 +31,9 @@ export default function Home() {
       </div>
       {/* Button */}
       <div className='grid justify-center'>
-        <ButtonLinkFilled href='/listings' text='View more listings' dataCy='btn-view-listings' />
+        <Link href='/listings' data-cy="link-view-listings">
+          <ButtonFilled text='View more listings' dataCy='btn-view-listings' />
+        </Link>
       </div>
     </div >
   )
