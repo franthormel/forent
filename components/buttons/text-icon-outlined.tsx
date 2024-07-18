@@ -1,13 +1,13 @@
 import { MouseEventHandler } from "react";
 
-export interface ButtonIconTextOutlinedProps {
+export interface ButtonTextIconOutlinedProps {
     text: string;
     onClick?: MouseEventHandler;
     dataCy?: string;
 }
 
-// NOTE: Icon -> Text
-export default function ButtonIconTextOutlined({ children, props }: { children: React.ReactNode, props: ButtonIconTextOutlinedProps }) {
+// NOTE: Text -> Icon
+export default function ButtonTextIconOutlined({ children, props }: { children: React.ReactNode, props: ButtonTextIconOutlinedProps }) {
     return (
         <button className="rounded-full bg-slate-50 px-5 py-2 outline outline-1 outline-gray-800 transition-all 
                         // Button and text hover color
@@ -17,10 +17,10 @@ export default function ButtonIconTextOutlined({ children, props }: { children: 
             data-cy={props.dataCy ?? "button-icon-text"}
             onClick={props.onClick}>
             <div className="flex">
-                <div className="mr-1">
+                {props.text}
+                <div className="ml-1">
                     {children}
                 </div>
-                {props.text}
             </div>
         </button>
     );
