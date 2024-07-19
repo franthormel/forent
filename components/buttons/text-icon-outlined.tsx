@@ -17,7 +17,9 @@ export default function ButtonTextIconOutlined({ children, props }: { children: 
             data-cy={props.dataCy ?? "button-icon-text"}
             onClick={props.onClick}>
             <div className="flex">
-                {props.text}
+                <span className="w-max">
+                    {props.text}
+                </span>
                 <div className="ml-1">
                     {children}
                 </div>
