@@ -4,9 +4,9 @@ import Search from "@/components/search";
 
 export default function Home() {
     return (
-        <div className="px-8 md:px-10">
+        <div className="flex flex-col gap-y-8">
             {/* Search and price filters */}
-            <div className="flex gap-x-4 w-full lg:max-w-5xl">
+            <div className="flex w-full gap-x-4 px-8 md:px-10 lg:max-w-5xl">
                 {/* Search filter */}
                 <div className="w-full">
                     <Search />
@@ -66,6 +66,16 @@ export default function Home() {
                             <path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" />
                         </svg>
                     </ButtonIconTextOutlined>
+                </div>
+            </div>
+            <div className="flex h-[36rem]">
+                {/* TODO: Map of listings */}
+                <div className="basis-1/2 bg-red-200">
+                    Map
+                </div>
+                {/* TODO: List of listings */}
+                <div className="basis-1/2 bg-yellow-100">
+                    List
                 </div>
             </div>
         </div>
