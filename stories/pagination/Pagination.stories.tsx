@@ -19,6 +19,7 @@ export const Default: Story = {
 export const FirstPage: Story = {
     args: {
         pages: 3,
+        currentPage: 1
     }
 };
 

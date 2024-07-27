@@ -1,18 +1,40 @@
 import CardListing from "@/components/card-listing";
+import Pagination from "@/components/pagination";
 import { CURRENCY_FORMATTER } from "@/lib/currency";
 import prisma from "@/lib/db";
 import { ListingsListTop } from "./list-top";
 import { ListingsMap } from "./map";
 import { ListingsSearchFilters } from "./search-filters";
 
+const LISTINGS_PER_PAGE = 11;
+
+// TODO: Move to new file (functions.ts)
+// TODO: Unit test
+function countListingsToSkip(currentPage: number) {
+    return (currentPage - 1) * LISTINGS_PER_PAGE;
+}
+
 export default async function Listings() {
+    const currentPage = 1;
+    const listingsToSkip = countListingsToSkip(currentPage);
+    // Count the number of listings using the givne current pagination option values
+    const listingsCount = await prisma.listing.count()
+    // Filter listings using the given pagination and filter options
     const listings = await prisma.listing.findMany({
-        take: 40,
+        skip: listingsToSkip,
+        take: LISTINGS_PER_PAGE,
         include: {
             address: true,
             prices: true
         }
     });
+    const pages = Math.ceil(listingsCount / LISTINGS_PER_PAGE);
+
+    // TODO: Remove last
+    console.log("-------------------------------------------------------")
+    console.log("length", listingsCount);
+    console.log("skip", listingsToSkip);
+    console.log("pages ", pages);
 
     return (
         <div className="flex flex-col gap-y-8">
@@ -20,7 +42,7 @@ export default async function Listings() {
             <ListingsSearchFilters />
             <div className="flex h-[36rem]">
                 <ListingsMap />
-                {/* TODO: List of listings */}
+                {/* List of listings */}
                 <div className="flex basis-1/2 flex-col">
                     {/* List of listings count & sort option */}
                     <ListingsListTop />
@@ -47,8 +69,10 @@ export default async function Listings() {
                             })}
                         </div>
                     </div>
-                    {/* TODO: List of listings pagination */}
-                    <div className="basis-20 bg-yellow-500" />
+                    {/* List of listings pagination */}
+                    <div className="flex basis-20 items-center justify-center border-y-[1px] border-gray-200">
+                        <Pagination pages={pages} currentPage={currentPage} />
+                    </div>
                 </div>
             </div>
         </div>

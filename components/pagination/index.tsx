@@ -13,9 +13,18 @@ export interface PaginationProps {
 export default function Pagination(props: PaginationProps) {
     const pageNumbers = Array.from({ length: props.pages }, (elem, i) => i + 1)
     // Show the previous button only if the current page is not the first page
-    const showPreviousButton = props.currentPage && props.currentPage >= 1
+    // TODO: Move to function then unit test
+    const showPreviousButton = props.currentPage && props.currentPage > 1
     // Show the next button only if the current page is not the last page
-    const showNextButton = props.currentPage === undefined || props.currentPage < props.pages
+    // TODO: Move to function then unit test
+    let showNextButton = false;
+    if (props.currentPage === undefined) {
+        if (props.pages !== 1) {
+            showNextButton = true;
+        }
+    } else {
+        showNextButton = props.currentPage < props.pages;
+    }
 
     return (
         <div className="flex gap-3">
@@ -29,7 +38,6 @@ export default function Pagination(props: PaginationProps) {
             }
             {pageNumbers.map((pageNumber) => {
                 const isCurrentPage = props.currentPage === pageNumber
-                console.log(isCurrentPage, props.currentPage, pageNumber)
                 return <PaginationItemNumber
                     page={pageNumber}
                     key={pageNumber}
