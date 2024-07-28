@@ -1,6 +1,6 @@
-import ButtonIconTextOutlined from "@/components/buttons/icon-text-outlined";
 import ButtonTextIconOutlined from "@/components/buttons/text-icon-outlined";
 import Search from "@/components/search";
+import ListingsSearchFiltersMenu from "./search-filters-menu";
 
 export function ListingsSearchFilters() {
     return (
@@ -52,19 +52,7 @@ export function ListingsSearchFilters() {
                 </ButtonTextIconOutlined>
             </div>
             {/* Filter menu */}
-            <div className="flex lg:hidden">
-                <ButtonIconTextOutlined props={{
-                    text: "Filters",
-                    dataCy: "button-filter-menu"
-                }}>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        height="24"
-                        width="24"
-                        viewBox="0 -960 960 960">
-                        <path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" />
-                    </svg>
-                </ButtonIconTextOutlined>
-            </div>
+            <ListingsSearchFiltersMenu />
         </div>
     )
 }

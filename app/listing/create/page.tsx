@@ -161,7 +161,6 @@ export default function ListingCreatePage() {
 					setShowModalState(false)
 				}
 			}}>
-				{/* FUTURE: Show deposit */}
 				<div className="py-16">
 					<Listing id="preview"
 						imageUrls={imageUrlsRef.current}

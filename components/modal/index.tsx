@@ -8,6 +8,12 @@ export interface ModalProps {
     dataCyContent?: string
 }
 
+/**
+ * Requirements for using this component.
+ * 
+ * 1. Create a boolean state variable that controls the modal's visibility
+ * 2. An action button to hide/show the modal by changing the boolean state variable's value
+ */
 export default function Modal({ children, props }: {
     props: ModalProps,
     children: ReactNode
