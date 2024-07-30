@@ -7,6 +7,7 @@ export default function FormInputReset(props: FormInputResetProps) {
         <input type="reset"
             value="Reset"
             className="cursor-pointer"
+            onClick={props.onClick}
             data-cy={props.dataCy ?? "form-input-reset"} />
     )
 }

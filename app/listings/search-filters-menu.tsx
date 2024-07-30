@@ -3,13 +3,13 @@
 import ButtonIconTextOutlined from "@/components/buttons/icon-text-outlined";
 import Modal from "@/components/modal";
 import { useState } from "react";
+import ListingsSearchFiltersModalContent from "./search-filters-modal-content";
 
 export default function ListingsSearchFiltersMenu() {
     const [showModalState, setShowModalState] = useState<boolean>(false);
 
     return (
         <div className="flex lg:hidden">
-            {/* TODO: Show correct components for `sm` and `md` screens */}
             <Modal props={{
                 show: showModalState,
                 close: (e) => {
@@ -17,7 +17,7 @@ export default function ListingsSearchFiltersMenu() {
                 }
             }}>
                 <div className="h-screen w-[75vw]">
-                    <h1>Helfo</h1>
+                    <ListingsSearchFiltersModalContent />
                 </div>
             </Modal>
             <ButtonIconTextOutlined props={{
