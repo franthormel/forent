@@ -11,7 +11,7 @@ export default function Dropdown({ children, props }: { children: ReactNode, pro
     const [showContent, setShowContent] = useState<boolean>(false);
 
     return (
-        <div className="relative">
+        <div className="relative flex">
             <ButtonTextIconOutlined props={{
                 text: props.text,
                 onClick: (e) => {
@@ -27,7 +27,7 @@ export default function Dropdown({ children, props }: { children: ReactNode, pro
             </ButtonTextIconOutlined>
             {/* NOTE: Width can be customized by the child component */}
             {showContent &&
-                <div className="bg-background absolute z-20 mt-2 w-fit rounded-md border border-gray-200 p-4 shadow-md">
+                <div className="absolute top-16 z-20 w-fit rounded-md border border-gray-200 bg-slate-50 p-4 shadow-md">
                     {children}
                 </div>}
         </div>

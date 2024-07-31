@@ -9,7 +9,7 @@ export interface ButtonTextIconOutlinedProps {
 // NOTE: Text -> Icon
 export default function ButtonTextIconOutlined({ children, props }: { children: React.ReactNode, props: ButtonTextIconOutlinedProps }) {
     return (
-        <button className="rounded-full bg-slate-50 px-5 py-2 outline outline-1 outline-gray-800 transition-all 
+        <button className="rounded-full bg-slate-50 px-5 py-2 outline outline-1 outline-gray-800 transition-all
                         // Button and text hover color
                         hover:bg-gray-800 hover:text-slate-50 
                         // SVG Icon hover color
