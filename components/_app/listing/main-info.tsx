@@ -1,7 +1,7 @@
 "use client"
 
 import { StringUtils } from "@/lib/commons/string_utils"
-import { CURRENCY_FORMATTER } from "@/lib/currency"
+import { CURRENCY_FORMATTER } from "@/lib/formatter/currency"
 import { availableDateText, depositText } from "./function"
 import ListingMainInfoColumn from "./main-info-col"
 

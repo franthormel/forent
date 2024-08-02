@@ -1,7 +1,7 @@
 import CardListing from "@/components/card-listing";
 import Pagination from "@/components/pagination";
-import { CURRENCY_FORMATTER } from "@/lib/currency";
 import prisma from "@/lib/db";
+import { CURRENCY_FORMATTER } from "@/lib/formatter/currency";
 import { ListingsListTop } from "./list-top";
 import { ListingsMap } from "./map";
 import { ListingsSearchFilters } from "./search-filters";

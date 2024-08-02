@@ -1,17 +1,21 @@
 import FormInput from "@/components/form-input";
+import { CURRENCY_FORMATTER } from "@/lib/formatter/currency";
 import ListingsFilterButtons from "./filter-buttons";
 
 export default function ListingsFilterPrice() {
+    const DEFAULT_MAX = 10_000_000;
+
+    const minPricePlaceholder = "None";
+    const maxPricePlaceholder = CURRENCY_FORMATTER.format(DEFAULT_MAX);
+
     return (
         <div className="flex flex-col gap-5">
-            {/* TODO: Use price formatter */}
             <FormInput label="Minimum Price"
                 name="price-min"
-                placeholder="None" />
-            {/* TODO: Use price formatter */}
+                placeholder={minPricePlaceholder} />
             <FormInput label="Maximum Price"
                 name="price-min"
-                placeholder="₱ 10,000,000" />
+                placeholder={maxPricePlaceholder} />
             <ListingsFilterButtons />
         </div>
     );
