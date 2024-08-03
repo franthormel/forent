@@ -13,6 +13,7 @@ type Story = StoryObj<typeof meta>;
 export const Example: Story = {
     args: {
         values: ["Any", "1", "2", "3", "4", "5+"],
-        label: "Options"
+        label: "Options",
+        activeIndex: 3,
     }
 };

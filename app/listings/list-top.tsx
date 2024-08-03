@@ -1,14 +1,17 @@
+import { formatAppend } from "@/lib/formatter/number";
+
 export function ListingsListTop() {
+    const listingsCount = 7_238;
+    const listingsCountText = formatAppend(listingsCount, "listings");
+
     return (
         <div>
             {/* TODO: Count and sort options */}
             <div className="basis-14 px-5 py-4 block md:flex md:flex-row border-y-[1px] border-gray-200">
                 {/* Count */}
                 {/* TODO: Use actual numbers */}
-                {/* TODO: Ensure number formatting is correct (use commas to separate) 
-                (refactor (similar to AREA_FORMATTER now) and use NUMBER_FORMATTER) */}
                 <span className="font-bold md:mr-6">
-                    7,238 listings
+                    {listingsCountText}
                 </span>
                 {/* TODO: Sort options */}
                 <div>

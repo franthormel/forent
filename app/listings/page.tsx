@@ -2,21 +2,16 @@ import CardListing from "@/components/card-listing";
 import Pagination from "@/components/pagination";
 import prisma from "@/lib/db";
 import { CURRENCY_FORMATTER } from "@/lib/formatter/currency";
+import { countListingsToSkip } from "./function";
 import { ListingsListTop } from "./list-top";
 import { ListingsMap } from "./map";
 import { ListingsSearchFilters } from "./search-filters";
 
 const LISTINGS_PER_PAGE = 11;
 
-// TODO: Move to new file (functions.ts)
-// TODO: Unit test
-function countListingsToSkip(currentPage: number) {
-    return (currentPage - 1) * LISTINGS_PER_PAGE;
-}
-
 export default async function Listings() {
     const currentPage = 1;
-    const listingsToSkip = countListingsToSkip(currentPage);
+    const listingsToSkip = countListingsToSkip(currentPage, LISTINGS_PER_PAGE);
     // Count the number of listings using the givne current pagination option values
     const listingsCount = await prisma.listing.count()
     // Filter listings using the given pagination and filter options

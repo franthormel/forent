@@ -1,3 +1,4 @@
+import { checkShowNextButton, checkShowPreviousButton } from "./function"
 import PaginationItemNav from "./item-nav"
 import PaginationItemNumber from "./item-number"
 
@@ -9,22 +10,10 @@ export interface PaginationProps {
     currentPage?: number
 }
 
-// TODO: Style when many pages (need to break it somewhere, must work for all screen screens)
 export default function Pagination(props: PaginationProps) {
     const pageNumbers = Array.from({ length: props.pages }, (elem, i) => i + 1)
-    // Show the previous button only if the current page is not the first page
-    // TODO: Move to function then unit test
-    const showPreviousButton = props.currentPage && props.currentPage > 1
-    // Show the next button only if the current page is not the last page
-    // TODO: Move to function then unit test
-    let showNextButton = false;
-    if (props.currentPage === undefined) {
-        if (props.pages !== 1) {
-            showNextButton = true;
-        }
-    } else {
-        showNextButton = props.currentPage < props.pages;
-    }
+    const showPreviousButton = checkShowPreviousButton(props.currentPage);
+    const showNextButton = checkShowNextButton(props.pages, props.currentPage);
 
     return (
         <div className="flex gap-3">

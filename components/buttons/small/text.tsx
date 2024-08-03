@@ -1,8 +1,6 @@
 import { buttonText, buttonType } from "../functions";
 import { ButtonProps } from "../types";
 
-// TODO: Story
-// TODO: Component
 export default function ButtonSmallText(props: ButtonProps) {
     const text = buttonText(props.loading) ?? props.text;
     const type = buttonType(props.type);

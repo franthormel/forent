@@ -12,6 +12,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Example: Story = {
     args: {
-        values: ["Any", "1", "2", "3", "4", "5+"]
+        values: ["Any", "1", "2", "3", "4", "5+"],
+        activeIndex: 0
     }
 };

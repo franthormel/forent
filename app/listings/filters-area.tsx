@@ -1,13 +1,13 @@
 import ButtonSmallFilled from "@/components/buttons/small/filled";
 import ButtonSmallText from "@/components/buttons/small/text";
 import FormInput from "@/components/form-input";
-import { AREA_FORMATTER } from "@/lib/formatter/area";
+import { formatAppend } from "@/lib/formatter/number";
 
 export default function ListingsFilterArea() {
     const DEFAULT_MAX = 20;
 
     const minAreaPlaceholder = "None";
-    const maxAreaPlaceholder = AREA_FORMATTER.format(DEFAULT_MAX);
+    const maxAreaPlaceholder = formatAppend(DEFAULT_MAX, "sqm.");
 
     return (
         <div className="flex flex-col gap-5">

@@ -46,6 +46,7 @@ export const SinglePage: Story = {
 export const ManyPages: Story = {
     args: {
         pages: 101,
+        currentPage: 55,
     }
 };
 
