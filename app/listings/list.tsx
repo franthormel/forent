@@ -1,20 +1,22 @@
+"use client"
+
 import CardListing from "@/components/card-listing";
 import { CURRENCY_FORMATTER } from "@/lib/formatter/currency";
-import { PrismaListing } from "@/lib/types-prisma/listing";
+import { useState } from "react";
+import { Listing } from "./types";
 
 export interface ListingsListInterface {
-    listings: PrismaListing[]
+    listings: Listing[]
 }
 
 export default function ListingsList(props: ListingsListInterface) {
+    const [listings, setListings] = useState<Listing[]>(props.listings);
+
     return (
         <div className="flex basis-full flex-col items-center overflow-x-auto p-4">
             <div className="grid-cols-auto grid gap-4 xl:grid-cols-2 xl:gap-6">
-                {props.listings.map((listing) => {
-                    const listingPrice = listing.prices.filter((price) => price.isCurrent)
-                        .at(0)!.value
-                        .toNumber();
-                    const priceFormatted = CURRENCY_FORMATTER.format(listingPrice)
+                {listings.map((listing) => {
+                    const priceFormatted = CURRENCY_FORMATTER.format(listing.price.value)
                     return (
                         <CardListing
                             key={listing.id}

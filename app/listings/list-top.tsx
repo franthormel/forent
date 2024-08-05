@@ -6,14 +6,12 @@ export function ListingsListTop() {
 
     return (
         <div>
-            {/* TODO: Count and sort options */}
             <div className="basis-14 px-5 py-4 block md:flex md:flex-row border-y-[1px] border-gray-200">
                 {/* Count */}
                 {/* TODO: Use actual numbers */}
                 <span className="font-bold md:mr-6">
                     {listingsCountText}
                 </span>
-                {/* TODO: Sort options */}
                 <div>
                     <span className="font-bold mr-1">Sort by</span>
                     <select className="bg-inherit cursor-pointer">

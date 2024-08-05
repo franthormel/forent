@@ -1,13 +1,12 @@
-import Pagination from "@/components/pagination"
-import { PrismaListing } from "@/lib/types-prisma/listing"
 import ListingsList from "./list"
 import { ListingsListTop } from "./list-top"
 import { ListingsMap } from "./map"
+import ListingsPagination from "./pagination"
+import { Listing } from "./types"
 
 export interface ListingsContentProps {
-    listings: PrismaListing[]
+    listings: Listing[]
     pages: number
-    currentPage: number
 }
 
 export default function ListingsContent(props: ListingsContentProps) {
@@ -17,9 +16,7 @@ export default function ListingsContent(props: ListingsContentProps) {
             <div className="flex basis-1/2 flex-col">
                 <ListingsListTop />
                 <ListingsList listings={props.listings} />
-                <div className="flex basis-20 items-center justify-center border-y-[1px] border-gray-200">
-                    <Pagination pages={props.pages} currentPage={props.currentPage} />
-                </div>
+                <ListingsPagination pages={props.pages} />
             </div>
         </div>
     )
