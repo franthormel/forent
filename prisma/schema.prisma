@@ -8,6 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// NOTE: Corresponding interface types (`/lib/types-prisma/) must also be modified when adding any changes to this model or its components
 // FUTURE: need to implement `on delete cascade` https://www.prisma.io/docs/orm/prisma-schema/data-model/relations/referential-actions#cascade
 model Listing {
   id            String    @id @default(cuid())
