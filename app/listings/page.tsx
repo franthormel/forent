@@ -3,7 +3,7 @@ import ListingsContent from "./content";
 import { countListingsToSkip } from "./function";
 import { ListingsSearchFilters } from "./search-filters";
 
-const LISTINGS_PER_PAGE = 11;
+const LISTINGS_PER_PAGE = 32;
 
 export default async function Listings() {
     const currentPage = 1;
@@ -23,7 +23,6 @@ export default async function Listings() {
 
     return (
         <div className="flex flex-col gap-y-8">
-            {/* Search and price filters */}
             <ListingsSearchFilters />
             <ListingsContent listings={listings} pages={pages} currentPage={currentPage} />
         </div>

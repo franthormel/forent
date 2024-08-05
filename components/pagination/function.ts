@@ -5,8 +5,8 @@
  * @param currentPage Current page
  * @returns `true` if the previous button should be shown, otherwise false.
  */
-export function checkShowPreviousButton(currentPage?: number) {
-  return currentPage !== undefined && currentPage > 1;
+export function checkShowPreviousButton(currentPage: number) {
+  return currentPage > 1;
 }
 
 /**
@@ -16,12 +16,6 @@ export function checkShowPreviousButton(currentPage?: number) {
  * @param currentPage Current page
  * @returns `true` if the next button should be shown, otherwise false.
  */
-export function checkShowNextButton(pages: number, currentPage?: number) {
-  if (currentPage === undefined) {
-    if (pages !== 1) {
-      return true;
-    }
-  } else {
-    return currentPage < pages;
-  }
+export function checkShowNextButton(pages: number, currentPage: number) {
+  return currentPage < pages;
 }

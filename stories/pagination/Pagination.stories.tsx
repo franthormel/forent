@@ -12,7 +12,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        pages: 5
+        pages: 5,
+        currentPage: 1
     }
 };
 
@@ -40,6 +41,7 @@ export const LastPage: Story = {
 export const SinglePage: Story = {
     args: {
         pages: 1,
+        currentPage: 1
     }
 };
 

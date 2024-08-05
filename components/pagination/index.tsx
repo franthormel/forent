@@ -4,10 +4,7 @@ import PaginationItemNumber from "./item-number"
 
 export interface PaginationProps {
     pages: number
-    /**
-     * Current page defaults to `1` if no value is provided.
-     */
-    currentPage?: number
+    currentPage: number
 }
 
 export default function Pagination(props: PaginationProps) {

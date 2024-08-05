@@ -7,7 +7,7 @@ import { ListingsMap } from "./map"
 export interface ListingsContentProps {
     listings: PrismaListing[]
     pages: number
-    currentPage?: number
+    currentPage: number
 }
 
 export default function ListingsContent(props: ListingsContentProps) {
