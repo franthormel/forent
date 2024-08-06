@@ -5,7 +5,14 @@ import { LISTINGS_PER_PAGE } from "./constants";
 import { countListingsToSkip } from "./function";
 import { Listing } from "./types";
 
-export async function fetchListingsByPage(currentPage: number) {
+export async function countMatchedListings(): Promise<number> {
+  // TODO: Add filter param values
+  return await prisma.listing.count();
+}
+
+export async function fetchListingsByPage(
+  currentPage: number
+): Promise<Listing[]> {
   const dbListings = await prisma.listing.findMany({
     skip: countListingsToSkip(currentPage, LISTINGS_PER_PAGE),
     take: LISTINGS_PER_PAGE,

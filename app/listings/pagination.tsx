@@ -2,19 +2,21 @@
 
 import Pagination from "@/components/pagination";
 import { useContext } from "react";
+import { LISTINGS_PER_PAGE } from "./constants";
 import { ListingsContext } from "./provider";
 
 export interface ListingsPaginationProps {
-    pages: number
+    listingsCount: number
 }
 
 export default function ListingsPagination(props: ListingsPaginationProps) {
     const context = useContext(ListingsContext);
+    const pages = Math.ceil(props.listingsCount / LISTINGS_PER_PAGE);
 
     return (
         <div className="flex basis-20 items-center justify-center border-y-[1px] border-gray-200">
             <Pagination
-                pages={props.pages}
+                pages={pages}
                 currentPage={context.pagination.currentPage.value}
                 changeToPreviousPage={context.pagination.changeToPreviousPage}
                 changeCurrentPage={context.pagination.currentPage.change}

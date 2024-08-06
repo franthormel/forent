@@ -1,17 +1,19 @@
 import { formatAppend } from "@/lib/formatter/number";
 
-export function ListingsListTop() {
-    const listingsCount = 7_238;
-    const listingsCountText = formatAppend(listingsCount, "listings");
+export interface ListingsListTopInterface {
+    listingsCount: number
+}
 
+export function ListingsListTop(props: ListingsListTopInterface) {
     return (
         <div>
             <div className="basis-14 px-5 py-4 block md:flex md:flex-row border-y-[1px] border-gray-200">
-                {/* Count */}
-                {/* TODO: Use actual numbers */}
-                <span className="font-bold md:mr-6">
-                    {listingsCountText}
-                </span>
+                {
+                    props.listingsCount > 0 &&
+                    <span className="font-bold md:mr-6">
+                        {formatAppend(props.listingsCount, "listings")}
+                    </span>
+                }
                 <div>
                     <span className="font-bold mr-1">Sort by</span>
                     <select className="bg-inherit cursor-pointer">
