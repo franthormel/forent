@@ -13,7 +13,13 @@ export default function ListingsPagination(props: ListingsPaginationProps) {
 
     return (
         <div className="flex basis-20 items-center justify-center border-y-[1px] border-gray-200">
-            <Pagination pages={props.pages} currentPage={context.pagination.currentPage} />
+            <Pagination
+                pages={props.pages}
+                currentPage={context.pagination.currentPage.value}
+                changeToPreviousPage={context.pagination.changeToPreviousPage}
+                changeCurrentPage={context.pagination.currentPage.change}
+                changeToNextPage={context.pagination.changeToNextPage}
+            />
         </div>
     );
 }

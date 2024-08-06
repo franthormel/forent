@@ -1,6 +1,6 @@
 import {
-  checkShowNextButton,
-  checkShowPreviousButton,
+  checkNextButton,
+  checkPreviousButton,
 } from "../../components/pagination/function";
 
 describe("Pagination", () => {
@@ -11,7 +11,7 @@ describe("Pagination", () => {
     { currentPage: 99, expected: true },
     { currentPage: NaN, expected: false },
   ])("checkShowPreviousButton($currentPage)", ({ currentPage, expected }) => {
-    const output = checkShowPreviousButton(currentPage);
+    const output = checkPreviousButton(currentPage);
     expect(output).toBe(expected);
   });
 
@@ -27,7 +27,7 @@ describe("Pagination", () => {
   ])(
     "checkShowNextButton($pages, $currentPage)",
     ({ pages, currentPage, expected }) => {
-      const output = checkShowNextButton(pages, currentPage);
+      const output = checkNextButton(pages, currentPage);
       expect(output).toBe(expected);
     }
   );

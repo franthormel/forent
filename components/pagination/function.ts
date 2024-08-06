@@ -1,21 +1,21 @@
 /**
  *
- * Show the previous button only if the current page is not the first page
+ * Enable the previous button only if the current page is not the first page
  *
  * @param currentPage Current page
- * @returns `true` if the previous button should be shown, otherwise false.
+ * @returns `true` if the previous button should be enabled, otherwise false.
  */
-export function checkShowPreviousButton(currentPage: number) {
+export function checkPreviousButton(currentPage: number) {
   return currentPage > 1;
 }
 
 /**
- * Show the next button only if the current page is not the last page
+ * Enable the next button only if the current page is not the last page
  *
  * @param pages Total number of pages
  * @param currentPage Current page
- * @returns `true` if the next button should be shown, otherwise false.
+ * @returns `true` if the next button should be enabled, otherwise false.
  */
-export function checkShowNextButton(pages: number, currentPage: number) {
+export function checkNextButton(pages: number, currentPage: number) {
   return currentPage < pages;
 }

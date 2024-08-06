@@ -7,9 +7,11 @@ export default function ListingsFiltersBedsBaths() {
     return (
         <div className="flex flex-col gap-5">
             <ButtonsSegmentedLabelled label="Beds"
-                values={bedsBathsOptions} />
+                values={bedsBathsOptions}
+                activeIndex={0} />
             <ButtonsSegmentedLabelled label="Baths"
-                values={bedsBathsOptions} />
+                values={bedsBathsOptions}
+                activeIndex={0} />
             <ListingsFilterButtons />
         </div>
     );
