@@ -12,6 +12,7 @@ import VectorSource from "ol/source/Vector";
 import { Fill, Stroke, Style, Text } from "ol/style";
 import CircleStyle from "ol/style/Circle";
 import { useEffect } from "react";
+import { Listing } from "./types";
 
 const ICON_DEFAULT_STYLE = new Style({
     image: new CircleStyle({
@@ -70,8 +71,11 @@ const TEXT_SELECTED_STYLE = new Style({
     }),
 });
 
+export interface ListingsMapInterface {
+    listings: Listing[]
+}
 
-export function ListingsMap() {
+export function ListingsMap(props: ListingsMapInterface) {
 
     // Map icon feature
     const iconFeature = new Feature(new Point(fromLonLat([0, 0])))
@@ -156,7 +160,6 @@ export function ListingsMap() {
         return () => map.dispose()
     }, []);
     // TODO: Think about the problem when icon or text features are dynamically added/removed. Need to think about the side effect dependencies
-
 
     return (
         <div id="map" className="basis-1/2 w-full h-full" tabIndex={0} />
