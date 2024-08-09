@@ -2,7 +2,9 @@ import CardListing from '@/components/card-listing';
 
 describe('Card Listing', () => {
     it('should display correct text when there is only one (1) bed or bath', () => {
-        cy.mount(<CardListing addressLine1='Address Line A1'
+        cy.mount(<CardListing
+            id='a'
+            addressLine1='Address Line A1'
             addressLine2='Address Line A2'
             area="25"
             baths="1"
@@ -19,7 +21,9 @@ describe('Card Listing', () => {
     })
 
     it('should display correct text when there are multiple beds or baths', () => {
-        cy.mount(<CardListing addressLine1='Address Line B1'
+        cy.mount(<CardListing
+            id='a'
+            addressLine1='Address Line B1'
             addressLine2='Address Line B2'
             area="50"
             baths="2"

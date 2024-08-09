@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CURRENCY_FORMATTER } from "../../currency";
+import { CURRENCY_FORMATTER } from "../../formatter/currency";
 
 // Price
 const PRICE_MIN = Number(process.env.LISTING_PRICE_MIN ?? 100);
