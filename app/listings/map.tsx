@@ -12,9 +12,9 @@ import OSM from "ol/source/OSM"
 import VectorSource from "ol/source/Vector"
 import { Fill, Stroke, Style, Text } from "ol/style"
 import CircleStyle from "ol/style/Circle"
+import { StyleLike } from "ol/style/Style"
 import { useEffect } from "react"
 import { Listing } from "./types"
-
 const ICON_STYLE = new Style({
     image: new CircleStyle({
         radius: 6,
@@ -120,9 +120,6 @@ export function ListingsMap(props: ListingsMapInterface) {
     const mapFeatures = createMapFeatures(props.listings);
 
     useEffect(() => {
-        // This ID is based upon the indices of the listings
-        let activeIndex: number = -1;
-
         const map = new Map({
             target: 'map',
             layers: [
@@ -131,8 +128,6 @@ export function ListingsMap(props: ListingsMapInterface) {
                 }),
                 new VectorLayer({
                     source: new VectorSource({
-                        // TODO: Use icons features if zoom level is big
-                        // TODO: Use text features if zoom level is small
                         features: mapFeatures.iconFeatures,
                     }),
                 })
@@ -143,16 +138,47 @@ export function ListingsMap(props: ListingsMapInterface) {
             }),
         })
 
-        // TODO: improve use select interaction demo on click (for show listing card) https://openlayers.org/en/latest/examples/select-features.html
-        // demo on hover (for change map pos style) https://openlayers.org/en/latest/examples/select-hover-features.html
+        // let featureDisplayState: 'icon' | 'text' = 'icon';
+        // const MAP_ZOOM_TEXT = 15;
+        // map.on('moveend', (e) => {
+        //     const mapZoom = map.getView().getZoom() || -1;
+        //     if (mapZoom >= MAP_ZOOM_TEXT && featureDisplayState !== "text") {
+        //         map.setLayers([
+        //             new TileLayer({
+        //                 source: new OSM(),
+        //             }),
+        //             new VectorLayer({
+        //                 source: new VectorSource({
+        //                     features: mapFeatures.textFeatures,
+        //                 }),
+        //             })
+        //         ])
+        //         featureDisplayState = 'text';
+        //     } else if (mapZoom < MAP_ZOOM_TEXT && featureDisplayState !== 'icon') {
+        //         map.setLayers([
+        //             new TileLayer({
+        //                 source: new OSM(),
+        //             }),
+        //             new VectorLayer({
+        //                 source: new VectorSource({
+        //                     features: mapFeatures.iconFeatures,
+        //                 }),
+        //             })
+        //         ])
+        //         featureDisplayState = 'icon'
+        //     }
+        // })
+
+        let activeIndex: number = -1;
+        let previousStyle: StyleLike | undefined;
         map.on('pointermove', (e) => {
             // Hover (revert style)
             if (activeIndex >= 0) {
-                const activeFeature = mapFeatures.iconFeatures.at(activeIndex);
-                // Revert style
                 // TODO: Use icons features if zoom level is big
                 // TODO: Use text features if zoom level is small
-                activeFeature?.setStyle(ICON_STYLE)
+                const activeFeature = mapFeatures.iconFeatures.at(activeIndex);
+                // Revert style
+                activeFeature?.setStyle(previousStyle)
                 // Remove index
                 activeIndex = -1;
                 // Reset cursor
@@ -161,18 +187,21 @@ export function ListingsMap(props: ListingsMapInterface) {
 
             // Hover (change style)
             map.forEachFeatureAtPixel(e.pixel, (f) => {
-                const hoveredFeature = f as Feature;
+                // This prevents the overlapping features issue
+                const hoveredFeatures = map.getFeaturesAtPixel(e.pixel)
+                const hoveredFeature = hoveredFeatures.at(hoveredFeatures.length - 1) as Feature;
                 const hoveredIndex = NumberUtils.toNumber(hoveredFeature.getId(), -1)
 
-                // TODO: animate change of style https://openlayers.org/en/latest/examples/feature-animation.html
                 // TODO: Display popup/banner of listing card
                 // 1. https://openlayers.org/en/latest/examples/overlay.html (HTML only)
                 // 2. https://openlayers.org/en/latest/examples/popup.html (Bootstrap)
+                // 3. https://openlayers.org/en/latest/examples/select-features.html
                 if (hoveredIndex !== activeIndex) {
                     activeIndex = hoveredIndex
-                    const textFeature = mapFeatures.activeFeatures.at(activeIndex);
+                    const activeFeature = mapFeatures.activeFeatures.at(activeIndex);
+                    previousStyle = hoveredFeature.getStyle();
                     // Change style
-                    hoveredFeature.setStyle(textFeature?.getStyle())
+                    hoveredFeature.setStyle(activeFeature?.getStyle())
                     // Change pointer
                     map.getViewport().style.cursor = 'pointer'
                 }
@@ -181,7 +210,6 @@ export function ListingsMap(props: ListingsMapInterface) {
 
         return () => map.dispose()
     }, [])
-    // TODO: Think about the problem when icon or text features are dynamically added/removed. Need to think about the side effect dependencies
 
     return (
         <div id="map" className="basis-1/2 w-full h-full" tabIndex={0} />
