@@ -11,7 +11,6 @@ interface ListingsContentInterface {
 export default function ListingsContent(props: ListingsContentInterface) {
     return (
         <div className="flex h-[36rem]">
-            {/* TODO: Display listings as pins  */}
             <ListingsMap listings={props.listings} />
             <div className="flex basis-1/2 flex-col">
                 <ListingsListTop listingsCount={props.listings.length} />

@@ -16,6 +16,7 @@ export default function Pagination(props: PaginationProps) {
     const nextButtonEnabled = checkNextButton(props.pages, props.currentPage);
 
     return (
+        // NOTE: This component will consume the entire width if there are too many pages. This might break flex layouts in smaller screens.
         <div className="flex gap-3">
             {/* Previous (hidden if the current page is the first page) */}
             <div className={`${previousButtonEnabled ? 'visible' : 'invisible'}`}

@@ -1,8 +1,11 @@
 "use client"
 
+import ButtonIconClose from "@/components/button-icons/close"
+import CardListing from "@/components/card-listing"
 import { NumberUtils } from "@/lib/commons/number_utils"
 import { CURRENCY_FORMATTER } from "@/lib/formatter/currency"
-import { Feature, View } from "ol"
+import { Feature, Overlay, View } from "ol"
+import { easeIn } from "ol/easing"
 import Point from "ol/geom/Point"
 import TileLayer from "ol/layer/Tile"
 import VectorLayer from "ol/layer/Vector"
@@ -13,7 +16,7 @@ import VectorSource from "ol/source/Vector"
 import { Fill, Stroke, Style, Text } from "ol/style"
 import CircleStyle from "ol/style/Circle"
 import { StyleLike } from "ol/style/Style"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Listing } from "./types"
 
 const ICON_STYLE = new Style({
@@ -114,6 +117,7 @@ function createMapFeatures(listings: Listing[]): MapFeatures {
 }
 
 export function ListingsMap(props: ListingsMapInterface) {
+    const [activeListing, setActiveListing] = useState<Listing | undefined>();
     const mapFeatures = createMapFeatures(props.listings);
 
     useEffect(() => {
@@ -142,6 +146,7 @@ export function ListingsMap(props: ListingsMapInterface) {
             }),
         })
 
+        // Change features display style based on the map's zoom level
         let featureDisplayState: 'icon' | 'text' = 'icon';
         const MAP_ZOOM_TEXT = 15;
         map.on('moveend', (e) => {
@@ -157,13 +162,14 @@ export function ListingsMap(props: ListingsMapInterface) {
             }
         })
 
+        // Change feature display style to active when hovered upon
         let activeIndex: number = -1;
         let previousStyle: StyleLike | undefined;
         map.on('pointermove', (e) => {
             // Hover (revert style)
             if (activeIndex >= 0) {
-                // Use icons features if zoom level is big
-                // Use text features if zoom level is small
+                // Uses icon features if zoom level is big
+                // Uses text features if zoom level is small
                 let activeFeature = mapFeatures.iconFeatures.at(activeIndex);
                 if (featureDisplayState === 'text') {
                     activeFeature = mapFeatures.textFeatures.at(activeIndex);
@@ -184,10 +190,6 @@ export function ListingsMap(props: ListingsMapInterface) {
                 const hoveredFeature = hoveredFeatures.at(hoveredFeatures.length - 1) as Feature;
                 const hoveredIndex = NumberUtils.toNumber(hoveredFeature.getId(), -1)
 
-                // TODO: Display popup/banner of listing card
-                // 1. https://openlayers.org/en/latest/examples/overlay.html (HTML only)
-                // 2. https://openlayers.org/en/latest/examples/popup.html (Bootstrap)
-                // 3. https://openlayers.org/en/latest/examples/select-features.html
                 if (hoveredIndex !== activeIndex) {
                     activeIndex = hoveredIndex
                     const activeFeature = mapFeatures.activeFeatures.at(activeIndex);
@@ -200,10 +202,61 @@ export function ListingsMap(props: ListingsMapInterface) {
             })
         })
 
+        map.on('click', (e) => {
+            // Show overlay if a listing feature was clicked
+            if (activeIndex >= 0) {
+                // Show content
+                setActiveListing(props.listings.at(activeIndex));
+
+                // Set overlay's element and position
+                const mapOverlay = new Overlay({
+                    element: document.getElementById('popup') ?? undefined,
+                    autoPan: {
+                        animation: {
+                            duration: 250,
+                            easing: easeIn,
+                        },
+                        margin: 20,
+                    },
+                    position: e.coordinate
+                });
+                map.addOverlay(mapOverlay);
+            } else if (activeIndex < 0) {
+                setActiveListing(undefined)
+            }
+        })
+
         return () => map.dispose()
     }, [])
 
     return (
-        <div id="map" className="basis-1/2 w-full h-full" tabIndex={0} />
+        <div className="h-full basis-1/2">
+            <div id="map" className="h-full" tabIndex={0} />
+            <div id="popup"
+                className={`${activeListing ? 'visible' : 'invisible'} rounded-md relative`}>
+                <div className="absolute right-2 top-2 rounded-full bg-slate-50/75 p-1">
+                    <ButtonIconClose
+                        onClick={() => {
+                            setActiveListing(undefined)
+                        }}
+                    />
+                </div>
+                <div >
+                    {
+                        activeListing &&
+                        <CardListing
+                            key={activeListing.id}
+                            id={activeListing.id}
+                            addressLine1={activeListing.address!.addressLine}
+                            addressLine2={`${activeListing.address!.city}, ${activeListing.address!.state}`}
+                            area={activeListing.area.toString()}
+                            baths={activeListing.baths}
+                            beds={activeListing.beds}
+                            imgUrl={activeListing.imageUrls[0]}
+                            price={CURRENCY_FORMATTER.format(activeListing.price.value)} />
+                    }
+                </div>
+            </div>
+        </div>
     )
 }
