@@ -15,6 +15,7 @@ import CircleStyle from "ol/style/Circle"
 import { StyleLike } from "ol/style/Style"
 import { useEffect } from "react"
 import { Listing } from "./types"
+
 const ICON_STYLE = new Style({
     image: new CircleStyle({
         radius: 6,
@@ -45,8 +46,6 @@ const TEXT_TEMPLATE_STYLE = new Text({
 })
 
 function createDefaultTextStyle(price: number): Style {
-    // Regular font
-    // Different text
     const text = TEXT_TEMPLATE_STYLE.clone()
     text.setFont('0.8rem sans-serif')
     text.setText(CURRENCY_FORMATTER.format(price));
@@ -56,8 +55,6 @@ function createDefaultTextStyle(price: number): Style {
 }
 
 function creatActiveTextStyle(price: number): Style {
-    // Regular font
-    // Different text
     const text = TEXT_TEMPLATE_STYLE.clone()
     text.setFont('bold 0.8rem sans-serif')
     text.setText(CURRENCY_FORMATTER.format(price));
@@ -120,17 +117,24 @@ export function ListingsMap(props: ListingsMapInterface) {
     const mapFeatures = createMapFeatures(props.listings);
 
     useEffect(() => {
+        const vectorLayerTextFeatures = new VectorLayer({
+            source: new VectorSource({
+                features: mapFeatures.textFeatures,
+            }),
+        });
+        const vectorLayerIconFeatures = new VectorLayer({
+            source: new VectorSource({
+                features: mapFeatures.iconFeatures,
+            }),
+        });
+
         const map = new Map({
             target: 'map',
             layers: [
                 new TileLayer({
                     source: new OSM(),
                 }),
-                new VectorLayer({
-                    source: new VectorSource({
-                        features: mapFeatures.iconFeatures,
-                    }),
-                })
+                vectorLayerIconFeatures
             ],
             view: new View({
                 center: [0, 0],
@@ -138,45 +142,33 @@ export function ListingsMap(props: ListingsMapInterface) {
             }),
         })
 
-        // let featureDisplayState: 'icon' | 'text' = 'icon';
-        // const MAP_ZOOM_TEXT = 15;
-        // map.on('moveend', (e) => {
-        //     const mapZoom = map.getView().getZoom() || -1;
-        //     if (mapZoom >= MAP_ZOOM_TEXT && featureDisplayState !== "text") {
-        //         map.setLayers([
-        //             new TileLayer({
-        //                 source: new OSM(),
-        //             }),
-        //             new VectorLayer({
-        //                 source: new VectorSource({
-        //                     features: mapFeatures.textFeatures,
-        //                 }),
-        //             })
-        //         ])
-        //         featureDisplayState = 'text';
-        //     } else if (mapZoom < MAP_ZOOM_TEXT && featureDisplayState !== 'icon') {
-        //         map.setLayers([
-        //             new TileLayer({
-        //                 source: new OSM(),
-        //             }),
-        //             new VectorLayer({
-        //                 source: new VectorSource({
-        //                     features: mapFeatures.iconFeatures,
-        //                 }),
-        //             })
-        //         ])
-        //         featureDisplayState = 'icon'
-        //     }
-        // })
+        let featureDisplayState: 'icon' | 'text' = 'icon';
+        const MAP_ZOOM_TEXT = 15;
+        map.on('moveend', (e) => {
+            const mapZoom = map.getView().getZoom() || -1;
+            if (mapZoom >= MAP_ZOOM_TEXT && featureDisplayState !== "text") {
+                map.removeLayer(vectorLayerIconFeatures);
+                map.addLayer(vectorLayerTextFeatures);
+                featureDisplayState = 'text';
+            } else if (mapZoom < MAP_ZOOM_TEXT && featureDisplayState !== 'icon') {
+                map.removeLayer(vectorLayerTextFeatures);
+                map.addLayer(vectorLayerIconFeatures);
+                featureDisplayState = 'icon'
+            }
+        })
 
         let activeIndex: number = -1;
         let previousStyle: StyleLike | undefined;
         map.on('pointermove', (e) => {
             // Hover (revert style)
             if (activeIndex >= 0) {
-                // TODO: Use icons features if zoom level is big
-                // TODO: Use text features if zoom level is small
-                const activeFeature = mapFeatures.iconFeatures.at(activeIndex);
+                // Use icons features if zoom level is big
+                // Use text features if zoom level is small
+                let activeFeature = mapFeatures.iconFeatures.at(activeIndex);
+                if (featureDisplayState === 'text') {
+                    activeFeature = mapFeatures.textFeatures.at(activeIndex);
+                }
+
                 // Revert style
                 activeFeature?.setStyle(previousStyle)
                 // Remove index
