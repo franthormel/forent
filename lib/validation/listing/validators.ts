@@ -19,6 +19,22 @@ export const PRICE_VALIDATOR = z
     message: `Price cannot exceed ${PRICE_MAX_FORMATTED}`,
   });
 
+export function customizePriceValidator(min: number, max: number): z.ZodNumber {
+  const minimumPriceMessage = CURRENCY_FORMATTER.format(min);
+  const maximumPriceMessage = CURRENCY_FORMATTER.format(max);
+  return z
+    .number({
+      required_error: "Price is required",
+      invalid_type_error: "Price must be a number",
+    })
+    .min(min, {
+      message: `Price must be at least ${minimumPriceMessage}`,
+    })
+    .max(max, {
+      message: `Price cannot exceed ${maximumPriceMessage}`,
+    });
+}
+
 // Deposit
 const DEPOSIT_MIN = Number(process.env.LISTING_DEPOSIT_MIN ?? 0);
 const DEPOSIT_MAX = Number(process.env.LISTING_DEPOSIT_MAX ?? 1_000_000);

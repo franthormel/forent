@@ -1,7 +1,11 @@
+"use client"
+
+import { useContext } from "react"
 import ListingsList from "./list"
 import { ListingsListTop } from "./list-top"
 import { ListingsMap } from "./map"
 import ListingsPagination from "./pagination"
+import { ListingsContext } from "./provider"
 import { Listing } from "./types"
 
 interface ListingsContentInterface {
@@ -9,6 +13,10 @@ interface ListingsContentInterface {
 }
 
 export default function ListingsContent(props: ListingsContentInterface) {
+    // TODO: Use filter values
+    const context = useContext(ListingsContext);
+    // console.log(context.searchFilters.price)
+
     return (
         <div className="flex h-[36rem]">
             <ListingsMap listings={props.listings} />

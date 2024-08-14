@@ -1,34 +1,72 @@
 "use client"
 
 import { createContext, useState } from "react"
-import { STARTING_PAGE } from "./constants"
+import { PRICE_MAX_FILTER, PRICE_MIN_FILTER, STARTING_PAGE } from "./constants"
+
+type ContextTypeNumber = {
+    value: number,
+    change: (value: number) => void
+}
 
 interface ListingsContextInterface {
+    searchFilters: {
+        price: {
+            min: ContextTypeNumber,
+            max: ContextTypeNumber
+        }
+    },
     pagination: {
         changeToPreviousPage: () => void,
         changeToNextPage: () => void,
-        currentPage: {
-            value: number,
-            change: (page: number) => void
-        }
+        currentPage: ContextTypeNumber
     }
 }
 
 export const ListingsContext = createContext<ListingsContextInterface>({
+    searchFilters: {
+        price: {
+            min: {
+                value: PRICE_MIN_FILTER,
+                change: (value) => { }
+            },
+            max: {
+                value: PRICE_MAX_FILTER,
+                change: (value) => { }
+            }
+        }
+    },
     pagination: {
         changeToPreviousPage: () => { },
         changeToNextPage: () => { },
         currentPage: {
             value: STARTING_PAGE,
-            change: (page) => { }
+            change: (value) => { }
         },
     }
 });
 
 export default function ListingsProvider({ children }: { children: React.ReactNode }) {
+    const [minPriceFilter, setMinPriceFilter] = useState<number>(PRICE_MIN_FILTER)
+    const [maxPriceFilter, setMaxPriceFilter] = useState<number>(PRICE_MAX_FILTER)
     const [currentPage, setCurrentPage] = useState<number>(STARTING_PAGE);
 
     const stateValue: ListingsContextInterface = {
+        searchFilters: {
+            price: {
+                min: {
+                    value: minPriceFilter,
+                    change: (value: number) => {
+                        setMinPriceFilter(value)
+                    },
+                },
+                max: {
+                    value: maxPriceFilter,
+                    change: (value: number) => {
+                        setMaxPriceFilter(value)
+                    },
+                },
+            },
+        },
         pagination: {
             changeToPreviousPage: () => {
                 setCurrentPage(currentPage - 1)
@@ -38,8 +76,8 @@ export default function ListingsProvider({ children }: { children: React.ReactNo
             },
             currentPage: {
                 value: currentPage,
-                change: (page: number) => {
-                    setCurrentPage(page)
+                change: (value: number) => {
+                    setCurrentPage(value)
                 },
             }
         }
