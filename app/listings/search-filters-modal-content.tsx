@@ -5,6 +5,7 @@ import ListingsFilterPrice from "./filter-price";
 import ListingsFilterArea from "./filters-area";
 
 export default function ListingsSearchFiltersModalContent() {
+    // TODO: Fix display of search filters
     return (
         <div className="flex flex-col gap-8 p-8">
             <header className="text-2xl font-bold">

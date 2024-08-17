@@ -45,9 +45,12 @@ export default function ListingsFiltersBedsBaths() {
                             }} />
                         <ButtonSmallFilled text="Search"
                             onClick={() => {
+                                // Close dropdown ...
+                                setDisplayDropdown(false)
+
+                                // ... change filter values
                                 context.searchFilters.beds.change(beds)
                                 context.searchFilters.baths.change(baths)
-                                setDisplayDropdown(false)
                             }} />
                     </div>
                 </div>

@@ -52,20 +52,14 @@ export default function ListingsFilterPrice() {
                             const result = minPriceValidator.safeParse(value)
 
                             if (result.success) {
-                                // Only clear existing error messages
-                                if (minPriceError !== undefined) {
-                                    setMinPriceError(undefined)
-                                }
-
+                                setMinPriceError(undefined)
                                 // Only change value if validation is successful
                                 setMaxPriceValidator(customizePriceValidator(value, PRICE_MAX_FILTER))
                                 setMinPrice(value)
                             } else {
                                 // Only change if it is a different error message
                                 const error = result.error.errors[0].message
-                                if (minPriceError !== error) {
-                                    setMinPriceError(error)
-                                }
+                                setMinPriceError(error)
                             }
                         }} />
                     <FormInput label="Maximum Price"
@@ -81,20 +75,13 @@ export default function ListingsFilterPrice() {
                             const result = maxPriceValidator.safeParse(value)
 
                             if (result.success) {
-                                // Only clear existing error messages
-                                if (maxPriceError !== undefined) {
-                                    setMaxPriceError(undefined)
-                                }
-
+                                setMaxPriceError(undefined)
                                 // Only change value if validation is successful
                                 setMinPriceValidator(customizePriceValidator(PRICE_MIN_FILTER, value))
                                 setMaxPrice(value)
                             } else {
-                                // Only change if it is a different error message
                                 const error = result.error.errors[0].message
-                                if (maxPriceError !== error) {
-                                    setMaxPriceError(error)
-                                }
+                                setMaxPriceError(error)
                             }
                         }} />
                     <div className="flex justify-evenly">

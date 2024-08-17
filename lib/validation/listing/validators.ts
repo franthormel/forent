@@ -1,3 +1,4 @@
+import { NUMBER_FORMATTER } from "@/lib/formatter/number";
 import { z } from "zod";
 import { CURRENCY_FORMATTER } from "../../formatter/currency";
 
@@ -121,12 +122,28 @@ export const AREA_VALIDATOR = z
   })
   .min(AREA_MIN, {
     // FUTURE: Localize `sqm`
-    message: `Area must be at least ${AREA_MIN} sqm.`,
+    message: `Area must be at least ${NUMBER_FORMATTER.format(AREA_MIN)} sqm.`,
   })
   .max(AREA_MAX, {
     // FUTURE: Localize `sqm`
-    message: `Area must not exceed ${AREA_MAX} sqm.`,
+    message: `Area must not exceed ${NUMBER_FORMATTER.format(AREA_MAX)} sqm.`,
   });
+
+export function customizeAreaValidator(min: number, max: number): z.ZodNumber {
+  return z
+    .number({
+      required_error: "Area is required",
+      invalid_type_error: "Area must be a number",
+    })
+    .min(min, {
+      // FUTURE: Localize `sqm`
+      message: `Area must be at least ${NUMBER_FORMATTER.format(min)} sqm.`,
+    })
+    .max(max, {
+      // FUTURE: Localize `sqm`
+      message: `Area must not exceed ${NUMBER_FORMATTER.format(max)} sqm.`,
+    });
+}
 
 // Available Date
 // NOTE: Append min-max date values using this validator if needed

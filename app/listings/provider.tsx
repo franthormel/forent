@@ -1,21 +1,24 @@
 "use client"
 
 import { createContext, useState } from "react"
-import { BEDS_BATHS_DEFAULT, PRICE_MAX_FILTER, PRICE_MIN_FILTER, STARTING_PAGE } from "./constants"
+import { AREA_MAX_INPUT, AREA_MIN_FILTER, BEDS_BATHS_DEFAULT, PRICE_MAX_FILTER, PRICE_MIN_FILTER, STARTING_PAGE } from "./constants"
 
 type ContextTypeNumber = {
     value: number,
     change: (value: number) => void
 }
 
+type ContenTypeNumberRange = {
+    min: ContextTypeNumber,
+    max: ContextTypeNumber
+}
+
 interface ListingsContextInterface {
     searchFilters: {
-        price: {
-            min: ContextTypeNumber,
-            max: ContextTypeNumber
-        },
+        price: ContenTypeNumberRange,
         beds: ContextTypeNumber,
-        baths: ContextTypeNumber
+        baths: ContextTypeNumber,
+        area: ContenTypeNumberRange
     },
     pagination: {
         changeToPreviousPage: () => void,
@@ -44,6 +47,16 @@ export const ListingsContext = createContext<ListingsContextInterface>({
             value: BEDS_BATHS_DEFAULT,
             change: (value) => { }
         },
+        area: {
+            min: {
+                value: AREA_MIN_FILTER,
+                change: (value) => { }
+            },
+            max: {
+                value: AREA_MAX_INPUT,
+                change: (value) => { }
+            }
+        },
     },
     pagination: {
         changeToPreviousPage: () => { },
@@ -61,6 +74,9 @@ export default function ListingsProvider({ children }: { children: React.ReactNo
 
     const [bedsFilter, setBedsFilter] = useState<number>(BEDS_BATHS_DEFAULT)
     const [bathsFilter, setBathsFilter] = useState<number>(BEDS_BATHS_DEFAULT)
+
+    const [minAreaFilter, setMinAreaFilter] = useState<number>(AREA_MIN_FILTER)
+    const [maxAreaFilter, setMaxAreaFilter] = useState<number>(AREA_MAX_INPUT)
 
     const [currentPage, setCurrentPage] = useState<number>(STARTING_PAGE);
 
@@ -90,6 +106,20 @@ export default function ListingsProvider({ children }: { children: React.ReactNo
                 value: bathsFilter,
                 change: (value) => {
                     setBathsFilter(value)
+                }
+            },
+            area: {
+                min: {
+                    value: minAreaFilter,
+                    change: (value) => {
+                        setMinAreaFilter(value)
+                    }
+                },
+                max: {
+                    value: maxAreaFilter,
+                    change: (value) => {
+                        setMaxAreaFilter(value)
+                    }
                 }
             }
         },
