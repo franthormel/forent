@@ -9,7 +9,11 @@ export default function ButtonsSegmentedLabelled(props: ButtonsSegmentedLabelled
         <div>
             <label>{props.label}</label>
             <div className="mt-2">
-                <ButtonsSegmented values={props.values} activeIndex={props.activeIndex} />
+                <ButtonsSegmented
+                    values={props.values}
+                    activeIndex={props.activeIndex}
+                    onCick={props.onCick}
+                />
             </div>
         </div>
     );

@@ -4,11 +4,15 @@ import ButtonsSegmentedLabelled from "@/components/buttons-segmented/labelled"
 import ButtonSmallFilled from "@/components/buttons/small/filled"
 import ButtonSmallText from "@/components/buttons/small/text"
 import Dropdown from "@/components/dropdown"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { BEDS_BATHS_DEFAULT, BEDS_BATHS_FILTER } from "./constants"
+import { ListingsContext } from "./provider"
 
 export default function ListingsFiltersBedsBaths() {
-    const bedsBathsOptions = ["Any", "1", "2", "3", "4", "5+"]
+    const [beds, setBeds] = useState<number>(BEDS_BATHS_DEFAULT)
+    const [baths, setBaths] = useState<number>(BEDS_BATHS_DEFAULT)
 
+    const context = useContext(ListingsContext)
     const [displayDropdown, setDisplayDropdown] = useState<boolean>(false)
 
     return (
@@ -22,14 +26,29 @@ export default function ListingsFiltersBedsBaths() {
             }}>
                 <div className="flex w-64 flex-col gap-5 lg:w-72">
                     <ButtonsSegmentedLabelled label="Beds"
-                        values={bedsBathsOptions}
-                        activeIndex={0} />
+                        values={BEDS_BATHS_FILTER}
+                        activeIndex={beds}
+                        onCick={(index) => {
+                            setBeds(index)
+                        }} />
                     <ButtonsSegmentedLabelled label="Baths"
-                        values={bedsBathsOptions}
-                        activeIndex={0} />
+                        values={BEDS_BATHS_FILTER}
+                        activeIndex={baths}
+                        onCick={(index) => {
+                            setBaths(index)
+                        }} />
                     <div className="flex justify-evenly">
-                        <ButtonSmallText text="Reset" />
-                        <ButtonSmallFilled text="Search" />
+                        <ButtonSmallText text="Reset"
+                            onClick={() => {
+                                setBeds(BEDS_BATHS_DEFAULT)
+                                setBaths(BEDS_BATHS_DEFAULT)
+                            }} />
+                        <ButtonSmallFilled text="Search"
+                            onClick={() => {
+                                context.searchFilters.beds.change(beds)
+                                context.searchFilters.baths.change(baths)
+                                setDisplayDropdown(false)
+                            }} />
                     </div>
                 </div>
             </Dropdown>

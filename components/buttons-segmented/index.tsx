@@ -5,6 +5,7 @@ export interface ButtonsSegmentedProps {
      * Where `n` is the number of entries in `values` minus one (1).
      */
     activeIndex: number
+    onCick?: (index: number) => void
 }
 
 export default function ButtonsSegmented(props: ButtonsSegmentedProps) {
@@ -20,7 +21,11 @@ export default function ButtonsSegmented(props: ButtonsSegmentedProps) {
                             ${indexIsActive && 'bg-amber-400'}
                             // Other segments must have no background color should change its background color when hovered upon
                             ${!indexIsActive && 'hover:bg-amber-200'} `}
-                        onClick={(e) => { }}>
+                        onClick={(e) => {
+                            if (props.onCick) {
+                                props.onCick(index)
+                            }
+                        }}>
                         {value}
                     </div>
                 )

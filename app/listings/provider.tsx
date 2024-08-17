@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useState } from "react"
-import { PRICE_MAX_FILTER, PRICE_MIN_FILTER, STARTING_PAGE } from "./constants"
+import { BEDS_BATHS_DEFAULT, PRICE_MAX_FILTER, PRICE_MIN_FILTER, STARTING_PAGE } from "./constants"
 
 type ContextTypeNumber = {
     value: number,
@@ -13,7 +13,9 @@ interface ListingsContextInterface {
         price: {
             min: ContextTypeNumber,
             max: ContextTypeNumber
-        }
+        },
+        beds: ContextTypeNumber,
+        baths: ContextTypeNumber
     },
     pagination: {
         changeToPreviousPage: () => void,
@@ -33,7 +35,15 @@ export const ListingsContext = createContext<ListingsContextInterface>({
                 value: PRICE_MAX_FILTER,
                 change: (value) => { }
             }
-        }
+        },
+        beds: {
+            value: BEDS_BATHS_DEFAULT,
+            change: (value) => { }
+        },
+        baths: {
+            value: BEDS_BATHS_DEFAULT,
+            change: (value) => { }
+        },
     },
     pagination: {
         changeToPreviousPage: () => { },
@@ -48,6 +58,10 @@ export const ListingsContext = createContext<ListingsContextInterface>({
 export default function ListingsProvider({ children }: { children: React.ReactNode }) {
     const [minPriceFilter, setMinPriceFilter] = useState<number>(PRICE_MIN_FILTER)
     const [maxPriceFilter, setMaxPriceFilter] = useState<number>(PRICE_MAX_FILTER)
+
+    const [bedsFilter, setBedsFilter] = useState<number>(BEDS_BATHS_DEFAULT)
+    const [bathsFilter, setBathsFilter] = useState<number>(BEDS_BATHS_DEFAULT)
+
     const [currentPage, setCurrentPage] = useState<number>(STARTING_PAGE);
 
     const stateValue: ListingsContextInterface = {
@@ -66,6 +80,18 @@ export default function ListingsProvider({ children }: { children: React.ReactNo
                     },
                 },
             },
+            beds: {
+                value: bedsFilter,
+                change: (value) => {
+                    setBedsFilter(value)
+                }
+            },
+            baths: {
+                value: bathsFilter,
+                change: (value) => {
+                    setBathsFilter(value)
+                }
+            }
         },
         pagination: {
             changeToPreviousPage: () => {
