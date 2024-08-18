@@ -1,6 +1,6 @@
-import { NUMBER_FORMATTER } from "@/lib/formatter/number";
 import { z } from "zod";
 import { CURRENCY_FORMATTER } from "../../formatter/currency";
+import { NUMBER_FORMATTER } from "../../formatter/number";
 
 // Price
 const PRICE_MIN = Number(process.env.LISTING_PRICE_MIN ?? 100);

@@ -15,8 +15,11 @@ import { ListingsContext } from "./provider"
 export default function ListingsFilterArea() {
     const maxAreaPlaceholder = formatAppend(AREA_MAX_INPUT, "sqm.")
 
-    const [minArea, setMinArea] = useState<number>(AREA_MIN_FILTER)
-    const [maxArea, setMaxArea] = useState<number>(AREA_MAX_FILTER)
+    const context = useContext(ListingsContext)
+
+    // TODO: (Area filter) Make sure values are the same
+    const [minArea, setMinArea] = useState<number>(context.searchFilters.area.min.value)
+    const [maxArea, setMaxArea] = useState<number>(context.searchFilters.area.max.value)
 
     const [minAreaError, setMinAreaError] = useState<string | undefined>(undefined)
     const [maxAreaError, setMaxAreaError] = useState<string | undefined>(undefined)
@@ -25,7 +28,6 @@ export default function ListingsFilterArea() {
     const [minAreaValidator, setMinAreaValidator] = useState<ZodNumber>(defaultValidator)
     const [maxAreaValidator, setMaxAreaValidator] = useState<ZodNumber>(defaultValidator)
 
-    const context = useContext(ListingsContext)
     const [displayDropdown, setDisplayDropdown] = useState<boolean>(false)
 
     return (
@@ -52,7 +54,6 @@ export default function ListingsFilterArea() {
 
                             if (result.success) {
                                 setMinAreaError(undefined)
-                                // Only change value if validation is successful
                                 setMaxAreaValidator(customizeAreaValidator(value, AREA_MAX_FILTER))
                                 setMinArea(value)
                             } else {
@@ -74,7 +75,6 @@ export default function ListingsFilterArea() {
 
                             if (result.success) {
                                 setMaxAreaError(undefined)
-                                // Only change value if validation is successful
                                 setMinAreaValidator(customizeAreaValidator(AREA_MIN_FILTER, value))
                                 setMaxArea(value)
                             } else {

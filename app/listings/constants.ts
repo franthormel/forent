@@ -1,4 +1,4 @@
-export const LISTINGS_PER_PAGE = 5;
+export const LISTINGS_PER_PAGE = 15;
 export const STARTING_PAGE = 1;
 
 export const PRICE_MIN_FILTER = 0;

@@ -9,10 +9,12 @@ import { BEDS_BATHS_DEFAULT, BEDS_BATHS_FILTER } from "./constants"
 import { ListingsContext } from "./provider"
 
 export default function ListingsFiltersBedsBaths() {
-    const [beds, setBeds] = useState<number>(BEDS_BATHS_DEFAULT)
-    const [baths, setBaths] = useState<number>(BEDS_BATHS_DEFAULT)
-
     const context = useContext(ListingsContext)
+
+    // TODO: (Beds/baths filter) Make sure values are the same
+    const [beds, setBeds] = useState<number>(context.searchFilters.beds.value)
+    const [baths, setBaths] = useState<number>(context.searchFilters.baths.value)
+
     const [displayDropdown, setDisplayDropdown] = useState<boolean>(false)
 
     return (

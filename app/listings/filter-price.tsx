@@ -13,11 +13,13 @@ import { PRICE_MAX_FILTER, PRICE_MIN_FILTER } from "./constants"
 import { ListingsContext } from "./provider"
 
 export default function ListingsFilterPrice() {
-    const minPricePlaceholder = "None"
     const maxPricePlaceholder = CURRENCY_FORMATTER.format(PRICE_MAX_FILTER)
 
-    const [minPrice, setMinPrice] = useState<number>(PRICE_MIN_FILTER)
-    const [maxPrice, setMaxPrice] = useState<number>(PRICE_MAX_FILTER)
+    const context = useContext(ListingsContext)
+
+    // TODO: (Price filter) Make sure values are the same
+    const [minPrice, setMinPrice] = useState<number>(context.searchFilters.price.min.value)
+    const [maxPrice, setMaxPrice] = useState<number>(context.searchFilters.price.max.value)
 
     const [minPriceError, setMinPriceError] = useState<string | undefined>(undefined)
     const [maxPriceError, setMaxPriceError] = useState<string | undefined>(undefined)
@@ -26,7 +28,6 @@ export default function ListingsFilterPrice() {
     const [minPriceValidator, setMinPriceValidator] = useState<ZodNumber>(defaultValidator)
     const [maxPriceValidator, setMaxPriceValidator] = useState<ZodNumber>(defaultValidator)
 
-    const context = useContext(ListingsContext)
     const [displayDropdown, setDisplayDropdown] = useState<boolean>(false)
 
     return (
@@ -42,7 +43,7 @@ export default function ListingsFilterPrice() {
                     <FormInput label="Minimum Price"
                         name="price-min"
                         type="number"
-                        placeholder={minPricePlaceholder}
+                        placeholder="None"
                         value={minPrice}
                         min={PRICE_MIN_FILTER}
                         max={maxPrice}
