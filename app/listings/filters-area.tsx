@@ -7,28 +7,37 @@ import FormInput from "@/components/form-input"
 import { NumberUtils } from "@/lib/commons/number_utils"
 import { formatAppend } from "@/lib/formatter/number"
 import { customizeAreaValidator } from "@/lib/validation/listing/validators"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ZodNumber } from "zod"
-import { AREA_MAX_FILTER, AREA_MAX_INPUT, AREA_MIN_FILTER } from "./constants"
+import { AREA_MAX_FILTER, AREA_MIN_FILTER } from "./constants"
 import { ListingsContext } from "./provider"
 
 export default function ListingsFilterArea() {
-    const maxAreaPlaceholder = formatAppend(AREA_MAX_INPUT, "sqm.")
+    const areaMaxPlaceholder = formatAppend(AREA_MAX_FILTER, "sqm.")
 
     const context = useContext(ListingsContext)
+    const contextAreaMin = context.searchFilters.area.min.value
+    const contextAreaMax = context.searchFilters.area.max.value;
 
-    // TODO: (Area filter) Make sure values are the same
-    const [minArea, setMinArea] = useState<number>(context.searchFilters.area.min.value)
-    const [maxArea, setMaxArea] = useState<number>(context.searchFilters.area.max.value)
+    const [areaMin, setAreaMin] = useState<number>(contextAreaMin)
+    const [areaMax, setAreaMax] = useState<number>(contextAreaMax)
 
-    const [minAreaError, setMinAreaError] = useState<string | undefined>(undefined)
-    const [maxAreaError, setMaxAreaError] = useState<string | undefined>(undefined)
+    const [areaMinError, setAreaMinError] = useState<string | undefined>(undefined)
+    const [areaMaxError, setAreaMaxError] = useState<string | undefined>(undefined)
 
     const defaultValidator = customizeAreaValidator(AREA_MIN_FILTER, AREA_MAX_FILTER)
-    const [minAreaValidator, setMinAreaValidator] = useState<ZodNumber>(defaultValidator)
-    const [maxAreaValidator, setMaxAreaValidator] = useState<ZodNumber>(defaultValidator)
+    const [areaMinValidator, setAreaMinValidator] = useState<ZodNumber>(defaultValidator)
+    const [areaMaxValidator, setAreaMaxValidator] = useState<ZodNumber>(defaultValidator)
 
     const [displayDropdown, setDisplayDropdown] = useState<boolean>(false)
+
+    useEffect(() => {
+        setAreaMin(contextAreaMin)
+    }, [contextAreaMin])
+
+    useEffect(() => {
+        setAreaMax(contextAreaMax)
+    }, [contextAreaMax])
 
     return (
         <div className="hidden lg:flex">
@@ -44,58 +53,58 @@ export default function ListingsFilterArea() {
                         name="area-min"
                         type="number"
                         placeholder="None"
-                        value={minArea}
+                        value={areaMin}
                         min={AREA_MIN_FILTER}
-                        max={maxArea}
-                        errorMessage={minAreaError}
+                        max={areaMax}
+                        errorMessage={areaMinError}
                         onChange={(e) => {
                             const value = NumberUtils.toNumber(e.target.value, -1)
-                            const result = minAreaValidator.safeParse(value)
+                            const result = areaMinValidator.safeParse(value)
 
                             if (result.success) {
-                                setMinAreaError(undefined)
-                                setMaxAreaValidator(customizeAreaValidator(value, AREA_MAX_FILTER))
-                                setMinArea(value)
+                                setAreaMinError(undefined)
+                                setAreaMaxValidator(customizeAreaValidator(value, AREA_MAX_FILTER))
+                                setAreaMin(value)
                             } else {
                                 const error = result.error.errors[0].message
-                                setMinAreaError(error)
+                                setAreaMinError(error)
                             }
                         }} />
                     <FormInput label="Maximum Area"
-                        name="area-min"
+                        name="area-max"
                         type="number"
-                        placeholder={maxAreaPlaceholder}
-                        value={maxArea}
-                        min={minArea}
+                        placeholder={areaMaxPlaceholder}
+                        value={areaMax}
+                        min={areaMin}
                         max={AREA_MAX_FILTER}
-                        errorMessage={maxAreaError}
+                        errorMessage={areaMaxError}
                         onChange={(e) => {
                             const value = NumberUtils.toNumber(e.target.value, -1)
-                            const result = maxAreaValidator.safeParse(value)
+                            const result = areaMaxValidator.safeParse(value)
 
                             if (result.success) {
-                                setMaxAreaError(undefined)
-                                setMinAreaValidator(customizeAreaValidator(AREA_MIN_FILTER, value))
-                                setMaxArea(value)
+                                setAreaMaxError(undefined)
+                                setAreaMinValidator(customizeAreaValidator(AREA_MIN_FILTER, value))
+                                setAreaMax(value)
                             } else {
                                 const error = result.error.errors[0].message
-                                setMaxAreaError(error)
+                                setAreaMaxError(error)
                             }
                         }} />
                     <div className="flex flex-col gap-3 xl:flex-row xl:justify-evenly xl:gap-0">
                         <ButtonSmallText text="Reset"
                             onClick={(e) => {
                                 // Reset input values ...
-                                setMinArea(AREA_MIN_FILTER)
-                                setMaxArea(AREA_MAX_FILTER)
+                                setAreaMin(AREA_MIN_FILTER)
+                                setAreaMax(AREA_MAX_FILTER)
 
                                 // ... error messages ...
-                                setMinAreaError(undefined)
-                                setMaxAreaError(undefined)
+                                setAreaMinError(undefined)
+                                setAreaMaxError(undefined)
 
                                 // ... and validators
-                                setMinAreaValidator(defaultValidator)
-                                setMaxAreaValidator(defaultValidator)
+                                setAreaMinValidator(defaultValidator)
+                                setAreaMaxValidator(defaultValidator)
                             }} />
                         <ButtonSmallFilled text="Search"
                             onClick={(e) => {
@@ -103,12 +112,12 @@ export default function ListingsFilterArea() {
                                 setDisplayDropdown(false)
 
                                 // ... error messages ...
-                                setMinAreaError(undefined)
-                                setMaxAreaError(undefined)
+                                setAreaMinError(undefined)
+                                setAreaMaxError(undefined)
 
                                 // ... change filter values
-                                context.searchFilters.area.min.change(minArea)
-                                context.searchFilters.area.max.change(maxArea)
+                                context.searchFilters.area.min.change(areaMin)
+                                context.searchFilters.area.max.change(areaMax)
                             }} />
                     </div>
                 </div>

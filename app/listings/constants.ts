@@ -16,10 +16,6 @@ export const BEDS_BATHS_DEFAULT = 0;
 
 export const AREA_MIN_FILTER = 0;
 /**
- * Placeholder value for maximum area input field.
- */
-export const AREA_MAX_INPUT = 1_000;
-/**
  * Maximum input value for the maximum area input field.
  */
 export const AREA_MAX_FILTER = 1_000_000;

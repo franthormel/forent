@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useState } from "react"
-import { AREA_MAX_INPUT, AREA_MIN_FILTER, BEDS_BATHS_DEFAULT, PRICE_MAX_FILTER, PRICE_MIN_FILTER, STARTING_PAGE } from "./constants"
+import { AREA_MAX_FILTER, AREA_MIN_FILTER, BEDS_BATHS_DEFAULT, PRICE_MAX_FILTER, PRICE_MIN_FILTER, STARTING_PAGE } from "./constants"
 
 type ContextTypeNumber = {
     value: number,
@@ -53,7 +53,7 @@ export const ListingsContext = createContext<ListingsContextInterface>({
                 change: (value) => { }
             },
             max: {
-                value: AREA_MAX_INPUT,
+                value: AREA_MAX_FILTER,
                 change: (value) => { }
             }
         },
@@ -76,7 +76,7 @@ export default function ListingsProvider({ children }: { children: React.ReactNo
     const [bathsFilter, setBathsFilter] = useState<number>(BEDS_BATHS_DEFAULT)
 
     const [minAreaFilter, setMinAreaFilter] = useState<number>(AREA_MIN_FILTER)
-    const [maxAreaFilter, setMaxAreaFilter] = useState<number>(AREA_MAX_INPUT)
+    const [maxAreaFilter, setMaxAreaFilter] = useState<number>(AREA_MAX_FILTER)
 
     const [currentPage, setCurrentPage] = useState<number>(STARTING_PAGE);
 

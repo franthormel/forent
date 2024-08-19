@@ -4,7 +4,7 @@ import Search from "@/components/search";
 import ListingsFiltersBedsBaths from "./filter-beds-baths";
 import ListingsFilterPrice from "./filter-price";
 import ListingsFilterArea from "./filters-area";
-import ListingsSearchFiltersMenu from "./search-filters-menu";
+import ListingsSearchFiltersModalMenu from "./search-filters-modal-menu";
 
 export function ListingsSearchFilters() {
     return (
@@ -15,7 +15,7 @@ export function ListingsSearchFilters() {
             <ListingsFilterPrice />
             <ListingsFiltersBedsBaths />
             <ListingsFilterArea />
-            <ListingsSearchFiltersMenu />
+            <ListingsSearchFiltersModalMenu />
         </div>
     )
 }

@@ -4,16 +4,27 @@ import ButtonsSegmentedLabelled from "@/components/buttons-segmented/labelled"
 import ButtonSmallFilled from "@/components/buttons/small/filled"
 import ButtonSmallText from "@/components/buttons/small/text"
 import Dropdown from "@/components/dropdown"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { BEDS_BATHS_DEFAULT, BEDS_BATHS_FILTER } from "./constants"
 import { ListingsContext } from "./provider"
 
 export default function ListingsFiltersBedsBaths() {
     const context = useContext(ListingsContext)
 
-    // TODO: (Beds/baths filter) Make sure values are the same
-    const [beds, setBeds] = useState<number>(context.searchFilters.beds.value)
-    const [baths, setBaths] = useState<number>(context.searchFilters.baths.value)
+    const contextBeds = context.searchFilters.beds.value;
+    const contextBaths = context.searchFilters.baths.value;
+
+    const [beds, setBeds] = useState<number>(contextBeds)
+    const [baths, setBaths] = useState<number>(contextBaths)
+
+    // Update the local values when the other filter values also change
+    useEffect(() => {
+        setBeds(contextBeds)
+    }, [contextBeds])
+
+    useEffect(() => {
+        setBaths(contextBaths)
+    }, [contextBaths])
 
     const [displayDropdown, setDisplayDropdown] = useState<boolean>(false)
 

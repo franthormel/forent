@@ -7,28 +7,37 @@ import FormInput from "@/components/form-input"
 import { NumberUtils } from "@/lib/commons/number_utils"
 import { CURRENCY_FORMATTER } from "@/lib/formatter/currency"
 import { customizePriceValidator } from "@/lib/validation/listing/validators"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ZodNumber } from "zod"
 import { PRICE_MAX_FILTER, PRICE_MIN_FILTER } from "./constants"
 import { ListingsContext } from "./provider"
 
 export default function ListingsFilterPrice() {
-    const maxPricePlaceholder = CURRENCY_FORMATTER.format(PRICE_MAX_FILTER)
+    const priceMaxPlaceholder = CURRENCY_FORMATTER.format(PRICE_MAX_FILTER)
 
     const context = useContext(ListingsContext)
+    const contextPriceMin = context.searchFilters.price.min.value
+    const contextPriceMax = context.searchFilters.price.max.value
 
-    // TODO: (Price filter) Make sure values are the same
-    const [minPrice, setMinPrice] = useState<number>(context.searchFilters.price.min.value)
-    const [maxPrice, setMaxPrice] = useState<number>(context.searchFilters.price.max.value)
+    const [priceMin, setPriceMin] = useState<number>(contextPriceMin)
+    const [priceMax, setPriceMax] = useState<number>(contextPriceMax)
 
-    const [minPriceError, setMinPriceError] = useState<string | undefined>(undefined)
-    const [maxPriceError, setMaxPriceError] = useState<string | undefined>(undefined)
+    const [priceMinError, setPriceMinError] = useState<string | undefined>(undefined)
+    const [priceMaxError, setPriceMaxError] = useState<string | undefined>(undefined)
 
     const defaultValidator = customizePriceValidator(PRICE_MIN_FILTER, PRICE_MAX_FILTER)
-    const [minPriceValidator, setMinPriceValidator] = useState<ZodNumber>(defaultValidator)
-    const [maxPriceValidator, setMaxPriceValidator] = useState<ZodNumber>(defaultValidator)
+    const [priceMinValidator, setPriceMinValidator] = useState<ZodNumber>(defaultValidator)
+    const [priceMaxValidator, setPriceMaxValidator] = useState<ZodNumber>(defaultValidator)
 
     const [displayDropdown, setDisplayDropdown] = useState<boolean>(false)
+
+    useEffect(() => {
+        setPriceMin(contextPriceMin)
+    }, [contextPriceMin])
+
+    useEffect(() => {
+        setPriceMax(contextPriceMax)
+    }, [contextPriceMax])
 
     return (
         <div className="hidden md:flex">
@@ -44,61 +53,58 @@ export default function ListingsFilterPrice() {
                         name="price-min"
                         type="number"
                         placeholder="None"
-                        value={minPrice}
+                        value={priceMin}
                         min={PRICE_MIN_FILTER}
-                        max={maxPrice}
-                        errorMessage={minPriceError}
+                        max={priceMax}
+                        errorMessage={priceMinError}
                         onChange={(e) => {
                             const value = NumberUtils.toNumber(e.target.value, -1)
-                            const result = minPriceValidator.safeParse(value)
+                            const result = priceMinValidator.safeParse(value)
 
                             if (result.success) {
-                                setMinPriceError(undefined)
-                                // Only change value if validation is successful
-                                setMaxPriceValidator(customizePriceValidator(value, PRICE_MAX_FILTER))
-                                setMinPrice(value)
+                                setPriceMinError(undefined)
+                                setPriceMaxValidator(customizePriceValidator(value, PRICE_MAX_FILTER))
+                                setPriceMin(value)
                             } else {
-                                // Only change if it is a different error message
                                 const error = result.error.errors[0].message
-                                setMinPriceError(error)
+                                setPriceMinError(error)
                             }
                         }} />
                     <FormInput label="Maximum Price"
                         name="price-max"
                         type="number"
-                        placeholder={maxPricePlaceholder}
-                        value={maxPrice}
-                        min={minPrice}
+                        placeholder={priceMaxPlaceholder}
+                        value={priceMax}
+                        min={priceMin}
                         max={PRICE_MAX_FILTER}
-                        errorMessage={maxPriceError}
+                        errorMessage={priceMaxError}
                         onChange={(e) => {
                             const value = NumberUtils.toNumber(e.target.value, -1)
-                            const result = maxPriceValidator.safeParse(value)
+                            const result = priceMaxValidator.safeParse(value)
 
                             if (result.success) {
-                                setMaxPriceError(undefined)
-                                // Only change value if validation is successful
-                                setMinPriceValidator(customizePriceValidator(PRICE_MIN_FILTER, value))
-                                setMaxPrice(value)
+                                setPriceMaxError(undefined)
+                                setPriceMinValidator(customizePriceValidator(PRICE_MIN_FILTER, value))
+                                setPriceMax(value)
                             } else {
                                 const error = result.error.errors[0].message
-                                setMaxPriceError(error)
+                                setPriceMaxError(error)
                             }
                         }} />
                     <div className="flex justify-evenly">
                         <ButtonSmallText text="Reset"
                             onClick={(e) => {
                                 // Reset input values ...
-                                setMinPrice(PRICE_MIN_FILTER)
-                                setMaxPrice(PRICE_MAX_FILTER)
+                                setPriceMin(PRICE_MIN_FILTER)
+                                setPriceMax(PRICE_MAX_FILTER)
 
                                 // ... error messages ...
-                                setMinPriceError(undefined)
-                                setMaxPriceError(undefined)
+                                setPriceMinError(undefined)
+                                setPriceMaxError(undefined)
 
                                 // ... and validators
-                                setMinPriceValidator(defaultValidator)
-                                setMaxPriceValidator(defaultValidator)
+                                setPriceMinValidator(defaultValidator)
+                                setPriceMaxValidator(defaultValidator)
                             }} />
                         <ButtonSmallFilled text="Search"
                             onClick={(e) => {
@@ -106,8 +112,10 @@ export default function ListingsFilterPrice() {
                                 setDisplayDropdown(false)
 
                                 // ... change filter values
-                                context.searchFilters.price.min.change(minPrice)
-                                context.searchFilters.price.max.change(maxPrice)
+                                context.searchFilters.price.min.change(priceMin)
+                                context.searchFilters.price.max.change(priceMax)
+                                setPriceMinError(undefined)
+                                setPriceMaxError(undefined)
                             }} />
                     </div>
                 </div>

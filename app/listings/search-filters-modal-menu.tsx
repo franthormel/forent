@@ -5,7 +5,7 @@ import Modal from "@/components/modal";
 import { useState } from "react";
 import ListingsSearchFiltersModalContent from "./search-filters-modal-content";
 
-export default function ListingsSearchFiltersMenu() {
+export default function ListingsSearchFiltersModalMenu() {
     const [showModalState, setShowModalState] = useState<boolean>(false);
 
     return (
@@ -17,7 +17,11 @@ export default function ListingsSearchFiltersMenu() {
                 }
             }}>
                 <div className="h-screen w-[75vw]">
-                    <ListingsSearchFiltersModalContent />
+                    <ListingsSearchFiltersModalContent
+                        onSearch={() => {
+                            setShowModalState(false)
+                        }}
+                    />
                 </div>
             </Modal>
             <ButtonIconTextOutlined props={{
