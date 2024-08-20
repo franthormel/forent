@@ -2,27 +2,28 @@
 
 import { useContext } from "react"
 import ListingsList from "./list"
-import { ListingsListTop } from "./list-top"
+import { ListingsListCountSort } from "./list-count-sort"
 import { ListingsMap } from "./map"
 import ListingsPagination from "./pagination"
 import { ListingsContext } from "./provider"
-import { Listing } from "./types"
+import { Listing, ListingSortCompareFunctions } from "./types"
 
 interface ListingsContentInterface {
     listings: Listing[]
 }
 
 export default function ListingsContent(props: ListingsContentInterface) {
-    // TODO: Use filter values
+    // TODO: Use context filter values, try to use useMemo if applicable
     const context = useContext(ListingsContext);
-    // console.log(context.searchFilters.price)
+
+    const sortedListings = props.listings.sort(ListingSortCompareFunctions.choose(context.sort.value))
 
     return (
         <div className="flex h-[36rem]">
             <ListingsMap listings={props.listings} />
             <div className="flex basis-1/2 flex-col">
-                <ListingsListTop listingsCount={props.listings.length} />
-                <ListingsList listings={props.listings} />
+                <ListingsListCountSort listingsCount={props.listings.length} />
+                <ListingsList listings={sortedListings} />
                 <ListingsPagination listingsCount={props.listings.length} />
             </div>
         </div>

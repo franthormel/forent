@@ -2,6 +2,7 @@
 
 import { createContext, useState } from "react"
 import { AREA_MAX_FILTER, AREA_MIN_FILTER, BEDS_BATHS_DEFAULT, PRICE_MAX_FILTER, PRICE_MIN_FILTER, STARTING_PAGE } from "./constants"
+import { ListingSort } from "./types"
 
 type ContextTypeNumber = {
     value: number,
@@ -19,6 +20,10 @@ interface ListingsContextInterface {
         beds: ContextTypeNumber,
         baths: ContextTypeNumber,
         area: ContenTypeNumberRange
+    },
+    sort: {
+        value: ListingSort,
+        change: (value: ListingSort) => void
     },
     pagination: {
         changeToPreviousPage: () => void,
@@ -58,6 +63,10 @@ export const ListingsContext = createContext<ListingsContextInterface>({
             }
         },
     },
+    sort: {
+        value: ListingSort.NEWEST,
+        change: (value: ListingSort) => { }
+    },
     pagination: {
         changeToPreviousPage: () => { },
         changeToNextPage: () => { },
@@ -77,6 +86,8 @@ export default function ListingsProvider({ children }: { children: React.ReactNo
 
     const [minAreaFilter, setMinAreaFilter] = useState<number>(AREA_MIN_FILTER)
     const [maxAreaFilter, setMaxAreaFilter] = useState<number>(AREA_MAX_FILTER)
+
+    const [listingSort, setListingSort] = useState<ListingSort>(ListingSort.NEWEST)
 
     const [currentPage, setCurrentPage] = useState<number>(STARTING_PAGE);
 
@@ -121,6 +132,12 @@ export default function ListingsProvider({ children }: { children: React.ReactNo
                         setMaxAreaFilter(value)
                     }
                 }
+            }
+        },
+        sort: {
+            value: listingSort,
+            change: (value) => {
+                setListingSort(value)
             }
         },
         pagination: {
