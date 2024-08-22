@@ -5,7 +5,7 @@ import ButtonSmallFilled from "@/components/buttons/small/filled"
 import ButtonSmallText from "@/components/buttons/small/text"
 import Dropdown from "@/components/dropdown"
 import { useContext, useEffect, useState } from "react"
-import { BEDS_BATHS_DEFAULT, BEDS_BATHS_FILTER } from "./constants"
+import { BEDS_BATHS_OPTIONS, DEFAULT_LIST_FILTERS } from "./constants"
 import { ListingsContext } from "./provider"
 
 export default function ListingsFiltersBedsBaths() {
@@ -39,13 +39,13 @@ export default function ListingsFiltersBedsBaths() {
             }}>
                 <div className="flex w-64 flex-col gap-5 lg:w-72">
                     <ButtonsSegmentedLabelled label="Beds"
-                        values={BEDS_BATHS_FILTER}
+                        values={BEDS_BATHS_OPTIONS}
                         activeIndex={beds}
                         onCick={(index) => {
                             setBeds(index)
                         }} />
                     <ButtonsSegmentedLabelled label="Baths"
-                        values={BEDS_BATHS_FILTER}
+                        values={BEDS_BATHS_OPTIONS}
                         activeIndex={baths}
                         onCick={(index) => {
                             setBaths(index)
@@ -53,8 +53,8 @@ export default function ListingsFiltersBedsBaths() {
                     <div className="flex justify-evenly">
                         <ButtonSmallText text="Reset"
                             onClick={() => {
-                                setBeds(BEDS_BATHS_DEFAULT)
-                                setBaths(BEDS_BATHS_DEFAULT)
+                                setBeds(DEFAULT_LIST_FILTERS.beds.value)
+                                setBaths(DEFAULT_LIST_FILTERS.baths.value)
                             }} />
                         <ButtonSmallFilled text="Search"
                             onClick={() => {

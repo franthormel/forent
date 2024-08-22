@@ -10,7 +10,7 @@ import { formatAppend } from "@/lib/formatter/number";
 import { customizeAreaValidator, customizePriceValidator } from "@/lib/validation/listing/validators";
 import { useContext, useEffect, useState } from "react";
 import { ZodNumber } from "zod";
-import { AREA_MAX_FILTER, AREA_MIN_FILTER, BEDS_BATHS_DEFAULT, BEDS_BATHS_FILTER, PRICE_MAX_FILTER, PRICE_MIN_FILTER } from "./constants";
+import { BEDS_BATHS_OPTIONS, DEFAULT_LIST_FILTERS } from "./constants";
 import { ListingsContext } from "./provider";
 
 interface ListingsSearchFiltersModalContentProps {
@@ -18,8 +18,8 @@ interface ListingsSearchFiltersModalContentProps {
 }
 
 export default function ListingsSearchFiltersModalContent(props: ListingsSearchFiltersModalContentProps) {
-    const areaMaxPlaceholder = formatAppend(AREA_MAX_FILTER, "sqm.")
-    const priceMaxPlaceholder = CURRENCY_FORMATTER.format(PRICE_MAX_FILTER)
+    const areaMaxPlaceholder = formatAppend(DEFAULT_LIST_FILTERS.area.max.value, "sqm.")
+    const priceMaxPlaceholder = CURRENCY_FORMATTER.format(DEFAULT_LIST_FILTERS.price.max.value)
 
     // Context values
     const context = useContext(ListingsContext)
@@ -45,10 +45,16 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
     const [priceMaxError, setPriceMaxError] = useState<string | undefined>(undefined)
 
     // Validators
-    const defaultAreaValidator = customizeAreaValidator(AREA_MIN_FILTER, AREA_MAX_FILTER)
+    const defaultAreaValidator = customizeAreaValidator(
+        DEFAULT_LIST_FILTERS.area.min.value,
+        DEFAULT_LIST_FILTERS.area.max.value
+    )
     const [areaMinValidator, setAreaMinValidator] = useState<ZodNumber>(defaultAreaValidator)
     const [areaMaxValidator, setAreaMaxValidator] = useState<ZodNumber>(defaultAreaValidator)
-    const defaultPriceValidator = customizePriceValidator(PRICE_MIN_FILTER, PRICE_MAX_FILTER)
+    const defaultPriceValidator = customizePriceValidator(
+        DEFAULT_LIST_FILTERS.price.min.value,
+        DEFAULT_LIST_FILTERS.price.max.value
+    )
     const [priceMinValidator, setPriceMinValidator] = useState<ZodNumber>(defaultPriceValidator)
     const [priceMaxValidator, setPriceMaxValidator] = useState<ZodNumber>(defaultPriceValidator)
 
@@ -90,7 +96,7 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
                         type="number"
                         placeholder="None"
                         value={priceMin}
-                        min={PRICE_MIN_FILTER}
+                        min={DEFAULT_LIST_FILTERS.price.min.value}
                         max={priceMax}
                         errorMessage={priceMinError}
                         onChange={(e) => {
@@ -99,7 +105,10 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
 
                             if (result.success) {
                                 setPriceMinError(undefined)
-                                setPriceMaxValidator(customizePriceValidator(value, PRICE_MAX_FILTER))
+                                setPriceMaxValidator(customizePriceValidator(
+                                    value,
+                                    DEFAULT_LIST_FILTERS.price.max.value
+                                ))
                                 setPriceMin(value)
                             } else {
                                 const error = result.error.errors[0].message
@@ -112,7 +121,7 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
                         placeholder={priceMaxPlaceholder}
                         value={priceMax}
                         min={priceMin}
-                        max={PRICE_MAX_FILTER}
+                        max={DEFAULT_LIST_FILTERS.price.max.value}
                         errorMessage={priceMaxError}
                         onChange={(e) => {
                             const value = NumberUtils.toNumber(e.target.value, -1)
@@ -120,7 +129,10 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
 
                             if (result.success) {
                                 setPriceMaxError(undefined)
-                                setPriceMinValidator(customizePriceValidator(PRICE_MIN_FILTER, value))
+                                setPriceMinValidator(customizePriceValidator(
+                                    DEFAULT_LIST_FILTERS.price.min.value,
+                                    value
+                                ))
                                 setPriceMax(value)
                             } else {
                                 const error = result.error.errors[0].message
@@ -130,13 +142,13 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
                 </div>
                 <div className="flex flex-col gap-5">
                     <ButtonsSegmentedLabelled label="Beds"
-                        values={BEDS_BATHS_FILTER}
+                        values={BEDS_BATHS_OPTIONS}
                         activeIndex={beds}
                         onCick={(index) => {
                             setBeds(index)
                         }} />
                     <ButtonsSegmentedLabelled label="Baths"
-                        values={BEDS_BATHS_FILTER}
+                        values={BEDS_BATHS_OPTIONS}
                         activeIndex={baths}
                         onCick={(index) => {
                             setBaths(index)
@@ -149,7 +161,7 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
                         type="number"
                         placeholder="None"
                         value={areaMin}
-                        min={AREA_MIN_FILTER}
+                        min={DEFAULT_LIST_FILTERS.area.min.value}
                         max={areaMax}
                         errorMessage={areaMinError}
                         onChange={(e) => {
@@ -158,7 +170,10 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
 
                             if (result.success) {
                                 setAreaMinError(undefined)
-                                setAreaMaxValidator(customizeAreaValidator(value, AREA_MAX_FILTER))
+                                setAreaMaxValidator(customizeAreaValidator(
+                                    value,
+                                    DEFAULT_LIST_FILTERS.area.max.value
+                                ))
                                 setAreaMin(value)
                             } else {
                                 const error = result.error.errors[0].message
@@ -171,7 +186,7 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
                         placeholder={areaMaxPlaceholder}
                         value={areaMax}
                         min={areaMin}
-                        max={AREA_MAX_FILTER}
+                        max={DEFAULT_LIST_FILTERS.area.max.value}
                         errorMessage={areaMaxError}
                         onChange={(e) => {
                             const value = NumberUtils.toNumber(e.target.value, -1)
@@ -179,7 +194,10 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
 
                             if (result.success) {
                                 setAreaMaxError(undefined)
-                                setAreaMinValidator(customizeAreaValidator(AREA_MIN_FILTER, value))
+                                setAreaMinValidator(customizeAreaValidator(
+                                    DEFAULT_LIST_FILTERS.area.min.value,
+                                    value
+                                ))
                                 setAreaMax(value)
                             } else {
                                 const error = result.error.errors[0].message
@@ -192,18 +210,18 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
                 <ButtonText text="Reset"
                     onClick={() => {
                         // Reset beds/baths ...
-                        setBeds(BEDS_BATHS_DEFAULT)
-                        setBaths(BEDS_BATHS_DEFAULT)
+                        setBeds(DEFAULT_LIST_FILTERS.beds.value)
+                        setBaths(DEFAULT_LIST_FILTERS.baths.value)
 
                         // ... area ...
-                        setAreaMin(AREA_MIN_FILTER)
-                        setAreaMax(AREA_MAX_FILTER)
+                        setAreaMin(DEFAULT_LIST_FILTERS.area.min.value)
+                        setAreaMax(DEFAULT_LIST_FILTERS.area.max.value)
                         setAreaMinError(undefined)
                         setAreaMaxError(undefined)
 
                         // ... price
-                        setPriceMin(PRICE_MIN_FILTER)
-                        setPriceMax(PRICE_MAX_FILTER)
+                        setPriceMin(DEFAULT_LIST_FILTERS.price.min.value)
+                        setPriceMax(DEFAULT_LIST_FILTERS.price.max.value)
                         setPriceMinError(undefined)
                         setPriceMaxError(undefined)
                     }} />

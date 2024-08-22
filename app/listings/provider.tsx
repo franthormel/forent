@@ -1,26 +1,11 @@
 "use client"
 
 import { createContext, useState } from "react"
-import { AREA_MAX_FILTER, AREA_MIN_FILTER, BEDS_BATHS_DEFAULT, PRICE_MAX_FILTER, PRICE_MIN_FILTER, STARTING_PAGE } from "./constants"
-import { ListingSort } from "./types"
-
-type ContextTypeNumber = {
-    value: number,
-    change: (value: number) => void
-}
-
-type ContenTypeNumberRange = {
-    min: ContextTypeNumber,
-    max: ContextTypeNumber
-}
+import { DEFAULT_LIST_FILTERS, STARTING_PAGE } from "./constants"
+import { ContextTypeNumber, ListingSort, ListingsSearchFilters } from "./types"
 
 interface ListingsContextInterface {
-    searchFilters: {
-        price: ContenTypeNumberRange,
-        beds: ContextTypeNumber,
-        baths: ContextTypeNumber,
-        area: ContenTypeNumberRange
-    },
+    searchFilters: ListingsSearchFilters,
     sort: {
         value: ListingSort,
         change: (value: ListingSort) => void
@@ -33,36 +18,7 @@ interface ListingsContextInterface {
 }
 
 export const ListingsContext = createContext<ListingsContextInterface>({
-    searchFilters: {
-        price: {
-            min: {
-                value: PRICE_MIN_FILTER,
-                change: (value) => { }
-            },
-            max: {
-                value: PRICE_MAX_FILTER,
-                change: (value) => { }
-            }
-        },
-        beds: {
-            value: BEDS_BATHS_DEFAULT,
-            change: (value) => { }
-        },
-        baths: {
-            value: BEDS_BATHS_DEFAULT,
-            change: (value) => { }
-        },
-        area: {
-            min: {
-                value: AREA_MIN_FILTER,
-                change: (value) => { }
-            },
-            max: {
-                value: AREA_MAX_FILTER,
-                change: (value) => { }
-            }
-        },
-    },
+    searchFilters: DEFAULT_LIST_FILTERS,
     sort: {
         value: ListingSort.NEWEST,
         change: (value: ListingSort) => { }
@@ -78,14 +34,14 @@ export const ListingsContext = createContext<ListingsContextInterface>({
 });
 
 export default function ListingsProvider({ children }: { children: React.ReactNode }) {
-    const [minPriceFilter, setMinPriceFilter] = useState<number>(PRICE_MIN_FILTER)
-    const [maxPriceFilter, setMaxPriceFilter] = useState<number>(PRICE_MAX_FILTER)
+    const [minPriceFilter, setMinPriceFilter] = useState<number>(DEFAULT_LIST_FILTERS.price.min.value)
+    const [maxPriceFilter, setMaxPriceFilter] = useState<number>(DEFAULT_LIST_FILTERS.price.max.value)
 
-    const [bedsFilter, setBedsFilter] = useState<number>(BEDS_BATHS_DEFAULT)
-    const [bathsFilter, setBathsFilter] = useState<number>(BEDS_BATHS_DEFAULT)
+    const [bedsFilter, setBedsFilter] = useState<number>(DEFAULT_LIST_FILTERS.beds.value)
+    const [bathsFilter, setBathsFilter] = useState<number>(DEFAULT_LIST_FILTERS.baths.value)
 
-    const [minAreaFilter, setMinAreaFilter] = useState<number>(AREA_MIN_FILTER)
-    const [maxAreaFilter, setMaxAreaFilter] = useState<number>(AREA_MAX_FILTER)
+    const [minAreaFilter, setMinAreaFilter] = useState<number>(DEFAULT_LIST_FILTERS.area.min.value)
+    const [maxAreaFilter, setMaxAreaFilter] = useState<number>(DEFAULT_LIST_FILTERS.area.max.value)
 
     const [listingSort, setListingSort] = useState<ListingSort>(ListingSort.NEWEST)
 

@@ -9,11 +9,11 @@ import { formatAppend } from "@/lib/formatter/number"
 import { customizeAreaValidator } from "@/lib/validation/listing/validators"
 import { useContext, useEffect, useState } from "react"
 import { ZodNumber } from "zod"
-import { AREA_MAX_FILTER, AREA_MIN_FILTER } from "./constants"
+import { DEFAULT_LIST_FILTERS } from "./constants"
 import { ListingsContext } from "./provider"
 
 export default function ListingsFilterArea() {
-    const areaMaxPlaceholder = formatAppend(AREA_MAX_FILTER, "sqm.")
+    const areaMaxPlaceholder = formatAppend(DEFAULT_LIST_FILTERS.area.max.value, "sqm.")
 
     const context = useContext(ListingsContext)
     const contextAreaMin = context.searchFilters.area.min.value
@@ -25,7 +25,10 @@ export default function ListingsFilterArea() {
     const [areaMinError, setAreaMinError] = useState<string | undefined>(undefined)
     const [areaMaxError, setAreaMaxError] = useState<string | undefined>(undefined)
 
-    const defaultValidator = customizeAreaValidator(AREA_MIN_FILTER, AREA_MAX_FILTER)
+    const defaultValidator = customizeAreaValidator(
+        DEFAULT_LIST_FILTERS.area.min.value,
+        DEFAULT_LIST_FILTERS.area.max.value
+    )
     const [areaMinValidator, setAreaMinValidator] = useState<ZodNumber>(defaultValidator)
     const [areaMaxValidator, setAreaMaxValidator] = useState<ZodNumber>(defaultValidator)
 
@@ -54,7 +57,7 @@ export default function ListingsFilterArea() {
                         type="number"
                         placeholder="None"
                         value={areaMin}
-                        min={AREA_MIN_FILTER}
+                        min={DEFAULT_LIST_FILTERS.area.min.value}
                         max={areaMax}
                         errorMessage={areaMinError}
                         onChange={(e) => {
@@ -63,7 +66,10 @@ export default function ListingsFilterArea() {
 
                             if (result.success) {
                                 setAreaMinError(undefined)
-                                setAreaMaxValidator(customizeAreaValidator(value, AREA_MAX_FILTER))
+                                setAreaMaxValidator(customizeAreaValidator(
+                                    value,
+                                    DEFAULT_LIST_FILTERS.area.max.value
+                                ))
                                 setAreaMin(value)
                             } else {
                                 const error = result.error.errors[0].message
@@ -76,7 +82,7 @@ export default function ListingsFilterArea() {
                         placeholder={areaMaxPlaceholder}
                         value={areaMax}
                         min={areaMin}
-                        max={AREA_MAX_FILTER}
+                        max={DEFAULT_LIST_FILTERS.area.max.value}
                         errorMessage={areaMaxError}
                         onChange={(e) => {
                             const value = NumberUtils.toNumber(e.target.value, -1)
@@ -84,7 +90,10 @@ export default function ListingsFilterArea() {
 
                             if (result.success) {
                                 setAreaMaxError(undefined)
-                                setAreaMinValidator(customizeAreaValidator(AREA_MIN_FILTER, value))
+                                setAreaMinValidator(customizeAreaValidator(
+                                    DEFAULT_LIST_FILTERS.area.min.value,
+                                    value
+                                ))
                                 setAreaMax(value)
                             } else {
                                 const error = result.error.errors[0].message
@@ -95,8 +104,8 @@ export default function ListingsFilterArea() {
                         <ButtonSmallText text="Reset"
                             onClick={(e) => {
                                 // Reset input values ...
-                                setAreaMin(AREA_MIN_FILTER)
-                                setAreaMax(AREA_MAX_FILTER)
+                                setAreaMin(DEFAULT_LIST_FILTERS.area.min.value)
+                                setAreaMax(DEFAULT_LIST_FILTERS.area.max.value)
 
                                 // ... error messages ...
                                 setAreaMinError(undefined)

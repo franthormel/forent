@@ -9,11 +9,11 @@ import { CURRENCY_FORMATTER } from "@/lib/formatter/currency"
 import { customizePriceValidator } from "@/lib/validation/listing/validators"
 import { useContext, useEffect, useState } from "react"
 import { ZodNumber } from "zod"
-import { PRICE_MAX_FILTER, PRICE_MIN_FILTER } from "./constants"
+import { DEFAULT_LIST_FILTERS } from "./constants"
 import { ListingsContext } from "./provider"
 
 export default function ListingsFilterPrice() {
-    const priceMaxPlaceholder = CURRENCY_FORMATTER.format(PRICE_MAX_FILTER)
+    const priceMaxPlaceholder = CURRENCY_FORMATTER.format(DEFAULT_LIST_FILTERS.price.max.value)
 
     const context = useContext(ListingsContext)
     const contextPriceMin = context.searchFilters.price.min.value
@@ -25,7 +25,10 @@ export default function ListingsFilterPrice() {
     const [priceMinError, setPriceMinError] = useState<string | undefined>(undefined)
     const [priceMaxError, setPriceMaxError] = useState<string | undefined>(undefined)
 
-    const defaultValidator = customizePriceValidator(PRICE_MIN_FILTER, PRICE_MAX_FILTER)
+    const defaultValidator = customizePriceValidator(
+        DEFAULT_LIST_FILTERS.price.min.value,
+        DEFAULT_LIST_FILTERS.price.max.value
+    )
     const [priceMinValidator, setPriceMinValidator] = useState<ZodNumber>(defaultValidator)
     const [priceMaxValidator, setPriceMaxValidator] = useState<ZodNumber>(defaultValidator)
 
@@ -54,7 +57,7 @@ export default function ListingsFilterPrice() {
                         type="number"
                         placeholder="None"
                         value={priceMin}
-                        min={PRICE_MIN_FILTER}
+                        min={DEFAULT_LIST_FILTERS.price.min.value}
                         max={priceMax}
                         errorMessage={priceMinError}
                         onChange={(e) => {
@@ -63,7 +66,10 @@ export default function ListingsFilterPrice() {
 
                             if (result.success) {
                                 setPriceMinError(undefined)
-                                setPriceMaxValidator(customizePriceValidator(value, PRICE_MAX_FILTER))
+                                setPriceMaxValidator(customizePriceValidator(
+                                    value,
+                                    DEFAULT_LIST_FILTERS.price.max.value
+                                ))
                                 setPriceMin(value)
                             } else {
                                 const error = result.error.errors[0].message
@@ -76,7 +82,7 @@ export default function ListingsFilterPrice() {
                         placeholder={priceMaxPlaceholder}
                         value={priceMax}
                         min={priceMin}
-                        max={PRICE_MAX_FILTER}
+                        max={DEFAULT_LIST_FILTERS.price.max.value}
                         errorMessage={priceMaxError}
                         onChange={(e) => {
                             const value = NumberUtils.toNumber(e.target.value, -1)
@@ -84,7 +90,10 @@ export default function ListingsFilterPrice() {
 
                             if (result.success) {
                                 setPriceMaxError(undefined)
-                                setPriceMinValidator(customizePriceValidator(PRICE_MIN_FILTER, value))
+                                setPriceMinValidator(customizePriceValidator(
+                                    DEFAULT_LIST_FILTERS.price.min.value,
+                                    value
+                                ))
                                 setPriceMax(value)
                             } else {
                                 const error = result.error.errors[0].message
@@ -95,8 +104,8 @@ export default function ListingsFilterPrice() {
                         <ButtonSmallText text="Reset"
                             onClick={(e) => {
                                 // Reset input values ...
-                                setPriceMin(PRICE_MIN_FILTER)
-                                setPriceMax(PRICE_MAX_FILTER)
+                                setPriceMin(DEFAULT_LIST_FILTERS.price.min.value)
+                                setPriceMax(DEFAULT_LIST_FILTERS.price.max.value)
 
                                 // ... error messages ...
                                 setPriceMinError(undefined)

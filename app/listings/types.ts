@@ -100,3 +100,20 @@ export class ListingSortCompareFunctions {
     }
   }
 }
+
+export type ContextTypeNumber = {
+  value: number;
+  change: (value: number) => void;
+};
+
+type ContenTypeNumberRange = {
+  min: ContextTypeNumber;
+  max: ContextTypeNumber;
+};
+
+export interface ListingsSearchFilters {
+  price: ContenTypeNumberRange;
+  beds: ContextTypeNumber;
+  baths: ContextTypeNumber;
+  area: ContenTypeNumberRange;
+}
