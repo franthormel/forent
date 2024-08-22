@@ -4,7 +4,7 @@ export const LISTINGS_PER_PAGE = 15;
 export const STARTING_PAGE = 1;
 
 const PRICE_MIN_FILTER = 0;
-const PRICE_MAX_FILTER = 10_000_000;
+const PRICE_MAX_FILTER = 100_000_000;
 /**
  * These are the labels for the beds/baths filter
  * The values to be used is its index.

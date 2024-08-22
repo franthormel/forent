@@ -1,7 +1,8 @@
 "use server";
 
 import prisma from "@/lib/db";
-import { Listing, PrismaListing } from "./types";
+import { DEFAULT_LIST_FILTERS } from "./constants";
+import { Listing, ListingsSearchFilters, PrismaListing } from "./types";
 
 const prismaListingMapper = (dbListing: PrismaListing) => {
   const dbListingPrice = dbListing.prices
@@ -30,12 +31,46 @@ const prismaListingMapper = (dbListing: PrismaListing) => {
   return listing;
 };
 
-export async function fetchMatchedListings(): Promise<Listing[]> {
-  // TODO: Add filter param values
+export async function fetchMatchedListings(
+  filters: ListingsSearchFilters = DEFAULT_LIST_FILTERS
+): Promise<Listing[]> {
+  // TODO: Use beds filter values
+  // TODO: Use baths filter values
   const prismaListings = await prisma.listing.findMany({
     include: {
       address: true,
       prices: true,
+    },
+    where: {
+      // Filter (price)
+      prices: {
+        some: {
+          // Price must be current ...
+          isCurrent: true,
+          AND: {
+            // ... and must be greater than or equal than the minimum filter value ...
+            value: {
+              gte: filters.price.min.value,
+            },
+            AND: {
+              // ... and must be lesser than or equal than the maximum filter value
+              value: {
+                lte: filters.price.max.value,
+              },
+            },
+          },
+        },
+      },
+      // Filter (area): must be greater than or equal than the minimum filter value ...
+      area: {
+        gte: filters.area.min.value,
+      },
+      AND: {
+        // ... and must be lesser than or equal than the maximum filter value
+        area: {
+          lte: filters.area.max.value,
+        },
+      },
     },
   });
   return prismaListings.map(prismaListingMapper);
