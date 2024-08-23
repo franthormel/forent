@@ -7,6 +7,7 @@ import Dropdown from "@/components/dropdown"
 import { useContext, useEffect, useState } from "react"
 import { BEDS_BATHS_OPTIONS, DEFAULT_LIST_FILTERS } from "./constants"
 import { ListingsContext } from "./provider"
+import { BedsBathsOption } from "./types"
 
 export default function ListingsFiltersBedsBaths() {
     const context = useContext(ListingsContext)
@@ -14,8 +15,8 @@ export default function ListingsFiltersBedsBaths() {
     const contextBeds = context.searchFilters.beds.value;
     const contextBaths = context.searchFilters.baths.value;
 
-    const [beds, setBeds] = useState<number>(contextBeds)
-    const [baths, setBaths] = useState<number>(contextBaths)
+    const [beds, setBeds] = useState<BedsBathsOption>(contextBeds)
+    const [baths, setBaths] = useState<BedsBathsOption>(contextBaths)
 
     // Update the local values when the other filter values also change
     useEffect(() => {
@@ -27,6 +28,7 @@ export default function ListingsFiltersBedsBaths() {
     }, [contextBaths])
 
     const [displayDropdown, setDisplayDropdown] = useState<boolean>(false)
+    const options = Object.values(BedsBathsOption)
 
     return (
         <div className="hidden lg:flex">
@@ -40,15 +42,15 @@ export default function ListingsFiltersBedsBaths() {
                 <div className="flex w-64 flex-col gap-5 lg:w-72">
                     <ButtonsSegmentedLabelled label="Beds"
                         values={BEDS_BATHS_OPTIONS}
-                        activeIndex={beds}
-                        onCick={(index) => {
-                            setBeds(index)
+                        activeIndex={options.indexOf(beds)}
+                        onCick={(value, index) => {
+                            setBeds(options.at(index)!)
                         }} />
                     <ButtonsSegmentedLabelled label="Baths"
                         values={BEDS_BATHS_OPTIONS}
-                        activeIndex={baths}
-                        onCick={(index) => {
-                            setBaths(index)
+                        activeIndex={options.indexOf(baths)}
+                        onCick={(value, index) => {
+                            setBaths(options.at(index)!)
                         }} />
                     <div className="flex justify-evenly">
                         <ButtonSmallText text="Reset"

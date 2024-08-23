@@ -1,4 +1,4 @@
-import { ListingsSearchFilters } from "./types";
+import { BedsBathsOption, ListingsSearchFilters } from "./types";
 
 export const LISTINGS_PER_PAGE = 15;
 export const STARTING_PAGE = 1;
@@ -10,8 +10,15 @@ const PRICE_MAX_FILTER = 100_000_000;
  * The values to be used is its index.
  * For example, the `Any` label's value is `0`
  */
-export const BEDS_BATHS_OPTIONS = ["Any", "1", "2", "3", "4", "5+"];
-const BEDS_BATHS_DEFAULT = 0;
+export const BEDS_BATHS_OPTIONS = [
+  BedsBathsOption.ANY,
+  BedsBathsOption.ONE,
+  BedsBathsOption.TWO,
+  BedsBathsOption.THREE,
+  BedsBathsOption.FOUR,
+  BedsBathsOption.MORE_THAN_FIVE,
+];
+const BEDS_BATHS_DEFAULT = BedsBathsOption.ANY;
 
 const AREA_MIN_FILTER = 0;
 const AREA_MAX_FILTER = 1_000_000;

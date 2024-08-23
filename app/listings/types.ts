@@ -101,19 +101,28 @@ export class ListingSortCompareFunctions {
   }
 }
 
-export type ContextTypeNumber = {
-  value: number;
-  change: (value: number) => void;
+export type ListingContextType<Type> = {
+  value: Type;
+  change: (value: Type) => void;
 };
 
 type ContenTypeNumberRange = {
-  min: ContextTypeNumber;
-  max: ContextTypeNumber;
+  min: ListingContextType<number>;
+  max: ListingContextType<number>;
 };
 
 export interface ListingsSearchFilters {
   price: ContenTypeNumberRange;
-  beds: ContextTypeNumber;
-  baths: ContextTypeNumber;
+  beds: ListingContextType<BedsBathsOption>;
+  baths: ListingContextType<BedsBathsOption>;
   area: ContenTypeNumberRange;
+}
+
+export enum BedsBathsOption {
+  ANY = "Any",
+  ONE = "1",
+  TWO = "2",
+  THREE = "3",
+  FOUR = "4",
+  MORE_THAN_FIVE = "5+",
 }

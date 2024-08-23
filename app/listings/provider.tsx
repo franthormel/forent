@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react"
 import { DEFAULT_LIST_FILTERS, STARTING_PAGE } from "./constants"
-import { ContextTypeNumber, ListingSort, ListingsSearchFilters } from "./types"
+import { BedsBathsOption, ListingContextType, ListingSort, ListingsSearchFilters } from "./types"
 
 interface ListingsContextInterface {
     searchFilters: ListingsSearchFilters,
@@ -13,7 +13,7 @@ interface ListingsContextInterface {
     pagination: {
         changeToPreviousPage: () => void,
         changeToNextPage: () => void,
-        currentPage: ContextTypeNumber
+        currentPage: ListingContextType<number>
     }
 }
 
@@ -37,8 +37,8 @@ export default function ListingsProvider({ children }: { children: React.ReactNo
     const [minPriceFilter, setMinPriceFilter] = useState<number>(DEFAULT_LIST_FILTERS.price.min.value)
     const [maxPriceFilter, setMaxPriceFilter] = useState<number>(DEFAULT_LIST_FILTERS.price.max.value)
 
-    const [bedsFilter, setBedsFilter] = useState<number>(DEFAULT_LIST_FILTERS.beds.value)
-    const [bathsFilter, setBathsFilter] = useState<number>(DEFAULT_LIST_FILTERS.baths.value)
+    const [bedsFilter, setBedsFilter] = useState<BedsBathsOption>(DEFAULT_LIST_FILTERS.beds.value)
+    const [bathsFilter, setBathsFilter] = useState<BedsBathsOption>(DEFAULT_LIST_FILTERS.baths.value)
 
     const [minAreaFilter, setMinAreaFilter] = useState<number>(DEFAULT_LIST_FILTERS.area.min.value)
     const [maxAreaFilter, setMaxAreaFilter] = useState<number>(DEFAULT_LIST_FILTERS.area.max.value)

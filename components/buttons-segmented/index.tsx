@@ -5,7 +5,7 @@ export interface ButtonsSegmentedProps {
      * Where `n` is the number of entries in `values` minus one (1).
      */
     activeIndex: number
-    onCick?: (index: number) => void
+    onCick?: (value: string, index: number) => void
 }
 
 export default function ButtonsSegmented(props: ButtonsSegmentedProps) {
@@ -23,7 +23,7 @@ export default function ButtonsSegmented(props: ButtonsSegmentedProps) {
                             ${!indexIsActive && 'hover:bg-amber-200'} `}
                         onClick={(e) => {
                             if (props.onCick) {
-                                props.onCick(index)
+                                props.onCick(value, index)
                             }
                         }}>
                         {value}

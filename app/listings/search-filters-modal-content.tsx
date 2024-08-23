@@ -12,6 +12,7 @@ import { useContext, useEffect, useState } from "react";
 import { ZodNumber } from "zod";
 import { BEDS_BATHS_OPTIONS, DEFAULT_LIST_FILTERS } from "./constants";
 import { ListingsContext } from "./provider";
+import { BedsBathsOption } from "./types";
 
 interface ListingsSearchFiltersModalContentProps {
     onSearch?: () => void
@@ -31,8 +32,8 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
     const contextPriceMax = context.searchFilters.price.max.value
 
     // Local values
-    const [beds, setBeds] = useState<number>(contextBeds)
-    const [baths, setBaths] = useState<number>(contextBaths)
+    const [beds, setBeds] = useState<BedsBathsOption>(contextBeds)
+    const [baths, setBaths] = useState<BedsBathsOption>(contextBaths)
     const [areaMin, setAreaMin] = useState<number>(contextAreaMin)
     const [areaMax, setAreaMax] = useState<number>(contextAreaMax)
     const [priceMin, setPriceMin] = useState<number>(contextPriceMin)
@@ -57,6 +58,8 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
     )
     const [priceMinValidator, setPriceMinValidator] = useState<ZodNumber>(defaultPriceValidator)
     const [priceMaxValidator, setPriceMaxValidator] = useState<ZodNumber>(defaultPriceValidator)
+
+    const options = Object.values(BedsBathsOption)
 
     // Updates the local values when the other filter values also change
     useEffect(() => {
@@ -143,15 +146,15 @@ export default function ListingsSearchFiltersModalContent(props: ListingsSearchF
                 <div className="flex flex-col gap-5">
                     <ButtonsSegmentedLabelled label="Beds"
                         values={BEDS_BATHS_OPTIONS}
-                        activeIndex={beds}
-                        onCick={(index) => {
-                            setBeds(index)
+                        activeIndex={options.indexOf(beds)}
+                        onCick={(value, index) => {
+                            setBeds(options.at(index)!)
                         }} />
                     <ButtonsSegmentedLabelled label="Baths"
                         values={BEDS_BATHS_OPTIONS}
-                        activeIndex={baths}
-                        onCick={(index) => {
-                            setBaths(index)
+                        activeIndex={options.indexOf(baths)}
+                        onCick={(value, index) => {
+                            setBaths(options.at(index)!)
                         }} />
                 </div>
                 {/* Area */}
