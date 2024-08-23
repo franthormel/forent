@@ -1,30 +1,44 @@
 "use client"
 
-import { useContext } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
+import { ListingSortCompareFunctions, makeSearchFiltersRequest } from "./functions"
 import ListingsList from "./list"
 import { ListingsListCountSort } from "./list-count-sort"
 import { ListingsMap } from "./map"
 import ListingsPagination from "./pagination"
 import { ListingsContext } from "./provider"
-import { Listing, ListingSortCompareFunctions } from "./types"
+import { Listing } from "./types"
 
-interface ListingsContentInterface {
-    listings: Listing[]
-}
-
-export default function ListingsContent(props: ListingsContentInterface) {
-    // TODO: Use context filter values, try to use useMemo if applicable
+export default function ListingsContent() {
     const context = useContext(ListingsContext);
+    const [listings, setListings] = useState<Listing[]>([]);
 
-    const sortedListings = props.listings.sort(ListingSortCompareFunctions.choose(context.sort.value))
+    useEffect(() => {
+        async function updateListings() {
+            const searchFiltersRequest = makeSearchFiltersRequest(context.searchFilters);
+            const request = await fetch("/api/listings", {
+                method: "POST",
+                body: JSON.stringify(searchFiltersRequest),
+            });
+            const json = await request.json()
+            const newListings: Listing[] = json.listings as Listing[];
+            setListings(newListings)
+        }
+        updateListings()
+    }, [context.searchFilters])
+
+
+    const sortedListings = useMemo(() => {
+        return listings.sort(ListingSortCompareFunctions.choose(context.sort.value))
+    }, [context.sort.value, listings])
 
     return (
         <div className="flex h-[36rem]">
-            <ListingsMap listings={props.listings} />
+            <ListingsMap listings={listings} />
             <div className="flex basis-1/2 flex-col">
-                <ListingsListCountSort listingsCount={props.listings.length} />
+                <ListingsListCountSort listingsCount={listings.length} />
                 <ListingsList listings={sortedListings} />
-                <ListingsPagination listingsCount={props.listings.length} />
+                <ListingsPagination listingsCount={listings.length} />
             </div>
         </div>
     )

@@ -227,7 +227,7 @@ export function ListingsMap(props: ListingsMapInterface) {
         })
 
         return () => map.dispose()
-    }, [])
+    }, [props.listings])
 
     return (
         <div className="h-full basis-1/2">

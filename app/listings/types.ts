@@ -61,46 +61,6 @@ export enum ListingSort {
   PRICE_ASC = "Price (low to high)",
 }
 
-type ListingSortCompareFunction = (a: Listing, b: Listing) => number;
-
-export class ListingSortCompareFunctions {
-  static #NEWEST: ListingSortCompareFunction = (a, b) => {
-    if (a.createdDate < b.createdDate) {
-      return 1;
-    }
-
-    if (a.createdDate === b.createdDate) {
-      return 0;
-    }
-
-    return -1;
-  };
-
-  static #PRICE_DESC: ListingSortCompareFunction = (a, b) => {
-    return b.price.value - a.price.value;
-  };
-
-  static #PRICE_ASC: ListingSortCompareFunction = (a, b) => {
-    return a.price.value - b.price.value;
-  };
-
-  static choose(sort: ListingSort): ListingSortCompareFunction {
-    switch (sort) {
-      case ListingSort.NEWEST:
-        return ListingSortCompareFunctions.#NEWEST;
-        break;
-      case ListingSort.PRICE_DESC:
-        return ListingSortCompareFunctions.#PRICE_DESC;
-        break;
-      case ListingSort.PRICE_ASC:
-        return ListingSortCompareFunctions.#PRICE_ASC;
-        break;
-      default:
-        return ListingSortCompareFunctions.#NEWEST;
-    }
-  }
-}
-
 export type ListingContextType<Type> = {
   value: Type;
   change: (value: Type) => void;
@@ -116,6 +76,19 @@ export interface ListingsSearchFilters {
   beds: ListingContextType<BedsBathsOption>;
   baths: ListingContextType<BedsBathsOption>;
   area: ContenTypeNumberRange;
+}
+
+export interface ListingsSearchFiltersRequest {
+  price: {
+    min: number;
+    max: number;
+  };
+  beds: BedsBathsOption;
+  baths: BedsBathsOption;
+  area: {
+    min: number;
+    max: number;
+  };
 }
 
 export enum BedsBathsOption {

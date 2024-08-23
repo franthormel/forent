@@ -1,4 +1,8 @@
-import { BedsBathsOption, ListingsSearchFilters } from "./types";
+import {
+  BedsBathsOption,
+  ListingsSearchFilters,
+  ListingsSearchFiltersRequest,
+} from "./types";
 
 export const LISTINGS_PER_PAGE = 15;
 export const STARTING_PAGE = 1;
@@ -51,5 +55,18 @@ export const DEFAULT_LIST_FILTERS: ListingsSearchFilters = {
       value: AREA_MAX_FILTER,
       change: (value) => {},
     },
+  },
+};
+
+export const DEFAULT_REQUEST_FILTERS: ListingsSearchFiltersRequest = {
+  price: {
+    min: PRICE_MIN_FILTER,
+    max: PRICE_MAX_FILTER,
+  },
+  beds: BEDS_BATHS_DEFAULT,
+  baths: BEDS_BATHS_DEFAULT,
+  area: {
+    min: AREA_MIN_FILTER,
+    max: AREA_MAX_FILTER,
   },
 };

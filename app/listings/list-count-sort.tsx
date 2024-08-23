@@ -5,8 +5,8 @@ import { useContext } from "react";
 import { ListingsContext } from "./provider";
 import { ListingSort } from "./types";
 
-export interface ListingsListCountSortInterface {
-    listingsCount: number
+interface ListingsListCountSortInterface {
+    listingsCount: number;
 }
 
 export function ListingsListCountSort(props: ListingsListCountSortInterface) {

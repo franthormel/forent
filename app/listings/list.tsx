@@ -4,7 +4,7 @@ import CardListing from "@/components/card-listing";
 import { CURRENCY_FORMATTER } from "@/lib/formatter/currency";
 import { useContext } from "react";
 import { LISTINGS_PER_PAGE } from "./constants";
-import { countListingsToSkip } from "./function";
+import { countListingsToSkip } from "./functions";
 import { ListingsContext } from "./provider";
 import { Listing } from "./types";
 

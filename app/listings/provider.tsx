@@ -14,7 +14,7 @@ interface ListingsContextInterface {
         changeToPreviousPage: () => void,
         changeToNextPage: () => void,
         currentPage: ListingContextType<number>
-    }
+    },
 }
 
 export const ListingsContext = createContext<ListingsContextInterface>({
@@ -30,7 +30,7 @@ export const ListingsContext = createContext<ListingsContextInterface>({
             value: STARTING_PAGE,
             change: (value) => { }
         },
-    }
+    },
 });
 
 export default function ListingsProvider({ children }: { children: React.ReactNode }) {
@@ -109,7 +109,7 @@ export default function ListingsProvider({ children }: { children: React.ReactNo
                     setCurrentPage(value)
                 },
             }
-        }
+        },
     }
 
     return (

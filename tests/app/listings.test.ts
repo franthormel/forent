@@ -1,4 +1,4 @@
-import { countListingsToSkip } from "../../app/listings/function";
+import { countListingsToSkip } from "../../app/listings/functions";
 
 describe("Listings", () => {
   test.each([

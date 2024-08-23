@@ -5,11 +5,11 @@ import { useContext } from "react";
 import { LISTINGS_PER_PAGE } from "./constants";
 import { ListingsContext } from "./provider";
 
-export interface ListingsPaginationProps {
+interface ListingsPaginationInterface {
     listingsCount: number
 }
 
-export default function ListingsPagination(props: ListingsPaginationProps) {
+export default function ListingsPagination(props: ListingsPaginationInterface) {
     const context = useContext(ListingsContext);
     const pages = Math.ceil(props.listingsCount / LISTINGS_PER_PAGE);
 

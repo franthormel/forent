@@ -1,13 +1,18 @@
-"use server";
-
-import prisma from "@/lib/db";
-import { DEFAULT_LIST_FILTERS } from "./constants";
+import { DEFAULT_REQUEST_FILTERS } from "@/app/listings/constants";
 import {
   BedsBathsOption,
   Listing,
-  ListingsSearchFilters,
+  ListingsSearchFiltersRequest,
   PrismaListing,
-} from "./types";
+} from "@/app/listings/types";
+import prisma from "@/lib/db";
+
+export async function POST(request: Request) {
+  const json = await request.json();
+  const searchFilters: ListingsSearchFiltersRequest = json;
+  const listings = await fetchMatchedListings(searchFilters);
+  return Response.json({ listings });
+}
 
 const prismaListingMapper = (dbListing: PrismaListing) => {
   const dbListingPrice = dbListing.prices
@@ -37,7 +42,7 @@ const prismaListingMapper = (dbListing: PrismaListing) => {
 };
 
 export async function fetchMatchedListings(
-  filters: ListingsSearchFilters = DEFAULT_LIST_FILTERS
+  filters: ListingsSearchFiltersRequest = DEFAULT_REQUEST_FILTERS
 ): Promise<Listing[]> {
   const prismaListings = await prisma.listing.findMany({
     include: {
@@ -53,12 +58,12 @@ export async function fetchMatchedListings(
           AND: {
             // ... and must be greater than or equal than the minimum filter value ...
             value: {
-              gte: filters.price.min.value,
+              gte: filters.price.min,
             },
             AND: {
               // ... and must be lesser than or equal than the maximum filter value
               value: {
-                lte: filters.price.max.value,
+                lte: filters.price.max,
               },
             },
           },
@@ -66,25 +71,21 @@ export async function fetchMatchedListings(
       },
       // Filter (area): must be greater than or equal than the minimum filter value ...
       area: {
-        gte: filters.area.min.value,
+        gte: filters.area.min,
       },
       AND: {
         // ... and must be lesser than or equal than the maximum filter value
         area: {
-          lte: filters.area.max.value,
+          lte: filters.area.max,
         },
       },
     },
   });
 
-  // It is easier to filter the beds/baths values programatically rather than using Prisma's filtering API for the use case.
+  // It is easier to filter the beds/baths values programatically rather than using Prisma's filtering API.
   return prismaListings
-    .filter((listing) =>
-      bedsBathsOptionFilter(filters.beds.value, listing.beds)
-    )
-    .filter((listing) =>
-      bedsBathsOptionFilter(filters.baths.value, listing.baths)
-    )
+    .filter((listing) => bedsBathsOptionFilter(filters.beds, listing.beds))
+    .filter((listing) => bedsBathsOptionFilter(filters.baths, listing.baths))
     .map(prismaListingMapper);
   return prismaListings.map(prismaListingMapper);
 }
