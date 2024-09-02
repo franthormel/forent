@@ -1,6 +1,6 @@
 import CardListing from "@/components/card-listing";
-import { CURRENCY_FORMATTER } from "@/lib/currency";
 import prisma from "@/lib/db";
+import { CURRENCY_FORMATTER } from "@/lib/formatter/currency";
 
 interface CardListingsProps {
     dataCy?: string

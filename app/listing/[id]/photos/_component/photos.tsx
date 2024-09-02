@@ -1,6 +1,7 @@
-import ButtonLinkFilled from "@/components/button-links/filled";
+import ButtonSmallFilled from "@/components/buttons/small/filled";
 import { NumberUtils } from "@/lib/commons/number_utils";
 import Image from "next/image";
+import Link from "next/link";
 
 interface ListingPhotosProps {
 	listingId: string
@@ -31,10 +32,10 @@ export default function ListingPhotos(props: ListingPhotosProps) {
 					className="font-medium text-xl">
 					Photos
 				</header>
-				<ButtonLinkFilled href={listingUrl}
-					text="Go to Listing"
-					dataCy={props.dataCyBtn ?? "listing-photos-btn"}
-					size="small" />
+				<Link href={listingUrl} data-cy="listing-photos-link">
+					<ButtonSmallFilled text="Go to Listing"
+						dataCy={props.dataCyBtn ?? "listing-photos-btn"} />
+				</Link>
 			</div>
 			<div className="grid auto-rows-auto gap-6 md:gap-8 lg:gap-y-10 xl:gap-y-12 2xl:gap-y-14"
 				data-cy={props.dataCy ?? "listing-photos"}>

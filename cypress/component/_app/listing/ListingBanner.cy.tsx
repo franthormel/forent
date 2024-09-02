@@ -7,7 +7,10 @@ describe("Listing Banner", () => {
 			const imageUrls = [
 				"https://images.unsplash.com/photo-1449247613801-ab06418e2861",
 			]
-			cy.mount(<ListingBanner imageUrls={imageUrls} listingId="id" />)
+			cy.mount(<ListingBanner imageUrls={imageUrls} listingId="id1" />)
+			cy.get('[data-cy="link-photos"]')
+				.should('have.attr', 'href')
+				.and('include', '/listing/id1/photos')
 			cy.get('[data-cy="btn-photos"]')
 				.should('exist')
 				.and('be.visible')
@@ -21,7 +24,10 @@ describe("Listing Banner", () => {
 				"https://images.unsplash.com/photo-1534595038511-9f219fe0c979",
 				"https://images.unsplash.com/photo-1535078035266-a0fa7d3b8f65",
 			]
-			cy.mount(<ListingBanner imageUrls={imageUrls} listingId="id" />)
+			cy.mount(<ListingBanner imageUrls={imageUrls} listingId="id2" />)
+			cy.get('[data-cy="link-photos"]')
+				.should('have.attr', 'href')
+				.and('include', '/listing/id2/photos')
 			cy.get('[data-cy="btn-photos"]')
 				.should('exist')
 				.and('be.visible')
@@ -53,7 +59,10 @@ describe("Listing Banner", () => {
 				"https://images.unsplash.com/photo-1609767175584-7abe16d3f1fa",
 				"https://images.unsplash.com/photo-1610516258978-461db90b97b4",
 			]
-			cy.mount(<ListingBanner imageUrls={imageUrls} listingId="id" />)
+			cy.mount(<ListingBanner imageUrls={imageUrls} listingId="id3" />)
+			cy.get('[data-cy="link-photos"]')
+				.should('have.attr', 'href')
+				.and('include', '/listing/id3/photos')
 			cy.get('[data-cy="btn-photos"]')
 				.should('exist')
 				.and('be.visible')

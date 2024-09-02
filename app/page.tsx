@@ -1,7 +1,7 @@
 import ButtonFilled from '@/components/buttons/filled'
-import Search from '@/components/search'
 import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Rent Property | Forent',
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   creator: 'franthormel',
   publisher: 'franthormel',
 }
-
+// NOTE: This is client-side due to some hydration error (https://nextjs.org/docs/messages/react-hydration-error#solution-2-disabling-ssr-on-specific-components)
 const CardListings = dynamic(() => import('./_component/card-listings'), { ssr: false })
 
 export default function Home() {
@@ -31,7 +31,9 @@ export default function Home() {
       </div>
       {/* Button */}
       <div className='grid justify-center'>
-        <ButtonFilled text='View more listings' dataCy='btn-view-listings' />
+        <Link href='/listings' data-cy="link-view-listings">
+          <ButtonFilled text='View more listings' dataCy='btn-view-listings' />
+        </Link>
       </div>
     </div >
   )

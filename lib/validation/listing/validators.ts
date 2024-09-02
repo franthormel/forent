@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { CURRENCY_FORMATTER } from "../../currency";
+import { CURRENCY_FORMATTER } from "../../formatter/currency";
+import { NUMBER_FORMATTER } from "../../formatter/number";
 
 // Price
 const PRICE_MIN = Number(process.env.LISTING_PRICE_MIN ?? 100);
@@ -18,6 +19,22 @@ export const PRICE_VALIDATOR = z
   .max(PRICE_MAX, {
     message: `Price cannot exceed ${PRICE_MAX_FORMATTED}`,
   });
+
+export function customizePriceValidator(min: number, max: number): z.ZodNumber {
+  const minimumPriceMessage = CURRENCY_FORMATTER.format(min);
+  const maximumPriceMessage = CURRENCY_FORMATTER.format(max);
+  return z
+    .number({
+      required_error: "Price is required",
+      invalid_type_error: "Price must be a number",
+    })
+    .min(min, {
+      message: `Price must be at least ${minimumPriceMessage}`,
+    })
+    .max(max, {
+      message: `Price cannot exceed ${maximumPriceMessage}`,
+    });
+}
 
 // Deposit
 const DEPOSIT_MIN = Number(process.env.LISTING_DEPOSIT_MIN ?? 0);
@@ -105,12 +122,28 @@ export const AREA_VALIDATOR = z
   })
   .min(AREA_MIN, {
     // FUTURE: Localize `sqm`
-    message: `Area must be at least ${AREA_MIN} sqm.`,
+    message: `Area must be at least ${NUMBER_FORMATTER.format(AREA_MIN)} sqm.`,
   })
   .max(AREA_MAX, {
     // FUTURE: Localize `sqm`
-    message: `Area must not exceed ${AREA_MAX} sqm.`,
+    message: `Area must not exceed ${NUMBER_FORMATTER.format(AREA_MAX)} sqm.`,
   });
+
+export function customizeAreaValidator(min: number, max: number): z.ZodNumber {
+  return z
+    .number({
+      required_error: "Area is required",
+      invalid_type_error: "Area must be a number",
+    })
+    .min(min, {
+      // FUTURE: Localize `sqm`
+      message: `Area must be at least ${NUMBER_FORMATTER.format(min)} sqm.`,
+    })
+    .max(max, {
+      // FUTURE: Localize `sqm`
+      message: `Area must not exceed ${NUMBER_FORMATTER.format(max)} sqm.`,
+    });
+}
 
 // Available Date
 // NOTE: Append min-max date values using this validator if needed

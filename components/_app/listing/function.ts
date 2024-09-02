@@ -1,5 +1,5 @@
 import { DateUtils } from "../../../lib/commons/date_utils";
-import { CURRENCY_FORMATTER } from "../../../lib/currency";
+import { CURRENCY_FORMATTER } from "../../../lib/formatter/currency";
 
 /**
  * Display proper text if the given listing's date is considered available

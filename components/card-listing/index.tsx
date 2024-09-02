@@ -33,7 +33,7 @@ export default function CardListing(props: CardListingProps) {
 	const dataCyAddressLine2 = props.dataCyAddressLine2 ?? "card-listing-address-line2"
 
 	return (
-		<Link href={`/listing/${props.id}`}>
+		<Link href={`/listing/${props.id}`} target="_blank">
 			<div className="w-80 cursor-pointer rounded-md bg-slate-50 p-0 shadow-md transition-all hover:shadow-xl">
 				<Image
 					className="h-3/5 w-full rounded-t-md object-cover"

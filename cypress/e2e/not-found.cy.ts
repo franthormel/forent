@@ -17,11 +17,13 @@ describe("not found page", () => {
       .and("be.visible")
       .and("have.text", "This page does not exist");
 
+    cy.get('[data-cy="not-found-link-homepage"]')
+      .and("have.attr", "href")
+      .and("include", "/");
+
     cy.get('[data-cy="not-found-button"]')
       .should("exist")
       .and("be.visible")
-      .and("have.text", "Go to Homepage")
-      .and("have.attr", "href")
-      .and("include", "/");
+      .and("have.text", "Go to Homepage");
   });
 });
