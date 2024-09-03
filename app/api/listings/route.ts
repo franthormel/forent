@@ -41,7 +41,7 @@ const prismaListingMapper = (dbListing: PrismaListing) => {
   return listing;
 };
 
-export async function fetchMatchedListings(
+async function fetchMatchedListings(
   filters: ListingsSearchFiltersRequest = DEFAULT_REQUEST_FILTERS
 ): Promise<Listing[]> {
   const prismaListings = await prisma.listing.findMany({
