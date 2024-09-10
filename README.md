@@ -2,9 +2,6 @@
 
 Apartment rental clone website.
 
-[![Test](https://github.com/franthormel/forent/actions/workflows/test.yml/badge.svg)](https://github.com/franthormel/forent/actions/workflows/test.yml)
-
-
 ## Showcase
 
 #### Homepage
